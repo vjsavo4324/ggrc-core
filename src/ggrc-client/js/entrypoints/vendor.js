@@ -27,6 +27,7 @@ import 'can/list/sort';
 import 'can/map/attributes';
 import 'can/map/backup';
 import 'can/map/validations';
+import 'can/view/stache';
 import 'moment';
 import 'moment-timezone/builds/moment-timezone-with-data.min';
 import 'spin.js';

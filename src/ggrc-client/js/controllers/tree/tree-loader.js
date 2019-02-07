@@ -7,8 +7,6 @@ export default can.Control.extend({
   defaults: {},
 }, {
   init_spinner: function () {
-    let renderer;
-    let spinner;
     let $footer;
     let $wrapper;
 
@@ -25,15 +23,12 @@ export default can.Control.extend({
         $wrapper.css('height', '40px');
       }
 
-      spinner = [
-        '<spinner toggle="showMe"',
-        '  size="large"',
-        '  extra-css-class="tree-items"',
-        '>',
-        '</spinner>',
-      ].join('');
-      renderer = can.view.mustache(spinner);
-      spinner = renderer({showMe: true});
+      let renderer = can.stache(
+        `<spinner extra-css-class="tree-items"
+                  toggle="showMe" size="large">
+        </spinner>`
+      );
+      let spinner = renderer({showMe: true});
 
       // Admin dashboard
       if ($footer.length === 0 &&

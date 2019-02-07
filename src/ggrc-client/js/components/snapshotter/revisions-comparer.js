@@ -59,8 +59,6 @@ export default can.Component.extend({
           that.getRevisions(currentRevisionID, newRevisionID)
             .then(function (data) {
               let revisions = that.prepareInstances(data);
-              let fragLeft = can.view(view, revisions[0]);
-              let fragRight = can.view(view, revisions[1]);
 
               if (displayDescriptions) {
                 const leftRevisionData = that.getRevisionData(
@@ -74,17 +72,24 @@ export default can.Component.extend({
                 confirmSelf.attr('leftRevisionData', leftRevisionData);
                 confirmSelf.attr('rightRevisionData', rightRevisionData);
               }
-
               // people should be preloaded before highlighting differences
               // to avoid breaking UI markup as highlightDifference
               // sets block's height
               that.loadACLPeople(revisions[1].instance)
                 .then(() => {
-                  fragLeft.appendChild(fragRight);
-                  target.find('.modal-body').html(fragLeft);
+                  $.ajax({
+                    url: view, dataType: 'text',
+                  }).then((view) => {
+                    let render = can.stache(view);
+                    let fragLeft = render(revisions[0]);
+                    let fragRight = render(revisions[1]);
 
-                  that.highlightDifference(target);
-                  that.highlightCustomAttributes(target, revisions);
+                    fragLeft.appendChild(fragRight);
+                    target.find('.modal-body').html(fragLeft);
+
+                    that.highlightDifference(target);
+                    that.highlightCustomAttributes(target, revisions);
+                  });
                 });
             });
         },

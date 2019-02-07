@@ -74,10 +74,15 @@ const DashboardControl = can.Control.extend({
   },
 
   init_page_header: function () {
-    let $pageHeader = this.element.find('#page-header');
-
+    let $pageHeader = $('#page-header');
     if (this.options.header_view && $pageHeader.length) {
-      $pageHeader.html(can.view(this.options.header_view));
+      $.ajax({
+        url: this.options.header_view,
+        dataType: 'text',
+      }).then((view) => {
+        let frag = can.stache(view)();
+        $pageHeader.html(frag);
+      });
     }
   },
 

@@ -316,9 +316,8 @@ For example, the ``workflow`` views are in the following folder
 View Helpers
 ^^^^^^^^^^^^
 
-View helpers are defined using the Mustache `helper mechanism provided
-by CanJS <http://canjs.com/docs/can.mustache.Helpers.html>`_.  Core
-helpers are specified in 
+View helpers are defined using the helper mechanism provided by CanJS. Core
+helpers are specified in
 :src:`ggrc-client/js/helpers.js`.
 
 Extensions

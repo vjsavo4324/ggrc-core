@@ -12,7 +12,8 @@ export default ModalsController({
   },
   init: function () {
     this._super(...arguments);
-    this.defaults.button_view = can.view.mustache('');
+    this.defaults.button_view =
+      GGRC.templates_path + '/base_objects/empty.stache';
   },
 }, {
   init: function () {

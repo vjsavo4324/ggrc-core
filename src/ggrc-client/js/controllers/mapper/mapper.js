@@ -179,7 +179,8 @@ const ObjectMapper = can.Control.extend({
   },
 }, {
   init: function () {
-    this.element.html(can.view.mustache(this.options.component)(this.options));
+    let frag = can.stache(this.options.component)(this.options);
+    this.element.html(frag);
   },
 });
 

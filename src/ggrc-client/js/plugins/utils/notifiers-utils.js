@@ -26,7 +26,7 @@ function notifier(type, message, data) {
   let props = {};
 
   if ( message && data ) {
-    message = can.mustache(message);
+    message = can.stache(message);
     props.data = data;
   }
 

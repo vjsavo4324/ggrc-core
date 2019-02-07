@@ -38,7 +38,6 @@ export default TreeLoader({
   },
 }, {
   init: function () {
-    let that = this;
     if (!this.options.extra_params) {
       this.options.extra_params = {};
     }
@@ -55,23 +54,26 @@ export default TreeLoader({
         },
       },
     });
-    this.context.attr('has_next_page', can.compute(function () {
-      let pager = that.context.attr('pager');
+    this.context.attr('has_next_page', can.compute(() => {
+      let pager = this.context.attr('pager');
       return pager && pager.has_next && pager.has_next();
     }));
-    this.context.attr('has_prev_page', can.compute(function () {
-      let pager = that.context.attr('pager');
+    this.context.attr('has_prev_page', can.compute(() => {
+      let pager = this.context.attr('pager');
       return pager && pager.has_prev && pager.has_prev();
     }));
     this.context.attr(this.options);
 
     if (this.options.header_view) {
-      can.view(this.options.header_view, $.when(this.context))
-        .then(function (frag) {
-          if (that.element) {
-            that.element.prepend(frag);
-          }
-        });
+      $.when(this.context, $.ajax({
+        url: this.options.header_view,
+        dataType: 'text',
+      })).then((ctx, view) => {
+        let frag = can.stache(view[0])(ctx);
+        if (this.element) {
+          this.element.prepend(frag);
+        }
+      });
     }
 
     if (!this.options.list) {
@@ -168,13 +170,14 @@ export default TreeLoader({
   },
 
   init_view: function () {
-    let that = this;
-    return can.view(this.options.list_view, this.context, function (frag) {
-      that.element.find('.spinner, .tree-structure').hide();
-      that.element
-        .append(frag)
-        .trigger('loaded');
-      that.options.state.attr('loading', false);
+    $.ajax({
+      url: this.options.list_view,
+      dataType: 'text',
+    }).then((view) => {
+      let frag = can.stache(view)(this.context);
+      this.element.find('.spinner, .tree-structure').hide();
+      this.element.append(frag).trigger('loaded');
+      this.options.state.attr('loading', false);
     });
   },
 

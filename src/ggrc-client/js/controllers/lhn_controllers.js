@@ -377,11 +377,18 @@ const LhnSearchControl = can.Control.extend({
     //  search box and the display prefs to save the search value between page loads.
     //  We also listen for this value in the controller
     //  to trigger the search.
-    let frag = can.view(templatePath, lhnPrefs);
+    $.ajax({
+      url: templatePath,
+      dataType: 'text',
+      async: false,
+    }).then((view) => {
+      let frag = can.stache(view)(lhnPrefs);
+      this.element.html(frag);
+    });
+
     let initialParams = {};
     let savedFilters = lhnPrefs.filter_params || new can.Map();
 
-    this.element.html(frag);
     this.post_init();
 
     let subLevelElements = this.element.find('.sub-level');
@@ -705,25 +712,34 @@ const LhnSearchControl = can.Control.extend({
         }),
       };
 
-      can.view($list.data('template') || self.options.list_view, context,
-        (frag, xhr) => {
-          $list.find(self.options.list_content_selector).html(frag);
+      $.ajax({
+        url: $list.data('template') || self.options.list_view,
+        dataType: 'text',
+        async: false,
+      }).then((view) => {
+        let frag = can.stache(view)(context);
+        $list.find(self.options.list_content_selector).html(frag);
 
-          // If this category we're rendering is the one that is open, wait for the
-          //  list to finish rendering in the content pane, then set the scrolltop
-          //  of the category to the stored value in display prefs.
-          if (modelName === getLHNState().open_category) {
-            $list.one('list_displayed', function () {
-              $(this).find(self.options.list_content_selector).scrollTop(
-                getLHNState().category_scroll || 0
-              );
-            });
-          }
-        });
-      can.view($list.data('actions') || self.options.actions_view, context,
-        function (frag, xhr) {
-          $list.find(self.options.actions_content_selector).html(frag);
-        });
+        // If this category we're rendering is the one that is open, wait for the
+        //  list to finish rendering in the content pane, then set the scrolltop
+        //  of the category to the stored value in display prefs.
+        if (modelName === getLHNState().open_category) {
+          $list.one('list_displayed', function () {
+            $(this).find(self.options.list_content_selector).scrollTop(
+              getLHNState().category_scroll || 0
+            );
+          });
+        }
+      });
+
+      $.ajax({
+        url: $list.data('actions') || self.options.actions_view,
+        dataType: 'text',
+        async: false,
+      }).then((view) => {
+        let frag = can.stache(view)(context);
+        $list.find(self.options.actions_content_selector).html(frag);
+      });
     });
   },
   get_list_model: function ($list, count) {

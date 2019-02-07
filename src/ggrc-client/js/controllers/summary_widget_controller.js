@@ -51,7 +51,6 @@ export default can.Control({
   },
 }, {
   init: function () {
-    let frag;
     if (this.element.data('widget-view')) {
       this.options.widget_view = GGRC.templates_path +
         this.element.data('widget-view');
@@ -71,10 +70,15 @@ export default can.Control({
         },
       },
     });
-    frag = can.view(this.get_widget_view(this.element),
-      this.options.context);
-    this.widget_shown();
-    this.element.html(frag);
+
+    $.ajax({
+      url: this.get_widget_view(this.element),
+      dataType: 'text',
+    }).then((view) => {
+      let frag = can.stache(view)(this.options.context);
+      this.element.html(frag);
+      this.widget_shown();
+    });
     return 0;
   },
   onRelationshipChange: function (model, ev, instance) {

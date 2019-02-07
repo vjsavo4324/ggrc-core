@@ -123,21 +123,19 @@ export default can.Control.extend({
     // determine it from the presemce of the corresponding CSS class
     let isActive = this.element.hasClass('active');
 
-    can.view(
-      this.options.show_view,
-      this.options,
-      this._ifNotRemoved(function (frag) {
-        this.replace_element(frag);
-        this.add_control();
-
-        if (isActive) {
-          this.element.addClass('active');
-        }
-
-        this._draw_node_deferred.resolve();
-      }.bind(this))
-    );
-
+    $.ajax({
+      url: this.options.show_view,
+      dataType: 'text',
+    }).then((view) => {
+      return can.stache(view)(this.options);
+    }).then(this._ifNotRemoved((frag) => {
+      this.replace_element(frag);
+      this.add_control();
+      if (isActive) {
+        this.element.addClass('active');
+      }
+      this._draw_node_deferred.resolve();
+    }));
     this._draw_node_in_progress = false;
   },
 

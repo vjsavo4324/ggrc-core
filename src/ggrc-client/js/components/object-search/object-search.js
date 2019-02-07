@@ -15,7 +15,7 @@ import template from './object-search.stache';
 
 export default can.Component.extend({
   tag: 'object-search',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: function () {
     return ObjectOperationsBaseVM.extend({

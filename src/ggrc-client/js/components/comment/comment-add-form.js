@@ -19,7 +19,7 @@ const tag = 'comment-add-form';
  */
 export default can.Component.extend({
   tag: tag,
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

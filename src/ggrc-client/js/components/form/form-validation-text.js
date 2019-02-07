@@ -3,8 +3,6 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
-const tag = 'form-validation-text';
-
 const textMap = {
   input: 'This field is required.',
   checkbox: 'This checkbox is required.',
@@ -15,8 +13,12 @@ const textMap = {
  * Form validation text component
  */
 export default can.Component.extend({
-  tag,
-  template: '<p class="required">{{text}}</p>',
+  tag: 'form-validation-text',
+  template: can.stache(
+    `<p class="required">
+       {{text}}
+     </p>`
+  ),
   leakScope: true,
   viewModel: {
     define: {

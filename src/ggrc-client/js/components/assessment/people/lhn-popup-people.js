@@ -11,7 +11,7 @@ import template from './templates/lhn-popup-people.stache';
 
 export default can.Component.extend({
   tag: 'lhn-popup-people',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

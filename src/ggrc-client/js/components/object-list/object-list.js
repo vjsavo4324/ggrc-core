@@ -7,13 +7,12 @@ import '../show-more/show-more';
 import '../spinner/spinner';
 import template from './object-list.stache';
 
-const tag = 'object-list';
 /**
  * Object List component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'object-list',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -9,7 +9,7 @@ import template from './controls-toolbar.stache';
 
 export default can.Component.extend({
   tag: 'assessment-controls-toolbar',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: null,

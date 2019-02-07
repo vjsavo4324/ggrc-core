@@ -121,7 +121,7 @@ let viewModel = can.Map.extend({
  */
 export default can.Component.extend({
   tag: 'advanced-search-filter-state',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
 });

@@ -6,13 +6,12 @@
 import * as businessModels from '../../models/business-models';
 import template from './business-object-list-item.stache';
 
-let tag = 'business-object-list-item';
 /**
  * Mapped objects item view component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'business-object-list-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

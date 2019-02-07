@@ -7,7 +7,7 @@ import template from './templates/tree-no-results.stache';
 
 export default can.Component.extend({
   tag: 'tree-no-results',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -49,7 +49,7 @@ const events = {
 
 export default can.Component.extend({
   tag: 'release-notes-list',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events,

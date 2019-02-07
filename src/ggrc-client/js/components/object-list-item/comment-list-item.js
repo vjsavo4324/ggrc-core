@@ -8,13 +8,12 @@ import '../person/person-data';
 import '../spinner/spinner';
 import template from './comment-list-item.stache';
 
-const tag = 'comment-list-item';
 /**
  * Simple component to show Comment Objects
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'comment-list-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

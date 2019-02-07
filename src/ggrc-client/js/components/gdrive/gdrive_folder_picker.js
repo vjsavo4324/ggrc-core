@@ -13,7 +13,7 @@ import template from './templates/gdrive_folder.stache';
 
 export default can.Component.extend({
   tag: 'ggrc-gdrive-folder-picker',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

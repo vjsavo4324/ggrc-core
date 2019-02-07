@@ -7,11 +7,10 @@ import Pagination from '../../base-objects/pagination';
 import template from './templates/related-revisions.stache';
 import './related-revisions-item';
 import Revision from '../../../models/service-models/revision.js';
-const tag = 'related-revisions';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'related-revisions',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

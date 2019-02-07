@@ -7,7 +7,7 @@ import template from './multiselect-dropdown.stache';
 
 export default can.Component.extend({
   tag: 'multiselect-dropdown',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     disabled: false,

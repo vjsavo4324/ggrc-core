@@ -12,7 +12,7 @@ import * as businessModels from '../../models/business-models';
 
 export default can.Component.extend({
   tag: 'mapper-results-item-details',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     init() {

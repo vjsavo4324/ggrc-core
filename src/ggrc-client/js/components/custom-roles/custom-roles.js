@@ -11,7 +11,7 @@ import {isProposableExternally} from '../../plugins/utils/ggrcq-utils';
 
 export default can.Component.extend({
   tag: 'custom-roles',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -5,15 +5,13 @@
 
 export default can.Component.extend({
   tag: 'unarchive-link',
+  template: can.stache('<a href="#"><content></content></a>'),
   leakScope: true,
   viewModel: {
     notify: '@',
     instance: null,
     notifyText: 'was unarchived successfully',
   },
-  template: ['<a href="#">',
-    '<content></content>',
-    '</a>'].join(''),
   events: {
     'a click': function (el, event) {
       let instance = this.viewModel.attr('instance');

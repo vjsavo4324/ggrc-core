@@ -15,7 +15,7 @@ import template from './questionnaire-link.stache';
 
 export default can.Component.extend({
   tag: 'questionnaire-link',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

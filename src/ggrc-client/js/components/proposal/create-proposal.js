@@ -15,7 +15,7 @@ const tag = 'create-proposal';
 
 export default can.Component.extend({
   tag,
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

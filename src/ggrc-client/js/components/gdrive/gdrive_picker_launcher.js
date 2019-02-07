@@ -22,7 +22,7 @@ import * as businessModels from '../../models/business-models';
 
 export default can.Component.extend({
   tag: 'ggrc-gdrive-picker-launcher',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

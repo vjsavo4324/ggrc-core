@@ -8,7 +8,7 @@ import template from './templates/people-group-modal.stache';
 
 export default can.Component.extend({
   tag: 'people-group-modal',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

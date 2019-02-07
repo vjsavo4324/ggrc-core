@@ -66,7 +66,7 @@ let viewModel = BaseTreeItemVM.extend({
 
 export default can.Component.extend({
   tag: 'sub-tree-item',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events: {

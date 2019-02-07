@@ -14,7 +14,7 @@ const tag = 'attach-button';
 
 export default can.Component.extend({
   tag,
-  template,
+  template: can.stache(template),
   confirmationCallback: '@',
   leakScope: true,
   viewModel: {

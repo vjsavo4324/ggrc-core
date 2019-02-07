@@ -22,6 +22,6 @@ const viewModel = can.Map.extend({
 export default can.Component.extend({
   tag: 'proposable-attribute',
   leakScope: false,
-  template,
+  template: can.stache(template),
   viewModel,
 });

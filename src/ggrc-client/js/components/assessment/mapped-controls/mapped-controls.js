@@ -125,8 +125,8 @@ const viewModel = {
  * Assessment specific mapped controls view component
  */
 export default can.Component.extend({
-  template,
   tag,
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
   events: {

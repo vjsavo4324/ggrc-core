@@ -22,7 +22,7 @@ import Mappings from '../../models/mappers/mappings';
  */
 export default can.Component.extend({
   tag: 'object-generator',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: function (attrs, parentViewModel) {
     return ObjectOperationsBaseVM.extend({

@@ -60,7 +60,7 @@ let viewModel = can.Map.extend({
 
 export default can.Component.extend({
   tag: 'cycle-task-group-object-task',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

@@ -7,7 +7,7 @@ import template from './prev-next-buttons.stache';
 
 export default can.Component.extend({
   tag: 'prev-next-buttons',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -6,11 +6,9 @@
 import template from './templates/request-review-modal.stache';
 import {createReviewInstance, saveReview} from '../../plugins/utils/object-review-utils';
 
-const tag = 'request-review-modal';
-
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'request-review-modal',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

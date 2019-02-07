@@ -7,7 +7,7 @@ import template from './sortable-column.stache';
 
 export default can.Component.extend({
   tag: 'sortable-column',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

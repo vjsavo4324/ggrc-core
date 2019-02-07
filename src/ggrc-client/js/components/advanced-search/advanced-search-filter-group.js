@@ -33,7 +33,7 @@ let viewModel = AdvancedSearchContainer.extend({
  */
 export default can.Component.extend({
   tag: 'advanced-search-filter-group',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
 });

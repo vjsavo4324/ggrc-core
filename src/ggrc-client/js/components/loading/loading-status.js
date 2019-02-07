@@ -7,7 +7,7 @@ import template from './loading-status.stache';
 
 export default can.Component.extend({
   tag: 'loading-status',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

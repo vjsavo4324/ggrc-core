@@ -10,11 +10,10 @@ import {
 } from '../../plugins/utils/object-history-utils';
 import {caDefTypeName} from '../../plugins/utils/custom-attribute/custom-attribute-config';
 import template from './templates/restore-revision.stache';
-const tag = 'restore-revision';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'restore-revision',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

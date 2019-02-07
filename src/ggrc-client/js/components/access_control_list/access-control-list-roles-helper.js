@@ -12,7 +12,7 @@ import template from './access-control-list-roles-helper.stache';
 
 export default can.Component.extend({
   tag: 'access-control-list-roles-helper',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

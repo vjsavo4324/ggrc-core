@@ -11,7 +11,7 @@ const tag = 'modal-issue-tracker-fields';
 
 export default can.Component.extend({
   tag,
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

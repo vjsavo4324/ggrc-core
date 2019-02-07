@@ -83,7 +83,7 @@ let getDefaultType = function (type, object) {
  */
 export default can.Component.extend({
   tag: 'object-mapper',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: function (attrs, parentViewModel) {
     let config = {

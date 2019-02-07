@@ -12,7 +12,7 @@ import template from './templates/custom-roles-modal.stache';
 
 export default can.Component.extend({
   tag: 'custom-roles-modal',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

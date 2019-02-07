@@ -9,7 +9,7 @@ import * as config from '../../apps/workflow-config';
 
 export default can.Component.extend({
   tag: 'repeat-on-button',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

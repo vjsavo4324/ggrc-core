@@ -7,7 +7,7 @@ import template from './mapping-type-selector.stache';
 
 export default can.Component.extend({
   tag: 'mapping-type-selector',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     disabled: false,

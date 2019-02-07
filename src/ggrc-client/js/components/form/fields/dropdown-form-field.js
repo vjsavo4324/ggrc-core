@@ -8,7 +8,7 @@ import template from './dropdown-form-field.stache';
 
 export default can.Component.extend({
   tag: 'dropdown-form-field',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

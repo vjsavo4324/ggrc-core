@@ -16,7 +16,7 @@ import template from './show-more.stache';
 
 export default can.Component.extend({
   tag: 'show-more',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

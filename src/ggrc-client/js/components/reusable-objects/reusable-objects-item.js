@@ -7,7 +7,7 @@ import template from './reusable-objects-item.stache';
 
 export default can.Component.extend({
   tag: 'reusable-objects-item',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     disabled: false,

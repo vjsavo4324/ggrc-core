@@ -6,15 +6,17 @@
 import Person from '../../models/business-models/person';
 import CycleTaskGroupObjectTask from '../../models/business-models/cycle-task-group-object-task';
 
-let baseCmpName = 'tasks-counter';
-
 /**
  *  Component to show number of Tasks Owned by Person
  *
  */
 export default can.Component.extend({
-  tag: baseCmpName,
-  template: '<div class="tasks-counter {{stateCss}}">{{tasksAmount}}</div>',
+  tag: 'tasks-counter',
+  template: can.stache(
+    `<div class="tasks-counter {{stateCss}}">
+       {{tasksAmount}}
+     </div>`
+  ),
   leakScope: true,
   viewModel: {
     CycleTaskGroupObjectTask,
@@ -41,6 +43,7 @@ export default can.Component.extend({
       },
       stateCss: {
         get: function () {
+          let baseCmpName = 'tasks-counter';
           if (this.attr('tasksAmount') === 0) {
             return baseCmpName + '__empty-state';
           }

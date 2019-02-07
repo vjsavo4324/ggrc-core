@@ -14,11 +14,11 @@ import {isSnapshotType} from '../../plugins/utils/snapshot-utils';
 
 export default can.Component.extend({
   tag: 'delete-button',
-  template: `
-    <span>
-      <i class="fa fa-trash"></i>
-      Delete
-    </span>`,
+  template: can.stache(
+    `<span>
+       <i class="fa fa-trash"></i>
+       Delete
+    </span>`),
   leakScope: true,
   viewModel: {
     define: {

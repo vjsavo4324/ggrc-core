@@ -13,7 +13,7 @@ import Issue from '../../models/business-models/issue';
 
 export default can.Component.extend({
   tag: 'add-issue-button',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

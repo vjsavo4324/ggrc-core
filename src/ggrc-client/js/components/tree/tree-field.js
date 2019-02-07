@@ -8,7 +8,7 @@ import {getTruncatedList} from '../../plugins/ggrc_utils';
 
 export default can.Component.extend({
   tag: 'tree-field',
-  template,
+  template: can.stache(template),
   viewModel: {
     define: {
       tooltipContent: {

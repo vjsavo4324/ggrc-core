@@ -5,14 +5,13 @@
 
 import template from './templates/numberbox.stache';
 
-const tag = 'numberbox';
 const FLOAT_NUMBER_PATTERN = '([0-9]+([.][0-9]+){0,1})';
 const INT_NUMBER_PATTERN = '([0-9]+)';
 const NEGATIVE_NUMBER_PATTERN = '([-]{0,1})';
 
 export default can.Component.extend({
-  template,
-  tag,
+  tag: 'numberbox',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     value: '',

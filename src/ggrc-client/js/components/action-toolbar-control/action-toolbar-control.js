@@ -5,9 +5,11 @@
 
 export default can.Component.extend({
   tag: 'action-toolbar-control',
-  template: '<div class="action-toolbar__controls-item">' +
-  '<content></content>' +
-  '</div>',
+  template: can.stache(
+    `<div class="action-toolbar__controls-item">
+       <content></content>
+     </div>`
+  ),
   leakScope: true,
   viewModel: {},
 });

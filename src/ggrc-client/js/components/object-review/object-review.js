@@ -18,11 +18,9 @@ import {
 import {getRole} from '../../plugins/utils/acl-utils';
 import {notifier} from '../../plugins/utils/notifiers-utils';
 
-const tag = 'object-review';
-
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'object-review',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -63,7 +63,7 @@ export const helpers = {
 
 export default can.Component.extend({
   tag: 'tree-item-custom-attribute',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   helpers,

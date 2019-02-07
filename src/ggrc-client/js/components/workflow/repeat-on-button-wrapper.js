@@ -7,11 +7,12 @@ import './repeat-on-button';
 
 export default can.Component.extend({
   tag: 'repeat-on-button-wrapper',
-  template: '<repeat-on-button ' +
-    '{unit}="instance.unit" ' +
-    '{repeat-every}="instance.repeat_every" ' +
-    '{on-save-repeat}="@onSetRepeat">' +
-    '</repeat-on-button>',
+  template: can.stache(
+    `<repeat-on-button {unit}="{instance.unit}"
+                       {repeat-every}="{instance.repeat_every}"
+                       {on-save-repeat}="{@onSetRepeat}">
+     </repeat-on-button>`
+  ),
   leakScope: true,
   viewModel: {
     define: {

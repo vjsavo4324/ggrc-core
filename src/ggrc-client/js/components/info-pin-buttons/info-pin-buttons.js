@@ -8,7 +8,7 @@ import {resolve} from '../../plugins/utils/can-utils';
 
 export default can.Component.extend({
   tag: 'info-pin-buttons',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     onChangeMaximizedState: null,

@@ -10,7 +10,7 @@ import template from './info-pane-footer.stache';
  */
 export default can.Component.extend({
   tag: 'info-pane-footer',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     createdAt: '',

@@ -75,7 +75,7 @@ let viewModel = can.Map.extend({
 
 export default can.Component.extend({
   tag: 'tree-filter-input',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events: {

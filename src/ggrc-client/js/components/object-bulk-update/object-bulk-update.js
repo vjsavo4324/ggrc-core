@@ -17,7 +17,7 @@ import Mappings from '../../models/mappers/mappings';
 
 export default can.Component.extend({
   tag: 'object-bulk-update',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: function (attrs, parentViewModel) {
     let type = attrs.type;

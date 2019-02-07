@@ -5,7 +5,7 @@
 
 import './relevant-filter';
 import './export-group';
-import csvExportTemplate from './templates/csv-export.stache';
+import template from './templates/csv-export.stache';
 import {
   download,
   fileSafeCurrentDate,
@@ -34,7 +34,7 @@ import QueryParser from '../../generated/ggrc_filter_query_parser';
 
 export default can.Component.extend({
   tag: 'csv-export',
-  template: csvExportTemplate,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

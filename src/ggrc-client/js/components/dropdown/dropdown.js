@@ -13,7 +13,7 @@ import template from './dropdown.stache';
 */
 export default can.Component.extend({
   tag: 'dropdown',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

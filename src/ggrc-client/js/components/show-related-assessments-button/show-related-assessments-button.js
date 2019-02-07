@@ -9,7 +9,7 @@ import {hasRelatedAssessments} from '../../plugins/utils/models-utils';
 
 export default can.Component.extend({
   tag: 'show-related-assessments-button',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

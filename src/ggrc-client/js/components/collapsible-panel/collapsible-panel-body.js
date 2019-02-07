@@ -11,7 +11,7 @@ const tag = 'collapsible-panel-body';
  */
 export default can.Component.extend({
   tag,
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     renderContent: function () {

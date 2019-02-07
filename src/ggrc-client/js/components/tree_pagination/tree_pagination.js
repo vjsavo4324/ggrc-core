@@ -12,7 +12,7 @@ import template from './tree_pagination.stache';
  */
 export default can.Component.extend({
   tag: 'tree-pagination',
-  template: template,
+  template: can.stache(template),
   init: function () {
     /**
      * Entrance object validation

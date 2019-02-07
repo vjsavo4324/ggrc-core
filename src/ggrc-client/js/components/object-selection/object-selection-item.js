@@ -7,7 +7,7 @@ import template from './object-selection-item.stache';
 
 export default can.Component.extend({
   tag: 'object-selection-item',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     isSaving: false,

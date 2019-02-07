@@ -19,7 +19,7 @@ import {getPageInstance} from '../../../js/plugins/utils/current-page-utils';
 
 export default can.Component.extend({
   tag: 'revisions-comparer',
-  template: '<content/>',
+  template: can.stache('<content/>'),
   leakScope: true,
   viewModel: {
     instance: null,

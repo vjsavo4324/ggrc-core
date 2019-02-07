@@ -8,7 +8,7 @@ import template from './effective-dates.stache';
 
 export default can.Component.extend({
   tag: 'effective-dates',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: null,

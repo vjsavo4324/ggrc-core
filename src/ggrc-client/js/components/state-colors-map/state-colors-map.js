@@ -5,10 +5,6 @@
 
 /* Default Sate for Assessment should be 'Not Started' */
 const defaultState = 'Not Started';
-const template =
-  `<span class="state-value-dot state-{{suffix}} {{verified}}">
-    {{state}}
-  </span>`;
 
 /**
  * can.Map(ViewModel) presenting behavior of State Colors Map Component
@@ -38,7 +34,11 @@ let viewModel = can.Map.extend({
  */
 export default can.Component.extend({
   tag: 'state-colors-map',
-  template,
+  template: can.stache(
+    `<span class="state-value-dot state-{{suffix}} {{verified}}">
+       {{state}}
+     </span>`
+  ),
   leakScope: true,
   viewModel,
 });

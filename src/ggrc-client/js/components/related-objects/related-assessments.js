@@ -15,6 +15,7 @@ import '../tree_pagination/tree_pagination';
 import Pagination from '../base-objects/pagination';
 import template from './templates/related-assessments.stache';
 import {prepareCustomAttributes} from '../../plugins/utils/ca-utils';
+import {resolve} from '../../plugins/utils/can-utils';
 import {backendGdriveClient} from '../../plugins/ggrc-gapi-client';
 import tracker from '../../tracker';
 import Evidence from '../../models/business-models/evidence';
@@ -176,14 +177,14 @@ export default can.Component.extend({
   },
   helpers: {
     isAllowedToReuse(evidence) {
-      evidence = Mustache.resolve(evidence);
+      evidence = resolve(evidence);
 
       let isAllowed = this.checkReuseAbility(evidence);
 
       return isAllowed;
     },
     ifAllowedToReuse(evidence, options) {
-      evidence = Mustache.resolve(evidence);
+      evidence = resolve(evidence);
 
       let isAllowed = this.checkReuseAbility(evidence);
 

@@ -12,6 +12,9 @@ import {
   getRole,
   isAuditor,
 } from './plugins/utils/acl-utils';
+import {
+  resolve,
+} from './plugins/utils/can-utils';
 import RefreshQueue from './models/refresh_queue';
 import Permission from './permission';
 import _ from 'lodash';
@@ -265,7 +268,7 @@ can.stache.registerHelper('using', function (options) {
     for (i in options.hash) {
       if (options.hash.hasOwnProperty(i)) {
         arg = options.hash[i];
-        arg = can.Mustache.resolve(arg);
+        arg = resolve(arg);
         if (arg && isReifiable(arg)) {
           refreshQueue.enqueue(reify(arg));
           frame.attr(i, reify(arg));
@@ -292,7 +295,7 @@ can.stache.registerHelper('using', function (options) {
  *    * datetime (MM/DD/YYYY hh:mm:ss [PM|AM] [local timezone])
  */
 can.stache.registerHelper('date', function (date, hideTime) {
-  date = can.Mustache.resolve(date);
+  date = resolve(date);
   return formatDate(date, hideTime);
 });
 
@@ -303,7 +306,7 @@ can.stache.registerHelper('date', function (date, hideTime) {
  *  (MM/DD/YYYY hh:mm:ss [PM|AM] [local timezone])
  */
 can.stache.registerHelper('dateTime', function (date) {
-  date = can.Mustache.resolve(date);
+  date = resolve(date);
   return getFormattedLocalDate(date);
 });
 
@@ -444,8 +447,8 @@ function resolveComputed(maybeComputed, alwaysResolve) {
 }
 
 can.stache.registerHelper('attach_spinner', function (spinOpts, styles) {
-  spinOpts = can.Mustache.resolve(spinOpts);
-  styles = can.Mustache.resolve(styles);
+  spinOpts = resolve(spinOpts);
+  styles = resolve(styles);
   spinOpts = typeof spinOpts === 'string' ? JSON.parse(spinOpts) : {};
   styles = typeof styles === 'string' ? styles : '';
   return function (el) {
@@ -534,7 +537,7 @@ can.stache.registerHelper('default_audit_title', function (instance, options) {
   let program;
   let title;
 
-  instance = can.Mustache.resolve(instance);
+  instance = resolve(instance);
   program = instance.attr('program');
 
   if (!instance._transient) {
@@ -797,8 +800,8 @@ can.stache.registerHelper('with_mapping_count',
     let relevant;
     let dfd;
 
-    mappingName = can.Mustache.resolve(mappingName);
-    instance = can.Mustache.resolve(instance);
+    mappingName = resolve(mappingName);
+    instance = resolve(instance);
 
     relevant = {
       id: instance.id,
@@ -819,7 +822,7 @@ can.stache.registerHelper('with_mapping_count',
 
 can.stache.registerHelper('autocomplete_select', function (disableCreate, opt) {
   let options = arguments[arguments.length - 1];
-  let _disableCreate = can.Mustache.resolve(disableCreate);
+  let _disableCreate = resolve(disableCreate);
 
   if (typeof (_disableCreate) !== 'boolean') {
     _disableCreate = false;
@@ -846,7 +849,7 @@ can.stache.registerHelper('debugger', function () {
 });
 
 can.stache.registerHelper('pretty_role_name', function (name) {
-  name = can.Mustache.resolve(name);
+  name = resolve(name);
   let ROLE_LIST = {
     ProgramOwner: 'Program Manager',
     ProgramEditor: 'Program Editor',
@@ -863,7 +866,7 @@ can.stache.registerHelper('pretty_role_name', function (name) {
 });
 
 can.stache.registerHelper('role_scope', function (scope) {
-  scope = can.Mustache.resolve(scope);
+  scope = resolve(scope);
 
   if (scope === 'Private Program') {
     return 'Program';
@@ -892,7 +895,7 @@ Example:
 {{un_camel_case "InProgress"}} becomes "In Progress"
 */
 can.stache.registerHelper('un_camel_case', function (str, toLowerCase) {
-  let value = can.Mustache.resolve(str);
+  let value = resolve(str);
   toLowerCase = typeof toLowerCase !== 'object';
   if (!value) {
     return value;
@@ -907,7 +910,7 @@ can.stache.registerHelper('modifyFieldTitle', function (type, field, options) {
     CycleTaskGroup: 'Group ',
     CycleTaskGroupObjectTask: 'Task ',
   };
-  type = can.Mustache.resolve(type);
+  type = resolve(type);
 
   return titlesMap[type] ? titlesMap[type] + field : field;
 });
@@ -926,7 +929,7 @@ can.stache.registerHelper('is_auditor', function (options) {
 });
 
 can.stache.registerHelper('has_role', function (role, instance, options) {
-  instance = can.Mustache.resolve(instance);
+  instance = resolve(instance);
   const acr = instance ? getRole(instance.type, role) : null;
 
   if (!acr) {
@@ -946,7 +949,7 @@ can.stache.registerHelper('has_role', function (role, instance, options) {
 });
 
 can.stache.registerHelper('isScopeModel', function (instance, options) {
-  const modelName = can.Mustache.resolve(instance).type;
+  const modelName = resolve(instance).type;
 
   return isScopeModel(modelName) ? options.fn(this) : options.inverse(this);
 });
@@ -958,7 +961,7 @@ can.stache.registerHelper('isScopeModel', function (instance, options) {
   @param object - the object we want to check
   */
 can.stache.registerHelper('if_recurring_workflow', function (object, options) {
-  object = can.Mustache.resolve(object);
+  object = resolve(object);
   if (object.type === 'Workflow' &&
       _.includes(['day', 'week', 'month'], object.unit)) {
     return options.fn(this);

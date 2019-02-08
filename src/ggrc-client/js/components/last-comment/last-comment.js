@@ -6,6 +6,7 @@
 import template from './last-comment.stache';
 import RefreshQueue from '../../models/refresh_queue';
 import {peopleWithRoleName} from '../../plugins/utils/acl-utils.js';
+import {resolve} from '../../plugins/utils/can-utils';
 import {COMMENT_CREATED} from '../../events/eventTypes';
 import {formatDate} from '../../plugins/utils/date-utils';
 import Comment from '../../models/service-models/comment';
@@ -66,7 +67,7 @@ export default can.Component.extend({
   },
   helpers: {
     getText(html, options) {
-      let resolvedHtml = Mustache.resolve(html) || '';
+      let resolvedHtml = resolve(html) || '';
       const regexTags = /<[^>]*>?/g;
       const regexNewLines = /<\/p>?/g;
 

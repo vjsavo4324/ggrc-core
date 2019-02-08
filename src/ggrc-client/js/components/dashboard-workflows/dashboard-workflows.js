@@ -4,6 +4,7 @@
 */
 
 import template from './templates/dashboard-workflows.stache';
+import {resolve} from '../../plugins/utils/can-utils';
 import {DATE_FORMAT, getFormattedLocalDate} from '../../plugins/utils/date-utils';
 import {getTruncatedList} from '../../plugins/ggrc_utils';
 
@@ -83,7 +84,7 @@ export default can.Component.extend({
   },
   helpers: {
     overdueCountMessage(taskStatistic) {
-      const {overdue, total} = Mustache.resolve(taskStatistic);
+      const {overdue, total} = resolve(taskStatistic);
       const formOfTaskWord = total > 1
         ? 'tasks'
         : 'task';
@@ -94,7 +95,7 @@ export default can.Component.extend({
       return `${overdue} of ${total} ${formOfTaskWord} ${formOfVerb} overdue`;
     },
     totalCountMessage(totalCount) {
-      totalCount = Mustache.resolve(totalCount);
+      totalCount = resolve(totalCount);
       const taskWord = totalCount > 1
         ? 'tasks'
         : 'task';

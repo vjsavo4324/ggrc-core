@@ -4,7 +4,7 @@
 */
 
 import template from './info-pin-buttons.stache';
-
+import {resolve} from '../../plugins/utils/can-utils';
 
 export default can.Component.extend({
   tag: 'info-pin-buttons',
@@ -21,8 +21,7 @@ export default can.Component.extend({
     },
     toggleSize: function (el, ev) {
       let maximized = !this.attr('maximized');
-      let onChangeMaximizedState =
-          Mustache.resolve(this.onChangeMaximizedState);
+      let onChangeMaximizedState = resolve(this.onChangeMaximizedState);
       ev.preventDefault();
 
       onChangeMaximizedState(maximized);
@@ -36,7 +35,7 @@ export default can.Component.extend({
       }.bind(this), 0);
     },
     close: function (el, ev) {
-      let onClose = Mustache.resolve(this.onClose);
+      let onClose = resolve(this.onClose);
       $(el).find('[rel="tooltip"]').tooltip('hide');
       ev.preventDefault();
       onClose();

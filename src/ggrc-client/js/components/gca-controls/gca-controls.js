@@ -5,6 +5,7 @@
 
 import template from './gca-controls.stache';
 import '../custom-attributes/custom-attributes-field';
+import {resolve} from '../../plugins/utils/can-utils';
 import {CUSTOM_ATTRIBUTE_TYPE} from '../../plugins/utils/custom-attribute/custom-attribute-config';
 import {CONTROL_TYPE} from './../../plugins/utils/control-utils';
 
@@ -55,7 +56,7 @@ export default can.Component.extend({
   },
   helpers: {
     errorMessage(type) {
-      type = Mustache.resolve(type);
+      type = resolve(type);
       return errorMessages[type] || errorMessages.any;
     },
     isHidable(item, options) {

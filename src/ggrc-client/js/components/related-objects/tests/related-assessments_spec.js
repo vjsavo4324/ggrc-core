@@ -8,6 +8,7 @@ import {
   getComponentVM,
 } from '../../../../js_specs/spec_helpers';
 import * as caUtils from '../../../plugins/utils/ca-utils';
+import * as canUtils from '../../../plugins/utils/can-utils';
 import * as businessModels from '../../../models/business-models';
 
 describe('related-assessments component', () => {
@@ -389,13 +390,13 @@ describe('related-assessments component', () => {
           fn: jasmine.createSpy(),
           inverse: jasmine.createSpy(),
         };
-        spyOn(Mustache, 'resolve');
+        spyOn(canUtils, 'resolve');
       });
 
       it('resolves compute argument', () => {
         ifAllowedToReuse(evidence, options);
 
-        expect(Mustache.resolve).toHaveBeenCalledWith(evidence);
+        expect(canUtils.resolve).toHaveBeenCalledWith(evidence);
       });
 
       it('calls fn if able to reuse', () => {

@@ -4,6 +4,7 @@
  */
 
 import template from './templates/tree-item-custom-attribute.stache';
+import {resolve} from '../../plugins/utils/can-utils';
 import {CONTROL_TYPE} from '../../plugins/utils/control-utils';
 import {formatDate} from '../../plugins/utils/date-utils';
 import {reify} from '../../plugins/utils/reify-utils';
@@ -34,8 +35,8 @@ const getCustomAttrValue = (instance, customAttributeId, options) => {
   let caObject;
   let hasHandler = false;
   let customAttrValue = null;
-  instance = Mustache.resolve(instance);
-  customAttributeId = Mustache.resolve(customAttributeId);
+  instance = resolve(instance);
+  customAttributeId = resolve(customAttributeId);
   caObject = instance.customAttr(customAttributeId);
 
   if (caObject) {

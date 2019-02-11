@@ -6,7 +6,7 @@
 <div class="tree-pagination flex-box">
   <div class="pagination dropdown-container">
     <div class="dropdown-container__wrapper">
-      <simple-popover {button-text}="paging.pageSize" extra-css-class="simple-popover_pagination_items" placement="{{placement}}">
+      <simple-popover {button-text}="{paging.pageSize}" extra-css-class="simple-popover_pagination_items" placement="{{placement}}">
         <div>Items per page:</div>
         <div class="dropdown-container__items-list flex-box flex-row">
           {{#paging.pageSizeSelect}}
@@ -22,37 +22,37 @@
     </div>
   </div>
   <div class="pagination">
-    <div class="pagination-item {{#if_equals paging.current 1}} disabled{{/if_equals}}">
-      <a can-click="setFirstPage">
+    <div class="pagination-item {{#if_equals paging.current 1}}disabled{{/if_equals}}">
+      <a ($click)="{setFirstPage}">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="pagination-item {{#if_equals paging.current 1}} disabled{{/if_equals}}">
-      <a can-click="setPrevPage">
+    <div class="pagination-item {{#if_equals paging.current 1}}disabled{{/if_equals}}">
+      <a ($click)="{setPrevPage}">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </a>
     </div>
     <div class="pagination-item pagination-item_list">
-      <simple-popover {button-text}="getPaginationInfo" extra-css-class="simple-popover_pagination_pages" placement="{{placement}}">
+      <simple-popover {button-text}="{getPaginationInfo}"
+                      extra-css-class="simple-popover_pagination_pages"
+                      placement="{{placement}}">
           {{#pagesList}}
-          <div
-            class="
-              pagination-item__popover-item
-              {{#if_equals paging.current .}} pagination-item__popover-item_selected{{/if_equals}}
-              single-line"
-            title="{{getPageTitle}}"
-            ($click)="setCurrentPage(.)">{{getPageTitle}}</div>
+            <div class="pagination-item__popover-item single-line
+                        {{#if_equals paging.current .}} pagination-item__popover-item_selected{{/if_equals}}"
+                 title="{{getPageTitle}}"
+                 ($click)="{setCurrentPage(.)}">
+              {{getPageTitle}}
+            </div>
           {{/pagesList}}
-        </div>
       </simple-popover>
     </div>
-    <div class="pagination-item {{#if_equals paging.current paging.count}} disabled{{/if_equals}}">
-      <a can-click="setNextPage">
+    <div class="pagination-item {{#if_equals paging.current paging.count}}disabled{{/if_equals}}">
+      <a ($click)="{setNextPage}">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </a>
     </div>
-    <div class="pagination-item {{#if_equals paging.current paging.count}} disabled{{/if_equals}}">
-      <a can-click="setLastPage">
+    <div class="pagination-item {{#if_equals paging.current paging.count}}disabled{{/if_equals}}">
+      <a ($click)="{setLastPage}">
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </a>
     </div>

@@ -33,7 +33,10 @@
 
           <div class="pane-header__toolbar">
             {{#is_info_pin}}
-              <info-pin-buttons maximized="maximized" on-change-maximized-state="@onChangeMaximizedState" on-close="@onClose"></info-pin-buttons>
+              <info-pin-buttons {maximized}="{maximized}" 
+                                {on-change-maximized-state}="{@onChangeMaximizedState}" 
+                                {on-close}="{@onClose}">
+              </info-pin-buttons>
             {{/is_info_pin}}
 
             <div class="info-pane-utility">

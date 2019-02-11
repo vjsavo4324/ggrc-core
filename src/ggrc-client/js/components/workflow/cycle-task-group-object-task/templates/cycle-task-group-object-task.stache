@@ -25,7 +25,10 @@
         </div>
 
         <div class="pane-header__toolbar">
-          <info-pin-buttons maximized="maximized" on-change-maximized-state="@onChangeMaximizedState" on-close="@onClose"></info-pin-buttons>
+          <info-pin-buttons {maximized}="{maximized}" 
+                            {on-change-maximized-state}="{@onChangeMaximizedState}" 
+                            {on-close}="{@onClose}">
+          </info-pin-buttons>
           <div class="info-pane-utility">
             {{#is_allowed 'update' instance context='for'}}
               <three-dots-menu>

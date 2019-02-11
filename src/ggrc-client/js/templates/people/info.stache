@@ -42,9 +42,9 @@
             <div class="pane-header__toolbar">
               {{#is_info_pin}}
                 <info-pin-buttons class="details-wrap"
-                                  maximized="maximized"
-                                  on-change-maximized-state="@onChangeMaximizedState"
-                                  on-close="@onClose">
+                                  {maximized}="{maximized}"
+                                  {on-change-maximized-state}="{@onChangeMaximizedState}"
+                                  {on-close}="{@onClose}">
                 </info-pin-buttons>
                 <div class="info-pane-utility">
                   {{> /static/templates/people/dropdown_menu.stache}}

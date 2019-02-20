@@ -160,26 +160,6 @@ export default Cacheable.extend({
     let assigneeRole = getRole('CycleTaskGroupObjectTask', 'Task Assignees');
 
     this._super(...arguments);
-    this.validateNonBlank('title');
-    this.validateNonBlank('workflow');
-    this.validateNonBlank('cycle');
-    this.validateNonBlank('cycle_task_group');
-    this.validateNonBlank('start_date');
-    this.validateNonBlank('end_date');
-
-    // instance.attr('access_control_list')
-    //   .replace(...) doesn't raise change event
-    // that's why we subscribe on access_control_list.length
-    this.validate('access_control_list.length', function () {
-      let that = this;
-      let hasAssignee = assigneeRole && _.some(that.access_control_list, {
-        ac_role_id: assigneeRole.id,
-      });
-
-      if (!hasAssignee) {
-        return 'No valid contact selected for assignee';
-      }
-    });
 
     this.bind('created', (ev, instance) => {
       if (
@@ -215,6 +195,50 @@ export default Cacheable.extend({
     });
   },
 }, {
+  define: {
+    title: {
+      value: '',
+      validate: {
+        required: true,
+      },
+    },
+    workflow: {
+      value: {},
+      validate: {
+        required: true,
+      },
+    },
+    cycle: {
+      value: {},
+      validate: {
+        required: true,
+      },
+    },
+    cycle_task_group: {
+      value: {},
+      validate: {
+        required: true,
+      },
+    },
+    start_date: {
+      value: '',
+      validate: {
+        required: true,
+      },
+    },
+    end_date: {
+      value: '',
+      validate: {
+        required: true,
+      },
+    },
+    access_control_list: {
+      value: [],
+      validate: {
+        validateAssignee: true,
+      },
+    },
+  },
   _workflow: function () {
     return this.refresh_all('cycle', 'workflow').then(function (workflow) {
       return workflow;

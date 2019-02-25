@@ -5,6 +5,8 @@
 // Disabling some minor eslint rules until major refactoring
 /* eslint-disable no-console, id-length */
 
+import CanModel from 'can-model/src/can-model';
+
 import CustomAttributeAccess from '../plugins/utils/custom-attribute/custom-attribute-access';
 import {
   isSnapshot,
@@ -17,6 +19,10 @@ import RefreshQueue from './refresh_queue';
 import tracker from '../tracker';
 import {delayLeavingPageUntil} from '../plugins/utils/current-page-utils';
 import Stub from './stub';
+
+if (!CanModel.attributes) {
+  CanModel.attributes = {};
+}
 
 function dateConverter(date, oldValue, fn, key) {
   let conversion = 'YYYY-MM-DD\\THH:mm:ss\\Z';
@@ -93,7 +99,7 @@ function makeDateSerializer(type, key) {
   };
 }
 
-export default can.Model.extend({
+export default CanModel.extend({
   root_object: '',
   attr_list: [
     {
@@ -570,6 +576,17 @@ export default can.Model.extend({
     if (this.isCustomAttributable()) {
       this._customAttributeAccess = new CustomAttributeAccess(this);
     }
+
+    /*
+    * Trigger validation after each "change" event of instance
+    * to have actual "instance.errors" object
+    */
+    this.on('change', (ev, fieldName) => {
+      if (fieldName === 'errors') {
+        return;
+      }
+      this.validate();
+    });
   },
   /**
    * Updates custom attribute objects with help custom

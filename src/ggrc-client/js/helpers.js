@@ -633,7 +633,7 @@ can.stache.registerHelper('if_helpers', function (...args) {
 
   args.forEach(function (arg, i) {
     if (i < args.length - 1) {
-      if (typeof arg === 'string' && arg.match(/^\n\s*/)) {
+      if (typeof arg === 'string' && arg.match(/^\\n\s*/)) {
         if (statement) {
           if (statement.logic === 'or') {
             disjunctions.push(statements);
@@ -642,7 +642,7 @@ can.stache.registerHelper('if_helpers', function (...args) {
           statements.push(statement);
           index = index + 1;
         }
-        if (match = arg.match(/^\n\s*((and|or) )?([#^])?(\S+?)$/)) {
+        if (match = arg.match(/^\\n\s*((and|or) )?([#^])?(\S+?)$/)) {
           statement = {
             fn_name: match[3] === '^' ? 'inverse' : 'fn',
             helper: can.stache.getHelper(match[4], options.contexts),

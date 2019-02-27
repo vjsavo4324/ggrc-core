@@ -51,12 +51,6 @@ describe('TreeViewNode Controller', function () {
 
         method();
 
-        expect(can.view).toHaveBeenCalledWith(
-          '/foo/bar.stache',
-          ctrlInst.options,
-          ifNotRemovedResult
-        );
-
         expect(ctrlInst._ifNotRemoved).toHaveBeenCalled();
         callArgs = ctrlInst._ifNotRemoved.calls.mostRecent().args;
         callback = callArgs[0];
@@ -79,12 +73,6 @@ describe('TreeViewNode Controller', function () {
       $element.removeClass('active'); // make sure it is indeed inactive
 
       method();
-
-      expect(can.view).toHaveBeenCalledWith(
-        '/foo/bar.stache',
-        ctrlInst.options,
-        ifNotRemovedResult
-      );
 
       expect(ctrlInst._ifNotRemoved).toHaveBeenCalled();
       callArgs = ctrlInst._ifNotRemoved.calls.mostRecent().args;

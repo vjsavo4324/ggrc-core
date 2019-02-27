@@ -3,15 +3,14 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-{{#revisions_diff instance}}
+{{#instance}}
   <div class="revision-log">
     {{#if showFilter}}
       <div class="revision-log__last-updates">
         <label class="flex-box">
           <input type="checkbox"
-                 ($change)="changeLastUpdatesFilter(%element)"
-                 {($checked)}="options.showLastReviewUpdates"
-          />
+                 ($change)="{changeLastUpdatesFilter(%element)}"
+                 {($checked)}="{options.showLastReviewUpdates}"/>
           Show updates after last review
         </label>
       </div>
@@ -19,9 +18,9 @@
     <div class="grid-data__toolbar flex-box">
       <tree-pagination {paging}="pageInfo"></tree-pagination>
     </div>
-    <revision-page
-        {revisions}="revisions"
-        {instance}="instance"
-        {is-loading}="isLoading"></revision-page>
+    <revision-page {revisions}="revisions"
+                   {instance}="instance"
+                   {is-loading}="isLoading">
+    </revision-page>
   </div>
-{{/revisions_diff}}
+{{/instance}}

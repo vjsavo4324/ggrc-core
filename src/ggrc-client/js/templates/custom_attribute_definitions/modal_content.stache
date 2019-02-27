@@ -38,7 +38,7 @@
       <label>
         Mandatory
       </label>
-      <input tabindex="3" type="checkbox" class="input-block-level" placeholder="Enter Placeholder" name="mandatory" type="text"  {{#if mandatory}}checked="checked"{{/if}}>
+      <input tabindex="3" type="checkbox" class="input-block-level" placeholder="Enter Placeholder" name="mandatory" {{#if mandatory}}checked="checked"{{/if}}>
     </div>
   </div>
   {{#switch attribute_type}}

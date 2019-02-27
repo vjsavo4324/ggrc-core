@@ -28,7 +28,7 @@
             {(attribute)}="value"
             (remove)="removeItem(../)"
             {available-attributes}="availableAttributes"
-            {extendable}="true",
+            {extendable}="true"
             (createGroup)="createGroup(../)">
           </advanced-search-filter-attribute>
         </div>

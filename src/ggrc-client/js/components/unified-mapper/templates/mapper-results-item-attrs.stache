@@ -7,21 +7,21 @@
   {{#each selectedColumns}}
     <div class="attr">
       {{#switch attr_type}}
-        {{#case 'custom'}}
+        {{#case "custom"}}
           <tree-item-custom-attribute {instance}="instance"
                                       {custom-attribute-id}="attr_custom_attribute_id"
           ></tree-item-custom-attribute>
         {{/case}}
 
-        {{#case 'role'}}
+        {{#case "role"}}
           <div class="roles attr-content">
             <tree-people-with-role-list-field {instance}="instance" {role}="attr_name"/>
           </div>
         {{/case}}
 
-        {{#case 'default'}}
+        {{#default}}
           <tree-item-attr {instance}="instance" {name}="attr_name"></tree-item-attr>
-        {{/case}}
+        {{/default}}
       {{/switch}}
     </div>
   {{/each}}

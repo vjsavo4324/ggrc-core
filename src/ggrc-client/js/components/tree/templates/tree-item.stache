@@ -15,7 +15,7 @@
         {{#selectedColumns}}
           <div class="flex-box attr-cell">
             {{#switch attr_type}}
-              {{#case 'custom'}}
+              {{#case "custom"}}
                 <div class="custom attr-content">
                   <tree-item-custom-attribute {instance}="instance"
                                               {custom-attribute-id}="attr_custom_attribute_id"
@@ -23,17 +23,17 @@
                 </div>
               {{/case}}
 
-              {{#case 'role'}}
+              {{#case "role"}}
                 <div class="roles attr-content">
                   <tree-people-with-role-list-field {instance}="instance" {role}="attr_name"/>
                 </div>
               {{/case}}
 
-              {{#case 'default'}}
+              {{#default}}
                 <div class="owner attr-content">
                   <tree-item-attr {instance}="instance" {name}="attr_name"></tree-item-attr>
                 </div>
-              {{/case}}
+              {{/default}}
            {{/switch}}
           </div>
         {{/selectedColumns}}

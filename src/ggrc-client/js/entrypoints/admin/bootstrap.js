@@ -126,10 +126,10 @@ new WidgetList('ggrc_admin', {
       widget_id: 'people_list',
       widget_icon: 'person',
       show_filter: false,
-      widget_name: function () {
+      widget_name() {
         return 'People';
       },
-      widget_info: function () {
+      widget_info() {
         return '';
       },
     },
@@ -140,10 +140,10 @@ new WidgetList('ggrc_admin', {
       widget_id: 'roles_list',
       widget_icon: 'role',
       show_filter: false,
-      widget_name: function () {
+      widget_name() {
         return 'Roles';
       },
-      widget_info: function () {
+      widget_info() {
         return '';
       },
     },
@@ -153,41 +153,42 @@ new WidgetList('ggrc_admin', {
       content_controller_options: adminListDescriptors.events,
       widget_id: 'events_list',
       widget_icon: 'event',
-      widget_name: function () {
+      widget_name() {
         return 'Events';
       },
-      widget_info: function () {
+      widget_info() {
         return '';
       },
     },
     custom_attributes: {
-      widget_id: 'custom_attribute',
-      widget_name: 'Custom Attributes',
-      widget_icon: 'workflow',
-      content_controller: TreeViewControl,
-      content_controller_selector: 'ul',
       model: CustomAttributable,
-      widget_initial_content:
-      '<ul' +
-      '  class="tree-structure new-tree colored-list tree-view-control"' +
-      '  data-no-pin="true"' +
-      '></ul>',
+      content_controller: TreeViewControl,
       content_controller_options: adminListDescriptors.custom_attributes,
+      widget_id: 'custom_attribute',
+      widget_icon: 'workflow',
+      widget_name() {
+        return 'Custom Attributes';
+      },
+      content_controller_selector: 'ul',
+      widget_initial_content:
+       `<ul class="tree-structure new-tree colored-list tree-view-control"
+            data-no-pin="true">
+        </ul>`,
     },
     custom_roles: {
-      widget_id: 'custom_roles',
-      widget_name: 'Custom Roles',
-      widget_icon: 'unlock',
-      content_controller: TreeViewControl,
-      content_controller_selector: 'ul',
-      content_controller_options: adminListDescriptors.custom_roles,
       model: Roleable,
-      widget_initial_content: [
-        '<ul',
-        '  class="tree-structure new-tree colored-list tree-view-control"',
-        '  data-no-pin="true"',
-        '></ul>',
-      ].join('\n'),
+      content_controller: TreeViewControl,
+      content_controller_options: adminListDescriptors.custom_roles,
+      widget_id: 'custom_roles',
+      widget_icon: 'unlock',
+      widget_name() {
+        return 'Custom Roles';
+      },
+      content_controller_selector: 'ul',
+      widget_initial_content:
+        `<ul class="tree-structure new-tree colored-list tree-view-control"
+             data-no-pin="true">
+         </ul>`,
     },
   },
 });
@@ -201,4 +202,5 @@ new DashboardControl('#pageContent', {
     'people', 'roles', 'events', 'custom_attributes', 'custom_roles',
   ],
 });
+
 initWidgets();

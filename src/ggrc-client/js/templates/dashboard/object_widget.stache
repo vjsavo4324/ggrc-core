@@ -1,9 +1,9 @@
 {{!
-    Copyright (C) 2019 Google Inc.
-    Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-
-  {{#if_equals widget_id "roles_list"}}
+{{#switch widget_id}}
+  {{#case "roles_list"}}
     <header class="header tree-header no-left-space {{#filter_is_hidden}}no-filter{{/filter_is_hidden}}">
       <div class="row-fluid">
         <div class="span6">
@@ -18,59 +18,49 @@
         </div>
       </div>
     </header>
-  {{/if_equals}}
+  {{/case}}
 
   {{^is_dashboard}}
-    {{#if_equals widget_id "custom_attribute"}}
+    {{#case "custom_attribute"}}
       <header class="header">
-        <h2>
-          {{{widget_name}}}
-        </h2>
+        <h2>{{{widget_name}}}</h2>
       </header>
-    {{/if_equals}}
+    {{/case}}
 
-    {{#if_equals widget_id "events_list"}}
+    {{#case "events_list"}}
       <header class="header">
-        <h2>
-          {{{widget_name}}}
-        </h2>
+        <h2>{{{widget_name}}}</h2>
       </header>
-    {{/if_equals}}
+    {{/case}}
 
-    {{#if_equals widget_id "info"}}
+    {{#case "info"}}
       <header class="header">
-        <h2>
-          {{{widget_name}}}
-        </h2>
+        <h2>{{{widget_name}}}</h2>
       </header>
-    {{/if_equals}}
+    {{/case}}
 
-    {{#if_equals widget_id "summary"}}
+    {{#case "summary"}}
       <header class="header">
-        <h2>
-          {{{widget_name}}}
-        </h2>
+        <h2>{{{widget_name}}}</h2>
       </header>
-    {{/if_equals}}
+    {{/case}}
   {{/is_dashboard}}
 
   <section class="content">
-
     {{#if_equals widgetType 'treeview'}}
-      <tree-widget-container {model}="model"
-                             {limit-depth-tree}="treeViewDepth"
-                             {options}="content_controller_options"
-      ></tree-widget-container>
+      <tree-widget-container {model}="{model}"
+                             {limit-depth-tree}="{treeViewDepth}"
+                             {options}="{content_controller_options}">
+      </tree-widget-container>
     {{else}}
       {{{widget_initial_content}}}
 
       {{#add_to_current_scope showSpinner=true}}
-        <spinner
-          size="large"
-          extra-css-class="initial-spinner"
-          toggle="showSpinner"
-        ></spinner>
+        <spinner {size}="'large'"
+                 {extra-css-class}="'initial-spinner'"
+                 {toggle}="{showSpinner}">
+        </spinner>
       {{/add_to_current_scope}}
     {{/if_equals}}
   </section>
-{{!/section}}
+{{/switch}}

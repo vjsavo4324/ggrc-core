@@ -519,12 +519,6 @@ can.stache.registerHelper('is_dashboard_or_all', function (options) {
     options.inverse(options.contexts);
 });
 
-can.stache.registerHelper('is_admin_page', (options) => {
-  return isAdmin() ?
-    options.fn(options.contexts) :
-    options.inverse(options.contexts);
-});
-
 can.stache.registerHelper('current_user_is_admin', function (options) {
   if (Permission.is_allowed('__GGRC_ADMIN__')) {
     return options.fn(options.contexts);
@@ -910,6 +904,32 @@ can.stache.registerHelper('modifyFieldTitle', function (type, field, options) {
 
   return titlesMap[type] ? titlesMap[type] + field : field;
 });
+
+can.stache.registerHelper('displayWidgetTab',
+  function (widget, instance, options) {
+    let displayTab;
+    let inForceShowList;
+    widget = resolve(widget);
+    instance = resolve(instance);
+
+    inForceShowList = _.includes(
+      instance.constructor.obj_nav_options.force_show_list,
+      widget.attr('internav_display'));
+
+    displayTab = isAdmin() ||
+        widget.attr('has_count') && !!widget.attr('count') ||
+        widget.attr('uncountable') ||
+        widget.attr('force_show') ||
+        instance.constructor.obj_nav_options.show_all_tabs ||
+        inForceShowList;
+
+    if (!displayTab) {
+      return options.inverse(options.contexts);
+    }
+
+    return options.fn(options.contexts);
+  }
+);
 
 can.stache.registerHelper('is_auditor', function (options) {
   const audit = getPageInstance();

@@ -268,8 +268,8 @@ export default can.Control.extend({
       $.ajax({url: this.options.button_view, dataType: 'text'}),
       $.ajax({url: this.options.custom_attributes_view, dataType: 'text'}),
       dfd,
-    ).then((content, header, footer, customAttributes) =>
-      this.draw(content, header, footer, customAttributes));
+    ).then((content, header, footer, customAttributes, context) =>
+      this.draw(content, header, footer, customAttributes, context));
   },
 
   fetch_data: function (params) {

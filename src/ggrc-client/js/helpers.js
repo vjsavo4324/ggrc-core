@@ -751,10 +751,6 @@ can.stache.registerHelper('if_instance_of', function (inst, cls, options) {
   return options[result ? 'fn' : 'inverse'](options.contexts);
 });
 
-can.stache.registerHelper('prune_context', function (options) {
-  return options.fn(new can.view.Scope(options.context));
-});
-
 can.stache.registerHelper('ggrc_config_value',
   function (key, default_, options) {
     key = resolveComputed(key);

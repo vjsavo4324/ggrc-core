@@ -83,7 +83,7 @@
                           </td>
                         </tr>
                       {{/each}}
-                    <tbody>
+                    </tbody>
                     <tfoot>
                       <tr>
                         <td>

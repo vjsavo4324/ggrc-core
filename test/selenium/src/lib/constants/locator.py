@@ -683,9 +683,7 @@ class ModalCloneAudit(ModalCommonConfirmAction):
   """Locators for Clone object modals."""
   MODAL = Common.MODAL_CONFIRM
   CHECKBOX_CLONE_ASMT_TMPLS = (
-      By.CSS_SELECTOR,
-      '{} [can-value="instance.includeObjects.AssessmentTemplate"]'
-        .format(MODAL))
+      By.CSS_SELECTOR, '{} .modal-body input[type="checkbox"]'.format(MODAL))
 
 
 class CommonWidgetInfo(object):

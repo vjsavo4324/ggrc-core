@@ -239,9 +239,9 @@ class TaskGroupTaskModal(BaseObjectModal):
     super(TaskGroupTaskModal, self).__init__()
     self._fields = ["title", "assignees", "start_date", "due_date"]
     self._start_date_picker = page_elements.Datepicker(
-        self._root.element(date="instance.start_date"))
+        self._root.element(id="repeate-start-date"))
     self._due_date_picker = page_elements.Datepicker(
-        self._root.element(date="instance.end_date"))
+        self._root.element(id="repeate-end-date"))
 
   def set_assignees(self, people):
     """Adds assignees to the list of assignees."""

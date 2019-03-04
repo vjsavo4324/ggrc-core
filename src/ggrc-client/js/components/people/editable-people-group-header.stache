@@ -3,7 +3,7 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<label class="action-toolbar editable-people-group__label form-label form-label__extended">
+<div class="action-toolbar editable-people-group__label form-label form-label__extended">
   <div class="people-group__title-content">
     <div class="people-group__title">
       {{#unless editableMode}}
@@ -38,7 +38,7 @@
       </div>
     {{/if}}
   {{/if}}
-</label>
+</div>
 {{#if singleUserRole}}
   <div class="people-group__title-tooltip">
     <small><em>You can add only one person for this role</em></small>

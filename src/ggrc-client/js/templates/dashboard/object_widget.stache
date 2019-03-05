@@ -54,13 +54,6 @@
       </tree-widget-container>
     {{else}}
       {{{widget_initial_content}}}
-
-      {{#add_to_current_scope showSpinner=true}}
-        <spinner {size}="'large'"
-                 {extra-css-class}="'initial-spinner'"
-                 {toggle}="{showSpinner}">
-        </spinner>
-      {{/add_to_current_scope}}
     {{/if_equals}}
   </section>
   

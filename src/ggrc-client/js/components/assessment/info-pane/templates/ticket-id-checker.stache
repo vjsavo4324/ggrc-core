@@ -6,8 +6,8 @@
 <content></content>
 
 <simple-modal 
-  {state}="modalState" 
-  {replace-content}="true" 
+  {state}="{modalState}" 
+  {replace-content}="{true}" 
   {extra-css-class}="'ticket-id-modal'">
   <div class="simple-modal__header">
         <div class="simple-modal__header-text">
@@ -26,7 +26,7 @@
         <div class="simple-modal__section {{^isValid}} field-failure {{/isValid}}">    
           <numberbox
             {placeholder}="'Enter Ticket ID'"
-            {(value)}="ticketId">
+            {(value)}="{ticketId}">
           </numberbox>
           {{^isValid}}<label class="help-inline warning">Please fill in the Ticket ID.</label>{{/isValid}}
         </div>

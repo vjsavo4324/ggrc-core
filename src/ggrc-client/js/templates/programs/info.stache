@@ -6,25 +6,30 @@
 {{#instance}}
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
     <div class="tier-content">
-      <general-page-header {instance}="instance"></general-page-header>
+      <general-page-header {instance}="{instance}"></general-page-header>
 
-      <tab-container {instance}="instance">
-        <tab-panel {(panels)}="panels" title-text="Attributes">
+      <tab-container {instance}="{instance}">
+        <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
           <div class="info-pane__body">
             <div class="info-pane__main-content info-pane__main-content-with-sidebar">
-              <object-review {instance}="instance"></object-review>
+              <object-review {instance}="{instance}"></object-review>
               {{> /static/templates/base_objects/description.stache}}
               {{> /static/templates/base_objects/notes.stache}}
               <div class="row-fluid wrap-row">
                 <div data-test-id="title_manager_7a906d2e">
-                  <custom-roles {read-only}="instance.readOnlyProgramRoles" {include-roles}="instance.class.programRoles" {instance}="instance"></custom-roles>
-                  <custom-roles {exclude-roles}="instance.class.programRoles" {instance}="instance"></custom-roles>
+                  <custom-roles {read-only}="{instance.readOnlyProgramRoles}" 
+                                {include-roles}="{instance.class.programRoles}"
+                                {instance}="{instance}">
+                  </custom-roles>
+                  <custom-roles {exclude-roles}="{instance.class.programRoles}"
+                                {instance}="{instance}">
+                  </custom-roles>
                 </div>
               </div>
               {{> /static/templates/base_objects/reference-urls.stache}}
               <div class="row-fluid wrap-row">
                 <folder-attachments-list {title}="'Attachment'"
-                                      {instance}="instance">
+                                         {instance}="{instance}">
                 </folder-attachments-list>
               </div>
 
@@ -83,14 +88,14 @@
             <div class="info-pane__sidebar">
               <div class="info-pane__section-title">Responses/Comments</div>
               <comments-section class="flex-box flex-col"
-                {instance}="instance"
+                {instance}="{instance}"
                 {notification}="'Notify Admins, Primary and Secondary Contacts'">
               </comments-section>
             </div>
           </div>
         </tab-panel>
-        <tab-panel tab-id="change-log" {(panels)}="panels" title-text="Change Log">
-            <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+        <tab-panel tab-id="change-log" {(panels)}="{panels}" {title-text}="'Change Log'">
+          <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
         </tab-panel>
       </tab-container>
     </div><!-- tier-content end -->
@@ -98,6 +103,6 @@
   </section>
 
   {{#if is_info_widget}}
-    <info-pane-footer {created-at}="instance.created_at" {modified-at}="instance.updated_at" {modified-by}="instance.modified_by"></info-pane-footer>
+    <info-pane-footer {created-at}="{instance.created_at}" {modified-at}="{instance.updated_at}" {modified-by}="{instance.modified_by}"></info-pane-footer>
   {{/if}}
 {{/instance}}

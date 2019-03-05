@@ -3,18 +3,18 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 {{#currentExports.length}}
-  <current-exports {exports}="currentExports"
-                   {disabled}="disabledItems"
-                   {in-progress}="isInProgress"
-                   (stop-export)="onStopExport(%event)"
-                   (remove-item)="onRemove(%event)"
-                   (view-content)="onViewContent(%event)"
+  <current-exports {exports}="{currentExports}"
+                   {disabled}="{disabledItems}"
+                   {in-progress}="{isInProgress}"
+                   (stop-export)="{onStopExport(%event)}"
+                   (remove-item)="{onRemove(%event)}"
+                   (view-content)="{onViewContent(%event)}"
   ></current-exports>
 {{/currentExports.length}}
 
 <h2>Export Objects</h2>
 
-<export-group ({panels})="panels"></export-group>
+<export-group ({panels})="{panels}"></export-group>
 
 <div class="export-group__actions-wrap">
     <button type="button"

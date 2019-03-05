@@ -7,7 +7,7 @@
   <div class="people-group__title-content">
     <div class="people-group__title">
       {{#unless editableMode}}
-        <spinner class="people-group__title-spinner" {toggle}="isLoading"></spinner>
+        <spinner class="people-group__title-spinner" {toggle}="{isLoading}"></spinner>
       {{/unless}}
       {{title}}
     </div>
@@ -21,10 +21,10 @@
   {{#if redirectionEnabled}}
     <div class="action-toolbar__controls">
       <div class="action-toolbar__controls-item">
-        <role-attr-names-provider {role-name}="title">
+        <role-attr-names-provider {role-name}="{title}">
           <proposable-control
-            {instance}="instance"
-            {attr-name}="linkAttrName"
+            {instance}="{instance}"
+            {attr-name}="{linkAttrName}"
           ></proposable-control>
         </role-attr-names-provider>
       </div>

@@ -4,13 +4,13 @@
 }}
 
 <section class="assessment-module info info-pane{{#is_info_pin}} sticky-info-panel assignable{{/is_info_pin}}">
-  <spinner {toggle}="isLoading" class="spinner-wrapper active"></spinner>
-  <inline-form-control {instance}="instance" {deferred-save}="deferredSave">
+  <spinner {toggle}="{isLoading}" class="spinner-wrapper active"></spinner>
+  <inline-form-control {instance}="{instance}" {deferred-save}="{deferredSave}">
     <div class="tier-content">
       {{> /static/templates/assessments/header.stache}}
       <tab-container
-        {instance}="instance">
-          <tab-panel {(panels)}="panels" title-text="Assessment">
+        {instance}="{instance}">
+          <tab-panel {(panels)}="{panels}" {title-text}="'Assessment'">
         <div class="assessment-info-pane info-pane__body">
             <div class="assessment-attributes info-pane__main-content info-pane__main-content-with-sidebar">
             {{#if showProcedureSection}}
@@ -18,15 +18,15 @@
                     {{#if instance.test_plan}}
                         <div class="assessment-procedure">
                             <assessment-inline-item
-                                type="text"
-                                prop-name="test_plan"
-                                with-read-more="true"
+                                {type}="'text'"
+                                {prop-name}="'test_plan'"
+                                {with-read-more}="{true}"
                                 class="width-100"
-                                {set-in-progress}="@setInProgressState"
-                                {on-state-change-dfd}="onStateChangeDfd"
-                                {is-edit-icon-denied}="isEditDenied"
-                                {value}="instance.test_plan"
-                                {instance}="instance">
+                                {set-in-progress}="{@setInProgressState}"
+                                {on-state-change-dfd}="{onStateChangeDfd}"
+                                {is-edit-icon-denied}="{isEditDenied}"
+                                {value}="{instance.test_plan}"
+                                {instance}="{instance}">
                                     <div class="info-pane__section-title">Assessment Procedure</div>
                             </assessment-inline-item>
                         </div>
@@ -50,14 +50,14 @@
                                 {{#unless isEditDenied}}
                                     <div class="action-toolbar__controls">
                                         <action-toolbar-control>
-                                            <map-button-using-assessment-type {instance}="instance">
+                                            <map-button-using-assessment-type {instance}="{instance}">
                                                 <confirm-edit-action
-                                                    (set-edit-mode)="openMapper()"
-                                                    (set-in-progress)="setInProgressState()"
-                                                    {is-edit-icon-denied}="isEditDenied"
-                                                    {instance}="instance"
-                                                    {on-state-change-dfd}="onStateChangeDfd"
-                                                    {edit-mode}="editMode">
+                                                    (set-edit-mode)="{openMapper()}"
+                                                    (set-in-progress)="{setInProgressState()}"
+                                                    {is-edit-icon-denied}="{isEditDenied}"
+                                                    {instance}="{instance}"
+                                                    {on-state-change-dfd}="{onStateChangeDfd}"
+                                                    {edit-mode}="{editMode}">
                                                         <i ($click)="confirmEdit()"
                                                             class="fa fa-code-fork action-toolbar__item-icon">
                                                         </i>
@@ -71,21 +71,21 @@
                     </div>
                     <assessment-mapped-controls
                         class="mapped-objects__list info-pane__section-content"
-                        {instance}="instance"
-                        {mapped-items}="assessmentTypeObjects"
-                        {assessment-type}="instance.assessment_type">
+                        {instance}="{instance}"
+                        {mapped-items}="{assessmentTypeObjects}"
+                        {assessment-type}="{instance.assessment_type}">
                     </assessment-mapped-controls>
                 </div>
                 <div class="assessment-controls info-pane__section">
                     <div class="assessment-note">
                       <custom-attributes-status
-                                {form-saving}="formState.saving"
-                                {is-dirty}="formState.isDirty">
+                                {form-saving}="{formState.saving}"
+                                {is-dirty}="{formState.isDirty}">
                                 <loading-status
-                                    {is-loading}="formSaving"
-                                    {loading-text}="formStatusText"
-                                    always-Show-Text="true"
-                                    show-Spinner="true">
+                                    {is-loading}="{formSaving}"
+                                    {loading-text}="{formStatusText}"
+                                    {always-show-text}="{true}"
+                                    {show-spinner}="{true}">
                                 </loading-status>
                       </custom-attributes-status>
                         <i class="fa fa-question-circle" rel="tooltip"
@@ -94,51 +94,51 @@
                     <div class="assessment-controls__extra-controls">
                         <div>
                             <div class="info-pane__section-title">
-                                <spinner class="info-pane__section-title-icon" {toggle}="isUpdatingFiles"></spinner>
+                                <spinner class="info-pane__section-title-icon" {toggle}="{isUpdatingFiles}"></spinner>
                                 Evidence file
                             </div>
-                            <object-list {items}="files" {empty-message}="noItemsText">
+                            <object-list {items}="{files}" {empty-message}="{noItemsText}">
                                 <editable-document-object-list-item {document}="{.}">
                                   <confirm-edit-action
-                                      (set-edit-mode)="removeRelatedItem(document, 'files')"
-                                      (set-in-progress)="setInProgressState()"
-                                      {is-edit-icon-denied}="isEditDenied"
-                                      {instance}="instance"
-                                      {on-state-change-dfd}="onStateChangeDfd">
-                                          <a ($click)="confirmEdit">
+                                      (set-edit-mode)="{removeRelatedItem(document, 'files')}"
+                                      (set-in-progress)="{setInProgressState()}"
+                                      {is-edit-icon-denied}="{isEditDenied}"
+                                      {instance}="{instance}"
+                                      {on-state-change-dfd}="{onStateChangeDfd}">
+                                          <a ($click)="{confirmEdit()}">
                                               <action-toolbar-control>
-                                                  <i class="fa fa-trash"></i>
+                                                <i class="fa fa-trash"></i>
                                               </action-toolbar-control>
                                           </a>
                                   </confirm-edit-action>
                                 </editable-document-object-list-item>
                             </object-list>
                             <confirm-edit-action
-                                        (set-in-progress)="setInProgressState()"
-                                        {instance}="instance"
-                                        {on-state-change-dfd}="onStateChangeDfd"
-                                        {edit-mode}="editMode">
+                                        (set-in-progress)="{setInProgressState()}"
+                                        {instance}="{instance}"
+                                        {on-state-change-dfd}="{onStateChangeDfd}"
+                                        {edit-mode}="{editMode}">
                             <attach-button
                                         (before-create)="addItems(%event, 'files')"
-                                        (created)="addRelatedItem(%event, 'files')" 
-                                        {is-attach-action-disabled}="isUpdatingFiles"
-                                        {confirmation-callback}="@confirmEdit"
+                                        (created)="addRelatedItem(%event, 'files')"
+                                        {is-attach-action-disabled}="{isUpdatingFiles}"
+                                        {confirmation-callback}="{@confirmEdit}"
                                         {instance}="instance"></attach-button>
                             </confirm-edit-action>
                         </div>
                         <div>
                             <div class="info-pane__section-title">
-                                <spinner class="info-pane__section-title-icon" {toggle}="isUpdatingUrls"></spinner>
+                                <spinner class="info-pane__section-title-icon" {toggle}="{isUpdatingUrls}"></spinner>
                                 Evidence URL
                             </div>
-                            <object-list {items}="urls" {empty-message}="noItemsText">
+                            <object-list {items}="{urls}" {empty-message}="{noItemsText}">
                                 <editable-document-object-list-item {document}="{.}">
                                     <confirm-edit-action
-                                        (set-edit-mode)="removeRelatedItem(document, 'urls')"
-                                        (set-in-progress)="setInProgressState()"
-                                        {is-edit-icon-denied}="isEditDenied"
-                                        {instance}="instance"
-                                        {on-state-change-dfd}="onStateChangeDfd">
+                                        (set-edit-mode)="{removeRelatedItem(document, 'urls')}"
+                                        (set-in-progress)="{setInProgressState()}"
+                                        {is-edit-icon-denied}="{isEditDenied}"
+                                        {instance}="{instance}"
+                                        {on-state-change-dfd}="{onStateChangeDfd}">
                                             <a ($click)="confirmEdit">
                                                 <action-toolbar-control>
                                                     <i class="fa fa-trash"></i>
@@ -150,13 +150,13 @@
                           {{#unless isEditDenied}}
                             {{#if urlsEditMode}}
                                 <create-url
-                                    {context}="instance.context"
-                                    (set-edit-mode)="setUrlEditMode(false)"
-                                    (before-create)="addItems(%event, 'urls')"
-                                    (created)="addRelatedItem(%event, 'urls')">
+                                    {context}="{instance.context}"
+                                    (set-edit-mode)="{setUrlEditMode(false)}"
+                                    (before-create)="{addItems(%event, 'urls')}"
+                                    (created)="{addRelatedItem(%event, 'urls')}">
                                     <form class="create-form">
                                         <fieldset class="create-form__layout">
-                                            <input {($value)}="value" class="create-form__input" type="text" placeholder="Add URL" spellcheck="false" autocomplete="false">
+                                            <input {($value)}="{value}" class="create-form__input" type="text" placeholder="Add URL" spellcheck="false" autocomplete="false">
                                             <div class="create-form__controls">
                                                 <button type="button" class="create-form__confirm" ($click)="create">
                                                     <i class="fa fa-check"></i>
@@ -170,11 +170,11 @@
                                 </create-url>
                             {{else}}
                                 <confirm-edit-action
-                                    (set-edit-mode)="setUrlEditMode(true)"
-                                    (set-in-progress)="setInProgressState()"
-                                    {is-edit-icon-denied}="isEditDenied"
-                                    {instance}="instance"
-                                    {on-state-change-dfd}="onStateChangeDfd">
+                                    (set-edit-mode)="{setUrlEditMode(true)}"
+                                    (set-in-progress)="{setInProgressState()}"
+                                    {is-edit-icon-denied}="{isEditDenied}"
+                                    {instance}="{instance}"
+                                    {on-state-change-dfd}="{onStateChangeDfd}">
                                         <button type="button" class="btn btn-small btn-gray"
                                             ($click)="confirmEdit()">Add</button>
                                 </confirm-edit-action>
@@ -183,52 +183,52 @@
                         </div>
                     </div>
                     <assessment-local-ca
-                        {instance}="instance"
-                        {deferred-save}="deferredSave"
-                        {evidence-amount}="files.length"
-                        {urls-amount}="urls.length"
-                        {fields}="formFields"
-                        {edit-mode}="editMode"
+                        {instance}="{instance}"
+                        {deferred-save}="{deferredSave}"
+                        {evidence-amount}="{files.length}"
+                        {urls-amount}="{urls.length}"
+                        {fields}="{formFields}"
+                        {edit-mode}="{editMode}"
                         {^saving}="formState.saving"
                         {^is-dirty}="formState.isDirty"
-                        (validation-error)="setLastErrorTab(tabIndex)"
-                        (validation-changed)="showRequiredInfoModal(%event)">
+                        (validation-error)="{setLastErrorTab(tabIndex)}"
+                        (validation-changed)="{showRequiredInfoModal(%event)}">
                       <custom-attributes
-                            {fields}="fields"
-                            {edit-mode}="canEdit"
-                            (value-changed)="attributeChanged(%event)">
+                            {fields}="{fields}"
+                            {edit-mode}="{canEdit}"
+                            (value-changed)="{attributeChanged(%event)}">
                       </custom-attributes>
                     </assessment-local-ca>
                     <!-- Modal Window to fix validation issues of CA fields -->
-                    <simple-modal {state}="modal.state"
-                                  {modal-title}="modal.modalTitle"
-                                  {instance}="instance"
-                                  {is-disabled}="isUpdatingFiles">
-                        <ca-object-modal-content {instance}="instance"
-                                                 {content}="modal.content"
-                                                 {state}="state"
-                                                 {evidences}="files"
-                                                 {is-updating-evidences}="isUpdatingFiles"
-                                                 (before-comment-created)="addItems(%event, 'comments')"
-                                                 (after-comment-created)="addRelatedItem(%event, 'comments')"
+                    <simple-modal {state}="{modal.state}"
+                                  {modal-title}="{modal.modalTitle}"
+                                  {instance}="{instance}"
+                                  {is-disabled}="{isUpdatingFiles}">
+                        <ca-object-modal-content {instance}="{instance}"
+                                                 {content}="{modal.content}"
+                                                 {state}="{state}"
+                                                 {evidences}="{files}"
+                                                 {is-updating-evidences}="{isUpdatingFiles}"
+                                                 (before-comment-created)="{addItems(%event, 'comments')}"
+                                                 (after-comment-created)="{addRelatedItem(%event, 'comments')}"
                         ></ca-object-modal-content>
                     </simple-modal>
                     <!-- End of Modal Window -->
 
                     {{#unless isEditDenied}}
                       <assessment-controls-toolbar class="assessment-controls-toolbar"
-                          {instance}="instance"
-                          {current-state}="currentState"
-                          {verifiers}="verifiers"
-                          {form-state}="formState"
-                          {is-info-pane-saving}="isInfoPaneSaving"
-                          {is-undo-button-visible}="isUndoButtonVisible"
-                          (on-state-change)="onStateChange(%event)"
+                          {instance}="{instance}"
+                          {current-state}="{currentState}"
+                          {verifiers}="{verifiers}"
+                          {form-state}="{formState}"
+                          {is-info-pane-saving}="{isInfoPaneSaving}"
+                          {is-undo-button-visible}="{isUndoButtonVisible}"
+                          (on-state-change)="{onStateChange(%event)}"
                       ></assessment-controls-toolbar>
                     {{/unless}}
                 </div>
                 <div class="info-pane__section">
-                    <assessment-people {instance}="instance">
+                    <assessment-people {instance}="{instance}">
                     </assessment-people>
                 </div>
             </div>
@@ -237,14 +237,14 @@
                 <div class="ggrc-form-item due-date__column">
                   <div class="ggrc-form-item__row">
                      <assessment-inline-item
-                         type="date"
-                         prop-name="start_date"
-                         with-read-more="true"
-                         {set-in-progress}="@setInProgressState"
-                         {on-state-change-dfd}="onStateChangeDfd"
-                         {is-edit-icon-denied}="isEditDenied"
-                         {value}="instance.start_date"
-                         {instance}="instance">
+                         {type}="'date'"
+                         {prop-name}="'start_date'"
+                         {with-read-more}="{true}"
+                         {set-in-progress}="{@setInProgressState}"
+                         {on-state-change-dfd}="{onStateChangeDfd}"
+                         {is-edit-icon-denied}="{isEditDenied}"
+                         {value}="{instance.start_date}"
+                         {instance}="{instance}">
                              <div class="info-pane__section-title">Due Date</div>
                      </assessment-inline-item>
                   </div>
@@ -253,12 +253,12 @@
                   <div class="ggrc-form-item__row">
                     <assessment-inline-item
                         type="multi-select-label"
-                        prop-name="labels"
-                        is-confirmation-needed="false"
-                        {on-state-change-dfd}="onStateChangeDfd"
-                        {is-edit-icon-denied}="isEditDenied"
-                        {value}="instance.labels"
-                        {instance}="instance">
+                        {prop-name}="'labels'"
+                        {is-confirmation-needed}="{false}"
+                        {on-state-change-dfd}="{onStateChangeDfd}"
+                        {is-edit-icon-denied}="{isEditDenied}"
+                        {value}="{instance.labels}"
+                        {instance}="{instance}">
                             <div class="info-pane__section-title">Label</div>
                     </assessment-inline-item>
                   </div>
@@ -269,75 +269,75 @@
                 {{#unless isEditDenied}}
                     <comment-add-form
                         class="comment-add-form"
-                        {instance}="instance"
-                        {is-saving}="isUpdatingComments"
-                        (after-create)="addRelatedItem(%event, 'comments')"
-                        (before-create)="addItems(%event, 'comments')"
+                        {instance}="{instance}"
+                        {is-saving}="{isUpdatingComments}"
+                        (after-create)="{addRelatedItem(%event, 'comments')}"
+                        (before-create)="{addItems(%event, 'comments')}"
                         {notifications-info}="'Notify Assignees and Verifiers'">
                     </comment-add-form>
                 {{/unless}}
-                <mapped-comments {mapped-items}="comments"
-                  {is-loading}="isUpdatingRelatedItems"
-                  {show-no-items-text}="isEditDenied"></mapped-comments>
+                <mapped-comments {mapped-items}="{comments}"
+                  {is-loading}="{isUpdatingRelatedItems}"
+                  {show-no-items-text}="{isEditDenied}"></mapped-comments>
               </div>
             </div>
         </div>
          </tab-panel>
-          <tab-panel {(panels)}="panels"
-                     tab-id="tab-related-assessments"
-                     {cache-content}="true"
-                     {parent-instance}="instance"
-                     {pre-render-content}="true"
-                     title-text="Related Assessments">
+          <tab-panel {(panels)}="{panels}"
+                     {tab-id}="'tab-related-assessments'"
+                     {cache-content}="{true}"
+                     {parent-instance}="{instance}"
+                     {pre-render-content}="{true}"
+                     {title-text}="'Related Assessments'">
             {{#instance}}
                 <related-assessments
-                    {instance}="instance"
-                    {need-reuse}="true"
-                    (refresh-assessment)="refreshAssessment"
-                    (after-object-reused)="updateItems('files', 'urls')">
+                    {instance}="{instance}"
+                    {need-reuse}="{true}"
+                    (refresh-assessment)="{refreshAssessment}"
+                    (after-object-reused)="{updateItems('files', 'urls')}">
                 </related-assessments>
             {{/instance}}
           </tab-panel>
-          <tab-panel {(panels)}="panels"
-                     {cache-content}="true"
-                     {pre-render-content}="true"
-                     title-text="Related Issues">
+          <tab-panel {(panels)}="{panels}"
+                     {cache-content}="{true}"
+                     {pre-render-content}="{true}"
+                     {title-text}="'Related Issues'">
                 {{#instance}}
-                    <related-issues {base-instance}="instance"
-                        {all-related-snapshots}="mappedSnapshots">
+                    <related-issues {base-instance}="{instance}"
+                        {all-related-snapshots}="{mappedSnapshots}">
                     </related-issues>
                 {{/instance}}
           </tab-panel>
-          <tab-panel {(panels)}="panels"
-                     title-text="Other Attributes"
+          <tab-panel {(panels)}="{panels}"
+                     {title-text}="'Other Attributes'"
                      class="assessment-attributes-panel"
-                     (update-active-tab)="initGlobalAttributes">
+                     (update-active-tab)="{initGlobalAttributes}">
               <div class="assessment-attributes-panel">
-                <custom-roles {exclude-roles}="assessmentMainRoles"
-                    {instance}="instance"
-                    {deferred-save}="deferredSave">
+                <custom-roles {exclude-roles}="{assessmentMainRoles}"
+                    {instance}="{instance}"
+                    {deferred-save}="{deferredSave}">
                 </custom-roles>
-                <assessment-custom-attributes (on-update-attributes)="saveGlobalAttributes(%event)"
-                                                  {items}="globalAttributes"
-                                                  {is-edit-denied}="isEditDenied"
-                                            class="ggrc-form ggrc-form-multiple-columns">
+                <assessment-custom-attributes (on-update-attributes)="{saveGlobalAttributes(%event)}"
+                                              {items}="{globalAttributes}"
+                                              {is-edit-denied}="{isEditDenied}"
+                                              class="ggrc-form ggrc-form-multiple-columns">
                 </assessment-custom-attributes>
                 <div class="info-pane__section ggrc-form">
                     <div class="ggrc-form-item">
                         <div class="ggrc-form-item__multiple-row">
                             <assessment-object-type-dropdown
-                                {instance}="instance"
-                                {(assessment-type)}="instance.assessment_type">
+                                {instance}="{instance}"
+                                {(assessment-type)}="{instance.assessment_type}">
                                 <assessment-inline-item
-                                    type="dropdown"
-                                    prop-name="assessment_type"
-                                    is-grouped-dropdown="true"
-                                    {set-in-progress}="@setInProgressState"
-                                    {on-state-change-dfd}="onStateChangeDfd"
-                                    {dropdown-options-groups}="objectTypes"
-                                    {is-edit-icon-denied}="isEditDenied"
-                                    {value}="instance.assessment_type"
-                                    {instance}="instance">
+                                    {type}="'dropdown'"
+                                    {prop-name}="'assessment_type'"
+                                    {is-grouped-dropdown}="{true}"
+                                    {set-in-progress}="{@setInProgressState}"
+                                    {on-state-change-dfd}="{onStateChangeDfd}"
+                                    {dropdown-options-groups}="{objectTypes}"
+                                    {is-edit-icon-denied}="{isEditDenied}"
+                                    {value}="{instance.assessment_type}"
+                                    {instance}="{instance}">
                                         <div class="ggrc-form__title">Assessment Type</div>
                                 </assessment-inline-item>
                             </assessment-object-type-dropdown>
@@ -352,14 +352,14 @@
                                 {{#unless isEditDenied}}
                                     <div class="action-toolbar__controls">
                                         <action-toolbar-control>
-                                            <map-button-using-assessment-type {instance}="instance">
+                                            <map-button-using-assessment-type {instance}="{instance}">
                                                 <confirm-edit-action
-                                                    (set-edit-mode)="openMapper()"
-                                                    (set-in-progress)="setInProgressState()"
-                                                    {is-edit-icon-denied}="isEditDenied"
-                                                    {instance}="instance"
-                                                    {on-state-change-dfd}="onStateChangeDfd"
-                                                    {edit-mode}="editMode">
+                                                    (set-edit-mode)="{openMapper()}"
+                                                    (set-in-progress)="{setInProgressState()}"
+                                                    {is-edit-icon-denied}="{isEditDenied}"
+                                                    {instance}="{instance}"
+                                                    {on-state-change-dfd}="{onStateChangeDfd}"
+                                                    {edit-mode}="{editMode}">
                                                         <i ($click)="confirmEdit()"
                                                             class="fa fa-code-fork action-toolbar__item-icon">
                                                         </i>
@@ -373,24 +373,24 @@
                     </div>
                     <assessment-mapped-controls
                         class="mapped-objects__list info-pane__section-content"
-                        without-details="true"
-                        {instance}="instance"
-                        {mapped-items}="relatedInformation"
-                        {assessment-type}="instance.assessment_type">
+                        {without-details}="{true}"
+                        {instance}="{instance}"
+                        {mapped-items}="{relatedInformation}"
+                        {assessment-type}="{instance.assessment_type}">
                     </assessment-mapped-controls>
                 </div>
                 <div class="ggrc-form ggrc-form-multiple-columns">
                 <div class="ggrc-form-item">
                     <div class="ggrc-form-item__row">
                         <assessment-inline-item
-                            type="text"
-                            prop-name="description"
-                            with-read-more="true"
-                            {set-in-progress}="@setInProgressState"
-                            {on-state-change-dfd}="onStateChangeDfd"
-                            {is-edit-icon-denied}="isEditDenied"
-                            {value}="instance.description"
-                            {instance}="instance">
+                            {type}="'text'"
+                            {prop-name}="'description'"
+                            {with-read-more}="{true}"
+                            {set-in-progress}="{@setInProgressState}"
+                            {on-state-change-dfd}="{onStateChangeDfd}"
+                            {is-edit-icon-denied}="{isEditDenied}"
+                            {value}="{instance.description}"
+                            {instance}="{instance}">
                                 <div class="ggrc-form__title">Description</div>
                         </assessment-inline-item>
                     </div>
@@ -401,14 +401,14 @@
                 <div class="ggrc-form-item">
                     <div class="ggrc-form-item__row">
                         <assessment-inline-item
-                            type="text"
-                            prop-name="notes"
-                            with-read-more="true"
-                            {set-in-progress}="@setInProgressState"
-                            {on-state-change-dfd}="onStateChangeDfd"
-                            {is-edit-icon-denied}="isEditDenied"
-                            {value}="instance.notes"
-                            {instance}="instance">
+                            {type}="{text}"
+                            {prop-name}="'notes'"
+                            {with-read-more}="{true}"
+                            {set-in-progress}="{@setInProgressState}"
+                            {on-state-change-dfd}="{onStateChangeDfd}"
+                            {is-edit-icon-denied}="{isEditDenied}"
+                            {value}="{instance.notes}"
+                            {instance}="{instance}">
                                 <div class="ggrc-form__title">Notes</div>
                         </assessment-inline-item>
                     </div>
@@ -423,16 +423,16 @@
                 <div class="ggrc-form-item">
                     <div class="ggrc-form-item__multiple-row">
                         <assessment-inline-item
-                            type="dropdown"
-                            prop-name="design"
-                            with-read-more="true"
-                            dropdown-no-value="true"
-                            {set-in-progress}="@setInProgressState"
-                            {on-state-change-dfd}="onStateChangeDfd"
-                            {dropdown-options}="model.conclusions"
-                            {is-edit-icon-denied}="isEditDenied"
-                            {value}="instance.design"
-                            {instance}="instance">
+                            {type}="'dropdown'"
+                            {prop-name}="'design'"
+                            {with-read-more}="{true}"
+                            {dropdown-no-value}="{true}"
+                            {set-in-progress}="{@setInProgressState}"
+                            {on-state-change-dfd}="{onStateChangeDfd}"
+                            {dropdown-options}="{model.conclusions}"
+                            {is-edit-icon-denied}="{isEditDenied}"
+                            {value}="{instance.design}"
+                            {instance}="{instance}">
                                 <div>
                                     <div class="ggrc-form__title">Conclusion: Design</div>
                                     <p class="conclusion-small-text">
@@ -443,16 +443,16 @@
                     </div>
                     <div class="ggrc-form-item__multiple-row">
                         <assessment-inline-item
-                            type="dropdown"
-                            prop-name="operationally"
-                            with-read-more="true"
-                            dropdown-no-value="true"
-                            {set-in-progress}="@setInProgressState"
-                            {on-state-change-dfd}="onStateChangeDfd"
-                            {dropdown-options}="model.conclusions"
-                            {is-edit-icon-denied}="isEditDenied"
-                            {value}="instance.operationally"
-                            {instance}="instance">
+                            {type}="'dropdown'"
+                            {prop-name}="'operationally'"
+                            {with-read-more}="{true}"
+                            {dropdown-no-value}="{true}"
+                            {set-in-progress}="{@setInProgressState}"
+                            {on-state-change-dfd}="{onStateChangeDfd}"
+                            {dropdown-options}="{model.conclusions}"
+                            {is-edit-icon-denied}="{isEditDenied}"
+                            {value}="{instance.operationally}"
+                            {instance}="{instance}">
                                 <div>
                                     <div class="ggrc-form__title">Conclusion: Operation</div>
                                     <p class="conclusion-small-text">
@@ -481,7 +481,7 @@
                           </div>
                           <div class="hidden-fields-area">
                             <div class="info-pane__section-ticket-tracker">
-                              <info-pane-issue-tracker-fields {instance}="instance">
+                              <info-pane-issue-tracker-fields {instance}="{instance}">
                               </info-pane-issue-tracker-fields>
                             </div>
                           </div>
@@ -493,9 +493,9 @@
             </div>
           </tab-panel>
 
-          <tab-panel {(panels)}="panels" title-text="Change Log">
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
               {{#instance}}
-                <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+                <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
               {{/instance}}
           </tab-panel>
       </tab-container>

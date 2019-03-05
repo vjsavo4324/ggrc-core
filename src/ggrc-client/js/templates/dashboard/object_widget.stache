@@ -45,7 +45,7 @@
       </header>
     {{/case}}
   {{/is_dashboard}}
-
+  
   <section class="content">
     {{#if_equals widgetType 'treeview'}}
       <tree-widget-container {model}="{model}"
@@ -63,4 +63,5 @@
       {{/add_to_current_scope}}
     {{/if_equals}}
   </section>
+  
 {{/switch}}

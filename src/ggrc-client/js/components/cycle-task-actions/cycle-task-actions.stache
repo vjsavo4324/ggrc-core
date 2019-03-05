@@ -10,7 +10,7 @@
 
 {{#if_instance_of instance 'CycleTaskGroupObjectTask'}}
   <div class="flex-box item-actions{{#if disabled}} disabled{{/if}}">
-    <spinner {toggle}="disabled" size="medium"></spinner>
+    <spinner {toggle}="{disabled}" {size}="'medium'"></spinner>
       {{#if isShowActionButtons}}
           <div class="request-control">
             {{#if_equals instance.status 'Assigned'}}
@@ -57,7 +57,7 @@
 {{#if_instance_of instance 'Cycle'}}
 <div class="flex-box item-actions">
   <div class="request-control">
-     <cycle-end-cycle cycle="instance">
+     <cycle-end-cycle {cycle}="{instance}">
        {{#isAllowedToUpdateWorkflow}}
          {{#if instance.is_current}}
            <button type="button" class="btn btn-white btn-small end-cycle">End Cycle</button>

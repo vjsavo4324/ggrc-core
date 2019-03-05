@@ -105,9 +105,9 @@ describe('template-field component', function () {
 
         htmlSnippet = [
           '<template-field',
-          '  {field}="fieldDefinition"',
-          '  {types}="types"',
-          '  (remove)="fieldRemoved">',
+          '  {field}="{fieldDefinition}"',
+          '  {types}="{types}"',
+          '  (remove)="{fieldRemoved}">',
           '</template-field>',
         ].join('');
 

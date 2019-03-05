@@ -18,41 +18,41 @@
 
   <related-people-access-control
     class="width-100"
-    (save-custom-role)="saveRoles()"
-    {^has-conflicts}="hasConflicts"
-    {conflict-roles}="conflictRoles"
-    {order-of-roles}="includeRoles"
-    {include-roles}="includeRoles"
-    {instance}="instance">
+    (save-custom-role)="{saveRoles()}"
+    {^has-conflicts}="{hasConflicts}"
+    {conflict-roles}="{conflictRoles}"
+    {order-of-roles}="{includeRoles}"
+    {include-roles}="{includeRoles}"
+    {instance}="{instance}">
       <div class="lhn-people-groups">
         {{#groups}}
           <related-people-access-control-group
             class="lhn-people-group"
-            auto-update="true"
-            (update-roles)="updateRoles(%event)"
-            {is-new-instance}="isNewInstance"
-            {required}="required"
-            {group-id}="groupId"
-            {title}="title"
-            {people}="people"
-            {instance}="instance"
-            {updatable-group-id}="updatableGroupId">
+            {auto-update}="{true}"
+            (update-roles)="{updateRoles(%event)}"
+            {is-new-instance}="{isNewInstance}"
+            {required}="{required}"
+            {group-id}="{groupId}"
+            {title}="{title}"
+            {people}="{people}"
+            {instance}="{instance}"
+            {updatable-group-id}="{updatableGroupId}">
               <div>
                 <deletable-people-group
-                  show-empty-message="true"
-                  {required}="required"
-                  (unmap)="removePerson(%event)"
-                  {can-unmap}="canEdit"
-                  {is-loading}="denyUnmap"
-                  {group-id}="groupId"
-                  {instance}="instance"
-                  {people}="people">
+                  {show-empty-message}="{true}"
+                  {required}="{required}"
+                  (unmap)="{removePerson(%event)}"
+                  {can-unmap}="{canEdit}"
+                  {is-loading}="{denyUnmap}"
+                  {group-id}="{groupId}"
+                  {instance}="{instance}"
+                  {people}="{people}">
                     <label class="lhn-people-group__title form-label form-label__extended">
                       {{title}}
                       {{#if required}}
                         <i class="fa fa-asterisk"></i>
                       {{/if}}
-                      <spinner class="lhn-people-group__spinner" toggle="denyUnmap"></spinner>
+                      <spinner class="lhn-people-group__spinner" {toggle}="{denyUnmap}"></spinner>
                     </label>
                 </deletable-people-group>
               </div>

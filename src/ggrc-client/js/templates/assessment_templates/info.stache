@@ -5,7 +5,7 @@
 
 {{#instance}}
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
-    <wrapper-assessment-template {instance}="instance">
+    <wrapper-assessment-template {instance}="{instance}">
       <div class="tier-content">
 
         <div class="pane-header">
@@ -36,7 +36,7 @@
         </div>
 
         <tab-container>
-          <tab-panel {(panels)}="panels" title-text="Attributes">
+          <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
             <div class="row-fluid wrap-row">
               <div class="span4">
                 <h6>Objects under assessment</h6>
@@ -121,7 +121,7 @@
                   </div>
                   <div class="hidden-fields-area">
                     <info-issue-tracker-fields
-                      {instance}="instance"
+                      {instance}="{instance}"
                       {note}="'Turns on Ticket Tracker integration.'">
                     </info-issue-tracker-fields>
                   </div>
@@ -130,8 +130,8 @@
             {{/if }}
 
           </tab-panel>
-          <tab-panel {(panels)}="panels" title-text="Change Log">
-              <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+              <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
         </tab-container>
       </div><!-- tier-content end -->
@@ -140,6 +140,6 @@
   </section>
 
   {{#if is_info_widget}}
-    <info-pane-footer {created-at}="instance.created_at" {modified-at}="instance.updated_at" {modified-by}="instance.modified_by"></info-pane-footer>
+    <info-pane-footer {created-at}="{instance.created_at}" {modified-at}="{instance.updated_at}" {modified-by}="{instance.modified_by}"></info-pane-footer>
   {{/if}}
 {{/instance}}

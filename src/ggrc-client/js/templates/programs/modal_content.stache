@@ -38,9 +38,9 @@
       <div class="rich-text" data-test-id="new_program_field_description_1fb8bc06">
           <rich-text
             tabindex="3"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Description'"
-            {(content)}="instance.description">
+            {(content)}="{instance.description}">
           </rich-text>
       </div>
     </div>
@@ -49,22 +49,22 @@
     <div class="span12 hide-wrap hidable">
       {{#new_object_form}}
         <access-control-list-roles-helper
-          {instance}="instance"
-          {is-new-instance}="new_object_form"
-          {order-of-roles}="instance.class.orderOfRoles">
+          {instance}="{instance}"
+          {is-new-instance}="{new_object_form}"
+          {order-of-roles}="{instance.class.orderOfRoles}">
         </access-control-list-roles-helper>
       {{/new_object_form}}
       {{^new_object_form}}
         <access-control-list-roles-helper
-          {instance}="instance"
-          {is-new-instance}="new_object_form"
-          {read-only}="instance.readOnlyProgramRoles"
-          {include-roles}="instance.class.programRoles">
+          {instance}="{instance}"
+          {is-new-instance}="{new_object_form}"
+          {read-only}="{instance.readOnlyProgramRoles}"
+          {include-roles}="{instance.class.programRoles}">
         </access-control-list-roles-helper>
         <access-control-list-roles-helper
-          {instance}="instance"
-          {is-new-instance}="new_object_form"
-          {exclude-roles}="instance.class.programRoles">
+          {instance}="{instance}"
+          {is-new-instance}="{new_object_form}"
+          {exclude-roles}="{instance.class.programRoles}">
         </access-control-list-roles-helper>
       {{/new_object_form}}
     </div>
@@ -81,9 +81,9 @@
       <div class="rich-text" data-test-id="new_program_field_notes_75b8bc05">
           <rich-text
             tabindex="6"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Notes'"
-            {(content)}="instance.notes">
+            {(content)}="{instance.notes}">
           </rich-text>
       </div>
     </div>
@@ -96,7 +96,7 @@
 
   <div class="row-fluid">
     <div data-id="folder_hidden" class="span6 hidable">
-      <ggrc-gdrive-folder-picker instance="instance" deferred="true" tabindex="7">
+      <ggrc-gdrive-folder-picker {instance}="{instance}" {deferred}="{true}" tabindex="7">
       </ggrc-gdrive-folder-picker>
     </div>
   </div>
@@ -116,7 +116,7 @@
     </div>
     <div test-id="new_program_field_effective_date_f2783a28">
       <div class="span4 hidable">
-        <effective-dates instance="instance"/>
+        <effective-dates {instance}="{instance}"/>
       </div>
     </div>
   </div>
@@ -127,9 +127,8 @@
         <i class="fa fa-question-circle" rel="tooltip" title="Indicates the status of this object."></i>
         <a href="javascript://" class="field-hide" tabindex="-1">hide</a>
       </label>
-        <dropdown data-test-id="new_program_dropdown_state_036a1fa6"
-                  options-list="model.statuses"
-                  name="instance.status"
+        <dropdown {options-list}="{model.statuses}"
+                  {name}="'instance.status'"
                   tabindex="23">
         </dropdown>
     </div>

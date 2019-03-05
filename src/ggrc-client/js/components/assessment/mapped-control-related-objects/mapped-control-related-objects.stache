@@ -3,8 +3,8 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 <!-- Requirements and Regulations Grids -->
-<collapsible-panel {title-text}="titleText" class="mapped-related-objects">
-  <object-list {items}="items">
+<collapsible-panel {title-text}="{titleText}" class="mapped-related-objects">
+  <object-list {items}="{items}">
     <div class="mapped-object-info">
       <div class="mapped-object-info__item">
           <h6>Title</h6>

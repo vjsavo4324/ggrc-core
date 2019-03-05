@@ -9,9 +9,8 @@
     <div class="ggrc-form-item">
       <div class="ggrc-form-item__multiple-row">
         <label class="form-label ggrc-form-item__label">State</label>
-        <dropdown
-          options-list="model.statuses"
-          name="instance.status">
+        <dropdown {options-list}="{model.statuses}"
+                  {name}="'instance.status'">
         </dropdown>
       </div>
       <div class="ggrc-form-item__multiple-row">
@@ -30,8 +29,7 @@
           {{/if_equals}}
           <i class="fa fa-asterisk"></i>
         </label>
-        <document-object-list-item
-          {instance}="instance">
+        <document-object-list-item {instance}="{instance}">
         </document-object-list-item>
       </div>
     </div>
@@ -44,17 +42,17 @@
         <div class="rich-text">
           <rich-text
             tabindex="2"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Description'"
-            {(content)}="instance.description">
+            {(content)}="{instance.description}">
           </rich-text>
         </div>
       </div>
     </div>
 
     <access-control-list-roles-helper
-      {instance}="."
-      {is-new-instance}="new_object_form">
+      {instance}="{.}"
+      {is-new-instance}="{new_object_form}">
     </access-control-list-roles-helper>
 
     <div class="ggrc-form-item">
@@ -62,7 +60,7 @@
         <label class="ggrc-form-item__label">
           Code
         </label>
-        <input disabled class="input-block-level" name="slug" placeholder="EVIDENCE-XXX" type="text" {$value}="slug">
+        <input disabled class="input-block-level" name="slug" placeholder="EVIDENCE-XXX" type="text" {$value}="{slug}">
       </div>
     </div>
   </form>

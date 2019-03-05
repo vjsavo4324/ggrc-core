@@ -55,7 +55,7 @@
         </div>
 
         <tab-container>
-          <tab-panel {(panels)}="panels" title-text="Attributes">
+          <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
             <div class="row-fluid wrap-row">
               <div class="span12">
                 <h6>Company</h6>
@@ -80,17 +80,17 @@
             </div>
             {{> /static/templates/custom_attributes/info.stache}}
           </tab-panel>
-          <tab-panel {(panels)}="panels" title-text="Change Log">
-            <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
         </tab-container>
       </div>
     </section>
 
     {{#if is_info_widget}}
-      <info-pane-footer {created-at}="instance.created_at"
-                        {modified-at}="instance.updated_at"
-                        {modified-by}="instance.modified_by">
+      <info-pane-footer {created-at}="{instance.created_at}"
+                        {modified-at}="{instance.updated_at}"
+                        {modified-by}="{instance.modified_by}">
       </info-pane-footer>
     {{/if}}
   {{/if_helpers}}

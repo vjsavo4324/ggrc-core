@@ -8,7 +8,7 @@
     {{#is_allowed 'update' instance context='for'}}
       {{#if instance.is_snapshotable}}
         <li>
-          <snapshot-scope-update instance="instance">
+          <snapshot-scope-update {instance}="{instance}">
             <a href="javascript://" can-click="upsertIt">
               <i class="fa fa-refresh"></i>
               Update objects to latest version</a>
@@ -20,8 +20,8 @@
       <li>
         <assessment-template-clone-button
           {object-type}="'AssessmentTemplate'"
-          {parent-id}="instance.id"
-          {parent-type}="instance.class.model_singular">
+          {parent-id}="{instance.id}"
+          {parent-type}="{instance.class.model_singular}">
           <i class="fa fa-sliders"></i>
           Define Assessment template
         </assessment-template-clone-button>
@@ -34,10 +34,9 @@
     {{#if instance.class.is_clonable}}
         {{#is_allowed 'update' instance context='for'}}
           <li>
-              <object-cloner
-                    instance="instance"
-                    modal-title="Clone {{ instance.type }}"
-                    modal-description="Select all that you would like to clone as well?">
+              <object-cloner {instance}="{instance}"
+                             {modal-title}="'Clone {{ instance.type }}'"
+                             {modal-description}="'Select all that you would like to clone as well?'">
                 <a href="javascript://" can-click="cloneObject">
                     <i class="fa fa-clone"></i>
                     Clone {{ instance.type }}</a>
@@ -73,14 +72,14 @@
   </li>
 
   <li>
-    <permalink {instance}="instance"/>
+    <permalink {instance}="{instance}"/>
   </li>
 
   {{#is_info_pin}}
     <unmap-dropdown-item
-      {page_instance}="page_instance"
-      {instance}="instance"
-      {options}="options">
+      {page_instance}="{page_instance}"
+      {instance}="{instance}"
+      {options}="{options}">
     </unmap-dropdown-item>
 
     {{#if instance.viewLink}}
@@ -129,7 +128,7 @@
   {{#if instance.archived}}
     {{#current_user_is_admin}}
         <li>
-           <unarchive-link instance="instance" notify="true">
+           <unarchive-link {instance}="{instance}" {notify}="{true}">
                <i class="fa fa-archive"></i>
                Unarchive Audit
            </unarchive-link>

@@ -6,7 +6,7 @@
 {{#is_allowed 'create' model.model_singular context='any'}}
 <li class="add-new oneline" data-ui-autocomplete-item="">
   {{#if model.isChangeableExternally}} 
-    <questionnaire-create-link {model}="model">
+    <questionnaire-create-link {model}="{model}">
       + Create
     </questionnaire-create-link>
   {{else}}

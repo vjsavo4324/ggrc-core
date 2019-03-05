@@ -31,7 +31,7 @@
                     {{/using}}
                     <li>
                       <task-group-clone
-                        {task-group}="instance">
+                        {task-group}="{instance}">
                         <a href="javascript://">
                           <i class="fa fa-clone"></i>
                           Clone Task Group
@@ -50,8 +50,8 @@
         <div class="info-pane__section">
         {{#if readyToRenderTaskGroupObjects}}
           <task-group-objects
-            {task-group}="instance"
-            {can-edit}="canEdit"
+            {task-group}="{instance}"
+            {can-edit}="{canEdit}"
           ></task-group-objects>
         {{/if}}
         </div>
@@ -60,8 +60,8 @@
             Tasks
           </h5>
           <task-list
-            {base-instance}="instance"
-            {workflow}="workflow"
+            {base-instance}="{instance}"
+            {workflow}="{workflow}"
           ></task-list>
         </div>
       </div>

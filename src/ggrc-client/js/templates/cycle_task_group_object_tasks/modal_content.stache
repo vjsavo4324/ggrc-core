@@ -3,10 +3,8 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<cycle-task-modal
-  {instance}="instance"
-  {pre-mapped-stubs}="object_params.pre_mapped_objects"
->
+<cycle-task-modal {instance}="{instance}"
+                  {pre-mapped-stubs}="{object_params.pre_mapped_objects}">
 <form action="javascript://" class="form">
   <div class="row-fluid">
     <div class="span12 {{#instance.computed_errors.title}}field-failure{{/instance.computed_errors.title}}">
@@ -25,16 +23,16 @@
         <label class="form-label">Task Description</label>
         <div class="rich-text">
           <rich-text tabindex="2"
-                     {hidden-toolbar}="true"
+                     {hidden-toolbar}="{true}"
                      {placeholder}="'Enter Description'"
-                     {(content)}="instance.description">
+                     {(content)}="{instance.description}">
           </rich-text>
         </div>
       {{else}}
         <label class="form-label">
           Selection Response Options (Comma Separated)
         </label>
-          <textarea-array array="instance.response_options" class-name="span12 double" placeholder="Enter Description" tabindex="2"></textarea-array>
+          <textarea-array {array}="{instance.response_options}" class-name="span12 double" placeholder="Enter Description" tabindex="2"></textarea-array>
       {{/if_equals}}
       <br>
       <select name="task_type">
@@ -43,9 +41,9 @@
         <option value="checkbox" {{#if_equals instance.task_type 'checkbox'}}selected="selected"{{/if_equals}}>Checkbox</option>
       </select>
       <deferred-mapper
-          {instance}="instance"
-          {mapped-objects}="mappedObjects"
-          {pre-mapped-objects}="preMappedObjects"
+          {instance}="{instance}"
+          {mapped-objects}="{mappedObjects}"
+          {pre-mapped-objects}="{preMappedObjects}"
         >
         <h6>Object(s) mapped to task</h6>
         {{#each list}}
@@ -86,8 +84,8 @@
     <div class="span4">
       <div class="{{#instance.computed_errors.contact}} field-failure {{/instance.computed_errors.contact}}">
         <access-control-list-roles-helper
-                {instance}="instance"
-                {is-new-instance}="new_object_form">
+                {instance}="{instance}"
+                {is-new-instance}="{new_object_form}">
         </access-control-list-roles-helper>
       </div>
       <br>
@@ -158,11 +156,11 @@
               <i class="fa fa-asterisk"></i>
           </label>
           <datepicker
-            set-max-date="instance.end_date"
-            date="instance.start_date"
-            required="true"
-            no-weekends="true"
-            readonly="true" />
+            {set-max-date}="{instance.end_date}"
+            {(date)}="{instance.start_date}"
+            {required}="{true}"
+            {no-weekends}="{true}"
+            {readonly}="{true}"/>
             {{#instance.computed_errors.start_date}}<label class="help-inline warning">{{this}}</label>{{/instance.computed_errors.start_date}}
           </div>
         </div>
@@ -172,11 +170,11 @@
               <i class="fa fa-asterisk"></i>
           </label>
           <datepicker
-            set-min-date="instance.start_date"
-            date="instance.end_date"
-            required="true"
-            no-weekends="true"
-            readonly="true" />
+            {set-min-date}="{instance.start_date}"
+            {(date)}="{instance.end_date}"
+            {required}="{true}"
+            {no-weekends}="{true}"
+            {readonly}="{true}"/>
             {{#instance.computed_errors.end_date}}<label class="help-inline warning">{{this}}</label>{{/instance.computed_errors.end_date}}
           </div>
         </div>

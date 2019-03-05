@@ -17,7 +17,7 @@
             <div class="action-toolbar__controls">
               <div class="action-toolbar__controls-item">
                 <proposable-control
-                  {instance}="instance"
+                  {instance}="{instance}"
                   {attr-name}="'title'"
                 ></proposable-control>
               </div>
@@ -38,7 +38,7 @@
               <div class="action-toolbar__controls">
                 <div class="action-toolbar__controls-item">
                   <proposable-control
-                    {instance}="instance"
+                    {instance}="{instance}"
                     {attr-name}="'status'"
                   ></proposable-control>
                 </div>
@@ -72,8 +72,8 @@
 
       <div class="pane-header__toolbar">
         {{#is_info_pin}}
-          <info-pin-buttons {maximized}="{maximized}" 
-                            {on-change-maximized-state}="{@onChangeMaximizedState}" 
+          <info-pin-buttons {maximized}="{maximized}"
+                            {on-change-maximized-state}="{@onChangeMaximizedState}"
                             {on-close}="{@onClose}">
           </info-pin-buttons>
         {{/is_info_pin}}
@@ -86,16 +86,16 @@
           <div class="pane-header__snapshot-info">
             <hr class="snapshot">
               <snapshot-comparer-config
-                {instance}="instance"
-                {left-revision-id}="instance.snapshot.revision_id"
-                {right-revisions}="instance.snapshot.revisions">
+                {instance}="{instance}"
+                {left-revision-id}="{instance.snapshot.revision_id}"
+                {right-revisions}="{instance.snapshot.revisions}">
                   <revisions-comparer
-                    {modal-title}="modalTitle"
-                    {modal-confirm}="modalConfirm"
-                    {button-view}="buttonView"
-                    {instance}="instance"
-                    {left-revision-id}="leftRevisionId"
-                    {right-revision}="rightRevision">
+                    {modal-title}="{modalTitle}"
+                    {modal-confirm}="{modalConfirm}"
+                    {button-view}="{buttonView}"
+                    {instance}="{instance}"
+                    {left-revision-id}="{leftRevisionId}"
+                    {right-revision}="{rightRevision}">
                       <a href="javascript://" can-click="compareIt">Get the latest version</a>
                   </revisions-comparer>
               </snapshot-comparer-config>

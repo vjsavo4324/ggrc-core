@@ -17,7 +17,7 @@
           placeholder="Enter Title"
           name="title"
           type="text"
-          {$value}="instance.title" autofocus>
+          {$value}="{instance.title}" autofocus>
         {{#instance.computed_errors.title}}<label class="help-inline warning">{{this}}</label>{{/instance.computed_errors.title}}
       </div>
     </div>
@@ -30,17 +30,17 @@
         <div class="rich-text">
             <rich-text
               tabindex="3"
-              {hidden-toolbar}="true"
+              {hidden-toolbar}="{true}"
               {placeholder}="'Enter Description'"
-              {(content)}="instance.description">
+              {(content)}="{instance.description}">
             </rich-text>
         </div>
       </div>
     </div>
 
     <access-control-list-roles-helper
-      {instance}="instance"
-      {is-new-instance}="new_object_form">
+      {instance}="{instance}"
+      {is-new-instance}="{new_object_form}">
     </access-control-list-roles-helper>
 
     <div class="ggrc-form-item">
@@ -49,10 +49,11 @@
           Repeat Workflow
         </label>
         {{#if new_object_form}}
-          <repeat-on-button-wrapper {(instance)}="instance"></repeat-on-button-wrapper>
+          <repeat-on-button-wrapper {(instance)}="{instance}"></repeat-on-button-wrapper>
         {{/if}}
-        <repeat-on-summary {unit}="instance.unit" {repeat-every}="instance.repeat_every"
-                           {hide-repeat-off}="new_object_form">
+        <repeat-on-summary {unit}="{instance.unit}" 
+                           {repeat-every}="{instance.repeat_every}"
+                           {hide-repeat-off}="{new_object_form}">
         </repeat-on-summary>
       </div>
       <div class="ggrc-form-item__multiple-row">
@@ -60,11 +61,10 @@
           Email preferences
           <i class="fa fa-question-circle" rel="tooltip" title="This setting will override user email preferences"></i>
         </label>
-        <input
-          type="checkbox"
-          can-value="instance.notify_on_change"
-          tabindex="3">
-          Force real-time email updates
+        <input tabindex="3"
+               type="checkbox"
+               {($value)}="{instance.notify_on_change}">
+        Force real-time email updates
       </div>
       <div class="ggrc-form-item__multiple-row">
         <label class="ggrc-form-item__label">
@@ -72,7 +72,7 @@
         </label>
         <input
           type="checkbox"
-          can-value="instance.is_verification_needed"
+          {($value)}="{instance.is_verification_needed}"
           {{#if instance.status}}
             {{^is instance.status 'Draft'}}disabled{{/is}}
           {{/if}}
@@ -88,11 +88,11 @@
           <i class="fa fa-question-circle" rel="tooltip" title="If selected, all Workflow attachments go here."></i>
         </label>
         <ggrc-gdrive-folder-picker
-          instance="instance"
-          deferred="true"
+          {instance}="{instance}"
+          {deferred}="{true}"
           tabindex="5"
-          hide-label="true"
-          placeholder="If selected, all workflow attachments go here."/>
+          {hide-label}="{true}"
+          {placeholder}="'If selected, all workflow attachments go here.'"/>
       </div>
     </div>
 
@@ -107,7 +107,7 @@
             placeholder="Enter Title"
             type="text"
             tabindex="5"
-            {($value)}="instance.task_group_title">
+            {($value)}="{instance.task_group_title}">
         </div>
       </div>
     {{/if}}
@@ -119,9 +119,9 @@
           <i class="fa fa-question-circle" rel="tooltip" title="This email will be sent to all workflow members once workflow starts"></i>
         </label>
         <rich-text tabindex="6"
-              {hidden-toolbar}="true"
-              {placeholder}="'Enter custom message here'"
-              {(content)}="instance.notify_custom_message">
+                   {hidden-toolbar}="{true}"
+                   {placeholder}="'Enter custom message here'"
+                   {(content)}="{instance.notify_custom_message}">
         </rich-text>
       </div>
     </div>
@@ -137,7 +137,7 @@
           class="input-block-level"
           placeholder="WORKFLOW-XXX"
           type="text"
-          {($value)}="instance.slug">
+          {($value)}="{instance.slug}">
       </div>
     </div>
   </form>

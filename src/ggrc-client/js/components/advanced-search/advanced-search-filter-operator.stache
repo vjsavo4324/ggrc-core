@@ -5,7 +5,7 @@
 
 <div class="filter-operator">
   <div class="filter-operator__content">
-    <select {($value)}="operator">
+    <select {($value)}="{operator}">
       <option value="AND">AND</option>
       <option value="OR">OR</option>
     </select>

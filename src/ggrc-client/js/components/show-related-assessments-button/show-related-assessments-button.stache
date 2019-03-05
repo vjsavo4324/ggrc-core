@@ -5,18 +5,17 @@
 {{#if instance}}
   {{#if isAllowedToShow}}
       <a class="{{cssClasses}}"
-         ($click)="showRelatedAssessments"
+         ($click)="{showRelatedAssessments()}"
          {{#if showTitle}}
          title="Show Related Assessments"
-         {{/if}}
-      >
+         {{/if}}>
         {{#if showIcon}}<i class="fa fa-assessment"></i>{{/if}}
         {{title}}
       </a>
-      <simple-modal instance="instance" modal-title="modalTitle" state="state" extra-css-class="related-assessments">
+      <simple-modal {instance}="{instance}" {modal-title}="{modalTitle}" {state}="{state}" {extra-css-class}="'related-assessments'">
           <div class="simple-modal__body">
             <related-assessments
-              {instance}="instance">
+              {instance}="{instance}">
             </related-assessments>
           </div>
       </simple-modal>

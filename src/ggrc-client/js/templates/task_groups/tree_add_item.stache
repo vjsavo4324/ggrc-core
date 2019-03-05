@@ -4,7 +4,7 @@
 }}
 
 <create-task-group-button
-  {workflow}="parent_instance">
+  {workflow}="{parent_instance}">
   {{#if showCreateButton}}
     <a href="javascript://"
       rel="tooltip"

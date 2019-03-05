@@ -10,35 +10,35 @@
         {{#case "state"}}
         <div class="filter-container__state">
           <advanced-search-filter-state
-            {model-name}="modelName"
-            {(state-model)}="value">
+            {model-name}="{modelName}"
+            {(state-model)}="{value}">
           </advanced-search-filter-state>
         </div>
         {{/case}}
         {{#case "operator"}}
         <div class="filter-container__operator">
           <advanced-search-filter-operator
-            {(operator)}="value">
+            {(operator)}="{value}">
           </advanced-search-filter-operator>
         </div>
         {{/case}}
         {{#case "attribute"}}
         <div class="filter-container__attribute">
           <advanced-search-filter-attribute
-            {(attribute)}="value"
-            (remove)="removeItem(../)"
-            {available-attributes}="availableAttributes"
-            {extendable}="true"
-            (createGroup)="createGroup(../)">
+            {(attribute)}="{value}"
+            (remove)="{removeItem(../)}"
+            {available-attributes}="{availableAttributes}"
+            {extendable}="{true}"
+            (createGroup)="{createGroup(../)}">
           </advanced-search-filter-attribute>
         </div>
         {{/case}}
         {{#case "group"}}
         <div class="filter-container__group">
           <advanced-search-filter-group
-            {(items)}="value"
-            (remove)="removeItem(../)"
-            {available-attributes}="availableAttributes">
+            {(items)}="{value}"
+            (remove)="{removeItem(../)}"
+            {available-attributes}="{availableAttributes}">
           </advanced-search-filter-group>
         </div>
         {{/case}}

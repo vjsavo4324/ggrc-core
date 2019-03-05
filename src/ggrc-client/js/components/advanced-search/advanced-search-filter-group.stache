@@ -15,16 +15,16 @@
         {{#case "attribute"}}
         <div class="filter-group__attribute">
           <advanced-search-filter-attribute
-            {(attribute)}="value"
-            (remove)="removeItem(../, true)"
-            {available-attributes}="availableAttributes">
+            {(attribute)}="{value}"
+            (remove)="{removeItem(../, true)}"
+            {available-attributes}="{availableAttributes}">
           </advanced-search-filter-attribute>
         </div>
         {{/case}}
         {{#case "operator"}}
         <div class="filter-group__operator">
           <advanced-search-filter-operator
-            {(operator)}="value">
+            {(operator)}="{value}">
           </advanced-search-filter-operator>
         </div>
         {{/case}}

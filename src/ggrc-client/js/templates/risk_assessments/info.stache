@@ -5,10 +5,10 @@
 
 <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
   <div class="tier-content">
-    <general-page-header {instance}="instance"></general-page-header>
+    <general-page-header {instance}="{instance}"></general-page-header>
 
     <tab-container>
-      <tab-panel {(panels)}="panels" title-text="Attributes">
+      <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
         <div class="info-pane__body">
           <div class="info-pane__main-content {{^if isSnapshot}}info-pane__main-content-with-sidebar{{/if}}">
             {{> /static/templates/base_objects/description.stache}}
@@ -19,8 +19,8 @@
                 <h6>Notes</h6>
                 <div class="rtf-block">
                   <read-more
-                    {text}="instance.notes"
-                    {handle-markdown}="instance.class.isChangeableExternally">
+                    {text}="{instance.notes}"
+                    {handle-markdown}="{instance.class.isChangeableExternally}">
                   </read-more>
                 </div>
               </div>
@@ -28,13 +28,13 @@
 
             <div class="row-fluid wrap-row">
               <div class="span4">
-                <related-documents {instance}="instance" kind="FILE">
+                <related-documents {instance}="{instance}" {kind}="'FILE'">
                   <h6>Supporting files</h6>
-                  <object-list {items}="documents" {empty-message}="noItemsText">
+                  <object-list {items}="{documents}" {empty-message}="{noItemsText}">
                     <editable-document-object-list-item {document}="{.}">
                       <unmap-button
-                        {destination}="instance"
-                        {source}="document">
+                        {destination}="{instance}"
+                        {source}="{document}">
                         <action-toolbar-control>
                           <i class="fa fa-trash"></i>
                         </action-toolbar-control>
@@ -44,9 +44,9 @@
 
                   {{#is_allowed 'update'}}
                     <ggrc-gdrive-picker-launcher
-                      instance="instance"
-                      link_text="Attach supporting file"
-                      (finish)="loadDocuments"
+                      {instance}="{instance}"
+                      {link_text}="'Attach supporting file'"
+                      (finish)="{loadDocuments}"
                       click_event="trigger_upload">
                       Attach
                     </ggrc-gdrive-picker-launcher>
@@ -55,11 +55,11 @@
               </div>
               <div class="span4">
                 <h6>Risk Manager</h6>
-                <person-data {person}="instance.ra_manager"></person-data>
+                <person-data {person}="{instance.ra_manager}"></person-data>
               </div>
               <div class="span4">
                 <h6>Risk Counsel</h6>
-                <person-data {person}="instance.ra_counsel"></person-data>
+                <person-data {person}="{instance.ra_counsel}"></person-data>
               </div>
             </div>
 
@@ -118,7 +118,7 @@
           <div class="info-pane__sidebar">
             <div class="info-pane__section-title">Responses/Comments</div>
             <comments-section class="flex-box flex-col"
-              {instance}="instance"
+              {instance}="{instance}"
               {notification}="'Notify Admins, Primary and Secondary Contacts'">
             </comments-section>
           </div>
@@ -126,8 +126,8 @@
         </div>
       </tab-panel>
       {{^if isSnapshot}}
-        <tab-panel {(panels)}="panels" title-text="Change Log">
-            <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+        <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
         </tab-panel>
       {{/if}}
     </tab-container>

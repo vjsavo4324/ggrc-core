@@ -16,11 +16,11 @@
       </div>
     {{/if}}
     <div class="grid-data__toolbar flex-box">
-      <tree-pagination {paging}="pageInfo"></tree-pagination>
+      <tree-pagination {paging}="{pageInfo}"></tree-pagination>
     </div>
-    <revision-page {revisions}="revisions"
-                   {instance}="instance"
-                   {is-loading}="isLoading">
+    <revision-page {revisions}="{revisions}"
+                   {instance}="{instance}"
+                   {is-loading}="{isLoading}">
     </revision-page>
   </div>
 {{/instance}}

@@ -9,22 +9,20 @@
       <a class="person-info-wrapper__remove-value" href="#" ($click)="unsetPerson">
         <i class="fa fa-times" aria-hidden="true"></i>
       </a>
-      <person-data {person-id}="inputValue"></person-data>
+      <person-data {person-id}="{inputValue}"></person-data>
     </div>
   {{else}}
     {{^if_config_exist 'external_services.Person'}}
-    <autocomplete
-      {{#if disabled}}disabled{{/if}}
-      search-items-type="Person"
-      (item-selected)="setPerson(%event)"
-      placeholder="Select person"
-    ></autocomplete>
+    <autocomplete {search-items-type}="'Person'"
+                  (item-selected)="{setPerson(%event)}"
+                  {placeholder}="'Select person'"
+                  {{#if disabled}}disabled{{/if}}>
+    </autocomplete>
     {{else}}
-    <external-data-autocomplete
-      {type}="'Person'"
-      {placeholder}="'Select person'"
-      {min-length}="2"
-      (item-selected)="setPerson(%event)">
+    <external-data-autocomplete {type}="'Person'"
+                                {placeholder}="'Select person'"
+                                {min-length}="2"
+                                (item-selected)="setPerson(%event)">
     </external-data-autocomplete>
     {{/if_config_exist}}
   {{/if}}

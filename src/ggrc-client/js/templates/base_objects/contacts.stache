@@ -6,7 +6,7 @@
 {{#instance}}
 <div class="row-fluid wrap-row">
   <div data-test-id="title_manager_7a906d2e">
-    <custom-roles {instance}="."></custom-roles>
+    <custom-roles {instance}="{.}"></custom-roles>
   </div>
 </div>
 {{/instance}}

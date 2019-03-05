@@ -50,10 +50,10 @@
               </a>
             {{else}}
               {{#isMappableExternally instance model.model_singular}}
-                <questionnaire-mapping-link 
+                <questionnaire-mapping-link
                   class="external-link"
-                  {instance}="instance"
-                  {destination-model}="model">                  
+                  {instance}="{instance}"
+                  {destination-model}="{model}">
                     <i class="fa fa-fw fa-{{ icon }} color"></i>
                     <span class="external-link__content">
                       {{title}}
@@ -75,7 +75,7 @@
                       {{title}}
                     </div>
                   </a>
-                {{else}} 
+                {{else}}
                   <a href="{{urlPath}}{{ href }}">
                     <div class="oneline">
                       <i class="fa fa-fw fa-{{ icon }} color"></i>
@@ -83,7 +83,7 @@
                     </div>
                   </a>
                 {{/canMapObject}}
-                
+
               {{/isMappableExternally}}
             {{/shouldCreateObject}}
           </div>

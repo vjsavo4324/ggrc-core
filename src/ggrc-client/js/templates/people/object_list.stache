@@ -52,7 +52,7 @@
         </div><!-- item-wrap end -->
       </div><!-- item-main end -->
 
-      <people-list-info {instance}="this"></people-list-info>
+      <people-list-info {instance}="{this}"></people-list-info>
     </li>
 
   {{/each}}

@@ -8,7 +8,7 @@ import template from './show-more.stache';
 /**
  * A component that limits list of items to acceptable count and shows
  * "Show more(<items count>)" link
- * Usage: <show-more limit="5" {items}="itemsToDisplay"
+ * Usage: <show-more limit="5" {items}="{itemsToDisplay}"
  *          should-show-all-items="true">
  *          <some-item-component></some-item-component>
  *        </show-more>

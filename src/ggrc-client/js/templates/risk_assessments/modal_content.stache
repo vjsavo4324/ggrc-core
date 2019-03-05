@@ -19,20 +19,18 @@
   <div class="row-fluid">
     <div class="span3">
       <a data-id="hide_effective_date_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
-      <datepicker
-        label="Effective Date"
-        date="instance.start_date"
-        set-max-date="instance.end_date"
-        required="true"
-        />
+      <datepicker {label}="'Effective Date'"
+                  {(date)}="{instance.start_date}"
+                  {set-max-date}="{instance.end_date}"
+                  {required}="{true}">
+      </datepicker>
     </div>
     <div class="span3">
       <a data-id="hide_stop_date_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
-      <datepicker
-        label="End Date"
-        date="instance.end_date"
-        required="true"
-        />
+      <datepicker {label}="'End Date'"
+                  {(date)}="{instance.end_date}"
+                  {required}="{true}">
+      </datepicker>
     </div>
     <div class="span3 hidable">
       {{#using manager=instance.ra_manager model_singular=model.model_singular}}
@@ -45,18 +43,18 @@
         <input tabindex="4" class="input-block-level" name="ra_manager.email" data-lookup="Person" placeholder="Enter email address" type="text" value="{{firstexist manager.email ''}}" />
         {{else}}
         <inline-autocomplete-wrapper
-          {instance}="instance"
+          {instance}="{instance}"
           {path}="'ra_manager'"
           {display-prop}="'email'"
-          {text-value}="manager.email">
+          {text-value}="{manager.email}">
           <external-data-autocomplete
             {type}="'Person'"
             {placeholder}="'Enter email address'"
-            (item-selected)="setItem(%event.selectedItem)"
-            (criteria-changed)="setItem(%event.value)"
-            {auto-clean}="false"
+            (item-selected)="{setItem(%event.selectedItem)}"
+            (criteria-changed)="{setItem(%event.value)}"
+            {auto-clean}="{false}"
             {min-length}="2"
-            {search-criteria}="textValue">
+            {search-criteria}="{textValue}">
           </external-data-autocomplete>
         </inline-autocomplete-wrapper>
         {{/if_config_exist}}
@@ -74,18 +72,18 @@
         <input tabindex="5" class="input-block-level" name="ra_counsel.email" data-lookup="Person" placeholder="Enter email address" type="text" value="{{firstexist counsel.email ''}}" />
         {{else}}
         <inline-autocomplete-wrapper
-          {instance}="instance"
+          {instance}="{instance}"
           {path}="'ra_counsel'"
           {display-prop}="'email'"
-          {text-value}="counsel.email">
+          {text-value}="'{counsel.email}'">
           <external-data-autocomplete
             {type}="'Person'"
             {placeholder}="'Enter email address'"
-            (item-selected)="setItem(%event.selectedItem)"
-            (criteria-changed)="setItem(%event.value)"
-            {auto-clean}="false"
+            (item-selected)="{setItem(%event.selectedItem)}"
+            (criteria-changed)="{setItem(%event.value)}"
+            {auto-clean}="{false}"
             {min-length}="2"
-            {search-criteria}="textValue">
+            {search-criteria}="'{textValue}'">
           </external-data-autocomplete>
         </inline-autocomplete-wrapper>
         {{/if_config_exist}}
@@ -103,9 +101,9 @@
       </label>
       <rich-text
         tabindex="6"
-        {hidden-toolbar}="true"
+        {hidden-toolbar}="{true}"
         {placeholder}="'Enter Description'"
-        {(content)}="instance.description">
+        {(content)}="{instance.description}">
       </rich-text>
     </div>
 
@@ -118,9 +116,9 @@
       <div class="rich-text">
           <rich-text
             tabindex="7"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Notes'"
-            {(content)}="instance.notes">
+            {(content)}="{instance.notes}">
           </rich-text>
       </div>
     </div>
@@ -145,8 +143,8 @@
         <i class="fa fa-question-circle" rel="tooltip" title="Indicates the status of this object."></i>
         <a data-id="hide_state_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
       </label>
-        <dropdown options-list="model.statuses"
-                  name="instance.status"
+        <dropdown {options-list}="{model.statuses}"
+                  {name}="'instance.status'"
                   tabindex="9">
         </dropdown>
     </div>

@@ -74,7 +74,7 @@
           <a class="secondary" href="{{viewLink}}">
             Open Original {{class.title_singular}}
           </a>
-          <questionnaire-link {instance}="instance" {css-classes}="'secondary'">
+          <questionnaire-link {instance}="{instance}" {css-classes}="'secondary'">
             Open {{class.title_singular}} in new frontend
           </questionnaire-link>
         {{/if}}

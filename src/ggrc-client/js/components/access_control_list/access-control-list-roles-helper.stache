@@ -7,13 +7,13 @@
 <custom-roles-modal
   tabindex="4"
   class="custom-roles-modal"
-  {instance}="instance"
-  {is-proposal}="isProposal"
-  {is-new-instance}="isNewInstance"
-  {include-roles}="includeRoles"
-  {exclude-roles}="excludeRoles"
-  {read-only}="readOnly"
-  {order-of-roles}="orderOfRoles"
-  {show-group-tooltip}="showGroupTooltip"
-  {group-tooltip}="groupTooltip">
+  {instance}="{instance}"
+  {is-proposal}="{isProposal}"
+  {is-new-instance}="{isNewInstance}"
+  {include-roles}="{includeRoles}"
+  {exclude-roles}="{excludeRoles}"
+  {read-only}="{readOnly}"
+  {order-of-roles}="{orderOfRoles}"
+  {show-group-tooltip}="{showGroupTooltip}"
+  {group-tooltip}="{groupTooltip}">
 </custom-roles-modal>

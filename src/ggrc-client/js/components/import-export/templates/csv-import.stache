@@ -23,7 +23,7 @@
     <div class="import-section import-buttons">
       {{#switch state}}
         {{#case 'Select'}}
-          <spinner {toggle}="isLoading"></spinner>
+          <spinner {toggle}="{isLoading}"></spinner>
 
           <button type="button"
                   ($click)="selectFile()"
@@ -39,7 +39,7 @@
 
         {{#case 'Not Started'}}
           <label class="confirm-action">
-            <input type="checkbox" {($checked)}="isConfirm">
+            <input type="checkbox" {($checked)}="{isConfirm}">
             <span>
               I confirm that the import file containing {{importedObjectsCount}}
               {{#if_equals importedObjectsCount 1}}object{{else}}objects{{/if_equals}} is complete and accurate to the best of my knowledge.
@@ -63,7 +63,7 @@
         {{/case}}
 
         {{#case 'Analysis'}}
-          <div>Analyzing file in Progress: <spinner {toggle}="true"></spinner></div>
+          <div>Analyzing file in Progress: <spinner {toggle}="{true}"></spinner></div>
           <button type="button"
                   class="btn btn-small btn-white margin-top-20"
                   ($click)="stopImport(jobId)">
@@ -116,7 +116,7 @@
         {{/case}}
 
         {{#case 'In Progress'}}
-          <div class="">Import in Progress: <spinner {toggle}="true"></spinner></div>
+          <div class="">Import in Progress: <spinner {toggle}="{true}"></spinner></div>
         {{/case}}
       {{/switch}}
 
@@ -124,7 +124,7 @@
     </div>
 
     {{#isImportStopped}}
-      <show-more {items}="importDetails" limit="1">
+      <show-more {items}="{importDetails}" limit="1">
         <div class="import-section border-top">
 
           <section class="import-details__stats">
@@ -153,7 +153,7 @@
           </section>
 
           {{#data}}
-            <collapsible-panel {title-text}="title" {expanded}="true">
+            <collapsible-panel {title-text}="{title}" {expanded}="{true}">
               {{#if messages.length}}
                 <ul>
                   {{#messages}}
@@ -177,9 +177,9 @@
 
   {{#history.length}}
   <div class="csv-import__import-history">
-    <import-history {history}="history"
-                    (remove-item)="onRemove(%event)"
-                    (download-csv)="onDownload(%event)"
+    <import-history {history}="{history}"
+                    (remove-item)="{onRemove(%event)}"
+                    (download-csv)="{onDownload(%event)}"
     ></import-history>
   </div>
   {{/history.length}}

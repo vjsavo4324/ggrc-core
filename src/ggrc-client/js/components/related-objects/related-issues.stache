@@ -1,18 +1,17 @@
 {{!
-Copyright (C) 2019 Google Inc.
-Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
-`}}
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+}}
 
 <model-loader {path}="'business-models/issue'">
-    <related-objects
-        {base-instance}="baseInstance"
-        {predefined-filter}="relatedIssuesFilter"
-        {model-constructor}="loadedModel"
-        related-items-type="Issue">
+    <related-objects {base-instance}="{baseInstance}"
+                     {predefined-filter}="{relatedIssuesFilter}"
+                     {model-constructor}="{loadedModel}"
+                     {related-items-type}="'Issue'">
         <div class="grid-data__toolbar flex-box">
-            <tree-pagination {paging}="paging" class="grid-data__toolbar-item"></tree-pagination>
+            <tree-pagination {paging}="{paging}" class="grid-data__toolbar-item"></tree-pagination>
             {{^if baseInstance.archived}}
-                    <add-issue-button {related-instance}="baseInstance" class="grid-data__toolbar-item"></add-issue-button>
+                    <add-issue-button {related-instance}="{baseInstance}" class="grid-data__toolbar-item"></add-issue-button>
             {{/if}}
         </div>
         <div class="grid-data-header flex-row flex-box">
@@ -24,7 +23,7 @@ Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
             </div>
         </div>
         <div class="grid-data-body">
-            <object-list {items}="relatedObjects" {is-loading}="isLoading" {list-type}="'GRID'">
+            <object-list {items}="{relatedObjects}" {is-loading}="{isLoading}" {list-type}="'GRID'">
                 <div class="grid-data-row flex-row flex-box">
                     <div class="flex-size-2">
                         <a href="{{instance.viewLink}}" target="_blank" class="grid-data-item__title-cell">
@@ -33,9 +32,9 @@ Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
                     </div>
                     <div class="flex-size-3">
                         <read-more
-                          {text}="instance.description"
-                          max-lines-number="2"
-                          {handle-markdown}="instance.class.isChangeableExternally">
+                          {text}="{instance.description}"
+                          {max-lines-number}=2
+                          {handle-markdown}="{instance.class.isChangeableExternally}">
                         </read-more>
                     </div>
                 </div>

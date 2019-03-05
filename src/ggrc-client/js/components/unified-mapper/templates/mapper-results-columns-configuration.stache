@@ -4,7 +4,7 @@
 }}
 
 <a href="#" class="dropdown-toggle tview-dropdown-toggle" 
-  data-toggle="dropdown" ($click)="initializeColumns()">
+   data-toggle="dropdown" ($click)="initializeColumns()">
   <i class="fa fa-fw fa-bars"></i>
 </a>
 <div class="dropdown-menu dropdown-menu-form" can-click="stopPropagation">
@@ -16,7 +16,7 @@
     <ul class="attr-list">
       {{#columns}}
         <li class="{{#mandatory}}disabled{{/mandatory}}">
-          <tree-visible-column-checkbox {column}=".">
+          <tree-visible-column-checkbox {column}="{.}">
           </tree-visible-column-checkbox>
         </li>
       {{/columns}}

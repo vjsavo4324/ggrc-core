@@ -11,8 +11,8 @@
     <div class="action-toolbar__controls">
       <div class="action-toolbar__controls-item">
         <proposable-control
-          {instance}="instance"
-          {attr-name}="redirectionAttrName"
+          {instance}="{instance}"
+          {attr-name}="{redirectionAttrName}"
         >
         </proposable-control>
       </div>

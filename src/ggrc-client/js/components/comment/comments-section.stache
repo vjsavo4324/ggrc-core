@@ -3,25 +3,25 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<comment-data-provider {instance}="instance">
+<comment-data-provider {instance}="{instance}">
   {{^if isDeniedToAddComment}}
     <comment-add-form class="comment-add-form"
-      {instance}="instance"
-      {is-saving}="isLoading"
-      (before-create)="addComment(%event)"
-      (after-create)="processComment(%event)"
-      {notifications-info}="notification">
+                      {instance}="{instance}"
+                      {is-saving}="{isLoading}"
+                      (before-create)="{addComment(%event)}"
+                      (after-create)="{processComment(%event)}"
+                      {notifications-info}="{notification}">
     </comment-add-form>
   {{/if}}
-  <mapped-comments {base-instance}="instance" 
-    {mapped-items}="comments"
-    {is-loading}="isLoading"
-    {show-no-items-text}="isDeniedToAddComment">
+  <mapped-comments {base-instance}="{instance}" 
+                   {mapped-items}="{comments}"
+                   {is-loading}="{isLoading}"
+                   {show-no-items-text}="{isDeniedToAddComment}">
   </mapped-comments>
   {{#if isAllowedToAddCommentExternally}}
-    <questionnaire-link {instance}="instance"
+    <questionnaire-link {instance}="{instance}"
       {link-type}="'comment'"
-      {show-icon}="true"
+      {show-icon}="{true}"
       {view-type}="'button'">
       Add Comment
     </questionnaire-link>

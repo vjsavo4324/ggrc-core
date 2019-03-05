@@ -10,16 +10,16 @@
         Comment
       </label>
       <rich-text
-        {hidden-toolbar}="true"
+        {hidden-toolbar}="{true}"
         {placeholder}="'Enter comment'"
-        {(content)}="actionComment"
+        {(content)}="{actionComment}"
         {with-mentions}="true">
       </rich-text>
     </div>
   </div>
 
   <div class="proposal-confirm__actions">
-    <spinner toggle="isLoading"></spinner>
+    <spinner {toggle}="{isLoading}"></spinner>
     {{#if canDisplayApplyButton}}
       <button type="button"
         class="btn btn-green proposal-confirm__button"

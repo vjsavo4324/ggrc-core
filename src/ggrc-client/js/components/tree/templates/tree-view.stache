@@ -5,17 +5,17 @@
 
 {{#items}}
   <tree-item class="tree-item-element"
-             {instance}="."
-             {limit-depth-tree}="limitDepthTree"
-             {get-depth-filter}="@getDepthFilter"
-             {selected-columns}="selectedColumns"
-             {disable-configuration}="disableConfiguration"
-             {mandatory}="mandatory"
-  ></tree-item>
+             {instance}="{.}"
+             {limit-depth-tree}="{limitDepthTree}"
+             {get-depth-filter}="{@getDepthFilter}"
+             {selected-columns}="{selectedColumns}"
+             {disable-configuration}="{disableConfiguration}"
+             {mandatory}="{mandatory}">
+  </tree-item>
 {{/items}}
 
-<tree-no-results {show}="notResult"></tree-no-results>
+<tree-no-results {show}="{notResult}"></tree-no-results>
 
 <div class="tree-spinner">
-  <spinner toggle="loading" size="large"></spinner>
+  <spinner {toggle}="{loading}" {size}="'large'"></spinner>
 </div>

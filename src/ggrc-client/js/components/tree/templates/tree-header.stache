@@ -17,7 +17,7 @@
       <ul class="attr-list">
         {{#columns}}
           <li class="{{#if mandatory}}disabled{{/if}}">
-            <tree-visible-column-checkbox {column}=".">
+            <tree-visible-column-checkbox {column}="{.}">
             </tree-visible-column-checkbox>
           </li>
         {{/columns}}
@@ -37,8 +37,8 @@
       {{else}}
         <sortable-column
           class="tree-header-titles__item"
-          {(sort)}="orderBy"
-          sort-field="{{attr_sort_field}}">
+          {(sort)}="{orderBy}"
+          {sort-field}="'{{attr_sort_field}}'">
           <span class="tree-header-titles__text">
             {{attr_title}}
           </span>

@@ -23,8 +23,8 @@
 
   {{#case 'network_zone'}}
     <model-loader {path}="'service-models/option'">
-      <tree-field-wrapper {source}="instance.network_zone" {type}="loadedModel">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.network_zone}" {type}="{loadedModel}">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
@@ -39,53 +39,53 @@
 
   {{#case 'type'}}
     <model-loader {path}="'service-models/option'">
-      <tree-field-wrapper {source}="instance.kind" {type}="loadedModel">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.kind}" {type}="{loadedModel}">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
 
   {{#case 'modified_by'}}
     <model-loader {path}="'business-models/person'">
-      <tree-field-wrapper {source}="instance.modified_by" {type}="loadedModel" {field}="'email'">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.modified_by}" {type}="{loadedModel}" {field}="'email'">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
 
   {{#case 'ra_manager'}}
     <model-loader {path}="'business-models/person'">
-      <tree-field-wrapper {source}="instance.ra_manager" {type}="loadedModel" {field}="'email'">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.ra_manager}" {type}="{loadedModel}" {field}="'email'">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
 
   {{#case 'ra_counsel'}}
     <model-loader {path}="'business-models/person'">
-      <tree-field-wrapper {source}="instance.ra_counsel" {type}="loadedModel" {field}="'email'">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.ra_counsel}" {type}="{loadedModel}" {field}="'email'">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
 
   {{#case 'assignee'}}
     <model-loader {path}="'business-models/person'">
-      <tree-field-wrapper {source}="instance.contact" {type}="loadedModel" {field}="'email'">
-        <tree-field {source}="items"/>
+      <tree-field-wrapper {source}="{instance.contact}" {type}="{loadedModel}" {field}="'email'">
+        <tree-field {source}="{items}"/>
       </tree-field-wrapper>
     </model-loader>
   {{/case}}
 
   {{#case 'assertions'}}
-    <sort {items}="instance.assertions">
-      <tree-field {source}="sortedItems"/>
+    <sort {items}="{instance.assertions}">
+      <tree-field {source}="{sortedItems}"/>
     </sort>
   {{/case}}
 
   {{#case 'categories'}}
-    <sort {items}="instance.categories">
-      <tree-field {source}="sortedItems"/>
+    <sort {items}="{instance.categories}">
+      <tree-field {source}="{sortedItems}"/>
     </sort>
   {{/case}}
 
@@ -98,7 +98,7 @@
   {{/case}}
 
   {{#case 'review_status'}}
-    <review-state {instance}="instance">
+    <review-state {instance}="{instance}">
       <span>{{reviewState}}</span>
     </review-state>
   {{/case}}
@@ -159,14 +159,14 @@
   {{/case}}
 
   {{#case 'repeat'}}
-    <repeat-on-summary class="repeat-cell" {unit}="instance.unit" 
-                       {repeat-every}="instance.repeat_every"
-                       {hide-repeat-off}="false" >
+    <repeat-on-summary class="repeat-cell" {unit}="{instance.unit}" 
+                       {repeat-every}="{instance.repeat_every}"
+                       {hide-repeat-off}="{false}" >
     </repeat-on-summary>
   {{/case}}
 
   {{#case 'reference_url'}}
-    <related-documents {instance}="instance" {kind}="REFERENCE_URL">
+    <related-documents {instance}="{instance}" {kind}="'REFERENCE_URL'">
       <div class="reference-urls-list">
         {{#each documents}}
           <span class="reference-urls-list__item">
@@ -178,11 +178,11 @@
   {{/case}}
 
   {{#case 'questionnaire'}}
-    <questions-link {instance}="instance">Open</questions-link>
+    <questions-link {instance}="{instance}">Open</questions-link>
   {{/case}}
 
   {{#case 'last_comment'}}
-    <last-comment {instance}="instance"></last-comment>
+    <last-comment {instance}="{instance}"></last-comment>
   {{/case}}
 
   {{#case 'audit_firm'}}

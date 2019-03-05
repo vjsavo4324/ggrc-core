@@ -10,8 +10,8 @@
             <h6>Remediation Plan</h6>
             <div class="rtf-block">
               <read-more
-                {text}="test_plan"
-                {handle-markdown}="instance.class.isChangeableExternally">
+                {text}="{test_plan}"
+                {handle-markdown}="{instance.class.isChangeableExternally}">
               </read-more>
             </div>
         </div>

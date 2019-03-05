@@ -6,7 +6,7 @@
 <h6>
   Filter by mapping
   {{^readOnly}}
-    <a href="javascript://" ($click)="addFilter" class="add-filter-rule">
+    <a href="javascript://" ($click)="{addFilter()}" class="add-filter-rule">
       <i class="fa fa-fw fa-plus-circle"></i>
     </a>
   {{/readOnly}}
@@ -14,18 +14,18 @@
 {{#each relevant}}
   <div class="single-line-filter">
     {{^readOnly}}
-      <i class="fa fa-trash" ($click)="removeFilter(%element, @index)"></i>
+      <i class="fa fa-trash" ($click)="{removeFilter(%element, @index)}"></i>
     {{/readOnly}}
     {{#if @index}}
-      <dropdown options-list="operators"
-                name="operator"
+      <dropdown {options-list}="{operators}"
+                {name}="'operator'"
                 class="inline-block">
       </dropdown>
     {{/if}}
     Mapped to:
     <select class="filter-type-selector select-filter{{@index}}"
             {{#readOnly}}disabled="disabled"{{/readOnly}}
-            can-value="model_name">
+            {($value)}="{model_name}">
       {{#menu}}
         {{#if model_singular}}
           <option value="{{model_singular}}"

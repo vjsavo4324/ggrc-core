@@ -6,9 +6,9 @@
 {{#instance}}
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
     <div class="tier-content">
-      <general-page-header {instance}="instance"></general-page-header>
+      <general-page-header {instance}="{instance}"></general-page-header>
       <tab-container>
-        <tab-panel {(panels)}="panels" title-text="{{instance.type}}">
+        <tab-panel {(panels)}="{panels}" {title-text}="{{instance.type}}">
           <div class="info-pane__body">
             <div class="info-pane__main-content info-pane__main-content-with-sidebar">
               <div class="row-fluid wrap-row">
@@ -19,8 +19,7 @@
                   Url
                   {{/if_equals}}
                 </h6>
-                <document-object-list-item
-                  {instance}="instance">
+                <document-object-list-item {instance}="{instance}">
                 </document-object-list-item>
               </div>
 
@@ -49,19 +48,19 @@
             <div class="info-pane__sidebar">
               <div class="info-pane__section-title">Responses/Comments</div>
               <comments-section class="flex-box flex-col"
-                {instance}="instance">
+                                {instance}="{instance}">
               </comments-section>
             </div>
           </div>
         </tab-panel>
-          <tab-panel {(panels)}="panels" title-text="Change Log">
-              <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
       </tab-container>
     </div><!-- tier-content end -->
   </section>
 
   {{#if is_info_widget}}
-    <info-pane-footer {created-at}="instance.created_at" {modified-at}="instance.updated_at" {modified-by}="instance.modified_by"></info-pane-footer>
+    <info-pane-footer {created-at}="{instance.created_at}" {modified-at}="{instance.updated_at}" {modified-by}="{instance.modified_by}"></info-pane-footer>
   {{/if}}
 {{/instance}}

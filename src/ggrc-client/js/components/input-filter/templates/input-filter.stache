@@ -7,7 +7,7 @@
        name="{{name}}"
        class="input-filter input-block-level"
        placeholder="{{placeholder}}"
-       {($value)}="value"
+       {($value)}="{value}"
        tabindex="{{tabindex}}"
        {{#autofocus}}autofocus{{/autofocus}}
 />

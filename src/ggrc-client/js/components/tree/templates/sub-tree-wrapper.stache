@@ -7,9 +7,9 @@
   {{#if isOpen}}
     {{#directlyItems}}
       <sub-tree-item class="tree-item-element"
-                     extra-css="directly-related"
-                     {instance}="."
-                     {limit-depth-tree}="limitDepthTree"
+                     {extra-css}="'directly-related'"
+                     {instance}="{.}"
+                     {limit-depth-tree}="{limitDepthTree}"
       ></sub-tree-item>
     {{/directlyItems}}
 
@@ -27,7 +27,10 @@
 
     {{#if needToSplit}}
       <div class="sub-tree-link">
-        <sub-tree-expander (expandNotDirectly)="expandNotDirectlyRelated()" {expanded}="notDirectlyExpanded" disabled="disabled" display="display">
+        <sub-tree-expander (expandNotDirectly)="{expandNotDirectlyRelated()}"
+                           {expanded}="{notDirectlyExpanded}"
+                           {disabled}="{disabled}"
+                           {display}="{display}">
           <a ($click)="expandNotDirectly()" href="javascript://">
             <i class="fa fa-caret-{{#if expanded}}down{{else}}right{{/if}}"></i>
             Show objects not directly related to this {{contextName}}
@@ -38,9 +41,9 @@
       {{#if notDirectlyExpanded}}
         {{#notDirectlyItems}}
           <sub-tree-item class="tree-item-element"
-                        extra-css="not-directly-related"
-                        {instance}="."
-                        {limit-depth-tree}="limitDepthTree"
+                         {extra-css}="'not-directly-related'"
+                         {instance}="{.}"
+                         {limit-depth-tree}="{limitDepthTree}"
           ></sub-tree-item>
         {{/notDirectlyItems}}
       {{/if}}
@@ -52,6 +55,6 @@
   {{/if}}
 
   <div class="tree-spinner">
-    <spinner toggle="loading" size="large"></spinner>
+    <spinner {toggle}="{loading}" {size}="'large'"></spinner>
   </div>
 </div>

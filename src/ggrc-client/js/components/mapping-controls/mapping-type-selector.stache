@@ -2,24 +2,24 @@
   Copyright (C) 2019 Google Inc.
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-<select {{#disabled}}disabled{{/disabled}}
+<select {($value)}="{selectedType}"
         class="input-block-level"
-        can-value="selectedType"
-        name="type-select">
+        name="type-select"
+        {{#disabled}}disabled{{/disabled}}>
   {{#each types}}
     {{#if items}}
       {{#if items.length}}
-          <optgroup label="{{name}}">
-            {{#each items}}
-              {{#if name}}
-                  <option value="{{value}}" label="{{name}}"></option>
-              {{/if}}
-            {{/each}}
-          </optgroup>
+        <optgroup label="{{name}}">
+          {{#each items}}
+            {{#if name}}
+              <option value="{{value}}" label="{{name}}"></option>
+            {{/if}}
+          {{/each}}
+        </optgroup>
       {{/if}}
     {{else}}
       {{#if name}}
-          <option value="{{value}}" label="{{name}}"></option>
+        <option value="{{value}}" label="{{name}}"></option>
       {{/if}}
     {{/if}}
   {{/each}}

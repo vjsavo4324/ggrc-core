@@ -4,8 +4,8 @@
 }}
 
 <simple-modal
-  {state}="modalState"
-  {replace-content}="true"
+  {state}="{modalState}"
+  {replace-content}="{true}"
   {extra-css-class}="'request-review-modal'"
 >
   <div class="request-review-modal__header">
@@ -21,8 +21,8 @@
     <div class="simple-modal__body">
       <div class="simple-modal__section">
         <custom-roles-modal
-          {instance}="review"
-          {is-new-instance}="review.isNew">
+          {instance}="{review}"
+          {is-new-instance}="{review.isNew}">
         </custom-roles-modal>
       </div>
       <div class="simple-modal__section">
@@ -33,9 +33,9 @@
                 Comment
               </label>
               <rich-text
-                {hidden-toolbar}="true"
+                {hidden-toolbar}="{true}"
                 {placeholder}="'Enter comment'"
-                {(content)}="review.email_message"
+                {(content)}="{review.email_message}"
                 {with-mentions}="true">
               </rich-text>
             </div>

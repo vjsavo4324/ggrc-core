@@ -7,9 +7,9 @@
    class="btn btn-small {{#if unit}}btn-green{{else}}btn-white{{/if}}">
     {{buttonText}}
 </a>
-<simple-modal modal-title="modalTitle"
-              state="state"
-              extra-css-class="repeat-on">
+<simple-modal {modal-title}="{modalTitle}"
+              {state}="{state}"
+              {extra-css-class}="'repeat-on'">
     <div class="simple-modal__body">
         <div class="ggrc-form">
           <div class="row-fluid">
@@ -24,20 +24,20 @@
                   <label class="{{#unless repeatEnabled}}disabled{{/unless}}">
                       Repeats
                   </label>
-                  <dropdown {options-list}="unitOptions"
-                            name="state.result.unit"
-                            id="repeats-select"
-                            {is-disabled}="repeatDisabled">
+                  <dropdown id="repeats-select"
+                            {options-list}="{unitOptions}"
+                            {name}="'state.result.unit'"
+                            {is-disabled}="{repeatDisabled}">
                   </dropdown>
               </div>
               <div class="span5">
                   <label class="{{#unless repeatEnabled}}disabled{{/unless}}">
                       Repeat Every
                   </label>
-                  <dropdown {options-list}="repeatOptions"
-                            name="state.result.repeatEvery"
-                            id="repeat-every-select"
-                            {is-disabled}="repeatDisabled">
+                  <dropdown id="repeat-every-select"
+                            {options-list}="{repeatOptions}"
+                            {name}="'state.result.repeatEvery'"
+                            {is-disabled}="{repeatDisabled}">
                   </dropdown>
               </div>
           </div>

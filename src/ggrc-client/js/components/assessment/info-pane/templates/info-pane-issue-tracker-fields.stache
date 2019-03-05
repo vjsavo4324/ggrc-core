@@ -6,25 +6,25 @@
 <div class="ggrc-form-item">
   <div class="ggrc-form-item__multiple-row">
     <issue-tracker-switcher
-      set-issue-title="true"
-      (issue-tracker-switcher-changed)="saveInlineForm(%event)"
-      {instance}="instance">
+      {set-issue-title}="{true}"
+      (issue-tracker-switcher-changed)="{saveInlineForm(%event)}"
+      {instance}="{instance}">
       <ticket-id-checker
-        {instance}="instance"
-        {issue-tracker-enabled}="instance.issue_tracker.enabled"
-        (value-change)="inlineDropdownValueChange(%event)">
+        {instance}="{instance}"
+        {issue-tracker-enabled}="{instance.issue_tracker.enabled}"
+        (value-change)="{inlineDropdownValueChange(%event)}">
         <inline-edit-control
-          (inline-save)="checkTicketId(%event)"
-          {is-edit-icon-denied}="isEditDenied"
-          {dropdown-options}="instance.class.issue_tracker_enable_options"
-          {instance}="instance"
-          {value}="issueTrackerEnabled"
-          type="dropdown">
+          (inline-save)="{checkTicketId(%event)}"
+          {is-edit-icon-denied}="{isEditDenied}"
+          {dropdown-options}="{instance.class.issue_tracker_enable_options}"
+          {instance}="{instance}"
+          {value}="{issueTrackerEnabled}"
+          {type}="'dropdown'">
             <base-inline-control-title
               class="inline__header"
-              {edit-mode}="editMode"
-              {is-edit-icon-denied}="isEditIconDenied"
-              (set-edit-mode-inline)="setEditModeInline(%event)">
+              {edit-mode}="{editMode}"
+              {is-edit-icon-denied}="{isEditIconDenied}"
+              (set-edit-mode-inline)="{setEditModeInline(%event)}">
                 <div class="ticket-info-header">
                   <span class="ggrc-form__title">Ticket Tracker</span>
                   {{#if instance.issueCreated}}
@@ -49,14 +49,14 @@
 <div class="ggrc-form-item">
   <div class="ggrc-form-item__multiple-row--double">
     <assessment-inline-item
-      type="number"
-      prop-name="issue_tracker.issue_id"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.issue_id"
-      {instance}="instance">
+      {type}="'number'"
+      {prop-name}="'issue_tracker.issue_id'"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.issue_id}"
+      {instance}="{instance}">
         <div>
           <div class="ggrc-form__title">Ticket ID</div>
           <div class="ggrc-form-item__small-text">
@@ -71,28 +71,28 @@
 <div class="ggrc-form-item">
   <div class="ggrc-form-item__multiple-row">
     <assessment-inline-item
-      type="number"
-      prop-name="issue_tracker.hotlist_id"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.hotlist_id"
-      {instance}="instance">
+      {type}="'number'"
+      {prop-name}="'issue_tracker.hotlist_id'"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.hotlist_id}"
+      {instance}="{instance}">
         <div class="ggrc-form__title">Hotlist ID</div>
     </assessment-inline-item>
   </div>
   <div class="ggrc-form-item__multiple-row">
     <assessment-inline-item
-      type="number"
-      prop-name="issue_tracker.component_id"
-      mandatory="true"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.component_id"
-      {instance}="instance">
+      {type}="'number'"
+      {prop-name}="'issue_tracker.component_id'"
+      {mandatory}="{true}"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.component_id}"
+      {instance}="{instance}">
         <div class="ggrc-form__title form-label form-label__extended">
             Component ID
           <i class="fa fa-asterisk"></i>
@@ -101,7 +101,7 @@
   </div>
   <div class="ggrc-form-item__multiple-row">
     <!-- use "inline-edit-control" to save styles... -->
-    <inline-edit-control {value}="instance.issue_tracker.issue_type">
+    <inline-edit-control {value}="{instance.issue_tracker.issue_type}">
       <div class="inline">
         <base-inline-control-title
           class="inline__header"
@@ -115,44 +115,44 @@
 <div class="ggrc-form-item">
   <div class="ggrc-form-item__multiple-row">
     <assessment-inline-item
-      type="dropdown"
-      prop-name="issue_tracker.issue_priority"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {dropdown-options}="instance.class.issue_tracker_priorities"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.issue_priority"
-      {instance}="instance">
+      {type}="'dropdown'"
+      {prop-name}="'issue_tracker.issue_priority'"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {dropdown-options}="{instance.class.issue_tracker_priorities}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.issue_priority}"
+      {instance}="{instance}">
         <div class="ggrc-form__title">Ticket Priority</div>
     </assessment-inline-item>
   </div>
   <div class="ggrc-form-item__multiple-row">
     <assessment-inline-item
-      type="dropdown"
-      prop-name="issue_tracker.issue_severity"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {dropdown-options}="instance.class.issue_tracker_severities"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.issue_severity"
-      {instance}="instance">
+      {type}="'dropdown'"
+      {prop-name}="'issue_tracker.issue_severity'"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {dropdown-options}="{instance.class.issue_tracker_severities}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.issue_severity}"
+      {instance}="{instance}">
         <div class="ggrc-form__title">Ticket Severity</div>
     </assessment-inline-item>
   </div>
   <div class="ggrc-form-item__multiple-row">
     <assessment-inline-item
-      type="input"
-      prop-name="issue_tracker.title"
-      mandatory="true"
-      with-read-more="true"
-      is-confirmation-needed="false"
-      {set-in-progress}="@setInProgressState"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {is-edit-icon-denied}="isEditDenied"
-      {value}="instance.issue_tracker.title"
-      {instance}="instance">
+      {type}="'input'"
+      {prop-name}="'issue_tracker.title'"
+      {mandatory}="{true}"
+      {with-read-more}="{true}"
+      {is-confirmation-needed}="{false}"
+      {set-in-progress}="{@setInProgressState}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {is-edit-icon-denied}="{isEditDenied}"
+      {value}="{instance.issue_tracker.title}"
+      {instance}="{instance}">
         <div class="ggrc-form__title form-label form-label__extended">
           Ticket Title
           <i class="fa fa-asterisk"></i>

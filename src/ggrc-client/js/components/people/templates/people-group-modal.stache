@@ -3,13 +3,11 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<simple-modal
-  modal-title="title"
-  state="modalState"
-  replace-content="true"
-  extra-css-class="people-group-modal"
-  (hide)="cancel"
->
+<simple-modal {modal-title}="{title}"
+              {state}="{modalState}"
+              {replace-content}="{true}"
+              {extra-css-class}="'people-group-modal'"
+              (hide)="{cancel()}">
   <div class="simple-modal__header flex-box flex-row">
     <div class="simple-modal__header-text flex-size-1">
       <div class="simple-modal__title">
@@ -29,30 +27,27 @@
         Add person
       </p>
       {{#if isLoading}}
-        <spinner {toggle}="isLoading"></spinner>
+        <spinner {toggle}="{isLoading}"></spinner>
       {{else}}
         {{#if_config_exist 'external_services.Person'}}
-          <external-data-autocomplete
-            {type}="'Person'"
-            {placeholder}="'Type person'"
-            {min-length}="2"
-            (item-selected)="personSelected(%event.selectedItem)">
+          <external-data-autocomplete {type}="'Person'"
+                                      {placeholder}="'Type person'"
+                                      {min-length}="2"
+                                      (item-selected)="{personSelected(%event.selectedItem)}">
           </external-data-autocomplete>
         {{else}}
-          <autocomplete
-            search-items-type="Person"
-            (item-selected)="personSelected(%event.selectedItem)"
-            placeholder="Type person">
+          <autocomplete {search-items-type}="'Person'"
+                        (item-selected)="{personSelected(%event.selectedItem)}"
+                        {placeholder}="'Type person'">
           </autocomplete>
         {{/if_config_exist}}
       {{/if}}
     </div>
     <div class="simple-modal__section people-group-modal__people-section">
       <div>
-        <object-list
-          ({items})="people"
-          {is-disabled}="isLoading"
-          {empty-message}="emptyListMessage">
+        <object-list ({items})="{people}"
+                     {is-disabled}="{isLoading}"
+                     {empty-message}="{emptyListMessage}">
             <person-data {person}="{.}">
               {{#unmapablePerson}}
                 <a href="javascript://"
@@ -70,16 +65,16 @@
   <div class="simple-modal__footer">
     <div class="simple-modal__toolbar people-group-modal__footer">
       <button type="button"
-        class="btn btn-green people-group-modal__button"
-        ($click)="save()"
+              class="btn btn-green people-group-modal__button"
+              ($click)="save()"
         {{#if isLoading}}disabled{{/if}}>
-          Save &amp; Close
+        Save &amp; Close
       </button>
       <button type="button"
-        class="btn btn-small people-group-modal__button btn-white"
-        ($click)="cancel()"
+              class="btn btn-small people-group-modal__button btn-white"
+              ($click)="cancel()"
         {{#if isLoading}}disabled{{/if}}>
-          Cancel
+        Cancel
       </button>
       <div class="people-group-modal__selected-count">
         {{selectedCount}}

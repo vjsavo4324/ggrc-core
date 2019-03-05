@@ -12,13 +12,13 @@
 
     <div class="task_group_tasks__list-item-column">
         <div class="people-list roles attr-content">
-          <tree-people-with-role-list-field {instance}="." {role}="class.tree_view_options.assigneeRoleName"/>
+          <tree-people-with-role-list-field {instance}="{.}" {role}="{class.tree_view_options.assigneeRoleName}"/>
         </div>
     </div>
 
     <div class="task_group_tasks__list-item-column">
         <div class="people-list roles attr-content">
-          <tree-people-with-role-list-field {instance}="." {role}="class.tree_view_options.secondaryAssigneeRoleName"/>
+          <tree-people-with-role-list-field {instance}="{.}" {role}="{class.tree_view_options.secondaryAssigneeRoleName}"/>
         </div>
     </div>
 

@@ -16,8 +16,8 @@
           </li>
           {{#is_allowed 'create' 'delete' 'UserRole' context=parent_instance.context.id}}
             <li class="border">
-              <user-roles-selector-button {person-id}="id">
-                <a href="javascript://" ($click)="openModal(%event)">
+              <user-roles-selector-button {person-id}="{id}">
+                <a href="javascript://" ($click)="{openModal(%event)}">
                   <i class="fa fa-address-card"></i>
                   Edit Authorizations
                 </a>

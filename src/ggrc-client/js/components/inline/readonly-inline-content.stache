@@ -8,12 +8,12 @@
   {{#case 'dropdown'}}
     <dropdown-form-field
       class="disabled-dropdown"
-      {value}="context.value"
-      {options}="dropdownOptions"
-      {no-value}="dropdownNoValue"
-      {dropdown-options-groups}="dropdownOptionsGroups"
-      {is-grouped-dropdown}="isGroupedDropdown"
-      disabled="true"
+      {value}="{context.value}"
+      {options}="{dropdownOptions}"
+      {no-value}="{dropdownNoValue}"
+      {dropdown-options-groups}="{dropdownOptionsGroups}"
+      {is-grouped-dropdown}="{isGroupedDropdown}"
+      {disabled}="{true}"
     ></dropdown-form-field>
   {{/case}}
 
@@ -33,15 +33,15 @@
 
   {{#case 'person'}}
     {{#if context.value}}
-      <person-data {person-id}="context.value"></person-data>
+      <person-data {person-id}="{context.value}"></person-data>
     {{else}}
       <span class="empty-message">No person</span>
     {{/if}}
   {{/case}}
   
   {{#case 'multi-select-label'}}
-    <multi-select-label {labels}="value"
-        {edit-mode}="false">
+    <multi-select-label {labels}="{value}"
+                        {edit-mode}="{false}">
     </multi-select-label>
   {{/case}}
 
@@ -49,8 +49,8 @@
     {{#if withReadMore}}
       <div class="inline-edit__text">
         <read-more
-          {text}="value"
-          {handle-markdown}="instance.class.isChangeableExternally">
+          {text}="{value}"
+          {handle-markdown}="{instance.class.isChangeableExternally}">
         </read-more>
       </div>
     {{else}}

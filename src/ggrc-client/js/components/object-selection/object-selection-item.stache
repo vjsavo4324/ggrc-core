@@ -3,10 +3,10 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 {{#if isDisabled}}
-    <input type="checkbox" checked="checked" disabled/>
+  <input type="checkbox" checked="checked" disabled/>
 {{else}}
   {{#if isSelected}}
-  <input type="checkbox" checked="checked"/>
+    <input type="checkbox" checked="checked"/>
   {{else}}
     <input type="checkbox"/>
   {{/if}}

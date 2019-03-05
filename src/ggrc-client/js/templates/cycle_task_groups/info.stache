@@ -37,8 +37,8 @@
             <h6>{{instance.class.title_singular}} description</h6>
             <div class="rtf-block">
               <read-more
-                {text}="instance.description"
-                {handle-markdown}="instance.class.isChangeableExternally">
+                {text}="{instance.description}"
+                {handle-markdown}="{instance.class.isChangeableExternally}">
               </read-more>
             </div>
           </div>

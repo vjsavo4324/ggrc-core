@@ -13,7 +13,7 @@
     {{/if}}
 </div>
 <div class="span-custom1-and-half">
-  <select class="input-block-level" can-value="selected.type">
+  <select class="input-block-level" {($value)}="{selected.type}">
     {{#types}}
       <option value="{{type}}">{{name}}</option>
     {{/types}}

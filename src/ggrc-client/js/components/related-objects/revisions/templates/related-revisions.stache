@@ -5,7 +5,7 @@
 
 <div class="object-history">
   <div class="grid-data__toolbar flex-box">
-    <tree-pagination {paging}="paging" class="grid-data__toolbar-item"></tree-pagination>
+    <tree-pagination {paging}="{paging}" class="grid-data__toolbar-item"></tree-pagination>
   </div>
   <div class="object-history__header flex-row flex-box">
     <div class="flex-size-1">
@@ -26,12 +26,13 @@
     </div>
   </div>
   <div class="object-history__body {{#isLoading}}loading{{/isLoading}}">
-    <object-list {items}="visibleRevisions" {is-loading}="loading" {list-type}="'GRID'">
-      <related-revisions-item
-        class="object-history__row flex-box"
-        {instance}="instance"
-        {last-revision}="lastRevision"
-        {revision}=".">
+    <object-list {items}="{visibleRevisions}"
+                 {is-loading}="{loading}"
+                 {list-type}="'GRID'">
+      <related-revisions-item class="object-history__row flex-box"
+                              {instance}="{instance}"
+                              {last-revision}="{lastRevision}"
+                              {revision}="{.}">
       </related-revisions-item>
     </object-list>
   </div>

@@ -6,13 +6,13 @@
 {{#instance}}
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
     <div class="tier-content">
-      <general-page-header {instance}="instance"></general-page-header>
+      <general-page-header {instance}="{instance}"></general-page-header>
 
-      <tab-container {instance}="instance">
-        <tab-panel {(panels)}="panels" title-text="Attributes">
+      <tab-container {instance}="{instance}">
+        <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
           <div class="info-pane__body">
             <div class="info-pane__main-content {{^if isSnapshot}}info-pane__main-content-with-sidebar{{/if}}">
-              <object-review {instance}="instance"></object-review>
+              <object-review {instance}="{instance}"></object-review>
               {{> /static/templates/base_objects/description.stache}}
               {{> /static/templates/base_objects/test_plan.stache}}
 
@@ -20,8 +20,8 @@
                 <div class="span12">
                   <h6>Risk Type</h6>
                   <read-more
-                    {text}="risk_type"
-                    {handle-markdown}="instance.class.isChangeableExternally">
+                    {text}="{risk_type}"
+                    {handle-markdown}="{instance.class.isChangeableExternally}">
                   </read-more>
                 </div>
               </div>
@@ -31,8 +31,8 @@
                   <div class="span12">
                     <h6>Threat Source</h6>
                     <read-more
-                      {text}="threat_source"
-                      {handle-markdown}="instance.class.isChangeableExternally">
+                      {text}="{threat_source}"
+                      {handle-markdown}="{instance.class.isChangeableExternally}">
                     </read-more>
                   </div>
                 </div>
@@ -43,8 +43,8 @@
                   <div class="span12">
                     <h6>Threat Event</h6>
                     <read-more
-                      {text}="threat_event"
-                      {handle-markdown}="instance.class.isChangeableExternally">
+                      {text}="{threat_event}"
+                      {handle-markdown}="{instance.class.isChangeableExternally}">
                     </read-more>
                   </div>
                 </div>
@@ -55,8 +55,8 @@
                   <div class="span12">
                     <h6>Vulnerability</h6>
                     <read-more
-                      {text}="vulnerability"
-                      {handle-markdown}="instance.class.isChangeableExternally">
+                      {text}="{vulnerability}"
+                      {handle-markdown}="{instance.class.isChangeableExternally}">
                     </read-more>
                   </div>
                 </div>
@@ -67,8 +67,8 @@
               {{> /static/templates/base_objects/reference-urls.stache}}
               <div class="row-fluid wrap-row">
                 <folder-attachments-list {title}="'Attachment'"
-                                      {instance}="instance"
-                                      {is-snapshot}="isSnapshot">
+                                         {instance}="{instance}"
+                                         {is-snapshot}="{isSnapshot}">
                 </folder-attachments-list>
               </div>
 
@@ -134,7 +134,7 @@
             <div class="info-pane__sidebar">
               <div class="info-pane__section-title">Responses/Comments</div>
               <comments-section class="flex-box flex-col"
-                {instance}="instance"
+                {instance}="{instance}"
                 {notification}="'Notify Admins, Primary and Secondary Contacts'">
               </comments-section>
             </div>
@@ -143,25 +143,25 @@
         </tab-panel>
         {{^if isSnapshot}}
           <tab-panel
-            warning-text="Some proposals are pending approval"
-            title-text="Change Proposals"
-            extra-classes="proposal proposal__tab-warning"
-            tab-id="tab-related-proposals"
-            {(panels)}="panels"
-            {parent-instance}="instance"
-            {can-display-warning}="true"
-            {pre-render-content}="true">
+            {warning-text}="'Some proposals are pending approval'"
+            {title-text}="'Change Proposals'"
+            {extra-classes}="'proposal proposal__tab-warning'"
+            {tab-id}="'tab-related-proposals'"
+            {(panels)}="{panels}"
+            {parent-instance}="{instance}"
+            {can-display-warning}="{true}"
+            {pre-render-content}="{true}">
               <related-proposals
-                (update-proposals-warning)="updateWarningState(%event)"
-                {base-instance}="instance">
+                (update-proposals-warning)="{updateWarningState(%event)}"
+                {base-instance}="{instance}">
               </related-proposals>
           </tab-panel>
-          <tab-panel {(panels)}="panels" title-text="Version History">
-            <related-revisions {instance}="instance"></related-revisions>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Version History'">
+            <related-revisions {instance}="{instance}"></related-revisions>
           </tab-panel>
 
-          <tab-panel tab-id="change-log" {(panels)}="panels" title-text="Change Log">
-              <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {tab-id}="'change-log'" {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
         {{/if}}
       </tab-container>
@@ -171,6 +171,6 @@
 
   </section>
   {{#if is_info_widget}}
-    <info-pane-footer {created-at}="instance.created_at" {modified-at}="instance.updated_at" {modified-by}="instance.modified_by"></info-pane-footer>
+    <info-pane-footer {created-at}="{instance.created_at}" {modified-at}="{instance.updated_at}" {modified-by}="{instance.modified_by}"></info-pane-footer>
   {{/if}}
 {{/instance}}

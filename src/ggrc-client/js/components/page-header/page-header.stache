@@ -56,9 +56,8 @@
   </li>
   <li>
     <feedback-link>
-      <tooltip-content
-        placement="'bottom'"
-        {content}="title">
+      <tooltip-content {placement}="'bottom'"
+                       {content}="{title}">
         <div class="oneline">
           <a href="{{link}}"
             target="_blank"
@@ -74,7 +73,7 @@
     <a href="/dashboard#!task">
       <div class="oneline">
         {{#if showTitles}}My Tasks{{/if}}
-        <tasks-counter {person}="current_user"
+        <tasks-counter {person}="{current_user}"
         ></tasks-counter>
       </div></a>
   </li>
@@ -142,7 +141,7 @@
         </li>
       {{/if}}
       <li class="notify-wrap">
-        <lazy-render trigger="menuInitialized">
+        <lazy-render {trigger}="{menuInitialized}">
           <notifications-menu-item>
           </notifications-menu-item>
         </lazy-render>

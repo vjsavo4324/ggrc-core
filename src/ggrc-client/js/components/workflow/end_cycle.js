@@ -18,7 +18,7 @@ import {countsMap as workflowCountsMap} from '../../apps/workflows';
  *
  * Usage example (state and permission checks not included):
  *
- *   <cycle-end-cycle cycle="instance">
+ *   <cycle-end-cycle {cycle}="{instance}">
  *       <button>Click to end a Cycle</button>
  *   </cycle-end-cycle>
  *

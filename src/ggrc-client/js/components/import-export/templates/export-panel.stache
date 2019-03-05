@@ -24,7 +24,7 @@
   </h6>
 
   <div class="single-line-filter">
-    <select can-value="type" class="input-block-level option-type-selector">
+    <select {($value)}="{type}" class="input-block-level option-type-selector">
       {{#exportable}}
         <option value="{{model_singular}}" label="{{title_plural}}"></option>
       {{/exportable}}
@@ -34,7 +34,7 @@
   {{#if_equals type "Snapshot"}}
    <h6>Select snapshot object type</h6>
    <div class="single-line-filter">
-     <select can-value="item.snapshot_type" class="input-block-level option-type-selector">
+     <select {($value)}="{item.snapshot_type}" class="input-block-level option-type-selector">
        {{#snapshotable_objects}}
          <option value="{{.}}" label="{{.}}" ></option>
        {{/snapshotable_objects}}
@@ -56,5 +56,9 @@
     </div>
   </div>
 
-  <relevant-filter has_parent="item.has_parent" relevant_menu_item="parent" panel_index="panel_index" relevant="item.relevant"></relevant-filter>
+  <relevant-filter {has_parent}="{item.has_parent}"
+                   {relevant_menu_item}="{parent}"
+                   {panel_index}="{panel_index}"
+                   {relevant}="{item.relevant}">
+  </relevant-filter>
 </div>

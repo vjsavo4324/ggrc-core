@@ -5,7 +5,7 @@
 
 <content></content>
 
-<simple-modal modal-title="modalTitle" state="modalState" replace-content="true" extra-css-class="related-snapshots">
+<simple-modal {modal-title}="{modalTitle}" {state}="{modalState}" {replace-content}="{true}" {extra-css-class}="'related-snapshots'">
   <div class="simple-modal__header flex-box flex-row">
         <div class="simple-modal__header-text flex-size-1">
             <div class="simple-modal__title">
@@ -31,8 +31,8 @@
             </div>
             <div class="related-snapshots__audit-container">
                 <business-object-list-item
-                    ($click)="openObject({relatedAudit})"
-                    {instance}="relatedAudit">
+                    ($click)="{openObject({relatedAudit})}"
+                    {instance}="{relatedAudit}">
                 </business-object-list-item>
             </div>
         </div>
@@ -43,20 +43,21 @@
                 Related Snapshots
             </div>
             <div class="modal-mapped-objects">
-                <spinner {toggle}="isLoading" class="spinner-wrapper active"
-                         extra-css-class="grid-spinner"></spinner>
-                <object-list {items}="relatedSnapshots">
+                <spinner {toggle}="{isLoading}" class="spinner-wrapper active"
+                         {extra-css-class}="'grid-spinner'">
+                </spinner>
+                <object-list {items}="{relatedSnapshots}">
                     <div class="modal-mapped-objects-item">
                         <div class="modal-mapped-objects-item__details">
                             <business-object-list-item
-                                ($click)="openObject({.})"
+                                ($click)="{openObject({.})}"
                                 {instance}="{.}">
                             </business-object-list-item>
                         </div>
                     </div>
                 </object-list>
             </div>
-            <tree-pagination {paging}="paging" placement="top"></tree-pagination>
+            <tree-pagination {paging}="{paging}" {placement}="'top'"></tree-pagination>
         </div>
         {{/if}}
     </div>

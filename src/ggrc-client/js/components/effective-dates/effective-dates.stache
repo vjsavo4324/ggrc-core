@@ -7,11 +7,10 @@
   <a data-id="hide_effective_date_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
   <datepicker
       tabindex="20"
-      {label}="configStartDate.label"
-      date="instance.start_date"
-      set-max-date="instance.end_date"
-      {helptext}="configStartDate.helpText"
-      test-id="startTestId"
-      {{#configStartDate.required}}required="true"{{/configStartDate.required}}
+      {label}="{configStartDate.label}"
+      {(date)}="{instance.start_date}"
+      {set-max-date}="{instance.end_date}"
+      {helptext}="{configStartDate.helpText}"
+      {{#configStartDate.required}}{required}="{true}"{{/configStartDate.required}}
   />
 </div>

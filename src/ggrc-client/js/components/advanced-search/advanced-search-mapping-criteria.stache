@@ -7,7 +7,7 @@
   <h6>{{title}}</h6>
   <div class="mapping-criteria__content flex-box flex-box-multi">
     <div class="mapping-criteria__type">
-      <select {($value)}="criteria.objectName" {{#if isClone}}disabled{{/if}}>
+      <select {($value)}="{criteria.objectName}" {{#if isClone}}disabled{{/if}}>
       {{#mappingTypes}}
         <option value="{{model_singular}}"
                 label="{{title_singular}}">
@@ -18,15 +18,15 @@
     <div class="flex-box flex-box-multi">
       <div class="flex-box flex-box-multi">
         <advanced-search-filter-attribute
-                {(attribute)}="criteria.filter.value"
-                {available-attributes}="availableAttributes"
-                {show-actions}="false">
+                {(attribute)}="{criteria.filter.value}"
+                {available-attributes}="{availableAttributes}"
+                {show-actions}="{false}">
         </advanced-search-filter-attribute>
         <button type="button" class="mapping-criteria__remove" ($click)="remove()"><i class="fa fa-trash"></i></button>
       </div>
       <div class="mapping-criteria__action">
         {{#if showPopover}}
-          <simple-popover {button-text}="'+ Add''" extra-css-class="advanced-search" placement="top">
+          <simple-popover {button-text}="{'+ Add'}" extra-css-class="{advanced-search}" placement="{top}">
             <button type="button"
                     class="mapping-criteria__action-button"
                     ($click)="addRelevant()">
@@ -57,20 +57,20 @@
     {{#switch criteria.mappedTo.type}}
       {{#case "mappingCriteria"}}
         <advanced-search-mapping-criteria
-          {(criteria)}="criteria.mappedTo.value"
-          (remove)="removeRelevant()"
-          {model-name}="criteria.objectName"
-          {extendable}="extendable"
-          (createGroup)="relevantToGroup()"
-          {^can-be-grouped}="../childCanBeGrouped">
+          {(criteria)}="{criteria.mappedTo.value}"
+          (remove)="{removeRelevant()}"
+          {model-name}="{criteria.objectName}"
+          {extendable}="{extendable}"
+          (createGroup)="{relevantToGroup()}"
+          {^can-be-grouped}="{../childCanBeGrouped}">
         </advanced-search-mapping-criteria>
       {{/case}}
       {{#case "group"}}
         <advanced-search-mapping-group
-          {(items)}="criteria.mappedTo.value"
-          (remove)="removeRelevant()"
-          {model-name}="criteria.objectName"
-          {^root}="../childCanBeGrouped">
+          {(items)}="{criteria.mappedTo.value}"
+          (remove)="{removeRelevant()}"
+          {model-name}="{criteria.objectName}"
+          {^root}="{../childCanBeGrouped}">
         </advanced-search-mapping-group>
         {{/case}}
       {{/switch}}

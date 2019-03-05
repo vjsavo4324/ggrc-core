@@ -17,12 +17,12 @@
            title="Set a name for the {{class.title_singular}}."></i>
       </label>
       <input-filter
-        name="name"
-        {(value)}="name"
-        placeholder="Enter Name"
-        exclude-symbols="*"
+        {name}="'name'"
+        {(value)}="{name}"
+        {placeholder}="'Enter Name'"
+        {exclude-symbols}="'*'"
         {tabindex}="1"
-        {autofocus}="true">
+        {autofocus}="{true}">
       </input-filter>
     </div>
 

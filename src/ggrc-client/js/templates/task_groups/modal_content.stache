@@ -28,19 +28,19 @@
           <input id="task_group_assignee" tabindex="2" type="text" name="contact.email" class="span10 search-icon" data-lookup="Person" placeholder="Enter text to search for Assignee" value="{{firstnonempty assignee.email ''}}">
           {{else}}
           <inline-autocomplete-wrapper
-            {instance}="instance"
+            {instance}="{instance}"
             {path}="'contact'"
             {display-prop}="'email'"
-            {text-value}="assignee.email">
+            {text-value}="{assignee.email}">
             <external-data-autocomplete
               {type}="'Person'"
               {extra-css-class}="'span10 search-icon'"
               {placeholder}="'Enter text to search for Assignee'"
-              (item-selected)="setItem(%event.selectedItem)"
-              (criteria-changed)="setItem(%event.value)"
-              {auto-clean}="false"
+              (item-selected)="{setItem(%event.selectedItem)}"
+              (criteria-changed)="{setItem(%event.value)}"
+              {auto-clean}="{false}"
               {min-length}="2"
-              {search-criteria}="textValue">
+              {search-criteria}="{textValue}">
             </external-data-autocomplete>
           </inline-autocomplete-wrapper>
           {{/if_config_exist}}
@@ -62,9 +62,9 @@
       <div class="rich-text">
           <rich-text
             tabindex="3"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Description'"
-            {(content)}="instance.description">
+            {(content)}="{instance.description}">
           </rich-text>
       </div>
     </div>

@@ -10,8 +10,8 @@
         <h6>Notes</h6>
         <div data-test-id="title_notes_content_ef5bc3a71e88" class="rtf-block">
           <read-more
-            {text}="notes"
-            {handle-markdown}="instance.class.isChangeableExternally">
+            {text}="{notes}"
+            {handle-markdown}="{instance.class.isChangeableExternally}">
           </read-more>
         </div>
       </div>

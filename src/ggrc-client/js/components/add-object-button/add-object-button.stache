@@ -6,11 +6,11 @@
 {{#is_allowed 'update' instance context="for"}}
   {{#is singular "AssessmentTemplate"}}
     <assessment-template-clone-button
-      {class}="linkclass"
-      {text}="text"
-      {object-type}="singular"
-      {parent-id}="instance.id"
-      {parent-type}="instance.class.model_singular">
+      {class}="{linkclass}"
+      {text}="{text}"
+      {object-type}="{singular}"
+      {parent-id}="{instance.id}"
+      {parent-type}="{instance.class.model_singular}">
       {{content}}
     </assessment-template-clone-button>
   {{else}}

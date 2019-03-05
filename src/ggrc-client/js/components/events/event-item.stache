@@ -25,7 +25,7 @@
     <li>
       <span class="event-owner">
         by
-        <person-data {person}="modified_by"></person-data>
+        <person-data {person}="{modified_by}"></person-data>
       </span>
     </li>
     <li>

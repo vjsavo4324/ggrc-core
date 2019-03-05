@@ -10,11 +10,11 @@
     {{#if_equals instance.type "Person"}}
       {{> /static/templates/people/dropdown_menu.stache}}
     {{else}}
-        {{#if_equals instance.type 'Audit'}}
-            {{> /static/templates/audits/dropdown_menu.stache}}
-        {{else}}
-            {{> /static/templates/base_objects/dropdown_menu.stache}}
-        {{/if_equals}}
+      {{#if_equals instance.type "Audit"}}
+        {{> /static/templates/audits/dropdown_menu.stache}}
+      {{else}}
+        {{> /static/templates/base_objects/dropdown_menu.stache}}
+      {{/if_equals}}
     {{/if_equals}}
   {{/if}}
 </div>

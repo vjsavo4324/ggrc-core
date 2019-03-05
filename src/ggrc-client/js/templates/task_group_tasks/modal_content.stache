@@ -46,9 +46,9 @@
             <div class="rich-text">
                 <rich-text
                   tabindex="3"
-                  {hidden-toolbar}="true"
+                  {hidden-toolbar}="{true}"
                   {placeholder}="'Enter Description'"
-                  {(content)}="instance.description">
+                  {(content)}="{instance.description}">
                 </rich-text>
             </div>
           </div>
@@ -60,7 +60,10 @@
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array array="instance.response_options" placeholder="Enter Values" class-name="span12 double"></textarea-array>
+            <textarea-array {array}="{instance.response_options}"
+                            {placeholder}="'Enter Values'" 
+                            {class-name}="'span12 double'">
+            </textarea-array>
           </div>
           {{/if_equals}}
         {{#if_equals instance.task_type 'checkbox'}}
@@ -70,7 +73,10 @@
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array array="instance.response_options" placeholder="Enter Values" class-name="span12 double"></textarea-array>
+            <textarea-array {array}="{instance.response_options}"
+                            {placeholder}="'Enter Values'"
+                            {class-name}="'span12 double'">
+            </textarea-array>
           </div>
         {{/if_equals}}
         <input type="hidden" name="task_group" model="TaskGroup" value="{{firstnonempty object_params.task_group instance.task_group.id}}" />
@@ -90,42 +96,46 @@
       </div>
     </div>
     <div class="span4">
-        <access-control-list-roles-helper
-                {instance}="instance"
-                {is-new-instance}="new_object_form">
+        <access-control-list-roles-helper {instance}="{instance}"
+                                          {is-new-instance}="{new_object_form}">
         </access-control-list-roles-helper>
         {{#using task_group=instance.task_group}}
         {{#using workflow=task_group.workflow}}
-            <div class="frequency-wrap">
-                <label class="form-label">
-                    Repeat
-                    <i class="fa fa-question-circle" rel="tooltip" title="Choose start and end dates"></i>
-                </label>
-                <repeat-on-summary {unit}="workflow.unit" {repeat-every}="workflow.repeat_every"
-                {hide-repeat-off}="false">
-                </repeat-on-summary>
-                <label class="smaller">
-                    <label class="form-label">
-                        Start Date
-                        <i class="fa fa-asterisk"></i>
-                    </label>
-                    <datepicker date="instance.start_date"
-                                required="true"
-                                no-weekends="true"
-                                readonly="true"></datepicker>
-                </label>
-                <label class="smaller">
-                    <label class="form-label">
-                        Due Date
-                        <i class="fa fa-asterisk"></i>
-                    </label>
-                    <datepicker set-min-date="instance.start_date"
-                                date="instance.end_date"
-                                required="true"
-                                no-weekends="true"
-                                readonly="true"></datepicker>
-                </label>
+          <div class="frequency-wrap">
+            <label class="form-label">
+              Repeat
+              <i class="fa fa-question-circle" rel="tooltip" title="Choose start and end dates"></i>
+            </label>
+            <repeat-on-summary {unit}="{workflow.unit}"
+                               {repeat-every}="{workflow.repeat_every}"
+                               {hide-repeat-off}="{false}">
+            </repeat-on-summary>
+            <div class="smaller">
+              <label class="form-label">
+                Start Date
+                <i class="fa fa-asterisk"></i>
+              </label>
+              <datepicker id="repeate-start-date"
+                          {(date)}="{instance.start_date}"
+                          {required}="{true}"
+                          {no-weekends}="{true}"
+                          {readonly}="{true}">
+              </datepicker>
             </div>
+            <div class="smaller">
+              <label class="form-label">
+                Due Date
+                <i class="fa fa-asterisk"></i>
+              </label>
+              <datepicker id="repeate-end-date"
+                          {(date)}="{instance.end_date}"
+                          {set-min-date}="{instance.start_date}"
+                          {required}="{true}"
+                          {no-weekends}="{true}"
+                          {readonly}="{true}">
+              </datepicker>
+            </div>
+          </div>
         {{/using}}
         {{/using}}
     </div>

@@ -31,14 +31,13 @@
       <div class="rich-text" data-test-id="control_description-text_9cc51ca3">
           <rich-text
             tabindex="2"
-            {hidden-toolbar}="true"
-            {placeholder}="'Enter Description'"
-            {(content)}="instance.description">
+            {hidden-toolbar}="{true}"
+            {placeholder}="{'Enter Description'}"
+            {(content)}="{instance.description}">
           </rich-text>
       </div>
     </div>
   </div>
-
 
   <div class="row-fluid">
     <div data-test-id="control_test_plan_d8b5a2f4" data-id="test_plan_hidden" class="span6 hidable">
@@ -50,9 +49,9 @@
       <div class="rich-text">
           <rich-text
             tabindex="2"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Assessment Procedure'"
-            {(content)}="instance.test_plan">
+            {(content)}="{instance.test_plan}">
           </rich-text>
       </div>
     </div>
@@ -61,9 +60,9 @@
   <div class="row">
     <div class="span12 hide-wrap hidable">
       <access-control-list-roles-helper
-        {instance}="."
-        {is-proposal}="isProposal"
-        {is-new-instance}="new_object_form">
+        {instance}="{.}"
+        {is-proposal}="{isProposal}"
+        {is-new-instance}="{new_object_form}">
       </access-control-list-roles-helper>
     </div>
   </div>
@@ -76,11 +75,10 @@
         <a data-id="hide_note_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
       </label>
       <div class="rich-text">
-          <rich-text
-            tabindex="5"
-            {hidden-toolbar}="true"
-            {placeholder}="'Enter Notes'"
-            {(content)}="instance.notes">
+          <rich-text tabindex="5"
+                     {hidden-toolbar}="{true}"
+                     {placeholder}="'Enter Notes'"
+                     {(content)}="{instance.notes}">
           </rich-text>
       </div>
     </div>
@@ -96,7 +94,7 @@
   {{^if isProposal}}
     <div class="row-fluid">
       <div data-id="folder_hidden" class="span6 hidable">
-        <ggrc-gdrive-folder-picker instance="instance" deferred="true" tabindex="13">
+        <ggrc-gdrive-folder-picker {instance}="{instance}" {deferred}="{true}" tabindex="13">
         </ggrc-gdrive-folder-picker>
       </div>
     </div>
@@ -124,12 +122,12 @@
         </label>
         <div data-id="kind_nature_dd" tabindex="7">
           <model-loader {path}="'service-models/option'">
-            <dropdown-wrapper {model-constructor}="loadedModel"
-                              {(value)}="instance.kind" 
+            <dropdown-wrapper {model-constructor}="{loadedModel}"
+                              {(value)}="{instance.kind}" 
                               {role}="'control_kind'">
-              <dropdown {options-list}="options"
-                        ($change)="selectedChanged" name="selected"
-                        {no-value}="true" {no-value-label}="'---'">
+              <dropdown {options-list}="{options}"
+                        ($change)="{selectedChanged()}" {name}="'selected'"
+                        {no-value}="{true}" {no-value-label}="'---'">
               </dropdown>
             </dropdown-wrapper>
           </model-loader>
@@ -143,15 +141,14 @@
           <a data-id="hide_fraud_related_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
         </label>        
         <boolean-dropdown-wrapper class="input-block-level"
-          {(selected)}="instance.fraud_related">
-          <dropdown
-            name="selectedInternal"
-            {options-list}="model.fraudRelatedOptions"
-            {tab-index}="8"
-            {no-value}="true"
-            {no-value-label}="'---'"
-            ($change)="onChange"
-            ></dropdown>
+          {(selected)}="{instance.fraud_related}">
+          <dropdown {options-list}="{model.fraudRelatedOptions}"
+                    {name}="'selectedInternal'"
+                    {no-value}="{true}"
+                    {no-value-label}="'---'"
+                    ($change)="{onChange}"
+                    {tab-index}="8">
+          </dropdown>
           </boolean-dropdown-wrapper>
       </div>
       <div data-test-id="control_significance_18f15545" data-id="significance_hidden" class="span3 hidable">
@@ -161,15 +158,14 @@
           <a data-id="hide_significance_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
         </label>
         <boolean-dropdown-wrapper class="input-block-level"
-          {(selected)}="instance.key_control">
-          <dropdown
-            name="selectedInternal"
-            {options-list}="model.keyControlOptions"
-            {tab-index}="9"
-            {no-value}="true"
-            {no-value-label}="'---'"
-            ($change)="onChange"
-            ></dropdown>
+          {(selected)}="{instance.key_control}">
+          <dropdown {options-list}="{model.keyControlOptions}"
+                    {name}="'selectedInternal'"
+                    {no-value}="{true}"
+                    {no-value-label}="'---'"
+                    ($change)="{onChange}"
+                    {tab-index}="9">
+          </dropdown>
           </boolean-dropdown-wrapper>
       </div>
       <div data-test-id="control_type_means_2ffa1b64" data-id="type_means_hidden" class="span3 hidable">
@@ -180,12 +176,12 @@
         </label>
         <div data-id="type_means_dd" tabindex="10">
           <model-loader {path}="'service-models/option'">
-            <dropdown-wrapper {model-constructor}="loadedModel"
-                              {(value)}="instance.means"
+            <dropdown-wrapper {model-constructor}="{loadedModel}"
+                              {(value)}="{instance.means}"
                               {role}="'control_means'">
-              <dropdown {options-list}="options" 
-                        ($change)="selectedChanged" name="selected"
-                        {no-value}="true" {no-value-label}="'---'">
+              <dropdown {options-list}="{options}" 
+                        ($change)="{selectedChanged}" {name}="'selected'"
+                        {no-value}="{true}" {no-value-label}="'---'">
               </dropdown>
             </dropdown-wrapper>
           </model-loader>
@@ -194,7 +190,7 @@
     </div>
     <div class="row-fluid input-block-level" test-id="control_effective_dates_0376cf90">
       <div class="span4 hidable">
-        <effective-dates instance="instance"/>
+        <effective-dates {instance}="{instance}"/>
       </div>
     </div>
 
@@ -207,12 +203,12 @@
         </label>
         <div data-id="frequency_dd" tabindex="11">
           <model-loader {path}="'service-models/option'">
-            <dropdown-wrapper {model-constructor}="loadedModel"
-                              {(value)}="instance.verify_frequency"
+            <dropdown-wrapper {model-constructor}="{loadedModel}"
+                              {(value)}="{instance.verify_frequency}"
                               {role}="'verify_frequency'">
-              <dropdown {options-list}="options"
-                        ($change)="selectedChanged" name="selected"
-                        {no-value}="true" {no-value-label}="'---'">
+              <dropdown {options-list}="{options}"
+                        ($change)="{selectedChanged}" {name}="'selected'"
+                        {no-value}="{true}" {no-value-label}="'---'">
               </dropdown>
             </dropdown-wrapper>
           </model-loader>
@@ -229,13 +225,12 @@
           <div data-id="assertions_dd" tabindex="12" class="no-outline">
             <model-loader {path}="'service-models/control-assertion'">
               <dropdown-multiselect-wrapper
-                {model-constructor}="loadedModel"
-                {(value)}="instance.assertions">
-                <multiselect-dropdown
-                  {options}="options"
-                  {selected}="selected"
-                  (selected-changed)="selectedChanged(%event)"
-                  {placeholder}="'Select Assertions'">
+                {model-constructor}="{loadedModel}"
+                {(value)}="{instance.assertions}">
+                <multiselect-dropdown {options}="{options}"
+                                      {selected}="{selected}"
+                                      (selected-changed)="{selectedChanged(%event)}"
+                                      {placeholder}="'Select Assertions'">
                 </multiselect-dropdown>
               </dropdown-multiselect-wrapper>
             </model-loader>
@@ -250,14 +245,12 @@
         </label>
           <div data-id="categories_dd" tabindex="13" class="no-outline">
             <model-loader {path}="'service-models/control-category'">
-              <dropdown-multiselect-wrapper
-                {model-constructor}="loadedModel"
-                {(value)}="instance.categories">
-                <multiselect-dropdown
-                  {options}="options"
-                  {selected}="selected"
-                  (selected-changed)="selectedChanged(%event)"
-                  {placeholder}="'Select Categories'">
+              <dropdown-multiselect-wrapper {model-constructor}="{loadedModel}"
+                                            {(value)}="{instance.categories}">
+                <multiselect-dropdown {options}="{options}"
+                                      {selected}="{selected}"
+                                      (selected-changed)="{selectedChanged(%event)}"
+                                      {placeholder}="'Select Categories'">
                 </multiselect-dropdown>
               </dropdown-multiselect-wrapper>
             </model-loader>
@@ -271,8 +264,8 @@
           <i class="fa fa-question-circle" rel="tooltip" title="Indicates the status of this object."></i>
           <a data-id="hide_state_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
         </label>
-        <dropdown {options-list}="model.statuses"
-                  name="instance.status"
+        <dropdown {options-list}="{model.statuses}"
+                  {name}="'instance.status'"
                   tab-index="14">
         </dropdown>
       </div>

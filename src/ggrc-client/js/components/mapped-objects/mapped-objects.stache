@@ -2,13 +2,16 @@
     Copyright (C) 2019 Google Inc.
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-<object-list {items}="showItems" {^selected-item}="selectedItem" {is-loading}="isLoading" {empty-message}="emptyMessage">
-    <content/>
+<object-list {items}="{showItems}"
+             {^selected-item}="{selectedItem}"
+             {is-loading}="{isLoading}"
+             {empty-message}="{emptyMessage}">
+    <content></content>
 </object-list>
 {{#if requireLimit}}
     <button type="button"
             class="btn btn-small btn-link btn-link-nopadding"
-            ($click)="toggleShowAll()">
+            ($click)="{toggleShowAll()}">
       {{showAllButtonText}}
     </button>
 {{/if}}

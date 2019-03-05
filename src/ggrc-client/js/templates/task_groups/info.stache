@@ -5,7 +5,7 @@
 
 {{#if instance}}
   <task-group
-    {instance}="instance"
-    {options}="options">
+    {instance}="{instance}"
+    {options}="{options}">
   </task-group>
 {{/instance}}

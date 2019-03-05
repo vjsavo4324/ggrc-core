@@ -11,9 +11,9 @@
     
       Do you want to search for an existing document or
       <create-document-button
-        {parent-instance}="source"
-        (map-objects)="mapObjects(%event.objects)"
-        (cancel)="cancel()">
+        {parent-instance}="{source}"
+        (map-objects)="{mapObjects(%event.objects)}"
+        (cancel)="{cancel()}">
         Attach new
       </create-document-button>
 

@@ -21,7 +21,7 @@ export default can.Component.extend({
   tag,
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       emptyMessage: {
         type: 'string',
@@ -209,7 +209,7 @@ export default can.Component.extend({
       objects = loadFn.call(this);
       this.attr('mappedItems').replace(objects);
     },
-  },
+  }),
   init: function () {
     this.viewModel.setMappedObjects();
   },

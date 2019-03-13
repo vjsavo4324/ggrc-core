@@ -13,7 +13,7 @@ export default can.Component.extend({
   tag,
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       canDisplayApplyButton: {
         get() {
@@ -92,7 +92,7 @@ export default can.Component.extend({
         });
       });
     },
-  },
+  }),
   events: {
     inserted() {
       this.viewModel.attr('$el', this.element);

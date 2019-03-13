@@ -21,7 +21,7 @@ export default can.Component.extend({
   tag: 'revisions-comparer',
   template: can.stache('<content/>'),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     instance: null,
     leftRevisionId: null,
     rightRevision: null,
@@ -592,5 +592,5 @@ export default can.Component.extend({
         $block.outerHeight(height2);
       }
     },
-  },
+  }),
 });

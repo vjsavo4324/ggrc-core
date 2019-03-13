@@ -13,11 +13,11 @@ export default can.Component.extend({
   tag,
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     renderContent: function () {
       return this.attr('softMode') || this.attr('expanded');
     },
     softMode: false,
     expanded: null,
-  },
+  }),
 });

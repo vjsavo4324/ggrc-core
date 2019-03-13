@@ -12,7 +12,7 @@ const tag = 'object-list-item-updater';
 export default can.Component.extend({
   tag,
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       targetInstance: {
         set: function (value) {
@@ -37,5 +37,5 @@ export default can.Component.extend({
           this.attr('instanceUpdated', true);
         }.bind(this));
     },
-  },
+  }),
 });

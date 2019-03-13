@@ -8,7 +8,7 @@ const tag = 'map-button-using-assessment-type';
 export default can.Component.extend({
   tag,
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     instance: {},
     deferredTo: {},
     openMapper: function () {
@@ -32,7 +32,7 @@ export default can.Component.extend({
           can.trigger(el, 'openMapper', ev);
         });
     },
-  },
+  }),
   events: {
     inserted: function () {
       this.viewModel.attr('deferredTo',

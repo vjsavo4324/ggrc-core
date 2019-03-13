@@ -15,7 +15,7 @@ export default can.Component.extend({
   tag: 'object-state-toolbar',
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       updateState: {
         get: function () {
@@ -63,5 +63,5 @@ export default can.Component.extend({
         undo: isUndo,
       });
     },
-  },
+  }),
 });

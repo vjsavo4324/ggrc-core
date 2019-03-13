@@ -28,7 +28,7 @@ const tag = 'assessment-mapped-controls';
  * ViewModel for Assessment Mapped Controls Popover.
  * @type {can.Map}
  */
-const viewModel = {
+const viewModel = can.Map.extend({
   define: {
     /**
      * Private Attribute defining array of requested Objects, Types and Fields of Objects
@@ -120,7 +120,7 @@ const viewModel = {
       .map(convertToFormViewField);
     return attributes;
   },
-};
+});
 /**
  * Assessment specific mapped controls view component
  */

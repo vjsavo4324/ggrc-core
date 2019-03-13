@@ -13,7 +13,7 @@ export default can.Component.extend({
   tag: 'tab-container',
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     lastErrorTab: null,
     define: {
       showTabs: {
@@ -27,7 +27,7 @@ export default can.Component.extend({
     tabOptions: {},
     hideOneTab: true,
     selectedTabIndex: 0,
-    panels: [],
+    panels: new can.List([]),
     /**
      * Update Panels List setting all panels except selected to inactive state
      * @param {Number} tabIndex - id of activated panel
@@ -67,7 +67,7 @@ export default can.Component.extend({
         this.setActivePanel(panel.tabIndex);
       }
     },
-  },
+  }),
   events: {
     /**
      * Update Currently selected Tab on each add of Panels

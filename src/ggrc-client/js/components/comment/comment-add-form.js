@@ -21,7 +21,7 @@ export default can.Component.extend({
   tag: tag,
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       notificationsInfo: {
         value: 'Send Notifications',
@@ -101,5 +101,5 @@ export default can.Component.extend({
           self.afterCreation(comment, false);
         });
     },
-  },
+  }),
 });

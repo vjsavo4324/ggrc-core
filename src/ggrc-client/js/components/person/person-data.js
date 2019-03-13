@@ -16,7 +16,7 @@ export default can.Component.extend({
   tag,
   template: can.stache(template),
   leakScope: true,
-  viewModel: {
+  viewModel: can.Map.extend({
     define: {
       personId: {
         type: 'number',
@@ -71,5 +71,5 @@ export default can.Component.extend({
         },
       },
     },
-  },
+  }),
 });

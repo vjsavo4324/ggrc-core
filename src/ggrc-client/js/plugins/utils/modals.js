@@ -101,7 +101,7 @@ function confirm(options, success, dismiss) {
       $target
         .modal({backdrop: 'static'});
 
-      new ModalsController($target, Object.assign({
+      new ModalsController($target[0], Object.assign({
         new_object_form: false,
         button_view: BUTTON_VIEW_CONFIRM_CANCEL,
         modal_confirm: 'Confirm',
@@ -148,7 +148,7 @@ function _setupWarning(confirm, settings) {
   let operation = settings.confirmOperationName;
   let buttonSelector = '[data-toggle=' + operation + ']';
 
-  confirm.on('change paste keyup', 'input[data-edit=confirm]',
+  $(confirm).on('change paste keyup', 'input[data-edit=confirm]',
     function (e) {
       let confirmButton = confirm.find(buttonSelector);
       let text = $(this)

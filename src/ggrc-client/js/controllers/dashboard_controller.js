@@ -30,6 +30,8 @@ const DashboardControl = can.Control.extend({
   },
 }, {
   init: function (el, options) {
+    can.Control.initElement(this);
+
     this.options = new can.Map(this.options);
     this.init_tree_view_settings();
     this.init_page_title();
@@ -74,6 +76,9 @@ const DashboardControl = can.Control.extend({
   },
 
   init_page_header: function () {
+    //let $pageHeader = this.$element.find('#page-header');
+    console.log('check it');
+
     let $pageHeader = $('#page-header');
     if (this.options.header_view && $pageHeader.length) {
       $.ajax({
@@ -87,7 +92,7 @@ const DashboardControl = can.Control.extend({
   },
 
   init_inner_nav: function () {
-    let $innernav = this.element.find('#inner-nav');
+    let $innernav = this.$element.find('#inner-nav');
     if ($innernav.length && this.options.innernav_view) {
       let pageInstance = getPageInstance();
       let options = {
@@ -165,13 +170,13 @@ const DashboardControl = can.Control.extend({
   },
 
   get_active_widget_containers: function () {
-    return this.element.find('.widget-area');
+    return this.$element.find('.widget-area');
   },
 
   add_widget_from_descriptor: function (...args) {
     let descriptor = {};
     let that = this;
-    let $element;
+    let element;
     let control;
     let $container;
     let $lastWidget;
@@ -198,9 +203,9 @@ const DashboardControl = can.Control.extend({
       return;
     }
 
-    $element = $("<section class='widget'>");
+    element = $("<section class='widget'>")[0];
     control = new descriptor
-      .controller($element, descriptor.controller_options);
+      .controller(element, descriptor.controller_options);
 
     if (isAdmin()) {
       control.prepare();
@@ -212,9 +217,9 @@ const DashboardControl = can.Control.extend({
     $lastWidget = $container.find('section.widget').last();
 
     if ($lastWidget.length > 0) {
-      $lastWidget.after($element);
+      $lastWidget.after(element);
     } else {
-      $container.append($element);
+      $container.append(element);
     }
 
     this.options.innerNavDescriptors.push(control.options);
@@ -243,15 +248,16 @@ const PageObjectControl = DashboardControl.extend({}, {
   init: function () {
     this.options.model = this.options.instance.constructor;
     this._super();
+    can.Control.initElement(this);
     this.init_info_pin();
   },
 
   init_info_pin: function () {
-    this.info_pin = new InfoPin(this.element.find('.pin-content'));
+    this.info_pin = new InfoPin(this.$element.find('.pin-content')[0]);
   },
 
   hideInfoPin() {
-    const infopinCtr = this.info_pin.element.control();
+    const infopinCtr = this.info_pin.$element.control();
 
     if (infopinCtr) {
       infopinCtr.hideInstance();

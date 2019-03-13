@@ -51,7 +51,7 @@ export default can.Component.extend({
         const $target = $('<div class="modal hide"></div>');
         $target.modal();
 
-        new ModalsController($target, modalSettings);
+        new ModalsController($target[0], modalSettings);
         $target.on('click', '[data-toggle="delete"]', () => {
           const dfd = this.onConfirm();
 

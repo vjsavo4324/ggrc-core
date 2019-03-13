@@ -35,8 +35,9 @@ let component = {
 
   events: {
     inserted: function (el, ev) {
-      this.element.find('.autocomplete--input').ggrc_autocomplete({
-        appendTo: this.element.find('.autocomplete--wrapper'),
+      let $el = $(this.element);
+      $el.find('.autocomplete--input').ggrc_autocomplete({
+        appendTo: $el.find('.autocomplete--wrapper'),
       });
     },
 

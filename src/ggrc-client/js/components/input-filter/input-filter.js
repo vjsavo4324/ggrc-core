@@ -31,7 +31,7 @@ export default can.Component.extend({
   },
   events: {
     '.input-filter input'(el) {
-      this.viewModel.cleanUpInput(el);
+      this.viewModel.cleanUpInput($(el));
     },
   },
 });

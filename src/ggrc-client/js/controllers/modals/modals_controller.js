@@ -89,11 +89,13 @@ export default can.Control.extend({
   init: function () {
     let userFetch;
 
+    can.Control.initElement(this);
+
     if (!(this.options instanceof can.Map)) {
       this.options = new can.Map(this.options);
     }
 
-    if (!this.element.find('.modal-body').length) {
+    if (!this.$element.find('.modal-body').length) {
       $.ajax({
         url: this.options.preload_view,
         dataType: 'text',
@@ -132,19 +134,19 @@ export default can.Control.extend({
     }
 
     if (content) {
-      this.element.html(content);
+      this.$element.html(content);
     }
 
-    this.options.attr('$header', this.element.find('.modal-header'));
-    this.options.attr('$content', this.element.find('.modal-body'));
-    this.options.attr('$footer', this.element.find('.modal-footer'));
+    this.options.attr('$header', this.$element.find('.modal-header')[0]);
+    this.options.attr('$content', this.$element.find('.modal-body')[0]);
+    this.options.attr('$footer', this.$element.find('.modal-footer')[0]);
     this.on();
     this.fetch_all()
       .then(() => this.apply_object_params())
       .then(() => this.serialize_form())
       .then(() => {
         if (!this.wasDestroyed()) {
-          this.element.trigger('preload');
+          this.$element.trigger('preload');
         }
       })
       .then((el) => this.autocomplete(el))
@@ -156,7 +158,7 @@ export default can.Control.extend({
       })
       .fail((error) => {
         notifierXHR('error', error);
-        this.element.modal_form('hide');
+        this.$element.modal_form('hide');
       });
   },
 
@@ -348,7 +350,7 @@ export default can.Control.extend({
         setFieldsCb();
       }
       // This is to trigger `focus_first_element` in modal_ajax handling
-      this.element.trigger('loaded');
+      this.$element.trigger('loaded');
     }
     if (!instance._transient) {
       instance.attr('_transient', new can.Map({}));
@@ -399,15 +401,15 @@ export default can.Control.extend({
     }
     if (header !== null) {
       header = can.stache(header)(context);
-      this.options.$header.find('h2').html(header);
+      $(this.options.$header).find('h2').html(header);
     }
     if (content !== null) {
       content = can.stache(content)(context);
-      this.options.$content.html(content).removeAttr('style');
+      $(this.options.$content).html(content).removeAttr('style');
     }
     if (footer !== null) {
       footer = can.stache(footer)(context);
-      this.options.$footer.html(footer);
+      $(this.options.$footer).html(footer);
     }
     if (customAttributes !== null && (isObjectModal || isProposal)) {
       customAttributes = can.stache(customAttributes)(context);
@@ -433,25 +435,27 @@ export default can.Control.extend({
 
   'input, textarea, select change':
     function (el, ev) {
+      const $el = $(el);
       this.options.instance.removeAttr('_suppress_errors');
       // Set the value if it isn't a search field
-      if (!el.hasClass('search-icon') ||
-        el.is('[null-if-empty]') &&
-        (!el.val() || !el.val().length)
+      if (!$el.hasClass('search-icon') ||
+        $el.is('[null-if-empty]') &&
+        (!$el.val() || !$el.val().length)
       ) {
-        this.set_value_from_element(el);
+        this.set_value_from_element($el);
       }
     },
 
   'input:not([data-lookup]), textarea keyup':
     function (el, ev) {
+      const $el = $(el);
       // TODO: If statement doesn't work properly. This is the right one:
       //       if (el.attr('value').length ||
       //          (typeof el.attr('value') !== 'undefined' && el.val().length)) {
-      if (el.prop('value').length === 0 ||
-        (typeof el.attr('value') !== 'undefined' &&
-        !el.attr('value').length)) {
-        this.set_value_from_element(el);
+      if ($el.prop('value').length === 0 ||
+        (typeof $el.attr('value') !== 'undefined' &&
+        !$el.attr('value').length)) {
+        this.set_value_from_element($el);
       }
     },
 
@@ -472,7 +476,7 @@ export default can.Control.extend({
   },
 
   serialize_form: function () {
-    let $form = this.options.$content.find('form');
+    let $form = $(this.options.$content).find('form');
     let $elements = $form
       .find(':input');
 
@@ -525,7 +529,7 @@ export default can.Control.extend({
         new this.options.model(instance && instance.serialize ?
           instance.serialize() : instance);
     }
-    $elem = this.options.$content
+    $elem = $(this.options.$content)
       .find("[name='" + item.name + "']");
     model = $elem.attr('model');
 
@@ -571,14 +575,15 @@ export default can.Control.extend({
       return;
     }
 
+    const $el = $(el);
     let date;
     let data;
     let options;
-    if (!el.data('datepicker')) {
-      el.datepicker({changeMonth: true, changeYear: true});
+    if (!$el.data('datepicker')) {
+      $el.datepicker({changeMonth: true, changeYear: true});
     }
-    date = el.datepicker('getDate');
-    data = el.data();
+    date = $el.datepicker('getDate');
+    data = $el.data();
     options = {
       before: 'maxDate',
       after: 'minDate',
@@ -592,7 +597,7 @@ export default can.Control.extend({
       if (!data[key]) {
         return;
       }
-      targetEl = this.element.find('[name=' + data[key] + ']');
+      targetEl = this.$element.find('[name=' + data[key] + ']');
       isInput = targetEl.is('input');
       targetDate = isInput ? targetEl.val() : targetEl.text();
 
@@ -606,25 +611,27 @@ export default can.Control.extend({
 
   "{$footer} a.btn[data-toggle='modal-submit-addmore'] click":
     function (el, ev) {
-      if (el.hasClass('disabled')) {
+      const $el = $(el);
+      if ($el.hasClass('disabled')) {
         return;
       }
       this.options.attr('add_more', true);
       this.save_ui_status();
-      this.triggerSave(el, ev);
+      this.triggerSave($el, ev);
     },
 
   "{$footer} a.btn[data-toggle='modal-submit'] click": function (el, ev) {
+    const $el = $(el);
     let options = this.options;
     let instance = options.attr('instance');
     let oldData = options.attr('oldData');
     let applyPreconditions = options.attr('applyPreconditions');
     let saveInstance = function () {
       options.attr('add_more', false);
-      this.triggerSave(el, ev);
+      this.triggerSave($el, ev);
     }.bind(this);
 
-    if (el.hasClass('disabled')) {
+    if ($el.hasClass('disabled')) {
       return;
     }
 
@@ -693,7 +700,7 @@ export default can.Control.extend({
 
     let i;
     let uiArrLength = this.options.ui_array.length;
-    let $hidables = this.element.find('.hidable');
+    let $hidables = this.$element.find('.hidable');
     let hiddenElements = $hidables.find('[tabindex]');
     let $hiddenElement;
     let tabValue;
@@ -704,7 +711,7 @@ export default can.Control.extend({
     this.options.attr('reset_visible', true);
 
     $hidables.addClass('hidden');
-    this.element.find('.inner-hide').addClass('inner-hidable');
+    this.$element.find('.inner-hide').addClass('inner-hidable');
 
     // Set up the hidden elements index to 1
     for (i = 0; i < hiddenElements.length; i++) {
@@ -731,7 +738,7 @@ export default can.Control.extend({
     // Update UI status array to initial state
     let i;
     let uiArrLength = this.options.ui_array.length;
-    let $form = this.element.find('form');
+    let $form = this.$element.find('form');
     let $body = $form.closest('.modal-body');
     let uiElements = $body.find('[uiindex]');
     let $el;
@@ -752,8 +759,8 @@ export default can.Control.extend({
     }
 
     this.options.attr('reset_visible', false);
-    this.element.find('.hidden').removeClass('hidden');
-    this.element.find('.inner-hide').removeClass('inner-hidable');
+    this.$element.find('.hidden').removeClass('hidden');
+    this.$element.find('.inner-hide').removeClass('inner-hidable');
     return false;
   },
 
@@ -808,7 +815,7 @@ export default can.Control.extend({
     // select the element with tab index and hide it
 
     if (this.options.attr('reset_visible')) {// some elements are hidden
-      $form = this.element.find('form');
+      $form = this.$element.find('form');
       $body = $form.closest('.modal-body');
 
       for (i = 0; i < this.options.ui_array.length; i++) {
@@ -861,13 +868,14 @@ export default can.Control.extend({
         return;
       }
 
-      const saveCloseBtn = this.element.find('a.btn[data-toggle=modal-submit]');
-      const modalBackdrop = this.element.data('modal_form').$backdrop;
-      const modalCloseBtn = this.element.find('.modal-dismiss > .fa-times');
-      const deleteBtn = this.element.find(
+      const saveCloseBtn = this.$element
+        .find('a.btn[data-toggle=modal-submit]');
+      const modalBackdrop = this.$element.data('modal_form').$backdrop;
+      const modalCloseBtn = this.$element.find('.modal-dismiss > .fa-times');
+      const deleteBtn = this.$element.find(
         'a.btn[data-toggle=modal-ajax-deleteform]'
       );
-      const saveAddmoreBtn = this.element.find(
+      const saveAddmoreBtn = this.$element.find(
         'a.btn[data-toggle=modal-submit-addmore]'
       );
 
@@ -898,7 +906,7 @@ export default can.Control.extend({
         return;
       }
 
-      let $form = $(this.element).find('form');
+      let $form = this.$element.find('form');
       $form.trigger('reset');
     }).done(() => {
       $.when(this.options.attr('instance', newInstance))
@@ -958,12 +966,13 @@ export default can.Control.extend({
           that.disableEnableContentUI(false);
           delete that.disable_hide;
           if (that.options.add_more) {
-            if (that.options.$trigger && that.options.$trigger.length) {
-              that.options.$trigger.trigger('modal:added', [obj]);
+            let $trigger = $(that.options.$trigger);
+            if ($trigger && $trigger.length) {
+              $trigger.trigger('modal:added', [obj]);
             }
             that.new_instance();
           } else {
-            that.element.trigger('modal:success', [obj])
+            that.$element.trigger('modal:success', [obj])
               .modal_form('hide');
             that.update_hash_fragment();
           }
@@ -1014,7 +1023,7 @@ export default can.Control.extend({
     }
     if (instance instanceof can.Model &&
       // Ensure that this modal was hidden and not a child modal
-      this.element && ev.target === this.element[0] &&
+      this.$element && ev.target === this.$element[0] &&
       !this.options.skip_refresh && !instance.isNew()) {
       if (instance.type === 'AssessmentTemplate') {
         cad = instance.attr('custom_attribute_definitions');
@@ -1043,7 +1052,7 @@ export default can.Control.extend({
   },
 
   should_update_hash_fragment: function () {
-    let $trigger = this.options.$trigger;
+    let $trigger = $(this.options.$trigger);
 
     if (!$trigger) {
       return false;
@@ -1072,7 +1081,7 @@ export default can.Control.extend({
    *  @param {boolean} isDisabled
    */
   disableEnableContentUI(isDisabled = false) {
-    const content = this.options.attr('$content');
+    const content = $(this.options.attr('$content'));
 
     if (!content) {
       return;

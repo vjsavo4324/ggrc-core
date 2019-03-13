@@ -282,8 +282,8 @@ import {InfiniteScrollControl, LhnTooltipsControl} from '../controllers/infinite
         }).then((view) => {
           let frag = can.stache(view)(context);
           $ul.html(frag);
-          new LhnTooltipsControl($ul);
-          new InfiniteScrollControl($ul);
+          new LhnTooltipsControl($ul[0]);
+          new InfiniteScrollControl($ul[0]);
         });
       });
     },
@@ -352,7 +352,7 @@ import {InfiniteScrollControl, LhnTooltipsControl} from '../controllers/infinite
         // being destroyed. In such cases we simply don't do anything.
         return;
       }
-      el = this.element.find('input[data-lookup]');
+      el = $(this.element).find('input[data-lookup]');
     } else {
       el = $(el);
     }

@@ -31,6 +31,7 @@ const userRolesModalSelector = can.Control.extend({
   },
 }, {
   init() {
+    can.Control.initElement(this);
     this.rolesList = new can.List();
     this.userRolesList = new can.List();
 
@@ -50,8 +51,8 @@ const userRolesModalSelector = can.Control.extend({
       dataType: 'text',
     }).then((view) => {
       let frag = can.stache(view)(this.context);
-      $(this.element).html(frag);
-      this.element.trigger('loaded');
+      $(this.$element).html(frag);
+      this.$element.trigger('loaded');
       deferred.resolve();
     });
 

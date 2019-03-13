@@ -18,20 +18,20 @@ export default ModalsController({
 }, {
   init: function () {
     this._super();
-    this.element.trigger('shown');
-    this.element.addClass('gapi-modal-control');
+    this.$element.trigger('shown');
+    this.$element.addClass('gapi-modal-control');
   },
   '{scopes} change': function () {
-    this.element.trigger('shown');
+    this.$element.trigger('shown');
   },
   '{$content} a.btn[data-toggle=gapi]:not(.disabled) click': function (el) {
     el.addClass('disabled');
     this.options.onAccept().always(() => {
-      this.element.modal_form('hide');
+      this.$element.modal_form('hide');
     });
   },
   ' hide': function () {
     this.options.onDecline();
-    this.element && this.element.remove();
+    this.$element && this.$element.remove();
   },
 });

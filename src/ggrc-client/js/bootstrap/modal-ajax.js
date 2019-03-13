@@ -75,7 +75,7 @@ let handlers = {
       _.constant({}),
       _.constant({}), {
         controller: DeleteModalControl,
-        target: $target,
+        target: $target[0],
       });
 
     $target.on('modal:success', function (e, data) {
@@ -137,7 +137,7 @@ let handlers = {
     $target
       .modal_form(option, $trigger);
 
-    new ModalsController($target, {
+    new ModalsController($target[0], {
       new_object_form: !$trigger.attr('data-object-id'),
       object_params: objectParams,
       extendNewInstance,
@@ -156,7 +156,7 @@ let handlers = {
       modal_title: objectParams.modal_title || modalTitle,
       content_view: contentView,
       isProposal: isProposal,
-      $trigger: $trigger,
+      $trigger: $trigger[0],
     });
 
     $target.on('modal:success', function (e, data, xhr) {

@@ -16,8 +16,8 @@ export default ModalsController({
   },
   'a.btn[data-toggle=archive]:not(:disabled) click': function (el, ev) {
     // Disable the cancel button.
-    let cancelButton = this.element.find('a.btn[data-dismiss=modal]');
-    let modalBackdrop = this.element.data('modal_form').$backdrop;
+    let cancelButton = this.$element.find('a.btn[data-dismiss=modal]');
+    let modalBackdrop = this.$element.data('modal_form').$backdrop;
 
     bindXHRToButton(this.options.instance.refresh()
       .then(function () {
@@ -30,7 +30,7 @@ export default ModalsController({
         const msg = `${instance.display_name()} archived successfully`;
         $(document.body).trigger('ajax:flash', {success: msg});
         if (this.element) {
-          this.element.trigger('modal:success', instance);
+          this.$element.trigger('modal:success', instance);
         }
 
         return new $.Deferred();

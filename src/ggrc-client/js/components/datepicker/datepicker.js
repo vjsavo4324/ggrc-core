@@ -82,14 +82,15 @@ export default can.Component.extend({
 
   events: {
     inserted: function () {
+      let $el = $(this.element);
       let viewModel = this.viewModel;
-      let element = this.element.find('.datepicker__calendar');
+      let element = $el.find('.datepicker__calendar');
       let minDate;
       let maxDate;
       let date;
       let options = {
         dateFormat: DATE_FORMAT.PICKER_ISO_DATE,
-        altField: this.element.find('.datepicker__input'),
+        altField: $el.find('.datepicker__input'),
         altFormat: DATE_FORMAT.PICKER_DISPLAY_FMT,
         onSelect: this.viewModel.onSelect.bind(this.viewModel),
       };

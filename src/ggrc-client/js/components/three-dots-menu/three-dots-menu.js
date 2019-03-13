@@ -28,7 +28,7 @@ const viewModel = can.Map.extend({
 
 const events = {
   inserted(element) {
-    const [menuNode] = element.find('[role=menu]');
+    const [menuNode] = $(element).find('[role=menu]');
     this.viewModel.initObserver(menuNode);
     this.viewModel.manageEmptyList(menuNode);
   },

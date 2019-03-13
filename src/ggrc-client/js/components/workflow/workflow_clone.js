@@ -45,7 +45,7 @@ export default can.Component.extend({
       $target.modal_form({}, el);
       import(/* webpackChunkName: "modalsCtrls" */'../../controllers/modals')
         .then(() => {
-          new ModalsController($target, {
+          new ModalsController($target[0], {
             modal_title: 'Clone Workflow',
             model: CloneWorkflow,
             instance: new CloneWorkflow({source_workflow: this.scope.workflow}),

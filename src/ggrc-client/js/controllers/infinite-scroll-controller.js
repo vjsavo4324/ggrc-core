@@ -4,7 +4,9 @@
 */
 
 const InfiniteScrollControl = can.Control.extend({}, {
-  init: function () {},
+  init: function () {
+    can.Control.initElement(this);
+  },
   ' DOMMouseScroll': 'prevent_overscroll',
   ' mousewheel': 'prevent_overscroll',
   ' scroll': 'prevent_overscroll',
@@ -54,7 +56,7 @@ const InfiniteScrollControl = can.Control.extend({}, {
     }
   },
   show_more: function ($el) {
-    this.element.trigger('scrollNext');
+    this.$element.trigger('scrollNext');
   },
 });
 
@@ -67,6 +69,8 @@ const LhnTooltipsControl = can.Control.extend({
   },
 }, {
   init: function () {
+    can.Control.initElement(this);
+
     if (!this.options.$extended) {
       this.options.$extended = $('#extended-info');
       if (this.options.$extended.length < 1) {
@@ -88,8 +92,9 @@ const LhnTooltipsControl = can.Control.extend({
   '{$extended} mouseleave': 'on_mouseleave',
   '{$extended} mouseenter': 'on_tooltip_mouseenter',
   on_mouseenter: function (el, ev) {
-    let instance = el.closest('[data-model]').data('model') ||
-        el.closest(':data(model)').data('model');
+    let $el = $(el);
+    let instance = $el.closest('[data-model]').data('model') ||
+        $el.closest(':data(model)').data('model');
     let delay = this.options.fade_in_delay;
 
     if (this.options.$extended.data('model') !== instance) {
@@ -143,6 +148,7 @@ const LhnTooltipsControl = can.Control.extend({
     return path;
   },
   on_fade_in_timeout: function (el, instance) {
+    let $el = $(el);
     let tooltipView = this.get_tooltip_view(el);
     if (tooltipView) {
       this.fade_in_timeout = null;
@@ -152,16 +158,16 @@ const LhnTooltipsControl = can.Control.extend({
       }).then((view) => {
         let frag = can.stache(view)({instance: instance});
         let tooltipWidth = this.options.$extended.outerWidth();
-        let offset = el.parent().offset();
+        let offset = $el.parent().offset();
         let elLeft = offset ? offset.left : 0;
         let offsetLeft = elLeft - tooltipWidth > 0 ?
-          elLeft - tooltipWidth : elLeft + el.parent().width();
+          elLeft - tooltipWidth : elLeft + $el.parent().width();
 
         this.options.$extended
           .html(frag)
           .addClass('in')
           .removeClass('hide')
-          .css({top: el.offset().top, left: offsetLeft})
+          .css({top: $el.offset().top, left: offsetLeft})
           .data('model', instance);
         this.ensure_tooltip_visibility();
       });

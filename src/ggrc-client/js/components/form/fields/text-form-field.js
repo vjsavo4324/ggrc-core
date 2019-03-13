@@ -67,7 +67,7 @@ export default can.Component.extend({
   viewModel: TEXT_FORM_FIELD_VM,
   events: {
     inserted() {
-      this.viewModel.attr('textField', this.element.find('.text-field'));
+      this.viewModel.attr('textField', $(this.element).find('.text-field'));
     },
   },
 });

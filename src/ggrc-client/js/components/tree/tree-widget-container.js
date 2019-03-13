@@ -718,11 +718,12 @@ export default can.Component.extend({
     },
     inserted() {
       let viewModel = this.viewModel;
-      viewModel.attr('$el', this.element);
+      let $element = $(this.element);
+      viewModel.attr('$el', $element);
 
-      this.element.closest('.widget')
+      $element.closest('.widget')
         .on('widget_hidden', viewModel._widgetHidden.bind(viewModel));
-      this.element.closest('.widget')
+      $element.closest('.widget')
         .on('widget_shown', viewModel._widgetShown.bind(viewModel));
       viewModel._widgetShown();
     },

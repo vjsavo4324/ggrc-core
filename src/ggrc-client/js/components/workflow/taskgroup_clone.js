@@ -43,7 +43,7 @@ export default can.Component.extend({
           const contentView =
             `${GGRC.templates_path}/task_groups/clone_modal_content.stache`;
 
-          new ModalsController($target, {
+          new ModalsController($target[0], {
             modal_title: 'Clone Task Group',
             model: CloneTaskGroup,
             instance: new CloneTaskGroup({

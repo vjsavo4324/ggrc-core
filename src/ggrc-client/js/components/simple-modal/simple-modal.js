@@ -47,7 +47,7 @@ export default can.Component.extend({
   events: {
     inserted() {
       const viewModel = this.viewModel;
-      const modalWrapper = this.element
+      const modalWrapper = $(this.element)
         .find('[data-modal-wrapper-target="true"]');
       viewModel.attr('modalWrapper', modalWrapper);
       viewModel.showHideModal(viewModel.attr('state.open'));

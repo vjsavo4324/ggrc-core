@@ -9,6 +9,7 @@ import TreeLoader from './tree-loader';
 import TreeViewNode from './tree-view-node';
 import TreeViewOptions from './tree-view-options';
 import Mappings from '../../models/mappers/mappings';
+import * as canEvent from 'can-event';
 
 const TreeViewControl = TreeLoader.extend({
   // static properties
@@ -66,6 +67,8 @@ const TreeViewControl = TreeLoader.extend({
   },
 
   init: function (el, opts) {
+    can.Control.initElement(this);
+
     let states = StateUtils
       .getStatesForModel(this.options.model.model_singular);
 
@@ -75,7 +78,7 @@ const TreeViewControl = TreeLoader.extend({
 
     this.options.attr('filter_states', filterStates);
 
-    const widget = this.element.closest('.widget');
+    const widget = this.$element.closest('.widget');
 
     if (widget && !widget.hasClass('tree-view-control-attached')) {
       widget.on('widget_hidden', this.widget_hidden.bind(this));
@@ -84,10 +87,10 @@ const TreeViewControl = TreeLoader.extend({
       widget.addClass('tree-view-control-attached');
     }
 
-    this.element.uniqueId();
+    this.$element.uniqueId();
 
     this.options.attr('is_subtree',
-      this.element && this.element.closest('.inner-tree').length > 0);
+      this.element && this.$element.closest('.inner-tree').length > 0);
 
     if (!this.options.scroll_element) {
       this.options.attr('scroll_element', $('.object-area'));
@@ -107,7 +110,7 @@ const TreeViewControl = TreeLoader.extend({
     }.bind(this));
 
     this._attached_deferred = $.Deferred();
-    if (this.element && this.element.closest('body').length) {
+    if (this.element && this.$element.closest('body').length) {
       this._attached_deferred.resolve();
     }
 
@@ -132,9 +135,9 @@ const TreeViewControl = TreeLoader.extend({
           return can.stache(view[0])(ctx);
         }).then(
           this._ifNotRemoved((frag) => {
-            this.element.before(frag);
+            this.$element.before(frag);
 
-            statusControl = this.element.parent()
+            statusControl = this.$element.parent()
               .find('.tree-filter__status-wrap');
             // set state filter (checkboxes)
             can.bind.call(statusControl.ready(() => {
@@ -284,7 +287,7 @@ const TreeViewControl = TreeLoader.extend({
     // we are just removeing the items from the lists and removing the DOM
     // elements by ids
     removedItemsIds.forEach((id) => {
-      this.element
+      this.$element
         .find(`.tree-view-node[data-object-id="${id}"]`)
         .remove();
     });
@@ -350,7 +353,7 @@ const TreeViewControl = TreeLoader.extend({
     }, $.Deferred().resolve());
 
     finalDfd.done(this._ifNotRemoved(function () {
-      let shown = this.element[0].children.length;
+      let shown = this.$element[0].children.length;
       let count = this.options.list.length;
       // We need to hide `of` in case the numbers are same
       if (shown === count && shown > 0) {
@@ -365,7 +368,7 @@ const TreeViewControl = TreeLoader.extend({
   },
   draw_items: function (optionsList) {
     let items;
-    let $footer = this.element.children('.tree-item-add').first();
+    let $footer = this.$element.children('.tree-item-add').first();
     let drawItemsDfds = [];
     let filteredItems = this.options.attr('filteredList') || [];
     let res;
@@ -377,16 +380,16 @@ const TreeViewControl = TreeLoader.extend({
       let control = new TreeViewNode(elem, options);
       drawItemsDfds.push(control._draw_node_deferred);
       filteredItems.push(control);
-      return control.element[0];
+      return control.element;
     });
 
     if ($footer.length) {
       $(items).insertBefore($footer);
     } else {
-      this.element.append(items);
+      this.$element.append(items);
     }
     if (this.options.sortable) {
-      $(this.element).sortable({element: 'li.tree-item', handle: '.drag'});
+      this.$element.sortable({element: 'li.tree-item', handle: '.drag'});
     }
     this.options.attr('filteredList', filteredItems);
     res = $.when(...drawItemsDfds);
@@ -429,7 +432,7 @@ const TreeViewControl = TreeLoader.extend({
   },
 
   clearList: function () {
-    this.element.children('.tree-item').remove();
+    this.$element.children('.tree-item').remove();
   },
 });
 

@@ -3,15 +3,20 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
+import * as canEvent from 'can-event';
+
 export default can.Control.extend({
   defaults: {},
 }, {
+  init: function () {
+    can.Control.initElement(this);
+  },
   init_spinner: function () {
     let $footer;
     let $wrapper;
 
     if (this.element) {
-      $footer = this.element.children('.tree-item-add').first();
+      $footer = this.$element.children('.tree-item-add').first();
 
       if (this.options.is_subtree) {
         $wrapper = $('<li class="tree-item tree-spinner"/>');
@@ -19,7 +24,7 @@ export default can.Control.extend({
         $wrapper = $('<div class="tree-spinner"/>');
       }
 
-      if (!this.options.is_subtree && !this.element.next().length) {
+      if (!this.options.is_subtree && !this.$element.next().length) {
         $wrapper.css('height', '40px');
       }
 
@@ -32,11 +37,11 @@ export default can.Control.extend({
 
       // Admin dashboard
       if ($footer.length === 0 &&
-        this.element.children('.tree-structure').length > 0) {
-        this.element.children('.tree-structure')
+        this.$element.children('.tree-structure').length > 0) {
+        this.$element.children('.tree-structure')
           .addClass('new-tree_loading').append($wrapper);
       } else if ($footer.length === 0) { // My work
-        this.element.addClass('new-tree_loading').append($wrapper);
+        this.$element.addClass('new-tree_loading').append($wrapper);
       } else {
         $footer.before($wrapper);
       }
@@ -69,7 +74,7 @@ export default can.Control.extend({
     if (refetch) {
       this._draw_list_deferred = null;
       this._display_deferred = null;
-      this.element.slideUp('fast').empty().slideDown();
+      this.$element.slideUp('fast').empty().slideDown();
     }
 
     if (this._display_deferred) {
@@ -102,7 +107,7 @@ export default can.Control.extend({
       return this._draw_list_deferred;
     }
     this._draw_list_deferred = $.Deferred();
-    if (this.element && !this.element.closest('body').length) {
+    if (this.element && !this.$element.closest('body').length) {
       return undefined;
     }
 
@@ -140,13 +145,13 @@ export default can.Control.extend({
 
       // for some reason, .closest(<selector>) does not work, thus need to use
       // using a bit less roboust .parent()
-      $contentContainer = this.element.parent();
+      $contentContainer = this.$element.parent();
       $contentContainer
         .find('spinner[extra-css-class="initial-spinner"]')
         .remove();
 
       this.init_spinner(); // the tree view's own items loading spinner
-      this.element.trigger('loading');
+      this.$element.trigger('loading');
     }
   },
 
@@ -154,13 +159,13 @@ export default can.Control.extend({
     let loadingDeferred;
 
     if (this._loading_deferred) {
-      this.element.trigger('loaded');
-      this.element.find('.tree-spinner').remove();
+      this.$element.trigger('loaded');
+      this.$element.find('.tree-spinner').remove();
 
-      if (this.element.hasClass('new-tree_loading')) {
-        this.element.removeClass('new-tree_loading');
+      if (this.$element.hasClass('new-tree_loading')) {
+        this.$element.removeClass('new-tree_loading');
       } else {
-        this.element.find('.new-tree_loading')
+        this.$element.find('.new-tree_loading')
           .removeClass('new-tree_loading');
       }
 

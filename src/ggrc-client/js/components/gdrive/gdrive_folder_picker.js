@@ -122,7 +122,7 @@ export default can.Component.extend({
       let viewModel = this.viewModel;
 
       if (!viewModel.attr('readonly')) {
-        this.element.removeAttr('tabindex');
+        $(this.element).removeAttr('tabindex');
       }
 
       viewModel.setRevisionFolder();

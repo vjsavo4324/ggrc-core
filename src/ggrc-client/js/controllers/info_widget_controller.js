@@ -23,11 +23,12 @@ export default can.Control.extend({
   },
 }, {
   init: function () {
+    can.Control.initElement(this);
     this.init_menu();
 
-    if (this.element.data('widget-view')) {
+    if (this.$element.data('widget-view')) {
       this.options.widget_view = GGRC.templates_path +
-        this.element.data('widget-view');
+      this.$element.data('widget-view');
     }
     if (this.options.instance.info_pane_preload) {
       this.options.instance.info_pane_preload();
@@ -48,7 +49,7 @@ export default can.Control.extend({
           dataType: 'text',
         }).then((view) => {
           let frag = can.stache(view)(this.options.context);
-          this.element.html(frag);
+          this.$element.html(frag);
         });
       });
   },

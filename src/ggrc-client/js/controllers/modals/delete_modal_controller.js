@@ -19,8 +19,8 @@ export default ModalsController({
   '{$footer} a.btn[data-toggle=delete]:not(:disabled) click'(el, ev) {
     let that = this;
     // Disable the cancel button.
-    let cancelButton = this.element.find('a.btn[data-dismiss=modal]');
-    let modalBackdrop = this.element.data('modal_form').$backdrop;
+    let cancelButton = this.$element.find('a.btn[data-dismiss=modal]');
+    let modalBackdrop = this.$element.data('modal_form').$backdrop;
 
     bindXHRToButton(this.options.instance.refresh()
       .then(function (instance) {
@@ -38,7 +38,7 @@ export default ModalsController({
         msg = instance.display_name() + ' deleted successfully';
         $(document.body).trigger('ajax:flash', {success: msg});
         if (that.element) {
-          that.element.trigger('modal:success', that.options.instance);
+          that.$element.trigger('modal:success', that.options.instance);
         }
 
         pubsub.dispatch({
@@ -50,6 +50,6 @@ export default ModalsController({
         // Do not re-enable the form elements.
       }).fail(function (xhr) {
         notifierXHR('error', xhr);
-      }), el.add(cancelButton).add(modalBackdrop));
+      }), $(el).add(cancelButton).add(modalBackdrop));
   },
 });

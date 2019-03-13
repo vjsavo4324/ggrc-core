@@ -4,6 +4,7 @@
 */
 
 import {getPageModel} from '../plugins/utils/current-page-utils';
+import * as canEvent from 'can-event';
 
 export default can.Control.extend({
   defaults: {
@@ -23,6 +24,7 @@ export default can.Control.extend({
   },
 }, {
   init: function () {
+    can.Control.initElement(this);
     if (!this.options.model) {
       this.options.model = getPageModel();
     }
@@ -56,10 +58,11 @@ export default can.Control.extend({
     return this._prepare_deferred;
   },
   draw_widget: function (frag) {
-    this.element.html(frag);
+    this.$element.html(frag);
 
     if (this.options.content_controller) {
-      let controllerContent = this.element.find(this.options.content_selector);
+      let controllerContent = this.$element
+        .find(this.options.content_selector);
       if (this.options.content_controller_selector) {
         controllerContent =
           controllerContent.find(this.options.content_controller_selector);
@@ -70,7 +73,7 @@ export default can.Control.extend({
 
       this.options.content_controller_options.show_header = true;
       this.content_controller = new this.options.content_controller(
-        controllerContent, this.options.content_controller_options
+        controllerContent[0], this.options.content_controller_options
       );
 
       if (this.content_controller.prepare) {
@@ -85,7 +88,7 @@ export default can.Control.extend({
 
     this._display_deferred = this.prepare().then(function () {
       let dfd;
-      let $containerVM = that.element
+      let $containerVM = that.$element
         .find('tree-widget-container')
         .viewModel();
       let FORCE_REFRESH = true;

@@ -26,8 +26,8 @@ const sortByNameEmail = (list) => {
   return new list.constructor(can.makeArray(list).sort(function (a, b) {
     a = a.person || a;
     b = b.person || b;
-    a = (can.trim(a.name) || can.trim(a.email)).toLowerCase();
-    b = (can.trim(b.name) || can.trim(b.email)).toLowerCase();
+    a = (_.trim(a.name) || _.trim(a.email)).toLowerCase();
+    b = (_.trim(b.name) || _.trim(b.email)).toLowerCase();
     if (a > b) {
       return 1;
     }

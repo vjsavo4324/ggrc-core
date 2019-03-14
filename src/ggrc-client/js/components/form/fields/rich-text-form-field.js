@@ -31,7 +31,7 @@ export default can.Component.extend({
         set(newValue) {
           let oldValue = this.attr('_oldValue');
           if (newValue === oldValue ||
-              newValue.length && !can.trim(newValue).length) {
+              newValue.length && !_.trim(newValue).length) {
             return;
           }
 

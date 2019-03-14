@@ -118,9 +118,7 @@ export default can.Control.extend({
     }
 
     // make attributes queue is correct.
-    list.sort(function (a, b) {
-      return a.id - b.id;
-    });
+    list.replace(_.sortBy(list, (listItem) => listItem.id));
 
     if (!this.element) {
       return undefined; // controller has been destroyed

@@ -4,6 +4,7 @@
 */
 (function ($, can) {
   let originComponentInit = can.Component.prototype.init;
+  let originListReplace = can.List.prototype.replace;
 
   // Returns a function which will be halted unless `this.element` exists
   // - useful for callbacks which depend on the controller's presence in the DOM
@@ -22,6 +23,17 @@
     return _.snakeCase(string);
   };
   */
+
+  can.List.prototype.replace = function (items) {
+    if (!items.then || !_.isFunction(items.then)) {
+      originListReplace.call(this, items);
+      return;
+    }
+
+    items.then((data) => {
+      originListReplace.call(this, data);
+    });
+  };
 
   // Add viewModel instance to element's data of component
   can.Component.prototype.init = function (el) {

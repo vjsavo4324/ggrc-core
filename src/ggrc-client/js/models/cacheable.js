@@ -673,14 +673,14 @@ export default CanModel.extend({
     return this.constructor.is_custom_attributable;
   },
   computed_errors: function () {
-    let errors = this.errors();
+    let errors = this.attr('errors');
     if (this.attr('_suppress_errors')) {
       return null;
     }
     return errors;
   },
   computed_unsuppressed_errors: function () {
-    return this.errors();
+    return this.attr('errors');
   },
   refresh: function (params) {
     let dfd;

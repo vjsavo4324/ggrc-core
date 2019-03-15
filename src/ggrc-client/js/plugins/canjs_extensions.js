@@ -5,6 +5,17 @@
 (function ($, can) {
   let originComponentInit = can.Component.prototype.init;
   let originListReplace = can.List.prototype.replace;
+  let defaultValidator = can.validate.validator();
+  let originalOnce = defaultValidator.once;
+
+  // Override "once" method to avoid exception connect to "length" name
+  defaultValidator.once = function (value, options, name) {
+    if (name === 'length') {
+      return;
+    }
+
+    return originalOnce.apply(this, arguments);
+  };
 
   // Returns a function which will be halted unless `this.element` exists
   // - useful for callbacks which depend on the controller's presence in the DOM

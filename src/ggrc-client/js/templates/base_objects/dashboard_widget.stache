@@ -9,7 +9,7 @@
       {{#dashboards}}
         <li
           {{#if_equals url activeDashboard.url}}class="active"{{/if_equals}}
-          ($click)="selectDashboard(%context)">
+          on:el:click="selectDashboard(%context)">
           {{name}}
         </li>
       {{/dashboards}}

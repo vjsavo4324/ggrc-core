@@ -15,7 +15,7 @@
               dropdown-container__item
               {{#if_equals paging.pageSize .}} dropdown-container__item_selected{{/if_equals}}
               flex-size-1"
-            ($click)="setPageSize(.)">{{.}}</div>
+            on:el:click="setPageSize(.)">{{.}}</div>
           {{/paging.pageSizeSelect}}
         </div>
       </simple-popover>
@@ -23,12 +23,12 @@
   </div>
   <div class="pagination">
     <div class="pagination-item {{#if_equals paging.current 1}}disabled{{/if_equals}}">
-      <a ($click)="{setFirstPage}">
+      <a on:el:click="setFirstPage()">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
       </a>
     </div>
     <div class="pagination-item {{#if_equals paging.current 1}}disabled{{/if_equals}}">
-      <a ($click)="{setPrevPage}">
+      <a on:el:click="setPrevPage()">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </a>
     </div>
@@ -40,19 +40,19 @@
             <div class="pagination-item__popover-item single-line
                         {{#if_equals paging.current .}} pagination-item__popover-item_selected{{/if_equals}}"
                  title="{{getPageTitle}}"
-                 ($click)="{setCurrentPage(.)}">
+                 on:el:click="setCurrentPage(.)">
               {{getPageTitle}}
             </div>
           {{/pagesList}}
       </simple-popover>
     </div>
     <div class="pagination-item {{#if_equals paging.current paging.count}}disabled{{/if_equals}}">
-      <a ($click)="{setNextPage}">
+      <a on:el:click="setNextPage()">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </a>
     </div>
     <div class="pagination-item {{#if_equals paging.current paging.count}}disabled{{/if_equals}}">
-      <a ($click)="{setLastPage}">
+      <a on:el:click="setLastPage()">
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </a>
     </div>

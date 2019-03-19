@@ -14,7 +14,7 @@
 
 <h2>Export Objects</h2>
 
-<export-group ({panels})="{panels}"></export-group>
+<export-group {(panels)}="{panels}"></export-group>
 
 <div class="export-group__actions-wrap">
     <button type="button"

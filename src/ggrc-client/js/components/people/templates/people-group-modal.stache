@@ -45,7 +45,7 @@
     </div>
     <div class="simple-modal__section people-group-modal__people-section">
       <div>
-        <object-list ({items})="{people}"
+        <object-list {(items)}="{people}"
                      {is-disabled}="{isLoading}"
                      {empty-message}="{emptyListMessage}">
             <person-data {person}="{.}">

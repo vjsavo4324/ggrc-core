@@ -99,7 +99,7 @@
     </a>
   </li>
   <li class="user user-dropdown dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button"
       on:el:click="handleMenuOpening">
       <div class="oneline">
         <i class="fa fa-user"></i>

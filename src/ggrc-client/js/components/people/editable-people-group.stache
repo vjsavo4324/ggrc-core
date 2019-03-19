@@ -8,7 +8,7 @@
   <content></content>
 
   {{#unless editableMode}}
-    <object-list ({items})="{showPeople}" {empty-message}="{emptyListMessage}">
+    <object-list {(items)}="{showPeople}" {empty-message}="{emptyListMessage}">
       <person-data class="people-group__readonly-person"
                    {person}="{.}">
       </person-data>
@@ -33,7 +33,7 @@
       <div class="inline-edit inline-edit--active">
         <div class="inline-edit__content editable-people-group__inline">
           <div class="editable-people-group__inline-content">
-            <object-list ({items})="{people}"
+            <object-list {(items)}="{people}"
                          {is-disabled}="{isLoading}"
                          {empty-message}="{emptyListMessage}">
               <person-data {person}="{.}">

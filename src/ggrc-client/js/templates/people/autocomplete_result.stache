@@ -4,7 +4,7 @@
 }}
 
 {{#each items}}
-<li {{data 'ui-autocomplete-item'}} class="ui-menu-item">
+<li {{canData 'ui-autocomplete-item'}} class="ui-menu-item">
   <a href="javascript://">
     {{name}} <span class="small">{{email}}</span>
   {{#if_equals system_wide_role 'No Access'}}

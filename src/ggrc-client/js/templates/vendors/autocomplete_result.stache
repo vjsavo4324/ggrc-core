@@ -4,8 +4,8 @@
 }}
 
 {{#each items}}
-<li {{data 'ui-autocomplete-item'}} class="ui-menu-item">
-  <a href="javascript://" class='show-extended' {{data 'model'}}>
+<li {{canData 'ui-autocomplete-item'}} class="ui-menu-item">
+  <a href="javascript://" class='show-extended' {{canData 'model'}}>
     {{title}}
   </a>
 </li>

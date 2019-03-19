@@ -6,7 +6,7 @@
 {{! dashboard object listing}}
 <ul class="tree-structure new-tree">
   {{#list}}
-    <li class="tree-item role" data-model="true" {{data 'model'}}>
+    <li class="tree-item role" data-model="true" {{canData 'model'}}>
       <div class="item-main">
         <div class="item-wrap">
           <div class="select">

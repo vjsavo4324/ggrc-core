@@ -5,7 +5,7 @@
 
 
 <li class="tree-item" data-model="true">
-  <div class="item-main" {{data 'model'}}>
+  <div class="item-main" {{canData 'model'}}>
     <div class="item-wrap">
       {{> /static/templates/base_objects/open_close.stache}}
       <div class="select disabled">
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           {{#child_options.0}}
-          <tbody class="tree-structure new-tree tree-view-control" {{data 'options'}}>
+          <tbody class="tree-structure new-tree tree-view-control" {{canData 'options'}}>
           </tbody>
           {{/child_options.0}}
           <!-- Custom attribute definitions here -->

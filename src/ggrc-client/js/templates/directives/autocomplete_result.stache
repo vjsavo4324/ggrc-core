@@ -4,9 +4,9 @@
 }}
 
 {{#each items}}
-<li {{data 'ui-autocomplete-item'}} class="ui-menu-item">
+<li {{canData 'ui-autocomplete-item'}} class="ui-menu-item">
   <a
-    href="javascript://" class='show-extended' {{data 'model'}}>
+    href="javascript://" class='show-extended' {{canData 'model'}}>
     <i class="fa fa-{{class.table_singular}} color"></i>
     {{firstnonempty title name email}}
   </a>

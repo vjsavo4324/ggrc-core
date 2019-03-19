@@ -4,8 +4,8 @@
 }}
 
 {{#each items}}
-<li class="ui-menu-item" {{data 'ui-autocomplete-item'}}>
-  <a href="javascript://" class='show-extended' {{data 'model'}}
+<li class="ui-menu-item" {{canData 'ui-autocomplete-item'}}>
+  <a href="javascript://" class='show-extended' {{canData 'model'}}
     data-tooltip-view="/cycle_task_groups/extended_info.stache">
     {{title}}
   </a>

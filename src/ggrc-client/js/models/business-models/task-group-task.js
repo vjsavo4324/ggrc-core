@@ -11,7 +11,6 @@ import {
   getClosestWeekday,
   getDate,
 } from '../../plugins/utils/date-utils';
-import {getPageInstance} from '../../plugins/utils/current-page-utils';
 import contactable from '../mixins/contactable';
 import timeboxed from '../mixins/timeboxed';
 import accessControlList from '../mixins/access-control-list';
@@ -66,14 +65,10 @@ export default Cacheable.extend({
 
     this.validate(['start_date', 'end_date'], function () {
       let that = this;
-      let workflow = getPageInstance();
+
       let datesAreValid = true;
       let startDate = getDate(that.attr('start_date'));
       let endDate = getDate(that.attr('end_date'));
-
-      if (!(workflow instanceof Workflow)) {
-        return;
-      }
 
       // Handle cases of a workflow with start and end dates
       datesAreValid = startDate && endDate &&

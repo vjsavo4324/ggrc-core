@@ -31,11 +31,11 @@
 
       <div class="lhs-nav">
         <ul class="top-level">
-          {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Program" title_plural="Programs" li_class="programs" template_view="/static/templates/programs/search_result.stache"}}}
-          {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Workflow" title_plural="Workflows" li_class="workflow" template_view="/static/templates/workflows/search_result.stache" tooltip_view="/workflows/extended_info.stache"}}}
-          {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Audit" title_plural="Audits" li_class="programs" template_view="/static/templates/audits/search_result.stache" tooltip_view="/audits/extended_info.stache"}}}
-          {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Assessment" title_plural="Assessments" li_class="programs" tooltip_view="/assessments/assignable_extended_info.stache" actions="/static/templates/base_objects/empty.stache"}}}
-          {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Issue" title_plural="Issues" li_class="programs" actions="/static/templates/base_objects/search_actions.stache"}}}
+          {{{renderLive "dashboard/lhn_search" type="Program" title_plural="Programs" li_class="programs" template_view="/static/templates/programs/search_result.stache"}}}
+          {{{renderLive "dashboard/lhn_search" type="Workflow" title_plural="Workflows" li_class="workflow" template_view="/static/templates/workflows/search_result.stache" tooltip_view="/workflows/extended_info.stache"}}}
+          {{{renderLive "dashboard/lhn_search" type="Audit" title_plural="Audits" li_class="programs" template_view="/static/templates/audits/search_result.stache" tooltip_view="/audits/extended_info.stache"}}}
+          {{{renderLive "dashboard/lhn_search" type="Assessment" title_plural="Assessments" li_class="programs" tooltip_view="/assessments/assignable_extended_info.stache" actions="/static/templates/base_objects/empty.stache"}}}
+          {{{renderLive "dashboard/lhn_search" type="Issue" title_plural="Issues" li_class="programs" actions="/static/templates/base_objects/search_actions.stache"}}}
         </ul>
       </div>
 
@@ -45,19 +45,18 @@
         <h2>Objects</h2>
 
         <ul class="top-level">
-          <li class="governance
-          accordion-group">
+          <li class="governance accordion-group">
             <a data-test-id="directives_66116337" class="governance list-toggle top" href="#">
               <i class="fa fa-caret-right"></i>
               Directives
             </a>
             <div class="content">
               <ul class="mid-level">
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Regulation" title_plural="Regulations" li_class="governance"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Policy" title_plural="Policies" li_class="governance"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Standard" title_plural="Standards" li_class="governance"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Contract" title_plural="Contracts" li_class="governance"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Requirement" title_plural="Requirements" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Regulation" title_plural="Regulations" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Policy" title_plural="Policies" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Standard" title_plural="Standards" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Contract" title_plural="Contracts" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Requirement" title_plural="Requirements" li_class="governance"}}}
               </ul>
             </div>
           </li>
@@ -69,8 +68,8 @@
             </a>
             <div class="content">
               <ul class="mid-level">
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Control" title_plural="Controls" li_class="controls"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Objective" title_plural="Objectives" li_class="objectives"}}}
+                {{{renderLive "dashboard/lhn_search" type="Control" title_plural="Controls" li_class="controls"}}}
+                {{{renderLive "dashboard/lhn_search" type="Objective" title_plural="Objectives" li_class="objectives"}}}
               </ul>
             </div>
           </li>
@@ -82,7 +81,7 @@
             </a>
             <div class="content">
               <ul class="mid-level">
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Person" title_plural="People" li_class="entities" template_view="/static/templates/people/search_result.stache"}}}
+                {{{renderLive "dashboard/lhn_search" type="Person" title_plural="People" li_class="entities" template_view="/static/templates/people/search_result.stache"}}}
               </ul>
             </div>
           </li>
@@ -94,20 +93,20 @@
             </a>
             <div class="content">
               <ul class="mid-level">
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="AccessGroup" title_plural="Access Groups" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="OrgGroup" title_plural="Org Groups" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="System" title_plural="Systems" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Process" title_plural="Processes" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="DataAsset" title_plural="Data Assets" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Product" title_plural="Products" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="ProductGroup" title_plural="Product Groups" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Project" title_plural="Projects" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Facility" title_plural="Facilities" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="KeyReport" title_plural="Key Reports" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Market" title_plural="Markets" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Metric" title_plural="Metrics" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="TechnologyEnvironment" title_plural="Technology Environments" li_class="business"}}}
-                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Vendor" title_plural="Vendors" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="AccessGroup" title_plural="Access Groups" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="OrgGroup" title_plural="Org Groups" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="System" title_plural="Systems" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Process" title_plural="Processes" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="DataAsset" title_plural="Data Assets" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Product" title_plural="Products" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="ProductGroup" title_plural="Product Groups" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Project" title_plural="Projects" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Facility" title_plural="Facilities" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="KeyReport" title_plural="Key Reports" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Market" title_plural="Markets" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Metric" title_plural="Metrics" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="TechnologyEnvironment" title_plural="Technology Environments" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Vendor" title_plural="Vendors" li_class="business"}}}
               </ul>
             </div>
           </li>

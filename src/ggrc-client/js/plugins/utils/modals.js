@@ -111,18 +111,24 @@ function confirm(options, success, dismiss) {
       }, options));
 
       $target.on('click', 'a.btn[data-toggle=confirm]', function (e) {
-        let params = $(e.target).closest('.modal').find('form')
-          .serializeArray();
-        $target.modal('hide').remove();
-        if (success) {
-          success(params, $(e.target).data('option'));
-        }
+        // setTimeout to wait for "event handlers" before remove the element
+        setTimeout(() => {
+          let params = $(e.target).closest('.modal').find('form')
+            .serializeArray();
+          $target.modal('hide').remove();
+          if (success) {
+            success(params, $(e.target).data('option'));
+          }
+        }, 0);
       })
         .on('click.modal-form.close', '[data-dismiss="modal"]', function () {
-          $target.modal('hide').remove();
-          if (dismiss) {
-            dismiss();
-          }
+          // setTimeout to wait for "event handlers" before remove the element
+          setTimeout(() => {
+            $target.modal('hide').remove();
+            if (dismiss) {
+              dismiss();
+            }
+          }, 0);
         });
     });
 

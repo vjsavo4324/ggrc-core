@@ -268,7 +268,7 @@ export default CanModel.extend({
     //  below when the update endpoint isn't set in the model's static config.
     //  This leads to conflicts not actually rejecting because on the second go-round
     //  the local and remote objects look the same.  --BM 2015-02-06
-    this.update = async function (id, params) {
+    this.update = function (id, params) {
       let ret = _update
         .call(this, id, this.process_args(params))
         .then((obj) => obj,
@@ -287,7 +287,7 @@ export default CanModel.extend({
       delete ret.hasFailCallback;
       return ret;
     };
-    this.create = async function (params) {
+    this.create = function (params) {
       let ret = _create
         .call(this, this.process_args(params));
       delete ret.hasFailCallback;

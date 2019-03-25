@@ -101,8 +101,14 @@ const DashboardControl = can.Control.extend({
         instance: pageInstance,
         showWidgetArea: this.showWidgetArea.bind(this),
       };
-      $innernav.html(can.view(this.options.innernav_view, options));
-      return;
+
+      $.ajax({
+        url: this.options.innernav_view,
+        dataType: 'text',
+      }).then((view) => {
+        let frag = can.stache(view)(options);
+        $innernav.html(frag);
+      });
     }
   },
 

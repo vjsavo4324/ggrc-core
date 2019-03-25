@@ -7,8 +7,8 @@ import template from './inner-nav-item.stache';
 export default can.Component.extend({
   tag: 'inner-nav-item',
   leakScope: false,
-  template,
-  viewModel: {
+  template: can.stache(template),
+  viewModel: can.Map.extend({
     define: {
       displayTab: {
         get() {
@@ -48,5 +48,5 @@ export default can.Component.extend({
       // prevent click propagation
       return false;
     },
-  },
+  }),
 });

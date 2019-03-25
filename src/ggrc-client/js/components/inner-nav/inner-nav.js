@@ -10,7 +10,7 @@ import InnerNavVM from './inner-nav-vm';
 
 export default can.Component.extend({
   tag: 'inner-nav',
-  template,
+  template: can.stache(template),
   viewModel: InnerNavVM,
   events: {
     inserted() {

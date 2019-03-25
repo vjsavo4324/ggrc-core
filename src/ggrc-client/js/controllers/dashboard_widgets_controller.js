@@ -36,7 +36,7 @@ export default can.Control.extend({
       this.options.object_category = this.options.model.category;
     }
 
-    this.element
+    this.$element
       .addClass('widget')
       .addClass(this.options.object_category)
       .addClass(this.options.widgetType)

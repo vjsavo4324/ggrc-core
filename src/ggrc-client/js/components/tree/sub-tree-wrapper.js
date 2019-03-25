@@ -228,7 +228,7 @@ const viewModel = can.Map.extend({
 
 const events = {
   inserted() {
-    let parents = this.element.parents('sub-tree-wrapper');
+    let parents = $(this.element).parents('sub-tree-wrapper');
     this.viewModel.attr('deepLevel', parents.length);
   },
   [`{viewModel.parent} ${REFRESH_SUB_TREE.type}`]() {

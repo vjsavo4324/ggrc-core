@@ -63,7 +63,7 @@ export default can.Component.extend({
   viewModel,
   events: {
     inserted() {
-      this.viewModel.attr('$el', this.element.find('.tree-item-wrapper'));
+      this.viewModel.attr('$el', $(this.element).find('.tree-item-wrapper'));
     },
   },
 });

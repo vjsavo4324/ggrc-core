@@ -130,10 +130,11 @@ export default can.Component.extend({
   viewModel,
   events: {
     inserted() {
-      let parents = this.element.parents('sub-tree-wrapper').length;
+      let $el = $(this.element);
+      let parents = $el.parents('sub-tree-wrapper').length;
       let canExpand = parents < this.viewModel.attr('deepLimit');
       this.viewModel.attr('canExpand', canExpand);
-      this.viewModel.attr('$el', this.element);
+      this.viewModel.attr('$el', $el);
     },
     '.tree-item-actions__content mouseenter'(el, ev) {
       let vm = this.viewModel;
@@ -142,7 +143,7 @@ export default can.Component.extend({
         vm.attr('activated', true);
       }
       // event not needed after render of content
-      el.off(ev);
+      $(el).off(ev);
     },
   },
 });

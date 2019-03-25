@@ -4,7 +4,6 @@
 */
 
 import {getPageModel} from '../plugins/utils/current-page-utils';
-import * as canEvent from 'can-event';
 
 export default can.Control.extend({
   defaults: {

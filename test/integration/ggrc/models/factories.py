@@ -350,6 +350,12 @@ class KeyReportFactory(TitledFactory):
     model = all_models.KeyReport
 
 
+class AccountBalanceFactory(TitledFactory):
+
+  class Meta:
+    model = all_models.AccountBalance
+
+
 class ProcessFactory(TitledFactory):
 
   class Meta:
@@ -608,6 +614,7 @@ def get_model_factory(model_name):
       "AccessControlRole": AccessControlRoleFactory,
       "AccessControlList": AccessControlListFactory,
       "AccessGroup": AccessGroupFactory,
+      "AccountBalance": AccountBalanceFactory,
       "Assessment": AssessmentFactory,
       "AssessmentTemplate": AssessmentTemplateFactory,
       "Audit": AuditFactory,

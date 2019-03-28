@@ -31,6 +31,7 @@ DISPLAY_CLASS_MAPPINGS = {
     'Metric': 'business',
     'TechnologyEnvironment': 'business',
     'ProductGroup': 'business',
+    'AccountBalance': 'business',
 
     'OrgGroup': 'entities',
     'Person': 'entities',

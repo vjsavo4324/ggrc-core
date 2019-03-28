@@ -254,3 +254,8 @@ def clear_memcache():
     return
 
   get_cache_manager().clean()
+
+
+def get_ie_cache_key(ie_job):
+  """Create key for export status entry"""
+  return "ImportExport:{}".format(ie_job.id)

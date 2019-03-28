@@ -8,60 +8,56 @@
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-arguments
 # pylint: disable=redefined-outer-name
-import re
 
 import pytest
 
-from lib import base, constants, users
+from lib import base, users
 from lib.constants import roles
-from lib.entities.entities_factory import PeopleFactory
-from lib.service import webui_service, rest_service, rest_facade, webui_facade
-from lib.utils import string_utils
+from lib.constants.element import ReviewStates
+from lib.service import rest_service, webui_facade, rest_facade
 
 
-class TestControlsWorkflow(base.Test):
-  """Test class for control scenario tests"""
-  info_service = rest_service.ObjectsInfoService
-  usr_email = PeopleFactory.superuser.name
-  rand_msg = string_utils.StringMethods.random_string()
+class TestObjectsReview(base.Test):
+  """Tests for objects review workflow."""
 
-  def _assert_control(self, actual_control, new_control_rest):
-    """Assert control object on equals."""
-    self.general_equal_assert(new_control_rest.repr_ui(), actual_control,
-                              "created_at", "updated_at",
-                              "custom_attribute_definitions",
-                              "custom_attributes",
-                              "object_review_txt")
-
-  @pytest.mark.skip(reason="Will be fixed.")
-  def test_control_approve_review_flow(self, control, selenium):
-    """Test accept review scenario"""
-    control_ui_service = webui_service.ControlsService(selenium)
-    control_ui_service.open_info_page_of_obj(control)
-    control_ui_service.submit_for_review(
-        control, self.usr_email, self.rand_msg)
-    control_ui_service.approve_review(control)
-    actual_control = control_ui_service.get_obj_from_info_page(
-        control)
-    control.update_attrs(os_state="Reviewed")
-    full_regex = (
-        unicode("Last reviewed by\n{}\non ".format(self.usr_email)) +
-        constants.element.Common.APPROVED_DATE_REGEX)
-    self._assert_control(actual_control, control)
-    assert re.compile(full_regex).match(actual_control.object_review_txt)
-
-
-class TestProgramReview(base.Test):
-  """Tests for program page review workflow."""
+  @pytest.fixture()
+  def program_with_assigned_reviewer(self):
+    """Creates program with assigned review.
+    Returns program and reviewer person."""
+    reviewer = rest_facade.create_user_with_role(roles.CREATOR)
+    users.set_current_user(rest_facade.create_user_with_role(roles.CREATOR))
+    program_with_review = rest_service.ReviewService().request_review(
+        rest_facade.create_program(), reviewer)
+    return {"program": program_with_review,
+            "reviewer": reviewer}
 
   @pytest.mark.smoke_tests
-  def test_add_program_reviewer(self, selenium):
+  def test_request_obj_review(self, selenium):
     """Confirm reviewer is displayed on Program Info panel."""
-    creator = rest_facade.create_user_with_role(roles.CREATOR)
     reviewer = rest_facade.create_user_with_role(roles.CREATOR)
-    users.set_current_user(creator)
-    expected_program = rest_facade.create_program()
-    webui_facade.submit_obj_for_review(selenium, expected_program, reviewer)
+    users.set_current_user(rest_facade.create_user_with_role(roles.CREATOR))
+    program = rest_facade.create_program()
+    webui_facade.submit_obj_for_review(selenium, program, reviewer.email)
+    actual_program = webui_facade.get_object(selenium, program)
+    program.update_attrs(review={
+        "status": ReviewStates.UNREVIEWED,
+        "reviewers": [reviewer.email],
+        "last_reviewed_by": ""})
+    self.general_equal_assert(program.repr_ui(), actual_program)
+
+  @pytest.mark.smoke_tests
+  def test_obj_mark_reviewed(self, selenium, program_with_assigned_reviewer):
+    """Confirm Reviewer with READ rights for an object
+    able to Review an object."""
+    expected_program = program_with_assigned_reviewer["program"]
+    reviewer = program_with_assigned_reviewer["reviewer"]
+    users.set_current_user(reviewer)
+    webui_facade.approve_obj_review(selenium, expected_program)
+    expected_program.update_attrs(review={
+        "status": ReviewStates.REVIEWED,
+        "reviewers": [reviewer.email],
+        "last_reviewed_by": "Last reviewed by\n" + reviewer.email + "\non " +
+                            rest_facade.get_last_review_date(expected_program)}
+    )
     actual_program = webui_facade.get_object(selenium, expected_program)
-    expected_program.update_attrs(reviewers=[reviewer.email])
-    assert expected_program.repr_ui() == actual_program
+    self.general_equal_assert(expected_program.repr_ui(), actual_program)

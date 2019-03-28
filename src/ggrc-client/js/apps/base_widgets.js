@@ -8,6 +8,7 @@
  */
 let allCoreTypes = [
   'AccessGroup',
+  'AccountBalance',
   'Assessment',
   'AssessmentTemplate',
   'Audit',
@@ -90,6 +91,7 @@ snapshotWidgetsConfig.forEach(function (model) {
 
 baseWidgetsByType = {
   AccessGroup: _.difference(filteredTypes, ['AccessGroup']),
+  AccountBalance: filteredTypes,
   Audit: [].concat(snapshotWidgetsConfig, excludeMappingConfig,
     auditInclusion).sort(),
   Contract: _.difference(filteredTypes, ['Contract']),

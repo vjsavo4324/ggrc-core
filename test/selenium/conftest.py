@@ -5,6 +5,8 @@
 # pylint: disable=global-variable-not-assigned
 # pylint: disable=unused-argument
 # pylint: disable=redefined-outer-name
+# pylint: disable=broad-except
+# pylint: disable=inconsistent-return-statements
 import copy
 import logging
 import os
@@ -17,7 +19,7 @@ from selenium.webdriver.remote.remote_connection import (
     LOGGER as SELENIUM_LOGGER)
 
 from lib import dynamic_fixtures, environment, url, users, browsers
-from lib.constants import element, workflow_repeat_units
+from lib.constants import element, roles, workflow_repeat_units
 from lib.custom_pytest_scheduling import CustomPytestScheduling
 from lib.entities import entities_factory
 from lib.page import dashboard
@@ -574,6 +576,18 @@ def dynamic_relationships(request):
 
 
 # New app fixtures
+
+@pytest.fixture()
+def creator():
+  """Create user with role 'Creator'."""
+  return rest_facade.create_user_with_role(roles.CREATOR)
+
+
+@pytest.fixture()
+def login_as_creator(creator):
+  """Login by user with role 'Creator'."""
+  users.set_current_user(creator)
+
 
 @pytest.fixture()
 def program():

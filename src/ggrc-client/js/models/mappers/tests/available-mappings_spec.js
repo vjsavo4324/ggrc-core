@@ -11,6 +11,7 @@ describe('Mappings', () => {
   let modules = {
     core: [
       'AccessGroup',
+      'AccountBalance',
       'Contract',
       'Control',
       'DataAsset',
@@ -53,6 +54,7 @@ describe('Mappings', () => {
 
   const mappingRules = {
     AccessGroup: _.difference(coreObjectsRules, ['AccessGroup']),
+    AccountBalance: coreObjectsRules,
     Assessment: [...snapshotableObjects, 'Evidence', 'Audit', 'Person'],
     AssessmentTemplate: ['Audit'],
     Audit: [...snapshotableObjects, 'Evidence', 'Assessment',

@@ -18,6 +18,7 @@ class TestSlugPrefix(unittest.TestCase):
 
   EXPECTED_PREFIXES = {
       'AccessGroup': 'ACCESSGROUP',
+      'AccountBalance': 'ACCOUNTBALANCE',
       'Assessment': 'ASSESSMENT',
       'AssessmentTemplate': 'TEMPLATE',
       'Audit': 'AUDIT',

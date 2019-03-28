@@ -297,8 +297,27 @@ class RelationshipsService(HelpRestService):
         dest_obj in help_utils.convert_to_list(dest_objs)]
 
 
+class ReviewService(BaseRestService):
+  """Service for working with entities reviews."""
+  def __init__(self):
+    super(ReviewService, self).__init__(url.REVIEWS)
+
+  def request_review(self, obj, person):
+    """Add reviewer to object.
+    Returns obj with added review."""
+    review_attrs = {
+        "reviewers": person, "reviewable": obj.repr_min_dict()}
+    review = self.create_obj(factory_params=review_attrs)
+    # reviewers field contains list of reviewer emails
+    obj.review = {
+        "status": review.status,
+        "reviewers": review.reviewers,
+        "last_reviewed_by": ""}
+    return obj
+
+
 class AssessmentsFromTemplateService(HelpRestService):
-  """Service for creating asessments from templates"""
+  """Service for creating assessments from templates."""
   def __init__(self):
     super(AssessmentsFromTemplateService, self).__init__(url.ASSESSMENTS)
 

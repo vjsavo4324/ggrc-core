@@ -910,6 +910,10 @@ class WidgetInfoAccessGroup(WidgetSnapshotsInfoPanel):
   """Locators for Access Group Info widgets."""
 
 
+class WidgetInfoAccountBalance(WidgetSnapshotsInfoPanel):
+  """Locators for Account Balance Info widgets."""
+
+
 class WidgetInfoSystem(WidgetSnapshotsInfoPanel):
   """Locators for System Info widgets."""
 
@@ -1131,10 +1135,10 @@ class AdminCustomAttributes(object):
           objects.ISSUES, objects.ASSESSMENTS, objects.STANDARDS,
           objects.REGULATIONS, objects.POLICIES, objects.CONTRACTS,
           objects.VENDORS, objects.PEOPLE,
-          objects.ACCESS_GROUPS, objects.ORG_GROUPS, objects.PRODUCTS,
-          objects.MARKETS, objects.PROCESSES, objects.FACILITIES,
-          objects.KEY_REPORTS,
-          objects.PROJECTS, objects.DATA_ASSETS, objects.SYSTEMS)
+          objects.ACCESS_GROUPS, objects.ACCOUNT_BALANCES, objects.ORG_GROUPS,
+          objects.PRODUCTS, objects.MARKETS, objects.PROCESSES,
+          objects.FACILITIES, objects.KEY_REPORTS, objects.PROJECTS,
+          objects.DATA_ASSETS, objects.SYSTEMS)
       for id_, name in enumerate(items, start=1):
         setattr(cls,
                 Common.TOGGLE + name.upper(),

@@ -36,6 +36,7 @@ import * as businessModels from '../../models/business-models';
 import TreeViewConfig from '../../apps/base_widgets';
 
 let DEFAULT_OBJECT_MAP = {
+  AccountBalance: 'Control',
   Assessment: 'Control',
   Objective: 'Control',
   Requirement: 'Objective',

@@ -456,3 +456,12 @@ class DefaultUserPermissions(object):
   def is_admin(self):
     """Whether the user has ADMIN permissions."""
     return self._is_allowed(self.ADMIN_PERMISSION)
+
+  def all_resources(self, action):
+    """All resources in which the user has `action` permission."""
+    permissions = self._permissions()
+    return [
+        (res_type, res_id)
+        for res_type, permission in permissions.get(action, {}).iteritems()
+        for res_id in permission.get("resources", set())
+    ]

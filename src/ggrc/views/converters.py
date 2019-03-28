@@ -7,6 +7,9 @@ This module handles all view related function to import and export pages
 including the import/export api endponts.
 """
 
+# pylint: disable=inconsistent-return-statements
+# TODO: Remove this suppression after pylint update to v.1.8.3 or higher.
+
 import re
 
 from functools import wraps
@@ -14,33 +17,36 @@ from logging import getLogger
 from StringIO import StringIO
 from datetime import datetime
 
-from apiclient.errors import HttpError
 from googleapiclient import errors
 
 import flask
 from flask import current_app
-from flask import request
 from flask import json
 from flask import render_template
-from werkzeug.exceptions import (
-    BadRequest, InternalServerError, Unauthorized, Forbidden, NotFound
-)
+from flask import request
+from werkzeug import exceptions as wzg_exceptions
 
-from ggrc import db, utils
-from ggrc.app import app
-from ggrc.cloud_api import task_queue
-from ggrc.converters import get_exportables
-from ggrc.converters.base import ImportConverter, ExportConverter
-from ggrc.converters.import_helper import count_objects, \
-    read_csv_file, get_export_filename, get_object_column_definitions
-from ggrc.gdrive import file_actions as fa
-from ggrc.models import import_export, background_task, all_models
-from ggrc.notifications import job_emails
-from ggrc.query.exceptions import BadQueryException
-from ggrc.query.builder import QueryHelper
-from ggrc.login import login_required, get_current_user
+
+from ggrc import db
+from ggrc import login
 from ggrc import settings
-from ggrc.utils import benchmark, errors as app_errors
+from ggrc import utils
+from ggrc.app import app
+from ggrc.cache import utils as cache_utils
+from ggrc.cloud_api import task_queue
+from ggrc.converters import base
+from ggrc.converters import get_exportables
+from ggrc.converters import import_helper
+from ggrc.gdrive import file_actions as fa
+from ggrc.models import all_models
+from ggrc.models import background_task
+from ggrc.models import exceptions as models_exceptions
+from ggrc.models import import_export
+from ggrc.notifications import job_emails
+from ggrc.query import builder
+from ggrc.query import exceptions as query_exceptions
+from ggrc.utils import benchmark
+from ggrc.utils import errors as app_errors
 
 
 EXPORTABLES_MAP = {exportable.__name__: exportable for exportable
@@ -68,7 +74,7 @@ def check_required_headers(required_headers):
           "Invalid header value for '{}'".format(header))
 
   if headers_errors:
-    raise BadRequest("\n".join(headers_errors))
+    raise wzg_exceptions.BadRequest("\n".join(headers_errors))
 
 
 def parse_export_request():
@@ -94,7 +100,7 @@ def export_file(export_to, filename, csv_string=None):
         ("Content-Disposition", "attachment"),
     ]
     return current_app.make_response((csv_string, 200, headers))
-  raise BadRequest(app_errors.BAD_PARAMS)
+  raise wzg_exceptions.BadRequest(app_errors.BAD_PARAMS)
 
 
 def handle_export_request_error(handle_function):
@@ -104,20 +110,22 @@ def handle_export_request_error(handle_function):
     """Wrapper for handle exceptions during exporting"""
     try:
       return handle_function(*args, **kwargs)
-    except BadQueryException as exception:
-      raise BadRequest(exception.message)
-    except Unauthorized as ex:
-      raise Unauthorized("%s %s" % (ex.message, app_errors.RELOAD_PAGE))
-    except HttpError as e:
+    except query_exceptions.BadQueryException as exception:
+      raise wzg_exceptions.BadRequest(exception.message)
+    except wzg_exceptions.Unauthorized as ex:
+      raise wzg_exceptions.Unauthorized("%s %s" % (ex.message,
+                                                   app_errors.RELOAD_PAGE))
+    except errors.HttpError as e:
       message = json.loads(e.content).get("error").get("message")
       if e.resp.code == 401:
-        raise Unauthorized("%s %s" % (message, app_errors.RELOAD_PAGE))
-      raise InternalServerError(message)
+        raise wzg_exceptions.Unauthorized("%s %s" % (message,
+                                                     app_errors.RELOAD_PAGE))
+      raise wzg_exceptions.InternalServerError(message)
     except Exception as e:  # pylint: disable=broad-except
       logger.exception(e.message)
       if settings.TESTING:
         raise
-      raise InternalServerError(
+      raise wzg_exceptions.InternalServerError(
           app_errors.INTERNAL_SERVER_ERROR.format(job_type="Export"))
   return handle_wrapper
 
@@ -145,9 +153,11 @@ def get_csv_template(objects):
     class_name = object_data["object_name"]
     object_class = EXPORTABLES_MAP[class_name]
     ignore_fields = IGNORE_FIELD_IN_TEMPLATE.get(class_name, [])
-    filtered_fields = [field for field in
-                       get_object_column_definitions(object_class)
-                       if field not in ignore_fields]
+    filtered_fields = [
+        field for field in
+        import_helper.get_object_column_definitions(object_class)
+        if field not in ignore_fields
+    ]
     object_data["fields"] = filtered_fields
   return make_export(objects)
 
@@ -163,13 +173,14 @@ def handle_export_csv_template_request():
   return export_file(export_to, filename, csv_string)
 
 
-def make_export(objects, exportable_objects=None):
+def make_export(objects, exportable_objects=None, ie_job=None):
   """Make export"""
-  query_helper = QueryHelper(objects)
+  query_helper = builder.QueryHelper(objects)
   ids_by_type = query_helper.get_ids()
-  converter = ExportConverter(
+  converter = base.ExportConverter(
       ids_by_type=ids_by_type,
       exportable_queries=exportable_objects,
+      ie_job=ie_job,
   )
   csv_data = converter.export_csv_data()
   object_names = "_".join(converter.get_object_names())
@@ -179,10 +190,10 @@ def make_export(objects, exportable_objects=None):
 def check_import_file():
   """Check if imported file format and type is valid"""
   if "file" not in request.files or not request.files["file"]:
-    raise BadRequest(app_errors.MISSING_FILE)
+    raise wzg_exceptions.BadRequest(app_errors.MISSING_FILE)
   csv_file = request.files["file"]
   if not csv_file.filename.lower().endswith(".csv"):
-    raise BadRequest(app_errors.WRONG_FILE_TYPE)
+    raise wzg_exceptions.BadRequest(app_errors.WRONG_FILE_TYPE)
   return csv_file
 
 
@@ -198,7 +209,7 @@ def parse_import_request():
     dry_run = request.headers["X-test-only"] == "true"
     return dry_run, file_data
   except:  # pylint: disable=bare-except
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Export"))
 
 
@@ -219,14 +230,16 @@ def make_response(data):
 def make_import(csv_data, dry_run, ie_job=None):
   """Make import"""
   try:
-    converter = ImportConverter(ie_job, dry_run=dry_run, csv_data=csv_data)
+    converter = base.ImportConverter(ie_job,
+                                     dry_run=dry_run,
+                                     csv_data=csv_data)
     converter.import_csv_data()
     return converter.get_info()
   except Exception as e:  # pylint: disable=broad-except
     logger.exception("Import failed: %s", e.message)
     if settings.TESTING:
       raise
-    raise BadRequest("{} {}".format(
+    raise wzg_exceptions.BadRequest("{} {}".format(
         app_errors.INTERNAL_SERVER_ERROR.format(job_type="Import"), e.message
     ))
 
@@ -234,40 +247,41 @@ def make_import(csv_data, dry_run, ie_job=None):
 def check_for_previous_run():
   """Check whether previous run is failed"""
   if int(request.headers["X-Appengine-Taskexecutioncount"]):
-    raise InternalServerError(app_errors.PREVIOUS_RUN_FAILED)
+    raise wzg_exceptions.InternalServerError(app_errors.PREVIOUS_RUN_FAILED)
 
 
 @app.route("/_background_tasks/run_export", methods=["POST"])
 @background_task.queued_task
 def run_export(task):
   """Run export"""
-  user = get_current_user()
+  user = login.get_current_user()
   ie_id = task.parameters.get("ie_id")
   objects = task.parameters.get("objects")
   exportable_objects = task.parameters.get("exportable_objects")
 
   try:
-    ie = import_export.get(ie_id)
+    ie_job = import_export.get(ie_id)
     check_for_previous_run()
 
-    content, _ = make_export(objects, exportable_objects)
-    db.session.refresh(ie)
-    if ie.status == "Stopped":
+    content, _ = make_export(objects, exportable_objects, ie_job)
+    db.session.refresh(ie_job)
+    if ie_job.status == "Stopped":
       return utils.make_simple_response()
-    ie.status = "Finished"
-    ie.end_at = datetime.utcnow()
-    ie.content = content
+    ie_job.status = "Finished"
+    ie_job.end_at = datetime.utcnow()
+    ie_job.content = content
     db.session.commit()
 
     job_emails.send_email(job_emails.EXPORT_COMPLETED, user.email,
-                          ie.title, ie_id)
-
+                          ie_job.title, ie_id)
+  except models_exceptions.ExportStoppedException:
+    logger.info("Export was stopped by user.")
   except Exception as e:  # pylint: disable=broad-except
     logger.exception("Export failed: %s", e.message)
-    ie = import_export.get(ie_id)
+    ie_job = import_export.get(ie_id)
     try:
-      ie.status = "Failed"
-      ie.end_at = datetime.utcnow()
+      ie_job.status = "Failed"
+      ie_job.end_at = datetime.utcnow()
       db.session.commit()
       job_emails.send_email(job_emails.EXPORT_CRASHED, user.email)
       return utils.make_simple_response(e.message)
@@ -283,12 +297,14 @@ def run_export(task):
 def run_import_phases(task):
   """Execute import phases"""
   ie_id = task.parameters.get("ie_id")
-  user = get_current_user()
+  user = login.get_current_user()
   try:
     ie_job = import_export.get(ie_id)
     check_for_previous_run()
 
-    csv_data = read_csv_file(StringIO(ie_job.content.encode("utf-8")))
+    csv_data = import_helper.read_csv_file(
+        StringIO(ie_job.content.encode("utf-8"))
+    )
 
     if ie_job.status == "Analysis":
       info = make_import(csv_data, True, ie_job)
@@ -354,34 +370,34 @@ def init_converter_views():
   # pylint: disable=unused-variable
   # The view function trigger a false unused-variable.
   @app.route("/_service/export_csv", methods=["POST"])
-  @login_required
+  @login.login_required
   def handle_export_csv():
     """Calls export handler"""
     with benchmark("handle export request"):
       return handle_export_request()
 
   @app.route("/_service/export_csv_template", methods=["POST"])
-  @login_required
+  @login.login_required
   def handle_export_csv_template():
     """Calls export csv template handler"""
     with benchmark("handle export csv template"):
       return handle_export_csv_template_request()
 
   @app.route("/_service/import_csv", methods=["POST"])
-  @login_required
+  @login.login_required
   def handle_import_csv():
     """Calls import handler"""
     with benchmark("handle import request"):
       return handle_import_request()
 
   @app.route("/import")
-  @login_required
+  @login.login_required
   def import_view():
     """Get import view"""
     return render_template("import_export/import.haml")
 
   @app.route("/export")
-  @login_required
+  @login.login_required
   def export_view():
     """Get export view"""
     return render_template("import_export/export.haml")
@@ -409,7 +425,7 @@ def handle_start(ie_job):
   elif ie_job.status == "Blocked":
     ie_job.status = "In Progress"
   else:
-    raise BadRequest(app_errors.WRONG_STATUS)
+    raise wzg_exceptions.BadRequest(app_errors.WRONG_STATUS)
   try:
     ie_job.start_at = datetime.utcnow()
     db.session.commit()
@@ -417,7 +433,9 @@ def handle_start(ie_job):
     return make_import_export_response(ie_job.log_json())
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(app_errors.JOB_FAILED.format(job_type="Import"))
+    raise wzg_exceptions.BadRequest(
+        app_errors.JOB_FAILED.format(job_type="Import")
+    )
 
 
 def run_background_import(ie_job_id):
@@ -444,25 +462,25 @@ def handle_import_put(**kwargs):
   """Handle import put"""
   command = kwargs.get("command2")
   ie_id = kwargs.get("id2")
-  user = get_current_user()
+  user = login.get_current_user()
   if user.system_wide_role == 'No Access':
-    raise Forbidden()
+    raise wzg_exceptions.Forbidden()
   if not ie_id or not command or command not in ("start", "stop"):
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Import"))
   try:
     ie_job = import_export.get(ie_id)
-  except (Forbidden, NotFound):
+  except (wzg_exceptions.Forbidden, wzg_exceptions.NotFound):
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Import"))
   if command == 'start':
     return handle_start(ie_job)
   elif command == "stop":
     return handle_import_stop(**kwargs)
-  raise BadRequest(app_errors.BAD_PARAMS)
+  raise wzg_exceptions.BadRequest(app_errors.BAD_PARAMS)
 
 
 def handle_import_get(**kwargs):
@@ -475,7 +493,7 @@ def handle_get(id2, command, job_type):
   check_import_export_headers()
   if command:
     if command != "download":
-      BadRequest("Unknown command")
+      wzg_exceptions.BadRequest("Unknown command")
     return handle_file_download(id2)
   try:
     if id2:
@@ -483,11 +501,11 @@ def handle_get(id2, command, job_type):
     else:
       ids = request.args.get("id__in")
       res = import_export.get_jobs(job_type, ids.split(",") if ids else None)
-  except (Forbidden, NotFound):
+  except (wzg_exceptions.Forbidden, wzg_exceptions.NotFound):
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type=job_type))
 
   return make_import_export_response(res)
@@ -497,7 +515,7 @@ def check_import_filename(filename):
   """Check filename has no special symbols"""
   spec_symbols = r'\\#?'
   if re.search('[{}]+'.format(spec_symbols), filename):
-    raise BadRequest(r"""
+    raise wzg_exceptions.BadRequest(r"""
         The file name should not contain special symbols \#?. Please correct
         the file name and import a Google sheet or a file again.
     """)
@@ -511,7 +529,7 @@ def handle_import_post(**kwargs):
   csv_data, csv_content, filename = fa.get_gdrive_file_data(file_meta)
   check_import_filename(filename)
   try:
-    objects, results, failed = count_objects(csv_data)
+    objects, results, failed = import_helper.count_objects(csv_data)
     ie = import_export.create_import_export_entry(
         content=csv_content,
         gdrive_metadata=file_meta,
@@ -521,11 +539,11 @@ def handle_import_post(**kwargs):
     return make_import_export_response({
         "objects": objects if not failed else [],
         "import_export": ie.log_json()})
-  except Unauthorized:
+  except wzg_exceptions.Unauthorized:
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Import"))
 
 
@@ -535,11 +553,13 @@ def handle_file_download(id2):
     export_to = request.args.get("export_to")
     ie = import_export.get(id2)
     return export_file(export_to, ie.title, ie.content.encode("utf-8"))
-  except (Forbidden, NotFound, Unauthorized):
+  except (wzg_exceptions.Forbidden,
+          wzg_exceptions.NotFound,
+          wzg_exceptions.Unauthorized):
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Download"))
 
 
@@ -548,7 +568,7 @@ def handle_export_put(**kwargs):
   command = kwargs.get("command2")
   ie_id = kwargs.get("id2")
   if not ie_id or not command or command != "stop":
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Export"))
   return handle_export_stop(**kwargs)
 
@@ -565,14 +585,16 @@ def handle_export_post(**kwargs):
   objects = request_json.get("objects")
   exportable_objects = request_json.get("exportable_objects", [])
   current_time = request.json.get("current_time")
-  user = get_current_user()
+  user = login.get_current_user()
   if user.system_wide_role == 'No Access':
-    raise Forbidden()
+    raise wzg_exceptions.Forbidden()
   if not objects or not current_time:
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Export"))
   try:
-    filename = get_export_filename(objects, current_time, exportable_objects)
+    filename = import_helper.get_export_filename(objects,
+                                                 current_time,
+                                                 exportable_objects)
     ie = import_export.create_import_export_entry(
         job_type="Export",
         status="In Progress",
@@ -583,7 +605,7 @@ def handle_export_post(**kwargs):
     return make_import_export_response(ie.log_json())
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Export"))
 
 
@@ -617,11 +639,11 @@ def handle_delete(**kwargs):
     db.session.delete(ie)
     db.session.commit()
     return make_import_export_response("OK")
-  except (Forbidden, NotFound):
+  except (wzg_exceptions.Forbidden, wzg_exceptions.NotFound):
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Import/Export"))
 
 
@@ -633,15 +655,15 @@ def handle_import_stop(**kwargs):
       ie_job.status = "Stopped"
       db.session.commit()
       return make_import_export_response(ie_job.log_json())
-  except Forbidden:
+  except wzg_exceptions.Forbidden:
     raise
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Import"))
   # Need to implement a better solution in order to identify specific
   # errors like here
-  raise BadRequest(app_errors.WRONG_STATUS)
+  raise wzg_exceptions.BadRequest(app_errors.WRONG_STATUS)
 
 
 def handle_export_stop(**kwargs):
@@ -654,14 +676,26 @@ def handle_export_stop(**kwargs):
       if getattr(settings, "APPENGINE_INSTANCE", "local") != "local":
         stop_ie_bg_tasks(ie_job)
       db.session.commit()
+      expire_ie_cache(ie_job)
       return make_import_export_response(ie_job.log_json())
-  except Forbidden:
+    if ie_job.status == "Stopped":
+      raise models_exceptions.ExportStoppedException()
+  except wzg_exceptions.Forbidden:
     raise
+  except models_exceptions.ExportStoppedException:
+    raise wzg_exceptions.BadRequest(app_errors.STOPPED_WARNING)
   except Exception as e:
     logger.exception(e.message)
-    raise BadRequest(
+    raise wzg_exceptions.BadRequest(
         app_errors.INCORRECT_REQUEST_DATA.format(job_type="Export"))
-  raise BadRequest(app_errors.WRONG_STATUS)
+  raise wzg_exceptions.BadRequest(app_errors.WRONG_STATUS)
+
+
+def expire_ie_cache(ie_job):
+  """Expire export status cache to force DB request."""
+  cache_manager = cache_utils.get_cache_manager()
+  cache_key = cache_utils.get_ie_cache_key(ie_job)
+  cache_manager.cache_object.memcache_client.delete(cache_key)
 
 
 def get_ie_bg_tasks(ie_job):

@@ -1,10 +1,18 @@
-[//]: <> (updated 01/17/2019)
+[//]: <> (updated 03/26/2019)
 
 Our product team is working hard to engineer compliance @ scale and make your day to day user journeys easier. We have been adding key capabilities to the product as listed here below.
 
-[Calendar events added for tasks (v.1.38.0, 01/17/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.vxhz1afc8gty)
+[Introducing new Control Library frontend (v.2.0.0, 03/26/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.xxbuiwi9f8pf)
 
-[Added a checkbox in Audit ‘Create screen’ to map snapshots manually (v.1.38.0, 01/17/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.1k1frii91vko)
+[‘Related Requirements’ added to snapshot (v.2.0.0, 03/26/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.dwnfktph11qf)
+
+[Introduced new object ‘Key report’ (v.1.41.0, 02/19/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.acts40q04kus)
+
+[Changes at synchronization logic with Ticket Tracker (v.1.39.0, 02/05/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.fe36fb28bds4)
+
+[Calendar events added for tasks (v.1.38.0, 01/16/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.v06wxnchauyl)
+
+[Added a checkbox in Audit ‘Create screen’ to map snapshots manually (v.1.38.0, 01/16/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.1k1frii91vko)
 
 [Primary and Secondary Contacts in Control object are renamed (v.1.35.0, 12/20/2018)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.fyunlkl3iivr)
 
@@ -74,11 +82,32 @@ Our product team is working hard to engineer compliance @ scale and make your da
 
 [Performance improvements](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.m9vl04nitn8)
 
-### Calendar events added for tasks (v.1.38.0, 01/17/2019)
+### Introducing new Control Library frontend (v.2.0.0, 03/26/2019)
 
-GGRC Workflow Tasks are now integrated with Google Calendar. In order to improve the notification capability of the tool we introduce a Google Calendar integration feature. It provides an ability to track upcoming tasks based on their due dates as google calendar events. Google calendar events are created for all tasks that are due in future and not finished. User will have ability to have an associate calendar event for every workcycle cycle task. The calendar event associated with the task contains the description of task due on that day as well as the “My Task” link.
+New frontend will support create, edit, delete, change proposal, restoring versions, comments and import of Controls. The above listed functionality will be disabled in the current UI. New frontend will also support mapping of scoping objects, Standards and Regulations to Controls. The current front end will still provide ability to add reference urls, attachments, snapshot creation, object mapping (except to Standards, Regulations and Scoping objects).
 
-### Added a checkbox in Audit ‘Create screen’ to map snapshots manually (v.1.38.0, 01/17/2019)
+### ‘Related Requirements’ added to snapshot (v.2.0.0, 03/26/2019)
+
+‘Related Requirements’ section was added to ‘More information’ option on Assessment Snapshots. Related Requirements contains information about Title, Description, Notes, Custom Attributes.
+
+### Introduced new object ‘Key report’ (v.1.41.0, 02/19/2019)
+
+New scoping object ‘Key report’ was introduced.
+
+### Changes at synchronization logic with Ticket Tracker (v.1.39.0, 02/05/2019)
+
+When the ticket for Assessment is created the fields are synced with the following logic:
+
+- Assessment Assignee appear in alphabetical order on Ticket Assignee field as primary assignee.
+- Non primary assessment assignees appear at Ticket CC list.
+- Audit Captain appear in alphabetical order on Ticket Reporter field as primary reporter.
+- Non primary reporter Audit Captains appear on Ticket CC list.
+
+### Calendar events added for tasks (v.1.38.0, 01/16/2019)
+
+GGRC Workflow Tasks are now integrated with Google Calendar. In order to improve the notification capability of the tool we introduce a Google Calendar integration feature. It provides an ability to track upcoming tasks based on their due dates as google calendar events. Google calendar events are created for all tasks that are due in future and not finished. User will have ability to have an associated calendar event for every workcycle cycle task. The calendar event associated with the task contains the description of task due on that day as well as the “My Task” link.   
+
+### Added a checkbox in Audit ‘Create screen’ to map snapshots manually (v.1.38.0, 01/16/2019)
 
 Now it is possible to create an audit without snapshots mapped. For this purpose on ‘Audit Create screen’ should be used a checkbox ‘Manually map snapshots’. This option is available and visible only on Audit ‘Create screen’.
 

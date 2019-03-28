@@ -28,6 +28,7 @@ class Lhn(object):
           cls.PEOPLE,)
       cls.SCOPE_MEMBERS = (
           cls.ACCESS_GROUPS,
+          cls.ACCOUNT_BALANCES,
           cls.ORG_GROUPS,
           cls.SYSTEMS,
           cls.PROCESSES,
@@ -152,7 +153,6 @@ class Common(object):
   SECONDARY_CONTACTS = roles.SECONDARY_CONTACTS
   OTHERS = "Others"
   OBJECT_REVIEW = "Object review"
-  OBJECT_REVIEW_FULL = "object_review_txt"
   APPROVED_DATE_REGEX = r"\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2} (A|P)M " \
                         r"(\+|\-)\d{2}:\d{2}"
 

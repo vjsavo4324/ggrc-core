@@ -3,10 +3,13 @@
 """Unified mapper tests."""
 # pylint: disable=no-self-use
 # pylint: disable=invalid-name
+# pylint: disable=redefined-outer-name
+# pylint: disable=unused-argument
 
 import pytest
 
 from lib import base, users
+from lib.constants import objects
 from lib.entities.entity import Representation
 from lib.service import webui_service, rest_facade
 
@@ -60,3 +63,13 @@ class TestProgramPage(base.Test):
         modified_by=users.current_user(),
         slug=rest_control.slug).repr_ui()
     self.general_equal_assert(control, actual_control, "custom_attributes")
+
+  def test_no_modal_for_program_control(self, login_as_creator, program,
+                                        selenium):
+    """Tests that 'New Control' modal is not opened
+    when creator adds control to a program."""
+    programs_service = webui_service.ProgramsService(selenium)
+    programs_service.open_info_page_of_obj(program)
+    obj_modal = programs_service.add_and_map_obj_widget(objects.CONTROLS)
+    assert not obj_modal.is_present, ("'New Control' modal "
+                                      "should not be present.")

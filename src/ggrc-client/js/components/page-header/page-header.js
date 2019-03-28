@@ -23,6 +23,7 @@ import template from './page-header.stache';
 import {getPageInstance} from '../../plugins/utils/current-page-utils';
 
 let colorsMap = {
+  AccountBalance: 'header-style-1',
   AccessGroup: 'header-style-1',
   OrgGroup: 'header-style-1',
   System: 'header-style-1',

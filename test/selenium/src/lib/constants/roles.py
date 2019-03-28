@@ -154,6 +154,10 @@ class ACLRolesIDsMetaClass(type):
   def PROGRAM_MANAGERS(cls):
     return cls.id_of_role(object_type="Program", name="Program Managers")
 
+  @property
+  def REVIEWERS(cls):
+    return cls.id_of_role(object_type="Review", name="Reviewer")
+
 
 class ACLRolesIDs(object):
   """Access Control List Roles IDs."""

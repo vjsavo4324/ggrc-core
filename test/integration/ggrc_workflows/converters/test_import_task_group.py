@@ -120,6 +120,7 @@ class TestTaskGroupImport(WorkflowTestCase):
       (all_models.ProductGroup.__name__, True),
       (all_models.TechnologyEnvironment.__name__, True),
       (all_models.KeyReport.__name__, True),
+      (all_models.AccountBalance.__name__, True),
   )
   @ddt.unpack
   def test_task_group_import_objects(self, model_name, is_mapped):

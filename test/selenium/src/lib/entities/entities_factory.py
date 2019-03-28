@@ -703,3 +703,16 @@ class ProposalsFactory(EntitiesFactory):
     return self.obj_inst().update_attrs(
         is_allow_none=False, author=users.current_user().email,
         status=unicode(object_states.PROPOSED))
+
+
+class ReviewsFactory(EntitiesFactory):
+  """Factory class for Review entities."""
+
+  def __init__(self):
+    super(ReviewsFactory, self).__init__(objects.REVIEWS)
+    self._acl_roles = [("reviewers", roles.ACLRolesIDs.REVIEWERS, [])]
+
+  def _create_random_obj(self, is_add_rest_attrs):
+    """Create Review entity."""
+    return self.obj_inst().update_attrs(
+        status=unicode(ReviewStates.UNREVIEWED), type=self.obj_type)

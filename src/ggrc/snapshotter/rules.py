@@ -13,6 +13,7 @@ class Types(object):
 
   all = {
       "AccessGroup",
+      "AccountBalance",
       "Contract",
       "Control",
       "DataAsset",

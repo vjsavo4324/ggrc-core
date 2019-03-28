@@ -10,6 +10,7 @@ from lib.constants import roles, objects
 from lib.entities import entities_factory
 from lib.entities.entity import Representation
 from lib.service import rest_service
+from lib.utils import date_utils
 
 
 def create_program(**attrs):
@@ -210,3 +211,16 @@ def delete_control_cas(cas):
   """Delete control cas."""
   from lib.service.rest_service import CustomAttributeDefinitionsService
   return CustomAttributeDefinitionsService().delete_objs(cas)
+
+
+def get_last_review_date(obj):
+  """Get last review date as string in (mm/dd/yyyy hh:mm:ss AM/PM) format."""
+  return date_utils.iso8601_to_ui_str_with_zone(
+      get_obj_review(obj).last_reviewed_at)
+
+
+def get_obj_review(obj):
+  """Get obj review instance."""
+  rest_obj = get_obj(obj)
+  return get_obj(entities_factory.ReviewsFactory().create(
+      id=rest_obj.review["id"]))

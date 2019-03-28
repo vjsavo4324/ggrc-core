@@ -13,6 +13,7 @@ describe('Mappings', function () {
     core: {
       models: [
         'AccessGroup',
+        'AccountBalance',
         'Assessment',
         'AssessmentTemplate',
         'Audit',
@@ -48,7 +49,7 @@ describe('Mappings', function () {
       scope: [
         'Metric', 'TechnologyEnvironment', 'AccessGroup', 'DataAsset',
         'Facility', 'KeyReport', 'Market', 'OrgGroup', 'Vendor', 'Process',
-        'Product', 'ProductGroup', 'Project', 'System',
+        'Product', 'ProductGroup', 'Project', 'System', 'AccountBalance',
       ],
     },
     workflows: {
@@ -79,6 +80,7 @@ describe('Mappings', function () {
   const unmappingRules = Object.freeze({
     AccessGroup: _.difference(filtered, ['AccessGroup', 'Audit', 'Standard',
       'Regulation']),
+    AccountBalance: _.difference(filtered, ['Audit', 'Standard', 'Regulation']),
     Assessment: _.difference(filtered, ['Audit', 'Person', 'Program', 'Project',
       'Workflow', 'Assessment', 'Document']),
     AssessmentTemplate: [],

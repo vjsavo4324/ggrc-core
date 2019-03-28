@@ -4,6 +4,7 @@
 */
 
 export {default as AccessGroup} from './access-group';
+export {default as AccountBalance} from './account-balance';
 export {default as Assessment} from './assessment';
 export {default as AssessmentTemplate} from './assessment-template';
 export {default as Audit} from './audit';

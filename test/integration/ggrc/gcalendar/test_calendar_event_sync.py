@@ -39,7 +39,7 @@ class TestCalendarEventSync(BaseCalendarEventTest):
         summary=event.title,
         description=event.description,
         start="2015-01-15",
-        end="2015-01-15",
+        end="2015-01-16",
         timezone="UTC",
         attendees=[person.email],
         send_notifications=False
@@ -79,7 +79,7 @@ class TestCalendarEventSync(BaseCalendarEventTest):
         description="new description",
         summary="summary",
         start="2015-01-15",
-        end="2015-01-15",
+        end="2015-01-16",
         timezone="UTC",
         attendees=[person.email],
     )

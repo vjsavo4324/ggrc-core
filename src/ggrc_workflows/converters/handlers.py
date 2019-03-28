@@ -192,6 +192,7 @@ class ObjectsColumnHandler(multi_object.ObjectsColumnHandler):
       all_models.Risk.__name__,
       all_models.Threat.__name__,
       all_models.KeyReport.__name__,
+      all_models.AccountBalance.__name__,
   )
 
   def get_value(self):

@@ -133,6 +133,7 @@ class Element(InstanceRepresentation):
   def __init__(self, driver, locator_or_element):
     super(Element, self).__init__()
     self._driver = driver
+    self._browser = browsers.get_browser()
     self.locator_or_element = locator_or_element
     self.element = self.get_element()
     self.text = self.element.text
@@ -815,10 +816,19 @@ class CommentsPanel(Element):
   def __init__(self, driver, locator_or_element):
     super(CommentsPanel, self).__init__(driver, locator_or_element)
     self._items = []
-    self.input_txt = RichTextInputField(
-        self.element, self._locators.INPUT_TXT_CSS)
-    self.add_btn = Button(self.element, self._locators.ADD_BTN_CSS)
-    self.send_cb = Checkbox(self.element, self._locators.CB_SEND_CSS)
+    self._root = self._browser.element(tag_name="comment-data-provider")
+
+  @property
+  def input_txt(self):
+    return self._root.element(class_name="ql-editor")
+
+  @property
+  def add_btn(self):
+    return self._root.button(text="Add")
+
+  @property
+  def send_cb(self):
+    return self._root.element(class_name="comment-add-form__toolbar-item")
 
   @property
   def scopes(self):
@@ -844,12 +854,17 @@ class CommentsPanel(Element):
     return not self.element.find_element(
         *self.input_txt.locator_or_element).text
 
+  def add_comment(self, text):
+    """Clear text from element and enter new text."""
+    self.input_txt.clear()
+    self.input_txt.send_keys(text)
+    self.add_btn.click()
+
   def add_comments(self, comments):
     """Add text comments to input field."""
     count_of_comments = len(self.scopes)
     for comment in comments:
-      self.input_txt.enter_text(comment)
-      self.add_btn.click()
+      self.add_comment(comment)
       selenium_utils.get_when_invisible(
           self._driver, constants.locator.Common.SPINNER_CSS)
       count_of_comments += 1

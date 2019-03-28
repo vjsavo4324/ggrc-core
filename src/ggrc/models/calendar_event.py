@@ -44,6 +44,16 @@ class CalendarEvent(Relatable, Base, db.Model):
     return value.date() if isinstance(value, datetime.datetime) else value
 
   @property
+  def calendar_end_date(self):
+    """Returns end date for all-day event in calendar api."""
+    return (self.due_date + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+  @property
+  def calendar_start_date(self):
+    """Returns start date for all-day event in calendar api."""
+    return self.due_date.strftime("%Y-%m-%d")
+
+  @property
   def is_synced(self):
     """Indicates whether the event was synced or not."""
     return self.last_synced_at is not None
@@ -56,4 +66,6 @@ class CalendarEvent(Relatable, Base, db.Model):
   def json_equals(self, event_response):
     """Checks if event is equal to json representation."""
     return (event_response['description'] == self.description and
-            event_response['summary'] == self.title)
+            event_response['summary'] == self.title and
+            event_response['end']['date'] == self.calendar_end_date and
+            event_response['start']['date'] == self.calendar_start_date)

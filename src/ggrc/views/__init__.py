@@ -822,6 +822,7 @@ def contributed_object_views():
   """Contributed object views"""
   contributed_objects = [
       models.AccessGroup,
+      models.AccountBalance,
       models.Assessment,
       models.AssessmentTemplate,
       models.Audit,

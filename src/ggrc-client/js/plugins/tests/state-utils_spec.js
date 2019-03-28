@@ -205,7 +205,7 @@ describe('StateUtils', function () {
           'Issue', 'Market', 'OrgGroup', 'Policy', 'Program', 'Project',
           'Risk', 'Threat', 'Vendor', 'Audit', 'RiskAssessment', 'Workflow',
           'AssessmentTemplate', 'Person', 'TaskGroup', 'TaskGroupTask',
-          'Cycle', 'CycleTaskGroup', 'KeyReport'];
+          'Cycle', 'CycleTaskGroup', 'KeyReport', 'AccountBalance'];
 
         _.forEach(models, function (model) {
           expect(StateUtils.getStatusFieldName(model))
@@ -242,7 +242,7 @@ describe('StateUtils', function () {
           'Issue', 'Market', 'OrgGroup', 'Policy', 'Program', 'Project',
           'Risk', 'Threat', 'Vendor', 'Audit', 'RiskAssessment', 'Workflow',
           'AssessmentTemplate', 'Person', 'TaskGroup', 'TaskGroupTask',
-          'Cycle', 'CycleTaskGroup', 'KeyReport'];
+          'Cycle', 'CycleTaskGroup', 'KeyReport', 'AccountBalance'];
 
         _.forEach(models, function (model) {
           expect(StateUtils.getBulkStatesForModel(model))

@@ -16,23 +16,10 @@
       {{/if}}
       {{^if instance.archived}}
         {{^if instance.class.isChangeableExternally}}
-          {{> /static/templates/base_objects/edit_object_link.stache}}
+          {{^if instance.readonly}}
+            {{> /static/templates/base_objects/edit_object_link.stache}}
+          {{/if}}
         {{/if}}
-      {{/if}}
-
-      {{#if instance.class.is_clonable}}
-      <li>
-        <object-cloner
-          instance="instance"
-          modal-title="Clone {{ instance.type }}"
-          modal-description="Select all that you would like to clone as well?"
-
-        >
-          <a href="javascript://" can-click="cloneObject">
-            <i class="fa fa-clone"></i>
-            Clone {{ instance.type }}</a>
-        </object-cloner>
-      </li>
       {{/if}}
 
       <li>
@@ -98,17 +85,19 @@
     {{#is_allowed 'delete' instance}}
       {{^if instance.archived}}
         {{^if instance.class.isChangeableExternally}}
-          <li>
-            <a data-test-id="dropdown_settings_delete_6a62eaaf"
-              data-toggle="modal-ajax-deleteform"
-              data-object-plural="{{model.table_plural}}"
-              data-object-singular="{{model.model_singular}}"
-              data-modal-reset="reset" data-modal-class="modal"
-              data-object-id="{{instance.id}}" href="javascript://">
-              <i class="fa fa-trash"></i>
-              Delete
-            </a>
-          </li>
+          {{^if instance.readonly}}
+            <li>
+              <a data-test-id="dropdown_settings_delete_6a62eaaf"
+                data-toggle="modal-ajax-deleteform"
+                data-object-plural="{{model.table_plural}}"
+                data-object-singular="{{model.model_singular}}"
+                data-modal-reset="reset" data-modal-class="modal"
+                data-object-id="{{instance.id}}" href="javascript://">
+                <i class="fa fa-trash"></i>
+                Delete
+              </a>
+            </li>
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/is_allowed}}

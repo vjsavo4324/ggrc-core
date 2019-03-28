@@ -37,7 +37,7 @@ ALL_MODELS = {
     "OrgGroup", "Policy", "Process", "Product", "Program", "Project",
     "Regulation", "Risk", "Requirement", "Standard", "System",
     "TechnologyEnvironment", "Threat", "Vendor", "CycleTaskGroupObjectTask",
-    "Workflow", "Metric", "ProductGroup", "KeyReport",
+    "Workflow", "Metric", "ProductGroup", "KeyReport", "AccountBalance",
 }
 
 MY_WORK_MODELS = ALL_MODELS - {"Workflow"}

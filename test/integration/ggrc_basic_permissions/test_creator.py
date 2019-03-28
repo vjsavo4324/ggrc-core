@@ -296,3 +296,100 @@ class TestCreator(TestCase):
         len(response.json.get("revisions_collection", {}).get("revisions")),
         revision_count
     )
+
+  @staticmethod
+  def _query_revisions(api, resource_type, resource_id):
+    """Helper function querying revisions related to particular object."""
+    return api.send_request(
+        api.client.post,
+        api_link="/query",
+        data=[{
+            "object_name": "Revision",
+            "type": "ids",
+            "filters": {
+                "expression": {
+                    "left": {
+                        "left": {
+                            "left": "resource_type",
+                            "op": {"name": "="},
+                            "right": resource_type,
+                        },
+                        "op": {"name": "AND"},
+                        "right": {
+                            "left": "resource_id",
+                            "op": {"name": "="},
+                            "right": resource_id,
+                        },
+                    },
+                    "op": {"name": "OR"},
+                    "right": {
+                        "left": {
+                            "left": {
+                                "left": "source_type",
+                                "op": {"name": "="},
+                                "right": resource_type,
+                            },
+                            "op": {"name": "AND"},
+                            "right": {
+                                "left": "source_id",
+                                "op": {"name": "="},
+                                "right": resource_id,
+                            }
+                        },
+                        "op": {"name": "OR"},
+                        "right": {
+                            "left": {
+                                "left": "destination_type",
+                                "op": {"name": "="},
+                                "right": resource_type,
+                            },
+                            "op": {"name": "AND"},
+                            "right": {
+                                "left": "destination_id",
+                                "op": {"name": "="},
+                                "right": resource_id,
+                            }
+                        }
+                    }
+                },
+            },
+        }],
+    )
+
+  def test_revision_access_query(self):
+    """Test GC assigned to obj can access revisions through query API."""
+    with factories.single_commit():
+      program = factories.ProgramFactory()
+      audit = factories.AuditFactory()
+      factories.RelationshipFactory(
+          source=audit,
+          destination=program,
+      )
+      factories.AccessControlPersonFactory(
+          ac_list=audit.acr_name_acl_map["Auditors"],
+          person=self.users["creator"],
+      )
+
+    audit_id = audit.id
+    self.api.set_user(self.users["creator"])
+    response = self._query_revisions(self.api, audit.type, audit_id)
+
+    self.assert200(response)
+    self.assertEqual(response.json[0]["Revision"]["count"], 2)
+
+  def test_rev_access_query_no_right(self):
+    """Test GC has no access to revisions of objects it has no right on."""
+    with factories.single_commit():
+      program = factories.ProgramFactory()
+      audit = factories.AuditFactory()
+      factories.RelationshipFactory(
+          source=audit,
+          destination=program,
+      )
+
+    audit_id = audit.id
+    self.api.set_user(self.users["creator"])
+    response = self._query_revisions(self.api, audit.type, audit_id)
+
+    self.assert200(response)
+    self.assertEqual(response.json[0]["Revision"]["count"], 0)

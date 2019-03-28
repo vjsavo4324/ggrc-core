@@ -23,7 +23,7 @@ div.nav {
         &.access_group, &.contract, &.control, &.data_asset, &.facility,
         &.market, &.objective, &.org_group, &.policy, &.process, &.product, &.product_group,
         &.metric, &.regulation, &.requirement, &.standard, &.system, &.vendor, &.risk,
-        &.technology_environment, &.threat, &.key_report {
+        &.technology_environment, &.threat, &.key_report, &.account_balance {
           a {
             color: $blue;
             opacity: 1;

@@ -145,7 +145,8 @@ class InfoWidget(WithObjectReview, WithPageElements, base.Widget,
     elements are existed.
     """
     return (element.ReviewStates.REVIEWED if self._browser.element(
-        class_name="state-reviewed") else element.ReviewStates.UNREVIEWED)
+        class_name="state-reviewed").exists
+        else element.ReviewStates.UNREVIEWED)
 
   def show_related_assessments(self):
     """Click `Assessments` button on control or objective page and return
@@ -222,11 +223,6 @@ class InfoWidget(WithObjectReview, WithPageElements, base.Widget,
     """Returns Primary Contacts page element"""
     return self._related_people_list("Primary Contacts", self._root)
 
-  @property
-  def reviewers(self):
-    """Returns Reviewers page element."""
-    return self._related_people_list("Reviewer", self._root)
-
   def global_custom_attributes(self):
     """Returns GCA values."""
     return self.get_custom_attributes()
@@ -295,9 +291,8 @@ class InfoWidget(WithObjectReview, WithPageElements, base.Widget,
       )
     if self.has_review():
       scope.update(review_status=self.get_review_status(),
-                   review_status_display_name=self.get_review_status())
-    if self.reviewers.exists():
-      scope["reviewers"] = self.reviewers.get_people_emails()
+                   review_status_display_name=self.get_review_status(),
+                   review=self.get_review_dict())
     self.update_obj_scope(scope)
     return scope
 
@@ -788,7 +783,6 @@ class Controls(WithAssignFolder, InfoWidget):
         [self.admin_text, self.control_operator_text, self.assertions_text],
         [self.admin_entered_text, self.control_operator_entered_text,
          self.assertions_entered_text])
-    self._add_obj_review_to_lsopes()
 
   @property
   def control_review_status(self):
@@ -809,14 +803,6 @@ class Controls(WithAssignFolder, InfoWidget):
     """Returns Primary Contacts page element"""
     return self._related_people_list(
         roles.CONTROL_OPERATORS, self._root)
-
-  def _add_obj_review_to_lsopes(self):
-    """Extend list of scopes by object review section """
-    review_msg = None
-    approved_el = self._browser.element(class_name="state-reviewed")
-    if approved_el.present:
-      review_msg = self._browser.element(class_name="object-review__body").text
-    self._extend_list_all_scopes(self._elements.OBJECT_REVIEW_FULL, review_msg)
 
   def select_first_available_date(self):
     """Select first available day on datepicker on submit for review popup."""
@@ -868,6 +854,14 @@ class AccessGroup(InfoWidget):
 
   def __init__(self, driver):
     super(AccessGroup, self).__init__(driver)
+
+
+class AccountBalance(InfoWidget):
+  """Model for Account Balance object Info pages and Info panels."""
+  _locators = locator.WidgetInfoAccessGroup
+
+  def __init__(self, driver):
+    super(AccountBalance, self).__init__(driver)
 
 
 class Systems(InfoWidget):

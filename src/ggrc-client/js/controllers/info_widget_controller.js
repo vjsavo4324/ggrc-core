@@ -90,6 +90,7 @@ export default can.Control.extend({
     if (!this.options.object_menu) {
       names = [
         'AccessGroup',
+        'AccountBalance',
         'Contract',
         'Control',
         'DataAsset',

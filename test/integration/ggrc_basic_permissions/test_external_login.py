@@ -54,6 +54,7 @@ class TestExternalPermissions(TestCase):
 
   MODELS = [
       all_models.AccessGroup,
+      all_models.AccountBalance,
       all_models.Contract,
       all_models.Control,
       all_models.DataAsset,

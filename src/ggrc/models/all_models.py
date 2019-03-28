@@ -17,6 +17,7 @@ from ggrc.data_platform.object_templates import ObjectTemplates
 from ggrc.data_platform.object_types import ObjectTypes
 from ggrc.models import inflector
 from ggrc.models.access_group import AccessGroup
+from ggrc.models.account_balance import AccountBalance
 from ggrc.models.assessment import Assessment
 from ggrc.models.assessment_template import AssessmentTemplate
 from ggrc.models.audit import Audit
@@ -96,6 +97,7 @@ all_models = [  # pylint: disable=invalid-name
     AccessControlPerson,
     AccessControlRole,
     AccessGroup,
+    AccountBalance,
     Assessment,
     AssessmentTemplate,
     Audit,

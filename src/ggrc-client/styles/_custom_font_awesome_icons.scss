@@ -260,6 +260,11 @@
   &.color { color: $green; }
 }
 
+.#{$fa-css-prefix}-account_balance {
+  &:before { content: $fa-var-calculator; }
+  &.color { color: $green; }
+}
+
 // Turn icons to black
 %black-icons {
   [class^="fa #{$fa-css-prefix}-"] {

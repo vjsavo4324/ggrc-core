@@ -26,6 +26,7 @@ class TestTotalReindex(TestCase):
   # 2 remove old records
   # 3 create new records
   INDEX_QUERY_LIMIT = {
+      'AccountBalance': 8,
       'Assessment': 10,
       'AssessmentTemplate': 6,
       'Audit': 7,
@@ -63,6 +64,7 @@ class TestTotalReindex(TestCase):
     mysql.MysqlRecordProperty.query.delete()
 
   INDEXED_MODEL_FACTORIES = [
+      ggrc_factories.AccountBalanceFactory,
       ggrc_factories.AuditFactory,
       ggrc_factories.AssessmentFactory,
       ggrc_factories.AssessmentTemplateFactory,

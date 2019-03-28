@@ -117,15 +117,15 @@ describe('external-data-autocomplete component', () => {
     });
 
     describe('onItemPicked() method', () => {
+      let saveDfd;
       let item;
-      let created;
 
       beforeEach(() => {
+        saveDfd = $.Deferred();
         item = {
           test: true,
         };
-        created = Promise.resolve(item);
-        spyOn(viewModel, 'createOrGet').and.returnValue(created);
+        spyOn(viewModel, 'createOrGet').and.returnValue(saveDfd);
       });
 
       it('turns on "saving" flag', () => {
@@ -147,7 +147,7 @@ describe('external-data-autocomplete component', () => {
 
         viewModel.onItemPicked(item);
 
-        created.then(() => {
+        saveDfd.resolve(item).then(() => {
           expect(viewModel.dispatch).toHaveBeenCalledWith({
             type: 'itemSelected',
             selectedItem: item,
@@ -161,7 +161,7 @@ describe('external-data-autocomplete component', () => {
 
         viewModel.onItemPicked(item);
 
-        created.then().finally(() => {
+        saveDfd.resolve().always(() => {
           expect(viewModel.attr('saving')).toBe(false);
           done();
         });
@@ -173,7 +173,7 @@ describe('external-data-autocomplete component', () => {
 
         viewModel.onItemPicked(item);
 
-        created.then(() => {
+        saveDfd.resolve().then(() => {
           expect(viewModel.attr('searchCriteria')).toBe('');
           done();
         });
@@ -186,7 +186,7 @@ describe('external-data-autocomplete component', () => {
 
           viewModel.onItemPicked(item);
 
-          created.then(() => {
+          saveDfd.resolve().then(() => {
             expect(viewModel.attr('searchCriteria')).toBe('someText');
             done();
           });

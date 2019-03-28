@@ -95,6 +95,7 @@
             <div class="content">
               <ul class="mid-level">
                 {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="AccessGroup" title_plural="Access Groups" li_class="business"}}}
+                {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="AccountBalance" title_plural="Account Balances" li_class="business"}}}
                 {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="OrgGroup" title_plural="Org Groups" li_class="business"}}}
                 {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="System" title_plural="Systems" li_class="business"}}}
                 {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Process" title_plural="Processes" li_class="business"}}}

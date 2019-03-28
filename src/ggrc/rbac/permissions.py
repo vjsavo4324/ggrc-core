@@ -143,6 +143,11 @@ def delete_resources_for(resource_type):
   return permissions_for(get_user()).delete_resources_for(resource_type)
 
 
+def all_resources(permission_type):
+  """All resources in which the user has `permission_type` permission."""
+  return permissions_for(get_user()).all_resources(permission_type)
+
+
 def is_admin():
   """Whether the current user has ADMIN permission."""
   return permissions_for(get_user()).is_admin()

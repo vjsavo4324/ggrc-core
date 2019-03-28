@@ -185,6 +185,7 @@ class TestCheckPopulatedContent(unittest.TestCase):
 
   @ddt.data(
       [{"status": "Active"}, {"status": "Active"}, "AccessGroup"],
+      [{"status": "Not Launched"}, {"status": "Draft"}, "AccountBalance"],
       [{"status": "Deprecated"}, {"status": "Deprecated"}, "Requirement"],
       [{"status": "Draft"}, {"status": "Draft"}, "Control"],
       [{"status": "Effective"}, {"status": "Active"}, "DataAsset"],
@@ -279,6 +280,32 @@ class TestCheckPopulatedContent(unittest.TestCase):
     # ensure that correct review_status_display_name is added for Control
     revision.populate_review_status_display_name(populated)
     self.assertEqual(populated, expected_result)
+
+  @ddt.data(
+      # Test System
+      ["System", {"readonly": True}, {"readonly": True}],
+      ["System", {"readonly": False}, {"readonly": False}],
+      ["System", {}, {"readonly": False}],
+      # Process and System share the same table "systems",
+      # so we need to ensure that no value will be set for Process
+      ["Process", {}, {}],
+      # Test candidates to be extended with WithReadonlyAccess functionality
+      ["Control", {}, {}],
+      ["Risk", {}, {}],
+      ["Process", {}, {}],
+      ["KeyReport", {}, {}],
+      # Test other objects
+      ["Market", {}, {}],
+  )
+  @ddt.unpack
+  def test_populated_readonly(self, resource_type, content, expected_content):
+    """Populated readonly if content={1} for {0}."""
+    obj = mock.Mock()
+    obj.id = self.object_id
+    obj.__class__.__name__ = resource_type
+
+    revision = all_models.Revision(obj, mock.Mock(), mock.Mock(), content)
+    self.assertEqual(revision.populate_readonly(), expected_content)
 
   @ddt.data(
       ({}, {}),

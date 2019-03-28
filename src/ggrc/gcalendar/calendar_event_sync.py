@@ -81,8 +81,8 @@ class CalendarEventsSync(object):
           calendar_id=self.calendar_id,
           description=event.description,
           summary=event.title,
-          start=event.due_date.strftime("%Y-%m-%d"),
-          end=event.due_date.strftime("%Y-%m-%d"),
+          start=event.calendar_start_date,
+          end=event.calendar_end_date,
           timezone="UTC",
           attendees=[event.attendee.email],
       )
@@ -99,8 +99,8 @@ class CalendarEventsSync(object):
         calendar_id=self.calendar_id,
         summary=event.title,
         description=event.description,
-        start=event.due_date.strftime("%Y-%m-%d"),
-        end=event.due_date.strftime("%Y-%m-%d"),
+        start=event.calendar_start_date,
+        end=event.calendar_end_date,
         timezone="UTC",
         attendees=[event.attendee.email],
         send_notifications=False

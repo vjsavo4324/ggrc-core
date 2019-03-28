@@ -27,7 +27,13 @@ import sqlalchemy.orm.exc
 from sqlalchemy.orm import load_only
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest, Forbidden, HTTPException, NotFound
+from werkzeug.exceptions import (
+    BadRequest,
+    Forbidden,
+    HTTPException,
+    NotFound,
+    MethodNotAllowed,
+)
 
 import ggrc.builder.json
 import ggrc.models
@@ -40,6 +46,7 @@ from ggrc.fulltext import get_indexer
 from ggrc.login import get_current_user_id, get_current_user
 from ggrc.models.cache import Cache
 from ggrc.models.exceptions import ValidationError, translate_message
+from ggrc.models.mixins.with_readonly_access import WithReadOnlyAccess
 from ggrc.rbac import permissions
 from ggrc.services.attribute_query import AttributeQueryBuilder
 from ggrc.services import signals
@@ -343,6 +350,7 @@ class ModelView(View):
   # Routing helpers
   @classmethod
   def endpoint_name(cls):
+    """Get name of current class"""
     return cls.__name__
 
   @classmethod
@@ -412,6 +420,8 @@ class Resource(ModelView):
 
   def dispatch_request(self, *args, **kwargs):  # noqa
     # pylint: disable=too-many-return-statements,arguments-differ
+    # pylint: disable=too-many-branches
+
     with benchmark("Dispatch request"):
       with benchmark("dispatch_request > Check Headers"):
         method = request.method
@@ -579,6 +589,18 @@ class Resource(ModelView):
             not permissions.has_conditions('update', self.model.__name__)):
       raise Forbidden()
 
+  @staticmethod
+  def _validate_readonly_access(obj):
+    """Return 405 MethodNotAllowed if object is marked as read-only"""
+
+    if not isinstance(obj, WithReadOnlyAccess):
+      return
+
+    if obj.readonly:
+      raise MethodNotAllowed(
+          description="The object is in a read-only mode and "
+                      "is dedicated for SOX needs")
+
   @utils.validate_mimetype("application/json")
   def put(self, id):  # pylint: disable=redefined-builtin
     """PUT operation handler."""
@@ -604,6 +626,12 @@ class Resource(ModelView):
     with benchmark("Query update permissions"):
       new_context = self.get_context_id_from_json(src)
       self._check_put_permissions(obj, new_context)
+
+    with benchmark("Validate read-only access"):
+      # check read-only access AFTER check for permissions to disallow
+      # user obtain value for flag "readonly"
+      self._validate_readonly_access(obj)
+
     with benchmark("Deserialize object"):
       self.json_update(obj, src)
 
@@ -702,6 +730,12 @@ class Resource(ModelView):
     header_error = self.validate_headers_for_put_or_delete(obj)
     if header_error:
       return header_error
+
+    with benchmark("Validate read-only access"):
+      # check read-only access AFTER check for permissions to disallow
+      # user obtain value for flag "readonly"
+      self._validate_readonly_access(obj)
+
     db.session.delete(obj)
     with benchmark("Send DELETEd event"):
       signals.Restful.model_deleted.send(
@@ -941,6 +975,8 @@ class Resource(ModelView):
     return src
 
   def _get_relationship(self, src):
+    """Get existing relationship if exists, and update updated_at"""
+
     relationship = self.model.query.filter(
         self.model.source_id == src["source"]["id"],
         self.model.source_type == src["source"]["type"],
@@ -1001,6 +1037,14 @@ class Resource(ModelView):
         db.session.expunge_all()
         raise Forbidden()
 
+  @staticmethod
+  def _validate_readonly_access_on_post(objects):
+    """Validate read-only access on POST
+
+    This method is overridden for relationships
+    """
+    pass
+
   def _gather_referenced_objects(self, data, accumulator=None):
     if accumulator is None:
       accumulator = collections.defaultdict(set)
@@ -1056,6 +1100,10 @@ class Resource(ModelView):
 
     with benchmark("Check create permissions"):
       self._check_post_permissions(objects)
+
+    with benchmark("Validate read-only access"):
+      self._validate_readonly_access_on_post(objects)
+
     with benchmark("Send collection POSTed event"):
       signals.Restful.collection_posted.send(
           obj.__class__, objects=objects, sources=sources)

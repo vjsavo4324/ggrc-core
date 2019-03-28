@@ -275,6 +275,10 @@ class AccessGroups(_ObjectWidgetBar):
   """Widget bar of Access Group objects."""
 
 
+class AccountBalances(_ObjectWidgetBar):
+  """Widget bar of Account Balance objects."""
+
+
 class Systems(_ObjectWidgetBar):
   """Widget bar of System objects."""
 

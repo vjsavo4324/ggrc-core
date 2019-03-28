@@ -115,7 +115,7 @@ export default can.Component.extend({
           type: 'itemSelected',
           selectedItem: model,
         });
-      }).finally(() => {// create is async and returns Promise (not $.Deferred)
+      }).always(() => {
         this.attr('saving', false);
       });
     },

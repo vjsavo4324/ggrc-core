@@ -33,6 +33,7 @@ GGRC.config = {
     'Requirement',
     'DataAsset',
     'AccessGroup',
+    'AccountBalance',
     'System',
     'KeyReport',
     'Contract',
@@ -86,6 +87,9 @@ GGRC.Bootstrap = {
   }, {
     title_plural: 'Key Reports',
     title_singular: 'KeyReport',
+  }, {
+    title_plural: 'Account Balance',
+    title_singular: 'AccountBalance',
   }, {
     title_plural: 'Markets',
     model_singular: 'Market',
@@ -174,6 +178,9 @@ GGRC.Bootstrap = {
   }, {
     title_plural: 'Key Reports',
     model_singular: 'KeyReport',
+  }, {
+    title_plural: 'Account Balance',
+    title_singular: 'AccountBalance',
   }, {
     title_plural: 'Markets',
     model_singular: 'Market',

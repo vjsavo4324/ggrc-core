@@ -23,6 +23,7 @@ USER_ROLES = "user_roles"
 CONTACTS = "contacts"
 QUERY = "query"
 ACCESS_CONTROL_ROLES = "access_control_roles"
+REVIEWS = "reviews"
 
 
 class Widget(object):

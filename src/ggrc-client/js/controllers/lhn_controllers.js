@@ -201,7 +201,7 @@ const LhnControl = can.Control.extend({}, {
   // it ain't pretty, but it works
   initial_lhn_render: function () {
     let self = this;
-    if (!$('.lhs-holder').size() || !$('.lhn-trigger').size()) {
+    if (!$('.lhs-holder').length || !$('.lhn-trigger').length) {
       window.requestAnimationFrame(this.initial_lhn_render.bind(this));
       return;
     }
@@ -465,7 +465,7 @@ const LhnSearchControl = can.Control.extend({
       .find('a.list-toggle.top');
     let $ul = $toggle.parent('li').find(this.options.list_mid_level_selector);
 
-    if ($toggle.size() && !$toggle.hasClass('active')) {
+    if ($toggle.length && !$toggle.hasClass('active')) {
       this.open_list($toggle, $ul, null, true);
     }
   },
@@ -476,7 +476,7 @@ const LhnSearchControl = can.Control.extend({
     let $parent = el.parent('li');
     let selector;
 
-    if ($parent.find(midSelector).size()) {
+    if ($parent.find(midSelector).length) {
       selector = midSelector;
     } else {
       selector = subSelector;

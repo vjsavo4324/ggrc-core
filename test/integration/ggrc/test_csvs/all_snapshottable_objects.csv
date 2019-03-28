@@ -115,3 +115,8 @@ Object type,,,,,,,,,,,,,,,,,,,,,,
 KeyReport,Code*,Title*,Description,Notes,Admin*,verifier,assignee,Effective Date,Launch Status,Reference URL,,,,,,,,,,,,
 ,KeyReport code,KeyReport title,KeyReport description,KeyReport notes,"user@example.com
 user1@example.com",user@example.com,user@example.com,20/2/2020,Draft,http://url.example.zzz,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+Object type,,,,,,,,,,,,,,,,,,,,,,
+AccountBalance,Code*,Title*,Description,Notes,Admin*,verifier,assignee,Effective Date,Launch Status,Reference URL,,,,,,,,,,,,
+,AccountBalance code,AccountBalance title,AccountBalance description,AccountBalance notes,"user@example.com
+user1@example.com",user@example.com,user@example.com,20/2/2020,Draft,http://url.example.zzz,,,,,,,,,,,,

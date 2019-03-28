@@ -27,7 +27,7 @@ register_model(CycleTaskGroupObjectTask)
 
 WORKFLOW_OBJECT_TYPES = {
     "Program", "Vendor", "OrgGroup",
-    "Assessment",
+    "Assessment", "AccountBalance",
     "Regulation", "Standard", "Policy", "Contract",
     "Objective", "Control", "Requirement",
     "System", "Process",

@@ -8,11 +8,11 @@
  * objects (AssessmentTemplate and Evidence)
  */
 export const businessObjects = [
-  'Assessment', 'AccessGroup', 'Audit', 'Contract', 'Control', 'DataAsset',
-  'Document', 'Facility', 'Issue', 'KeyReport', 'Market', 'Metric', 'Objective',
-  'OrgGroup', 'Policy', 'Process', 'Product', 'ProductGroup', 'Program',
-  'Project', 'Regulation', 'Requirement', 'Risk', 'Standard', 'System',
-  'TechnologyEnvironment', 'Threat', 'Vendor',
+  'Assessment', 'AccessGroup', 'AccountBalance', 'Audit', 'Contract', 'Control',
+  'DataAsset', 'Document', 'Facility', 'Issue', 'KeyReport', 'Market', 'Metric',
+  'Objective', 'OrgGroup', 'Policy', 'Process', 'Product', 'ProductGroup',
+  'Program', 'Project', 'Regulation', 'Requirement', 'Risk', 'Standard',
+  'System', 'TechnologyEnvironment', 'Threat', 'Vendor',
 ];
 
 /**
@@ -25,9 +25,9 @@ export const coreObjects = _.difference(businessObjects,
  * Scoping objects
  */
 export const scopingObjects = [
-  'AccessGroup', 'DataAsset', 'Facility', 'KeyReport', 'Market', 'Metric',
-  'OrgGroup', 'Process', 'Product', 'ProductGroup', 'Project', 'System',
-  'TechnologyEnvironment', 'Vendor',
+  'AccessGroup', 'AccountBalance', 'DataAsset', 'Facility', 'KeyReport',
+  'Market', 'Metric', 'OrgGroup', 'Process', 'Product', 'ProductGroup',
+  'Project', 'System', 'TechnologyEnvironment', 'Vendor',
 ];
 
 /**

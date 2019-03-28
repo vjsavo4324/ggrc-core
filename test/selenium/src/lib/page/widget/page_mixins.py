@@ -74,6 +74,16 @@ class WithObjectReview(base.WithBrowser):
   def review_status(self):
     return self._review_root.element(class_name="state-value")
 
+  @property
+  def object_review_txt(self):
+    """Return page element with review message."""
+    return self._review_root.element(class_name="object-review__body")
+
+  @property
+  def reviewers(self):
+    """Return page element with reviewers emails."""
+    return self._related_people_list("Reviewer", self._review_root)
+
   def open_submit_for_review_popup(self):
     """Open submit for control popup by clicking on corresponding button."""
     self.request_review_btn.click()
@@ -82,6 +92,22 @@ class WithObjectReview(base.WithBrowser):
   def click_approve_review(self):
     """Click approve review button."""
     self.mark_reviewed_btn.click()
+
+  def get_object_review_txt(self):
+    """Return review message on info pane."""
+    return self.object_review_txt.text if self.object_review_txt.exist else ""
+
+  def get_reviewers_emails(self):
+    """Return reviewers emails if reviewers assigned."""
+    return self.reviewers.get_people_emails() \
+        if self.reviewers.exists() else []
+
+  def get_review_dict(self):
+    """Return Review as dict if reviewers assigned."""
+    return {"status": self.get_review_state_txt(),
+            "reviewers": self.get_reviewers_emails(),
+            "last_reviewed_by": self.get_object_review_txt()[:-7]} if\
+        self.get_reviewers_emails() != [] else None
 
   def has_review(self):
     """Check if review section exists."""

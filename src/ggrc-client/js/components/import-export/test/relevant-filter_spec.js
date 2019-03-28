@@ -16,7 +16,7 @@ describe('relevant-filter component', () => {
   describe('menu() method', () => {
     it('returns the list of models sorted by "model_singular" field in ' +
     'alphabetical order', () => {
-      const expectedModelNames = ['AccessGroup', 'Assessment',
+      const expectedModelNames = ['AccessGroup', 'AccountBalance', 'Assessment',
         'AssessmentTemplate', 'Audit', 'Contract', 'Control', 'Cycle',
         'CycleTaskGroup', 'CycleTaskGroupObjectTask', 'DataAsset',
         'Document', 'Evidence', 'Facility', 'Issue', 'KeyReport', 'Market',

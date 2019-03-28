@@ -17,3 +17,7 @@ cron:
 - description: GGRC - import health jobs
   url: /import_health_cron_endpoint
   schedule: every 10 mins
+- description: ggrc sync
+  url: /ggrc_sync
+  target: ggrc-service
+  schedule: every 1 minutes

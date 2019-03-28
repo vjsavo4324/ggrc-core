@@ -158,9 +158,13 @@ class CommonUnifiedMapperModal(base.Modal):
     self._confirm_map_selected()
 
   def click_create_and_map_obj(self):
-    """Clicks `Create and map new object` link."""
+    """Clicks `Create and map new object` link
+    and returns new modal for object."""
+    from lib.page.widget import object_modal
     self._browser.element(class_name="modal-header").button(
         text="Create and map new object").click()
+    return object_modal.get_modal_obj(
+        obj_type=objects.get_singular(self.tree_view.obj_name))
 
   def close_modal(self):
     """Close Unified Mapper's modal window."""

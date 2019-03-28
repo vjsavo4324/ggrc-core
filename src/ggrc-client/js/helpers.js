@@ -429,7 +429,7 @@ Mustache.registerHelper('is_allowed_to_map_task', (sourceType, options) => {
     'Contract', 'Requirement', 'Control', 'Objective', 'KeyReport',
     'OrgGroup', 'Vendor', 'AccessGroup', 'System', 'Process', 'DataAsset',
     'Product', 'ProductGroup', 'Project', 'Facility', 'Market', 'Metric',
-    'TechnologyEnvironment'];
+    'TechnologyEnvironment', 'AccountBalance'];
   sourceType = resolveComputed(sourceType);
 
   if (mappableTypes.includes(sourceType)) {

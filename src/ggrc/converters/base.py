@@ -5,22 +5,24 @@
 
 from collections import defaultdict
 
+import sqlalchemy as sa
 from flask import g
 from google.appengine.ext import deferred
 
+from ggrc import db
 from ggrc import login
 from ggrc import settings
-from ggrc.utils import benchmark
-from ggrc.utils import structures
+from ggrc.cache import utils as cache_utils
 from ggrc.cache.utils import clear_memcache
+from ggrc.converters import base_block
 from ggrc.converters import get_exportables
 from ggrc.converters import import_helper
-from ggrc.converters import base_block
-from ggrc.converters.snapshot_block import SnapshotBlockConverter
-from ggrc.converters.import_helper import extract_relevant_data
-from ggrc.converters.import_helper import split_blocks
-from ggrc.converters.import_helper import CsvStringBuilder
+from ggrc.converters import snapshot_block
 from ggrc.fulltext import get_indexer
+from ggrc.models import exceptions
+from ggrc.models import all_models
+from ggrc.utils import benchmark
+from ggrc.utils import structures
 
 
 class BaseConverter(object):
@@ -67,11 +69,11 @@ class ImportConverter(BaseConverter):
 
   def initialize_block_converters(self):
     """Initialize block converters."""
-    offsets_and_data_blocks = split_blocks(self.csv_data)
+    offsets_and_data_blocks = import_helper.split_blocks(self.csv_data)
     for offset, data, csv_lines in offsets_and_data_blocks:
       class_name = data[1][0].strip().lower()
       object_class = self.exportable.get(class_name)
-      raw_headers, rows = extract_relevant_data(data)
+      raw_headers, rows = import_helper.extract_relevant_data(data)
       block_converter = base_block.ImportBlockConverter(
           self,
           object_class=object_class,
@@ -115,7 +117,9 @@ class ImportConverter(BaseConverter):
     from ggrc import views
     views.background_update_issues(parameters=arg_list)
 
-  def _start_compute_attributes_job(self, revision_ids):
+  @staticmethod
+  def _start_compute_attributes_job(revision_ids):
+    """Starts deferred task to calculate computed attributes."""
     if revision_ids:
       cur_user = login.get_current_user()
       deferred.defer(
@@ -136,12 +140,14 @@ class ExportConverter(BaseConverter):
   blocks and columns are handled in the correct order.
   """
 
-  def __init__(self, ids_by_type, exportable_queries=None):
+  def __init__(self, ids_by_type, exportable_queries=None, ie_job=None):
     super(ExportConverter, self).__init__()
     self.dry_run = True  # TODO: fix ColumnHandler to not use it for exports
     self.block_converters = []
     self.ids_by_type = ids_by_type
     self.exportable_queries = exportable_queries or []
+    self.ie_job = ie_job
+    self.cache_manager = cache_utils.get_cache_manager()
 
   def get_object_names(self):
     return [c.name for c in self.block_converters]
@@ -166,7 +172,8 @@ class ExportConverter(BaseConverter):
       fields = object_data.get("fields", "all")
       if class_name == "Snapshot":
         self.block_converters.append(
-            SnapshotBlockConverter(self, object_ids, fields=fields)
+            snapshot_block.SnapshotBlockConverter(self, object_ids,
+                                                  fields=fields),
         )
       else:
         block_converter = base_block.ExportBlockConverter(
@@ -194,7 +201,7 @@ class ExportConverter(BaseConverter):
                        for converter in self.block_converters])
     table_width += 1  # One line for 'Object line' column
 
-    csv_string_builder = CsvStringBuilder(table_width)
+    csv_string_builder = import_helper.CsvStringBuilder(table_width)
     for block_converter in self.block_converters:
       with benchmark("Generate export file header"):
         csv_header = block_converter.generate_csv_header()
@@ -205,6 +212,9 @@ class ExportConverter(BaseConverter):
         csv_string_builder.append_line(csv_header[1])
 
       for line in block_converter.generate_row_data():
+        ie_status = self.get_job_status()
+        if ie_status and ie_status == all_models.ImportExport.STOPPED_STATUS:
+          raise exceptions.ExportStoppedException()
         line.insert(0, "")
         csv_string_builder.append_line(line)
 
@@ -212,6 +222,29 @@ class ExportConverter(BaseConverter):
       csv_string_builder.append_line([])
 
     return csv_string_builder.get_csv_string()
+
+  def _add_ie_status_to_cache(self, status):
+    """Add export job status to memcache"""
+    cache_key = cache_utils.get_ie_cache_key(self.ie_job)
+    self.cache_manager.cache_object.memcache_client.add(cache_key, status)
+
+  def get_job_status(self):
+    """Get export job status from cache if exists and from DB otherwise"""
+    if not self.ie_job:
+      return None
+    status = self._get_ie_status_from_cache()
+    if not status:
+      status = self._get_ie_status_from_db()
+      self._add_ie_status_to_cache(status)
+    return status
+
+  def _get_ie_status_from_cache(self):
+    """Get export job status from memcache if exists, from DB otherwise."""
+    if not self.ie_job:
+      return None
+    cache_key = cache_utils.get_ie_cache_key(self.ie_job)
+    ie_status = self.cache_manager.cache_object.memcache_client.get(cache_key)
+    return ie_status
 
   def _get_exportable_queries(self):
     """Get a list of filtered object queries regarding exportable items.
@@ -233,3 +266,16 @@ class ExportConverter(BaseConverter):
     else:
       queries = self.ids_by_type
     return queries
+
+  def _get_ie_status_from_db(self):
+    """Get status of current ImportExport job."""
+    if not self.ie_job:
+      return None
+    return db.engine.execute(
+        sa.text("""
+                SELECT status
+                FROM import_exports
+                WHERE id = :ie_id
+        """),
+        {"ie_id": self.ie_job.id},
+    ).fetchone()[0]

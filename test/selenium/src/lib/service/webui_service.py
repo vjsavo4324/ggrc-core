@@ -11,7 +11,8 @@ from lib.constants import objects, messages, element, regex
 from lib.constants.locator import WidgetInfoAssessment
 from lib.element.tab_containers import DashboardWidget
 from lib.entities.entity import Representation
-from lib.page import dashboard, export_page
+from lib.page import dashboard, export_page, widget_bar
+from lib.page.modal import unified_mapper
 from lib.page.modal.request_review import RequestReviewModal
 from lib.page.widget import object_modal
 from lib.utils import (
@@ -469,6 +470,10 @@ class BaseWebUiService(object):
     self.open_info_page_of_obj(obj).click_approve_review()
     ui_utils.wait_for_alert("Review is complete.")
 
+  def get_obj_review_txt(self, obj):
+    """Return review message on info pane."""
+    return self.open_info_page_of_obj(obj).get_object_review_txt()
+
 
 class SnapshotsWebUiService(BaseWebUiService):
   """Class for snapshots business layer's services objects."""
@@ -709,3 +714,14 @@ class ProgramsService(BaseWebUiService):
   """Class for Programs business layer's services objects."""
   def __init__(self, driver):
     super(ProgramsService, self).__init__(driver, objects.PROGRAMS)
+
+  def add_and_map_obj_widget(self, obj):
+    """Adds widget of selected type and
+    click `Create and map new object` link and
+    returns modal object for selected object type."""
+    widget_bar.Programs().add_widget()
+    dashboard.CreateObjectDropdown().click_item_by_text(
+        text=objects.get_normal_form(obj))
+    obj_modal = unified_mapper.CommonUnifiedMapperModal(
+        self.driver, obj).click_create_and_map_obj()
+    return obj_modal

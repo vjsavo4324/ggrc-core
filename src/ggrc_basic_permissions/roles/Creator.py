@@ -88,6 +88,7 @@ owner_update = owner_delete + [
 permissions = {
     "read": owner_read,
     "create": [
+        "AccountBalance",
         {
             "type": "Audit",
             "condition": "is_allowed_based_on",

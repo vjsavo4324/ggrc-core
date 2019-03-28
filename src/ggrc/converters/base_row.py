@@ -15,12 +15,14 @@ from ggrc import db
 from ggrc.converters import errors
 from ggrc.converters import get_importables
 from ggrc.converters import pre_commit_checks
+from ggrc.converters.handlers import handlers
 from ggrc.login import get_current_user_id
 from ggrc.models import all_models
 from ggrc.models import cache
 from ggrc.models.exceptions import StatusValidationError
 from ggrc.models.mixins import issue_tracker
 from ggrc.models.mixins import synchronizable
+from ggrc.models.mixins.with_readonly_access import WithReadOnlyAccess
 from ggrc.rbac import permissions
 from ggrc.services import signals
 from ggrc.snapshotter import create_snapshots
@@ -33,6 +35,13 @@ from ggrc.cache import utils as cache_utils
 from ggrc.utils.log_event import log_event
 
 logger = getLogger(__name__)
+
+
+_ALLOWED_ATTRS_FOR_READONLY_ACCESS = (
+    'slug',
+    'email',
+    'comments',
+)
 
 
 class RowConverter(object):
@@ -65,6 +74,20 @@ class ImportRowConverter(RowConverter):
     self.line = line
     self.initial_state = None
     self.is_new_object_set = False
+    self._is_obj_readonly = False
+
+  def _is_allowed_for_readonly_obj(self, attr_name, handler):
+    """Return whether attr is allowed for readonly objects"""
+    if not self._is_obj_readonly:
+      return False
+
+    if attr_name in _ALLOWED_ATTRS_FOR_READONLY_ACCESS:
+      return False
+
+    if isinstance(handler, handlers.MappingColumnHandler):
+      return False
+
+    return True
 
   def handle_raw_cell(self, attr_name, idx, header_dict):
     """Process raw value from self.row[idx] for attr_name.
@@ -73,9 +96,14 @@ class ImportRowConverter(RowConverter):
     special logic for deprecated status and primary key attributes, as well as
     value uniqueness.
     """
-    handler = header_dict["handler"]
-    item = handler(self, attr_name, parse=True,
-                   raw_value=self.row[idx], **header_dict)
+    handler_cls = header_dict["handler"]
+    item = handler_cls(self, attr_name, raw_value=self.row[idx], **header_dict)
+
+    if not self._is_allowed_for_readonly_obj(attr_name, item):
+      item.set_value()
+    else:
+      item.ignore = True
+
     if header_dict.get("type") == AttributeInfo.Type.PROPERTY:
       self.attrs[attr_name] = item
     else:
@@ -108,6 +136,7 @@ class ImportRowConverter(RowConverter):
 
   def _handle_raw_data(self):
     """Pass raw values into column handlers for all cell in the row."""
+
     row_headers = {attr_name: (idx, header_dict)
                    for idx, (attr_name, header_dict)
                    in enumerate(self.headers.iteritems())}
@@ -199,6 +228,14 @@ class ImportRowConverter(RowConverter):
     obj.modified_by_id = get_current_user_id()
     return obj
 
+  def _has_readonly_access(self, obj):
+    """Return True if new obj has type WithReadOnlyAccess and readonly=True"""
+
+    if self.is_new or not isinstance(obj, WithReadOnlyAccess):
+      return False
+
+    return obj.readonly
+
   def get_object_by_key(self, key="slug"):
     """ Get object if the slug is in the system or return a new object """
     value = self.get_value(key)
@@ -206,6 +243,7 @@ class ImportRowConverter(RowConverter):
 
     if value:
       obj = self.find_by_key(key, value)
+
     if not value or not obj:
       # We assume that 'get_importables()' returned value contains
       # names of the objects that cannot be created via import but
@@ -217,6 +255,9 @@ class ImportRowConverter(RowConverter):
     elif not permissions.is_allowed_update_for(obj):
       self.ignore = True
       self.add_error(errors.PERMISSION_ERROR)
+    elif self._has_readonly_access(obj):
+      self._is_obj_readonly = True
+
     self.initial_state = dump_attrs(obj)
     return obj
 
@@ -231,7 +272,8 @@ class ImportRowConverter(RowConverter):
     if not self.obj or self.ignore or self.is_delete:
       return
     for mapping in self.objects.values():
-      mapping.set_obj_attr()
+      if not mapping.ignore:
+        mapping.set_obj_attr()
     if hasattr(self.obj, "validate_role_limit"):
       results = self.obj.validate_role_limit(_import=True)
       for role, msg in results:
@@ -248,10 +290,28 @@ class ImportRowConverter(RowConverter):
       logger.exception("Import failed with: %s", err.message)
       self.add_error(errors.UNKNOWN_ERROR)
 
+  def _check_ignored_columns(self):
+    """Add warning if some columns were ignored"""
+    ignored_names = list(handler.display_name
+                         for handler in self.attrs.values()
+                         if handler.ignore)
+    ignored_names.extend(handler.display_name
+                         for handler in self.objects.values()
+                         if handler.ignore)
+
+    if not ignored_names:
+      return
+
+    columns_str = ', '.join("'{}'".format(name)
+                            for name in sorted(ignored_names))
+
+    self.add_warning(errors.READONLY_ACCESS_WARNING, columns=columns_str)
+
   def process_row(self):
     """Parse, set, validate and commit data specified in self.row."""
     self._check_object_class()
     self._handle_raw_data()
+    self._check_ignored_columns()
     self._check_mandatory_fields()
     if self.ignore:
       db.session.rollback()
@@ -377,7 +437,7 @@ class ImportRowConverter(RowConverter):
       return
 
     for item_handler in self.attrs.values():
-      if not item_handler.view_only:
+      if not item_handler.view_only and not item_handler.ignore:
         item_handler.set_obj_attr()
 
   def send_comment_notifications(self):
@@ -461,7 +521,8 @@ class ImportRowConverter(RowConverter):
     if self.is_new:
       db.session.add(self.obj)
     for handler in self.attrs.values():
-      handler.insert_object()
+      if not handler.ignore:
+        handler.insert_object()
 
   def insert_secondary_objects(self):
     """Add additional objects to the current database session.
@@ -471,8 +532,9 @@ class ImportRowConverter(RowConverter):
     """
     if not self.obj or self.ignore or self.is_delete:
       return
-    for secondary_object in self.objects.values():
-      secondary_object.insert_object()
+    for handler in self.objects.values():
+      if not handler.ignore:
+        handler.insert_object()
     if issubclass(self.obj.__class__, issue_tracker.IssueTracked):
       if not self.issue_tracker:
         self.issue_tracker = self.obj.issue_tracker

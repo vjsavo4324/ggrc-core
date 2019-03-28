@@ -155,7 +155,7 @@ describe('TreeViewUtils module', function () {
         Control.sub_tree_view_options.default_filter = ['Audit'];
 
         result = module.getModelsForSubTier('Control');
-        expect(result.available.length).toEqual(31);
+        expect(result.available.length).toEqual(32);
         expect(result.selected.length).toEqual(1);
         expect(result.selected[0]).toEqual('Audit');
       });
@@ -167,8 +167,8 @@ describe('TreeViewUtils module', function () {
       Control.sub_tree_view_options.default_filter = null;
 
       result = module.getModelsForSubTier('Control');
-      expect(result.available.length).toEqual(31);
-      expect(result.selected.length).toEqual(31);
+      expect(result.available.length).toEqual(32);
+      expect(result.selected.length).toEqual(32);
     });
 
     it('gets available models from Mappings for CycleTaskGroupObjectTask',

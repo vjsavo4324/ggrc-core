@@ -81,3 +81,10 @@ def assert_chronological_order(list_of_datetimes):
   for i in range(len(list_of_datetimes) - 1):
     current_item, next_item = list_of_datetimes[i], list_of_datetimes[i + 1]
     assert current_item >= next_item
+
+
+def iso8601_to_ui_str_with_zone(iso8601_str):
+  """Converts ISO 8601 (yyyy-mm-ddThh:mm:ss) string to
+   (mm/dd/yyyy hh:mm:ss AM/PM) format."""
+  return datetime.datetime.strftime(
+      iso8601_to_local_datetime(iso8601_str), "%m/%d/%Y %I:%M:%S %p")

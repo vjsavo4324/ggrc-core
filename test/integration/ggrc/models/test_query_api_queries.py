@@ -27,6 +27,7 @@ class TestAllModels(WithQueryApi, TestCase):
       'Assessment': 16,
       'AssessmentTemplate': 10,
       'AccessGroup': 17,
+      'AccountBalance': 14,
       'Audit': 14,
       'Comment': 8,
       'Contract': 15,
@@ -57,6 +58,7 @@ class TestAllModels(WithQueryApi, TestCase):
   }
 
   MODEL_FACTORIES = [
+      ggrc_factories.AccountBalanceFactory,
       ggrc_factories.AuditFactory,
       ggrc_factories.AssessmentFactory,
       ggrc_factories.AssessmentTemplateFactory,

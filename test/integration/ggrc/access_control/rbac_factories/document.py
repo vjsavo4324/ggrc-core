@@ -13,11 +13,13 @@ FACTORIES_MAPPING = {
     "Standard": factories.StandardFactory,
     "Program": factories.ProgramFactory,
     "KeyReport": factories.KeyReportFactory,
+    "AccountBalance": factories.AccountBalanceFactory,
 }
 
 
 class DocumentReferenceUrlRBACFactory(base.BaseRBACFactory):
   """Document Reference Url RBAC factory class."""
+  # pylint: disable=too-many-instance-attributes
 
   def __init__(self, user_id, acr, parent=None):
     """Set up objects for Document permission tests.

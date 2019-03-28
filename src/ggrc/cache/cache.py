@@ -21,6 +21,7 @@ def all_cache_entries():
   """Get list of all models that can be cached."""
   ret = [
       resource('access_groups', 'AccessGroup'),
+      resource('account_balances', 'AccountBalance'),
       resource('audits', 'Audit'),
       resource('custom_attribute_values', 'CustomAttributeValue'),
       resource('comments', 'Comment'),

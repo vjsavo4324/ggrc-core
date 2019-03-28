@@ -45,6 +45,7 @@ const objectTypeDecisionTree = Object.freeze({
   risk: businessModels.Risk,
   workflow: businessModels.Workflow,
   key_report: businessModels.KeyReport,
+  account_balance: businessModels.AccountBalance,
 });
 
 const getModelInstance = (id, type, requiredAttr) => {

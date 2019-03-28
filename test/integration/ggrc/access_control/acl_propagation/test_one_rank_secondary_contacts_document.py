@@ -49,6 +49,14 @@ class TestSecondaryContactsDocumentPropagation(base.TestACLPropagation):
               "read_comments": True,
               "add_comment": True
           },
+          "Document AccountBalance": {
+              "read": True,
+              "create_and_map": True,
+              "update": True,
+              "delete": False,
+              "read_comments": True,
+              "add_comment": True
+          },
           "MappedReview Risk": {
               "create_review": True,
               "read_review": True,
@@ -74,6 +82,14 @@ class TestSecondaryContactsDocumentPropagation(base.TestACLPropagation):
               "add_comment": True
           },
           "Document KeyReport": {
+              "read": True,
+              "create_and_map": True,
+              "update": True,
+              "delete": False,
+              "read_comments": True,
+              "add_comment": True
+          },
+          "Document AccountBalance": {
               "read": True,
               "create_and_map": True,
               "update": True,

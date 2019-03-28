@@ -12,6 +12,7 @@ description = """
 permissions = {
     "read": [
         "AccessControlRole",
+        "AccountBalance",
         "BackgroundTask",
         "Workflow",
         "TaskGroup",
@@ -73,6 +74,7 @@ permissions = {
         "PersonProfile",
     ],
     "create": [
+        "AccountBalance",
         "Audit",
         "BackgroundTask",
         "Snapshot",
@@ -129,6 +131,7 @@ permissions = {
         "Review"
     ],
     "update": [
+        "AccountBalance",
         {
             "type": "Audit",
             "terms": {
@@ -188,6 +191,7 @@ permissions = {
         "PersonProfile",
     ],
     "delete": [
+        "AccountBalance",
         {
             "type": "Audit",
             "terms": {

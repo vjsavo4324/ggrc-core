@@ -18,6 +18,7 @@ permissions = {
     "read": [
         "AccessControlRole",
         "AccessControlList",
+        "AccountBalance",
         "Audit",
         "BackgroundTask",
         "Snapshot",
@@ -84,6 +85,7 @@ permissions = {
         "PersonProfile",
     ],
     "create": [
+        "AccountBalance",
         {
             "type": "Audit",
             "condition": "is_allowed_based_on",

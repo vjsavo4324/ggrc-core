@@ -157,6 +157,16 @@ class TestPrimaryContactsPropagation(base.TestACLPropagation):
               "create_and_map_document_comment": True,
               "read_document_comment": True,
           },
+          "Universal AccountBalance": {
+              "create_and_map_document": True,
+              "read_document": True,
+              "update_document": True,
+              "delete_document": False,
+              "create_and_map_comment": True,
+              "read_comment": True,
+              "create_and_map_document_comment": True,
+              "read_document_comment": True,
+          },
           "MappedReview Program": {
               "create_review": True,
               "read_review": True,
@@ -353,6 +363,16 @@ class TestPrimaryContactsPropagation(base.TestACLPropagation):
               "create_and_map_document_comment": True,
               "read_document_comment": True,
           },
+          "Universal AccountBalance": {
+              "create_and_map_document": True,
+              "read_document": True,
+              "update_document": True,
+              "delete_document": False,
+              "create_and_map_comment": True,
+              "read_comment": True,
+              "create_and_map_document_comment": True,
+              "read_document_comment": True,
+          },
       },
       "Editor": {
           "Universal AccessGroup": {
@@ -486,6 +506,16 @@ class TestPrimaryContactsPropagation(base.TestACLPropagation):
               "read_document_comment": True,
           },
           "Universal KeyReport": {
+              "create_and_map_document": True,
+              "read_document": True,
+              "update_document": True,
+              "delete_document": False,
+              "create_and_map_comment": True,
+              "read_comment": True,
+              "create_and_map_document_comment": True,
+              "read_document_comment": True,
+          },
+          "Universal AccountBalance": {
               "create_and_map_document": True,
               "read_document": True,
               "update_document": True,

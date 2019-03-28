@@ -9,7 +9,7 @@ import Issue from '../../js/models/business-models/issue';
 import * as businessModels from '../../js/models/business-models';
 
 describe('Model states test', function () {
-  let basicStateObjects = ['AccessGroup', 'Contract',
+  let basicStateObjects = ['AccessGroup', 'AccountBalance', 'Contract',
     'Control', 'DataAsset', 'Facility', 'KeyReport', 'Market',
     'Objective', 'OrgGroup', 'Policy', 'Process', 'Product', 'Program',
     'Project', 'Regulation', 'Risk', 'Requirement', 'Standard', 'System',
@@ -44,9 +44,10 @@ describe('Model "status" attr test', function () {
     'Contract', 'Control', 'Cycle', 'Document', 'Evidence', 'Issue',
     'Objective', 'Policy', 'Program', 'Regulation', 'Risk', 'RiskAssessment',
     'Requirement', 'Standard', 'Threat', 'Workflow'];
-  const objectsWithLaunchStatus = ['AccessGroup', 'DataAsset', 'Facility',
-    'KeyReport', 'Market', 'Metric', 'OrgGroup', 'Process', 'Product',
-    'ProductGroup', 'Project', 'System', 'TechnologyEnvironment', 'Vendor'];
+  const objectsWithLaunchStatus = ['AccessGroup', 'AccountBalance',
+    'DataAsset', 'Facility', 'KeyReport', 'Market', 'Metric', 'OrgGroup',
+    'Process', 'Product', 'ProductGroup', 'Project', 'System',
+    'TechnologyEnvironment', 'Vendor'];
 
   objectsWithState.forEach(function (object) {
     it(`checks if ${object} has State in attr_list`, () => {
@@ -80,7 +81,7 @@ describe('Model review state test', function () {
     'Policy', 'Program', 'Regulation', 'Risk', 'Requirement', 'Standard',
     'Threat'];
   const externalReviewObjects = ['Control'];
-  const objectsWithoutReview = ['AccessGroup', 'Assessment',
+  const objectsWithoutReview = ['AccessGroup', 'AccountBalance', 'Assessment',
     'AssessmentTemplate', 'Audit', 'DataAsset', 'Facility', 'Issue',
     'KeyReport', 'Market', 'Metric', 'OrgGroup', 'Process', 'Product',
     'ProductGroup', 'Project', 'System', 'TechnologyEnvironment', 'Vendor'];

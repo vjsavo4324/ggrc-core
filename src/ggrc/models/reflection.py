@@ -206,6 +206,7 @@ class AttributeInfo(object):
       "delete",
       "repeat_every",
       "unit",
+      "readonly",
       ALIASES_PREFIX,
       "comments",
       "last_comment",
@@ -458,8 +459,8 @@ class AttributeInfo(object):
     return set(sum(unique_columns, []))
 
   @classmethod
-  def get_object_attr_definitions(cls, object_class,
-                                  ca_cache=None, fields=None):
+  def get_object_attr_definitions(cls, object_class, ca_cache=None,
+                                  fields=None, include_hidden=False):
     """Get all column definitions for object_class.
 
     This function joins custom attribute definitions, mapping definitions and
@@ -468,6 +469,9 @@ class AttributeInfo(object):
     Args:
       object_class: Model for which we want the attribute definitions.
       ca_cache: dictionary containing custom attribute definitions.
+      include_hidden (bool): Flag which specifies if we should include
+        attribute definition for hidden attributes (they marked as 'hidden'
+        in _aliases dict).
     """
     definitions = {}
 
@@ -483,6 +487,12 @@ class AttributeInfo(object):
     unique_columns = cls.get_unique_constraints(object_class)
 
     for key, value in aliases:
+      if (
+          not include_hidden and
+          isinstance(value, dict) and
+          value.get("hidden")
+      ):
+        continue
       column = object_class.__table__.columns.get(key)
       mandatory = False
       if column is not None:
@@ -516,7 +526,7 @@ class AttributeInfo(object):
   def get_attr_definitions_array(cls, object_class, ca_cache=None):
     """ get all column definitions containing only json serializable data """
     definitions = cls.get_object_attr_definitions(object_class,
-                                                  ca_cache=ca_cache)
+                                                  ca_cache=ca_cache,)
     order = cls.get_column_order(definitions.keys())
     result = []
     for key in order:

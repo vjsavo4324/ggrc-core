@@ -153,6 +153,9 @@ new Mappings({
     indirectMappings: ['Assessment', 'Person', 'Regulation', 'Standard',
       'TaskGroup', 'Workflow'],
   },
+  AccountBalance: {
+    ...scopingObjectConfig,
+  },
   DataAsset: {
     ...scopingObjectConfig,
   },
@@ -281,8 +284,8 @@ new Mappings({
   },
   MultitypeSearch: {
     map: [
-      'AccessGroup', 'Assessment', 'AssessmentTemplate', 'Audit',
-      'Contract', 'Control', 'CycleTaskGroupObjectTask', 'DataAsset',
+      'AccessGroup', 'AccountBalance', 'Assessment', 'AssessmentTemplate',
+      'Audit', 'Contract', 'Control', 'CycleTaskGroupObjectTask', 'DataAsset',
       'Document', 'Evidence', 'Facility', 'Issue', 'KeyReport', 'Market',
       'Metric', 'Objective', 'OrgGroup', 'Person', 'Process', 'Product',
       'ProductGroup', 'Project', 'Policy', 'Program', 'Regulation',

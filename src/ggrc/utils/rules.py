@@ -153,12 +153,13 @@ def _all_rules():
                 'Policy', 'Process', 'Product', 'Program', 'Project',
                 'Regulation', 'Risk', 'Requirement', 'Standard',
                 'System', 'Threat', 'Vendor', 'Metric', 'ProductGroup',
-                'TechnologyEnvironment', 'KeyReport'}
+                'TechnologyEnvironment', 'KeyReport', 'AccountBalance'}
 
   snapshots = snapshotter.rules.Types.all
 
   all_rules = {
       "AccessGroup": all_models - {'AccessGroup'},
+      "AccountBalance": all_models,
       "Contract": all_models - {'Contract'},
       "Control": all_models,
       "CycleTaskGroupObjectTask": ((all_models | {'Audit'}) -

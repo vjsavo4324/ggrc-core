@@ -84,6 +84,7 @@ def contributed_services():
       service('product_groups', models.ProductGroup),
       service('reviews', review.Review),
       service('key_reports', models.KeyReport),
+      service('account_balances', models.AccountBalance),
   ]
 
 

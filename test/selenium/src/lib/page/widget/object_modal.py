@@ -6,6 +6,7 @@
 * Proposal for object
 """
 from lib import base
+from lib.constants import objects
 from lib.element import page_elements
 from lib.entities import entity
 from lib.page.error_popup import ErrorPopup
@@ -156,6 +157,10 @@ class ControlModal(BaseObjectModal):
 
   def __init__(self, _driver=None):
     super(ControlModal, self).__init__()
+    self._root = self._browser.element(
+        class_name="modal-header", text="New {}".format(
+            objects.get_singular(objects.CONTROLS, title=True))).parent(
+                class_name="modal-wide")
     self._fields = ["title", "description", "status", "slug", "assertions"]
 
   def select_assertions(self, assertions):

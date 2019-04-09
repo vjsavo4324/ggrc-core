@@ -3,4 +3,4 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<create-proposal {instance}="instance"></create-proposal>
+<create-proposal {instance}="{instance}"></create-proposal>

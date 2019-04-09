@@ -3,4 +3,4 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<restore-revision {instance}="instance" {restored-revision}="rightRevision"></restore-revision>
+<restore-revision {instance}="{instance}" {restored-revision}="{rightRevision}"></restore-revision>

@@ -19,6 +19,7 @@ from ggrc.login import get_current_user_id
 from ggrc.models import all_models
 from ggrc.models.hooks import common
 from ggrc.models.hooks.issue_tracker import assessment_integration
+from ggrc.models.hooks.issue_tracker import integration_utils
 from ggrc.models.exceptions import StatusValidationError
 from ggrc.services import signals
 from ggrc.utils import referenced_objects
@@ -107,6 +108,7 @@ def init_hook():
       # Handling IssueTracker info here rather than in hooks/issue_tracker
       # would avoid querying same data (such as snapshots, audits and
       # templates) twice.
+      integration_utils.update_issue_tracker_for_import(assessment)
       tracker_handler.handle_assessment_create(assessment, src)
 
   # pylint: disable=unused-variable

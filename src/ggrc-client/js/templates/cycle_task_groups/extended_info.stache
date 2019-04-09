@@ -1,21 +1,17 @@
 {{!
-    Copyright (C) 2019 Google Inc.
-    Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
-
-    Template applicable to workflows only
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-
 
 {{#instance}}
   <div class="row-fluid">
     <div class="span12">
-      {{#using cycle=instance.cycle}}
-      {{#using workflow=cycle.workflow}}
-        <a class="main-title {{class.category}} oneline" href="{{workflow.viewLink}}">
-          {{title}}
-        </a>
-      {{/using}}
-      {{/using}}
+      <object-loader {path}="instance.cycle">
+        <a class="main-title {{class.category}} oneline"
+           href="/workflows/{{loadedObject.workflow.id}}">
+        {{title}}
+      </a>
+      </object-loader>
     </div>
   </div>
 

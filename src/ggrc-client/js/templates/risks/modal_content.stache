@@ -43,9 +43,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="2"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Description'"
-          {(content)}="instance.description">
+          {(content)}="{instance.description}">
         </rich-text>
       </div>
     </div>
@@ -65,9 +65,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="4"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Risk Type'"
-          {(content)}="instance.risk_type">
+          {(content)}="{instance.risk_type}">
         </rich-text>
       </div>
     </div>
@@ -82,9 +82,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="5"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Threat Source'"
-          {(content)}="instance.threat_source">
+          {(content)}="{instance.threat_source}">
         </rich-text>
       </div>
     </div>
@@ -99,9 +99,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="6"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Threat Event'"
-          {(content)}="instance.threat_event">
+          {(content)}="{instance.threat_event}">
         </rich-text>
       </div>
     </div>
@@ -116,9 +116,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="7"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Vulnerability'"
-          {(content)}="instance.vulnerability">
+          {(content)}="{instance.vulnerability}">
         </rich-text>
       </div>
     </div>
@@ -127,9 +127,9 @@
   <div class="row">
     <div class="span12 hide-wrap hidable">
       <access-control-list-roles-helper
-        {instance}="."
-        {is-proposal}="isProposal"
-        {is-new-instance}="new_object_form">
+        {instance}="{.}"
+        {is-proposal}="{isProposal}"
+        {is-new-instance}="{new_object_form}">
       </access-control-list-roles-helper>
     </div>
   </div>
@@ -146,9 +146,9 @@
       <div class="rich-text">
         <rich-text
           tabindex="8"
-          {hidden-toolbar}="true"
+          {hidden-toolbar}="{true}"
           {placeholder}="'Enter Notes'"
-          {(content)}="instance.notes">
+          {(content)}="{instance.notes}">
         </rich-text>
       </div>
     </div>
@@ -165,7 +165,7 @@
   {{^if isProposal}}
     <div class="row-fluid">
       <div data-id="folder_hidden" class="span6 hidable">
-        <ggrc-gdrive-folder-picker instance="instance" deferred="true" tabindex="9">
+        <ggrc-gdrive-folder-picker {instance}="{instance}" {deferred}="{true}" tabindex="9">
         </ggrc-gdrive-folder-picker>
       </div>
     </div>
@@ -184,7 +184,7 @@
       </div>
     {{/if}}
     <div class="span4 hidable">
-      <effective-dates instance="instance"/>
+      <effective-dates {instance}="{instance}"/>
     </div>
   </div>
 
@@ -196,10 +196,10 @@
            title="Indicates the status of this object."></i>
         <a href="javascript://" class="field-hide" tabindex="-1">hide</a>
       </label>
-        <dropdown options-list="model.statuses"
-                  no-value="true"
-                  no-value-label="---"
-                  name="instance.status"
+        <dropdown {options-list}="{model.statuses}"
+                  {no-value}="{true}"
+                  {no-value-label}="'---'"
+                  {name}="'instance.status'"
                   tabindex="23">
         </dropdown>
     </div>

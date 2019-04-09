@@ -69,7 +69,7 @@ const init = function () {
 
 export default can.Component.extend({
   tag: 'task-group',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   init,

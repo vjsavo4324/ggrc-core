@@ -46,9 +46,13 @@ export default can.Control.extend({
       return this._prepare_deferred;
     }
 
-    this._prepare_deferred =
-      can.view(this.options.widget_view, $.when(this.options))
-        .then((frag) => this.draw_widget(frag));
+    this._prepare_deferred = $.when(this.options, $.ajax({
+      url: this.options.widget_view,
+      dataType: 'text',
+    })).then((ctx, view) => {
+      let frag = can.stache(view[0])(ctx);
+      this.draw_widget(frag);
+    });
 
     return this._prepare_deferred;
   },

@@ -3,10 +3,8 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
-const tag = 'snapshot-comparer-config';
-
 export default can.Component.extend({
-  tag,
+  tag: 'snapshot-comparer-config',
   leakScope: true,
   viewModel: {
     define: {

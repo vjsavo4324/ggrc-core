@@ -1,8 +1,10 @@
-[//]: <> (updated 03/26/2019)
+[//]: <> (updated 04/10/2019)
 
 Our product team is working hard to engineer compliance @ scale and make your day to day user journeys easier. We have been adding key capabilities to the product as listed here below.
 
-[Introducing new Control Library frontend (v.2.0.0, 03/26/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.xxbuiwi9f8pf)
+[New object Account Balance (v.2.1.0, 04/10/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.t02sm9tcam2t)
+
+[Introducing new Control Library frontend (v.2.0.0, 03/26/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.oo6v96vy5j1x)
 
 [‘Related Requirements’ added to snapshot (v.2.0.0, 03/26/2019)](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.dwnfktph11qf)
 
@@ -82,9 +84,13 @@ Our product team is working hard to engineer compliance @ scale and make your da
 
 [Performance improvements](https://docs.google.com/document/d/1Tm1nRVDIgUArjezZSnCvcwCm3gLcXdB6wRJKUaF6VUA/edit#heading=h.m9vl04nitn8)
 
+### New object Account Balance (v.2.1.0, 04/10/2019)
+
+Account Balance can be used to sort, store and summarize a company's transactions and processes. Account Balance is categorized as a scoping object and can be mapped to other GRC objects similar to other scoping objects.
+
 ### Introducing new Control Library frontend (v.2.0.0, 03/26/2019)
 
-New frontend will support create, edit, delete, change proposal, restoring versions, comments and import of Controls. The above listed functionality will be disabled in the current UI. New frontend will also support mapping of scoping objects, Standards and Regulations to Controls. The current front end will still provide ability to add reference urls, attachments, snapshot creation, object mapping (except to Standards, Regulations and Scoping objects).
+New frontend will support create, edit, delete, change proposal, restoring versions, comments and import of Controls. The above listed functionality will be disabled in the current UI. New frontend will also support mapping of Scoping objects, Standards and Regulations to Controls. The current frontend will still provide ability to add reference urls, attachments, snapshot creation, object mapping (except to Standards, Regulations and Scoping objects).
 
 ### ‘Related Requirements’ added to snapshot (v.2.0.0, 03/26/2019)
 

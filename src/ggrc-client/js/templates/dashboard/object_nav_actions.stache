@@ -3,9 +3,8 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-
 <span class="inner-nav__actions">
-  <nav-actions {instance}="instance">
+  <nav-actions {instance}="{instance}">
     {{#if showSetupRequirement}}
       <p class="tiny-help-text">
         You need to setup task group(s) before activating workflow.
@@ -22,11 +21,11 @@
       </p>
     {{/if}}
     {{#if canEdit}}
-      <workflow-activate {instance}="instance">
-        <spinner toggle="waiting"></spinner>
+      <workflow-activate {instance}="{instance}">
+        <spinner {toggle}="{waiting}"></spinner>
 
         {{^if waiting}}
-          {{#if_equals instance.status "Draft"}}
+          {{#is(instance.status, "Draft")}}
             <button
               type="submit"
               href="#workflowActivate"
@@ -35,7 +34,7 @@
               {{^if instance.can_start_cycle}}disabled="disabled"{{/if}}>
               Activate Workflow
             </button>
-          {{/if_equals}}
+          {{/is}}
         {{/if}}
       </workflow-activate>
     {{/if}}

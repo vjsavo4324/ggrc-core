@@ -16,7 +16,7 @@ import template from './inline.stache';
 
 export default can.Component.extend({
   tag: 'inline-edit-control',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

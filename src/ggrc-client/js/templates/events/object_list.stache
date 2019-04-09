@@ -12,7 +12,7 @@
             <div class="span12">
               <div class="item-data">
                 <div class="tree-title-area">
-                  <event-item {event}="."></event-item>
+                  <event-item {event}="{.}"></event-item>
                 </div>
               </div>
             </div>

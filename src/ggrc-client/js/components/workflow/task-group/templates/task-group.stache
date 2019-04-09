@@ -4,7 +4,6 @@
 }}
 
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
-
     <div class="tier-content">
       <div class="pane-header">
         <div class="pane-header__container">
@@ -12,56 +11,50 @@
             <h6>Title</h6>
             <h3 class="pane-header__title-name">{{instance.title}}</h3>
           </div>
-
           <div class="pane-header__toolbar">
             {{#is_info_pin}}
-              <info-pin-buttons maximized="maximized" on-change-maximized-state="@onChangeMaximizedState" on-close="@onClose"></info-pin-buttons>
+              <info-pin-buttons {maximized}="{maximized}" 
+                                {on-change-maximized-state}="{@onChangeMaximizedState}" 
+                                {on-close}="{@onClose}">
+              </info-pin-buttons>
             {{/is_info_pin}}
-
             <div class="info-pane-utility">
               {{#is_allowed 'update' instance}}
                 <three-dots-menu>
-                    {{#using workflow=instance.workflow}}
-                      {{^if_equals workflow.status 'Inactive'}}
-                        {{> /static/templates/base_objects/edit_object_link.stache}}
-                      {{/if_equals}}
-                    {{/using}}
-                    <li>
-                      <task-group-clone
-                        {task-group}="instance">
-                        <a href="javascript://">
-                          <i class="fa fa-clone"></i>
-                          Clone Task Group
-                        </a>
-                      </task-group-clone>
-                  </three-dots-menu>
-                </div>
+                  {{^is(workflow.status, "Inactive")}}
+                    {{> /static/templates/base_objects/edit_object_link.stache}}
+                  {{/is}}
+                  <li>
+                    <task-group-clone {task-group}="{instance}">
+                      <a href="javascript://">
+                        <i class="fa fa-clone"></i>
+                        Clone Task Group
+                      </a>
+                    </task-group-clone>
+                  </li>
+                </three-dots-menu>
               {{/is_allowed}}
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="pane-content">
-        {{> /static/templates/task_groups/tier2_content.stache}}
-        <div class="info-pane__section">
-        {{#if readyToRenderTaskGroupObjects}}
-          <task-group-objects
-            {task-group}="instance"
-            {can-edit}="canEdit"
-          ></task-group-objects>
-        {{/if}}
+        <div class="pane-content">
+          {{> /static/templates/task_groups/tier2_content.stache}}
+          <div class="info-pane__section">
+            {{#if readyToRenderTaskGroupObjects}}
+              <task-group-objects {task-group}="{instance}"
+                                  {can-edit}="{canEdit}"
+              ></task-group-objects>
+            {{/if}}
+          </div>
+          <div class="info-pane__section">
+            <h5 class="info-pane__section-title">
+              Tasks
+            </h5>
+            <task-list {base-instance}="{instance}"
+                       {workflow}="{workflow}"
+            ></task-list>
+          </div>
         </div>
-        <div class="info-pane__section">
-          <h5 class="info-pane__section-title">
-            Tasks
-          </h5>
-          <task-list
-            {base-instance}="instance"
-            {workflow}="workflow"
-          ></task-list>
-        </div>
-      </div>
     </div>
   </div>
-  </section>
+</section>

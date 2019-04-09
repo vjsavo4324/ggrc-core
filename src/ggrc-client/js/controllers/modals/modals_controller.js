@@ -48,7 +48,6 @@ import {
   checkPreconditions,
   becameDeprecated,
 } from '../../plugins/utils/controllers';
-import {REFRESH_MAPPING} from '../../events/eventTypes';
 import {
   notifierXHR,
 } from '../../plugins/utils/notifiers-utils';
@@ -94,9 +93,13 @@ export default can.Control.extend({
     }
 
     if (!this.element.find('.modal-body').length) {
-      can.view(this.options.preload_view,
-        {},
-        (content) => this.after_preload(content));
+      $.ajax({
+        url: this.options.preload_view,
+        dataType: 'text',
+      }).then((view) => {
+        let frag = can.stache(view)();
+        this.after_preload(frag);
+      });
       return;
     }
 
@@ -149,12 +152,28 @@ export default can.Control.extend({
         if (!this.wasDestroyed()) {
           this.options.afterFetch(this.element);
           this.restore_ui_status_from_storage();
+          if (this.is_audit_modal()) {
+            this.init_audit_title();
+          }
         }
       })
       .fail((error) => {
         notifierXHR('error', error);
         this.element.modal_form('hide');
       });
+  },
+
+  is_audit_modal: function () {
+    const {instance} = this.options;
+    return instance.constructor
+      && instance.constructor.model_singular === 'Audit';
+  },
+
+  init_audit_title: function () {
+    const {instance, new_object_form: isNewObjectForm} = this.options;
+    if (isNewObjectForm) {
+      instance.initTitle();
+    }
   },
 
   apply_object_params: function () {
@@ -247,6 +266,9 @@ export default can.Control.extend({
       }, 0);
 
       instance.attr(path, null).attr(path, ui.item);
+      if (this.is_audit_modal()) {
+        this.init_audit_title();
+      }
       if (!instance._transient) {
         instance.attr('_transient', can.Map());
       }
@@ -255,17 +277,19 @@ export default can.Control.extend({
   },
 
   fetch_templates: function (dfd) {
-    let that = this;
-    dfd = dfd ? dfd.then(function () {
-      return that.options;
+    dfd = dfd ? dfd.then(() => {
+      return this.options;
     }) : $.when(this.options);
+
     return $.when(
-      can.view(this.options.content_view, dfd),
-      can.view(this.options.header_view, dfd),
-      can.view(this.options.button_view, dfd),
-      can.view(this.options.custom_attributes_view, dfd)
-    ).done((content, header, footer, customAttributes) =>
-      this.draw(content, header, footer, customAttributes));
+      $.ajax({url: this.options.content_view, dataType: 'text'}),
+      $.ajax({url: this.options.header_view, dataType: 'text'}),
+      $.ajax({url: this.options.button_view, dataType: 'text'}),
+      $.ajax({url: this.options.custom_attributes_view, dataType: 'text'}),
+      dfd,
+    ).then((content, header, footer, customAttributes, context) => {
+      this.draw(content, header, footer, customAttributes, context);
+    });
   },
 
   fetch_data: function (params) {
@@ -371,7 +395,7 @@ export default can.Control.extend({
     return findParams.serialize ? findParams.serialize() : findParams;
   },
 
-  draw: function (content, header, footer, customAttributes) {
+  draw: function (content, header, footer, customAttributes, context) {
     if (this.wasDestroyed()) {
       return;
     }
@@ -380,11 +404,7 @@ export default can.Control.extend({
     let isProposal = this.options.isProposal;
     let isObjectModal = modalTitle && (modalTitle.indexOf('Edit') === 0 ||
       modalTitle.indexOf('New') === 0);
-    let $form;
-    let tabList;
-    let hidableTabs;
-    let storableUI;
-    let i;
+
     if (can.isArray(content)) {
       content = content[0];
     }
@@ -398,31 +418,34 @@ export default can.Control.extend({
       customAttributes = customAttributes[0];
     }
     if (header !== null) {
+      header = can.stache(header)(context);
       this.options.$header.find('h2').html(header);
     }
     if (content !== null) {
+      content = can.stache(content)(context);
       this.options.$content.html(content).removeAttr('style');
     }
     if (footer !== null) {
+      footer = can.stache(footer)(context);
       this.options.$footer.html(footer);
     }
-
     if (customAttributes !== null && (isObjectModal || isProposal)) {
+      customAttributes = can.stache(customAttributes)(context);
       this.options.$content.append(customAttributes);
     }
 
     // Update UI status array
-    $form = $(this.element).find('form');
-    tabList = $form.find('[tabindex]');
-    hidableTabs = 0;
-    for (i = 0; i < tabList.length; i++) {
+    let $form = $(this.element).find('form');
+    let tabList = $form.find('[tabindex]');
+    let hidableTabs = 0;
+    for (let i = 0; i < tabList.length; i++) {
       if ($(tabList[i]).attr('tabindex') > 0) {
         hidableTabs++;
       }
     }
     // ui_array index is used as the tab_order, Add extra space for skipped numbers
-    storableUI = hidableTabs + 20;
-    for (i = 0; i < storableUI; i++) {
+    let storableUI = hidableTabs + 20;
+    for (let i = 0; i < storableUI; i++) {
       // When we start, all the ui elements are visible
       this.options.ui_array.push(0);
     }
@@ -872,6 +895,9 @@ export default can.Control.extend({
 
       ajd.always(() => {
         this.options.attr('isSaving', false);
+        if (this.is_audit_modal()) {
+          this.init_audit_title();
+        }
       });
       if (this.options.add_more) {
         bindXHRToButton(ajd, saveCloseBtn);
@@ -1023,7 +1049,6 @@ export default can.Control.extend({
       instance.notifier.onEmpty(() => {
         instance.refresh();
       });
-      instance.dispatch(REFRESH_MAPPING);
     }
   },
 

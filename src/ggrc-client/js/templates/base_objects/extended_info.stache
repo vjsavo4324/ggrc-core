@@ -27,32 +27,30 @@
 
   {{> /static/templates/base_objects/contacts.stache}}
 
-  <div class="row-fluid">
-    <div class="span5">
-      <div class="tiny-data">
-        <i class="fa fa-control color"></i>
-        {{#with_mapping_count instance 'Control'}}
-          {{count}}
-        {{else}}
-          <span {{attach_spinner '{ "radius": 2.5, "length": 2.5, "width": 2 }' 'display:inline-block; top: -5px; left: 2px;' }}></span>
-        {{/with_mapping_count}}
-        &nbsp;&nbsp;
-        <i class="fa fa-process color"></i>
-        {{#with_mapping_count instance 'Process'}}
-          {{count}}
-        {{else}}
-          <span {{attach_spinner '{ "radius": 2.5, "length": 2.5, "width": 2 }' 'display:inline-block; top: -5px; left: 2px;' }}></span>
-        {{/with_mapping_count}}
-        &nbsp;&nbsp;
-        <i class="fa fa-system color"></i>
-        {{#with_mapping_count instance 'System'}}
-          {{count}}
-        {{else}}
-          <span {{attach_spinner '{ "radius": 2.5, "length": 2.5, "width": 2 }' 'display:inline-block; top: -5px; left: 2px;' }}></span>
-        {{/with_mapping_count}}
-      </div>
+<div class="row-fluid">
+  <div class="span5">
+    <div class="tiny-data">
+      <mapped-counter {instance}="instance"
+                      {type}="'Control'"
+                      {is-spinner-visible}="true"
+                      {is-title-visible}="false"
+                      {extra-css-class}="'color'">
+      </mapped-counter>
+      <mapped-counter {instance}="instance"
+                      {type}="'Process'"
+                      {is-spinner-visible}="true"
+                      {is-title-visible}="false"
+                      {extra-css-class}="'color'">
+      </mapped-counter>
+      <mapped-counter {instance}="instance"
+                      {type}="'System'"
+                      {is-spinner-visible}="true"
+                      {is-title-visible}="false"
+                      {extra-css-class}="'color'">
+      </mapped-counter>
     </div>
   </div>
+</div>
 
   <div class="row-fluid">
     <div class="span12">
@@ -74,7 +72,7 @@
           <a class="secondary" href="{{viewLink}}">
             Open Original {{class.title_singular}}
           </a>
-          <questionnaire-link {instance}="instance" {css-classes}="'secondary'">
+          <questionnaire-link {instance}="{instance}" {css-classes}="'secondary'">
             Open {{class.title_singular}} in new frontend
           </questionnaire-link>
         {{/if}}

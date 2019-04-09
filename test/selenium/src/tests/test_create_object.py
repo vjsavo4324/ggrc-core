@@ -9,12 +9,12 @@
 import pytest
 
 from lib import base
-from lib import browsers
 from lib import users
 from lib.constants import roles
 from lib.constants import objects
 from lib.rest_facades import person_rest_facade
 from lib.service import webui_facade
+from lib.ui import ui_facade
 
 
 @pytest.fixture(params=[roles.ADMINISTRATOR, roles.CREATOR,
@@ -42,7 +42,4 @@ class TestCreateObject(base.Test):
       pytest.xfail(reason="GGRC-6934 Create object is not present.")
     obj_modal = webui_facade.open_create_obj_modal(
         obj_type=objects.get_singular(objects.CONTROLS, title=True))
-    for window in browsers.get_browser().windows():
-      window.use()
-      assert not obj_modal.is_present, ("Modal is present on page "
-                                        "while it should not.")
+    ui_facade.verify_modal_obj_not_present_in_all_windows(obj_modal)

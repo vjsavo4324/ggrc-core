@@ -21,7 +21,7 @@ import template from './templates/tree-actions.stache';
 
 export default can.Component.extend({
   tag: 'tree-actions',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {
@@ -32,7 +32,7 @@ export default can.Component.extend({
             false :
             this.attr('options').add_item_view ||
             this.attr('model').tree_view_options.add_item_view ||
-            GGRC.templates_path + '/base_objects/tree_add_item.stache';
+            'base_objects/tree_add_item';
         },
       },
       show3bbs: {

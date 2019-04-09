@@ -17,11 +17,11 @@
                   <h6>Name</h6>
                   {{#if name}}
                     <h3 class="pane-header__title-name">{{name}}
-                      {{#if_equals system_wide_role 'No Access'}}
+                      {{#is(system_wide_role, 'No Access')}}
                         <span class="user-disabled">
                           (Inactive user)
                         </span>
-                      {{/if_equals}}
+                      {{/is}}
                     </h3>
                   {{else}}
                     <span class="empty-message">None</span>
@@ -42,9 +42,9 @@
             <div class="pane-header__toolbar">
               {{#is_info_pin}}
                 <info-pin-buttons class="details-wrap"
-                                  maximized="maximized"
-                                  on-change-maximized-state="@onChangeMaximizedState"
-                                  on-close="@onClose">
+                                  {maximized}="{maximized}"
+                                  {on-change-maximized-state}="{@onChangeMaximizedState}"
+                                  {on-close}="{@onClose}">
                 </info-pin-buttons>
                 <div class="info-pane-utility">
                   {{> /static/templates/people/dropdown_menu.stache}}
@@ -55,7 +55,7 @@
         </div>
 
         <tab-container>
-          <tab-panel {(panels)}="panels" title-text="Attributes">
+          <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
             <div class="row-fluid wrap-row">
               <div class="span12">
                 <h6>Company</h6>
@@ -70,27 +70,27 @@
               <div class="span12">
                 <h6>Authorizations</h6>
                 <span>
-                  {{#if_equals instance.system_wide_role 'No Access'}}
+                  {{#is(instance.system_wide_role, "No Access")}}
                     No Role
                   {{else}}
                     {{instance.system_wide_role}}
-                  {{/if_equals}}
+                  {{/is}}
                 </span>
               </div>
             </div>
             {{> /static/templates/custom_attributes/info.stache}}
           </tab-panel>
-          <tab-panel {(panels)}="panels" title-text="Change Log">
-            <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
         </tab-container>
       </div>
     </section>
 
     {{#if is_info_widget}}
-      <info-pane-footer {created-at}="instance.created_at"
-                        {modified-at}="instance.updated_at"
-                        {modified-by}="instance.modified_by">
+      <info-pane-footer {created-at}="{instance.created_at}"
+                        {modified-at}="{instance.updated_at}"
+                        {modified-by}="{instance.modified_by}">
       </info-pane-footer>
     {{/if}}
   {{/if_helpers}}

@@ -3,16 +3,15 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<div class="
-    simple-popover {{extraCssClass}}
-    {{#if open}} simple-popover_active{{/if}}
-    simple-popover_placement_{{placement}}">
-        <div class="simple-popover__button">
-            <button type="button" class="btn btn-link" ($click)="toggle">{{buttonText}}</button>
-        </div>
-        {{#if open}}
-        <div class="simple-popover__content" ($click)="hide">
-            <content></content>
-        </div>
-        {{/if}}
+<div class="simple-popover {{extraCssClass}}
+     {{#if open}} simple-popover_active{{/if}}
+     simple-popover_placement_{{placement}}">
+    <div class="simple-popover__button">
+        <button type="button" class="btn btn-link" ($click)="toggle">{{buttonText}}</button>
+    </div>
+    {{#if open}}
+    <div class="simple-popover__content" ($click)="hide">
+        <content></content>
+    </div>
+    {{/if}}
 </div>

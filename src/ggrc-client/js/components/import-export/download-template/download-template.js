@@ -9,7 +9,6 @@ import {downloadTemplate, download} from '../../../plugins/utils/import-export-u
 import {backendGdriveClient} from '../../../plugins/ggrc-gapi-client';
 import {confirm} from '../../../plugins/utils/modals';
 
-const tag = 'download-template';
 const CSV_FILE_NAME = 'import_template.csv';
 const CSV_FORMAT = 'csv';
 const SHEET_FORMAT = 'gdrive';
@@ -110,8 +109,8 @@ const viewModel = can.Map.extend({
 });
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'download-template',
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

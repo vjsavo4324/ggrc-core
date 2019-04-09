@@ -12,7 +12,7 @@ import Permission from '../../permission';
 
 export default can.Component.extend({
   tag: 'comments-section',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

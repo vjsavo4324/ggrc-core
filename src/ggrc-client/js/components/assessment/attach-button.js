@@ -10,11 +10,9 @@ import {
   findGDriveItemById,
 } from '../../plugins/utils/gdrive-picker-utils';
 
-const tag = 'attach-button';
-
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'attach-button',
+  template: can.stache(template),
   confirmationCallback: '@',
   leakScope: true,
   viewModel: {

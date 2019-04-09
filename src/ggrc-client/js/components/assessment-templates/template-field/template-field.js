@@ -16,7 +16,7 @@ import template from './template-field.stache';
  */
 export default can.Component.extend({
   tag: 'template-field',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     types: [],

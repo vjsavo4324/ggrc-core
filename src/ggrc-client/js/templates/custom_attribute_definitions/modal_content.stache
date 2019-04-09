@@ -15,12 +15,12 @@
         <i class="fa fa-question-circle" rel="tooltip" title="Give new {{model.model_plural}} a name."></i>
       </label>
       <input-filter
-        name="title"
-        {(value)}="title"
-        placeholder="Enter Title"
-        exclude-symbols="*"
+        {name}="'title'"
+        {(value)}="{title}"
+        {placeholder}="'Enter Title'"
+        {exclude-symbols}="'*'"
         {tabindex}="1"
-        {autofocus}="true">
+        {autofocus}="{true}">
       </input-filter>
     </div>
     <div class="span4">
@@ -29,16 +29,16 @@
         <i class="fa fa-asterisk"></i>
         <i class="fa fa-question-circle" rel="tooltip" title="Choose the type of attribute to create."></i>
       </label>
-        <dropdown options-list="model.attributeTypes"
-                  name="instance.attribute_type"
-                  data-purpose="ca-type">
+        <dropdown {options-list}="{model.attributeTypes}"
+                  {name}="'instance.attribute_type'"
+                  {data-purpose}="'ca-type'">
         </dropdown>
     </div>
     <div class="span2">
       <label>
         Mandatory
       </label>
-      <input tabindex="3" type="checkbox" class="input-block-level" placeholder="Enter Placeholder" name="mandatory" type="text"  {{#if mandatory}}checked="checked"{{/if}}>
+      <input tabindex="3" type="checkbox" class="input-block-level" placeholder="Enter Placeholder" name="mandatory" {{#if mandatory}}checked="checked"{{/if}}>
     </div>
   </div>
   {{#switch attribute_type}}

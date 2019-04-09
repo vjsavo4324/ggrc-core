@@ -20,23 +20,23 @@
 <div class="selector-list people-selector">
   <ul>
     {{#rolesList}}
-    <li {{ data 'option' }} data-id="{{ id }}">
+    <li {{canData 'option' }} data-id="{{ id }}">
       <label>
-        {{#if_equals selectedOption id}}
+        {{#is(selectedOption, id)}}
           <input type="radio" checked="checked" name="map" rel="tooltip" title="map">
         {{else}}
           <input type="radio" name="map" rel="tooltip" title="map">
-        {{/if_equals}}
+        {{/is}}
         {{pretty_role_name name}}
       </label>
       <div class="role-description">
         <p>{{{description}}}</p>
-        {{#if_equals name "Administrator"}}
+        {{#is(name, "Administrator")}}
           <p>
           <strong>Note</strong>: This role does not automatically confer Admin access to gDrive resources.
             Please ensure that all Administrator users are also members of <span style="white-space: nowrap">{{ggrc_config_value "GAPI_ADMIN_GROUP"}}</span>
           </p>
-        {{/if_equals}}
+        {{/is}}
         {{#scope}}<p><strong>Role Scope:</strong> {{role_scope scope}}</p>{{/scope}}
       </div>
     </li>

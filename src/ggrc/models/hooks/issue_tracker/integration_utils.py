@@ -10,6 +10,7 @@ from ggrc import settings
 from ggrc.models import exceptions
 from ggrc.models import all_models
 from ggrc.integrations import constants
+from ggrc.utils import referenced_objects
 
 
 def is_already_linked(ticket_id):
@@ -286,3 +287,177 @@ def _collect_comments(revision_ids):
       revisions.source_type.in_(constants.ISSUE_TRACKED_MODELS)
   )
   return imported_comments_dst.union(imported_comments_src).all()
+
+
+def _get_assessment_template(obj_src):
+  """Get asmt template object which is referenced by current row if exists"""
+
+  tmpl_info = obj_src.get('template')
+  if not tmpl_info or not isinstance(tmpl_info, dict):
+    return None
+
+  return referenced_objects.get(tmpl_info.get('type'), tmpl_info.get('id'))
+
+
+def _get_issue_tracker(obj):
+  """Get issue_tracker dict from obj if dict is based on existing tracker"""
+
+  if not obj:
+    return None
+
+  ret = obj.issue_tracker
+  if not ret.get('_is_stub'):
+    return ret
+
+  return None
+
+
+def _get_default_issue_tracker(obj):
+  """Return default issue_tracker info populated with obj specific data"""
+
+  # get default values from constants
+  # add to issue_tracker all required fields which exist in constants
+  defaults = constants.DEFAULT_ISSUETRACKER_VALUES
+  keys = all_models.IssuetrackerIssue.get_issuetracker_issue_stub()
+  ret = dict(
+      (key, defaults[key]) for key in keys if key in defaults)
+
+  # for Issue hotlist_id and component_id are placed to issue specific keys
+  if isinstance(obj, all_models.Issue):
+    ret["hotlist_id"] = defaults['issue_hotlist_id']
+    ret["component_id"] = defaults['issue_component_id']
+  # for Assessment default issue title is assessment title
+  if isinstance(obj, all_models.Assessment):
+    ret["title"] = obj.title
+
+  return ret
+
+
+def _get_disabled_for_audit_or_app(obj):
+  """Return dict with disabled integration if it's disabled in audit or app"""
+
+  if not settings.ISSUE_TRACKER_ENABLED:
+    return {"enabled": False}
+
+  is_asmt = isinstance(obj, all_models.Assessment)
+  is_tmpl = isinstance(obj, all_models.AssessmentTemplate)
+
+  # disable integration for asmt and tmpl if audit integration is OFF
+
+  if not is_asmt and not is_tmpl:
+    return None
+
+  audit_issue_tracker = _get_issue_tracker(obj.audit) or dict()
+  if not audit_issue_tracker.get('enabled'):
+    return {'enabled': False}
+
+  return None
+
+
+def _get_all_issue_trackers(obj, obj_src):
+  """Get ordered list of issue tracker dicts to be used for object
+
+  For Issue:
+     1) * only for "enabled" key - set OFF if enabled=OFF for APP
+     2) data which is requested by user
+     3) default values, default hotlist_id/component_id are stored
+        in specific keys.
+  For Audit:
+     1) * only for "enabled" key - set OFF if enabled=OFF for APP
+     2) data which is requested by user
+     3) default values
+  For Assessment the list is the following:
+     1) * only for "enabled" key - set OFF if enabled=OFF for Audit or APP
+     2) data by user + set enabled=OFF if enabled=OFF for Audit
+     3) assessment template if available
+     4) audit if available
+     5) default values, default title is Assessment title
+  For Assessment Template the list is the following:
+     1) * only for "enabled" key - set OFF if enabled=OFF for Audit or APP
+     2) data which is requested by user
+     3) audit if available
+     4) default values
+
+  :return: list of issue_tracker dicts. The list has at least 1 item
+  """
+  ret = list()
+
+  is_asmt = isinstance(obj, all_models.Assessment)
+  is_tmpl = isinstance(obj, all_models.AssessmentTemplate)
+
+  # disable integration for asmt and tmpl if audit integration is OFF
+  ret.append(_get_disabled_for_audit_or_app(obj))
+
+  # issue_tracker related data source depends on the way user make request
+  # for API call it is obj_src, for import - dict is stored in IssueTracked obj
+  src = obj.issue_tracker_to_import if obj.is_import else obj_src
+
+  obj_issue_tracker = src.get('issue_tracker')
+  if isinstance(obj_issue_tracker, dict) and obj_issue_tracker:
+    ret.append(obj_issue_tracker)
+
+  if is_asmt:
+    # get issue tracker values from assessment template if available
+    dct = _get_issue_tracker(_get_assessment_template(src))
+    ret.append(dct)
+
+  if is_asmt or is_tmpl:
+    # get issue tracker values from audit if available
+    ret.append(_get_issue_tracker(obj.audit))
+
+  ret.append(_get_default_issue_tracker(obj))
+
+  # remove None or empty values
+  ret = list(a for a in ret if a)
+
+  return ret
+
+
+def _get_all_issue_tracker_keys(all_issue_trackers):
+  """Collect all keys in all dicts."""
+
+  ret = set()
+  for dct in all_issue_trackers:
+    ret.update(dct.keys())
+
+  return ret
+
+
+def collect_issue_tracker_info(obj, obj_src):
+  """Set predefined values for issue tracker based on object type
+
+  For each key we have to get first not-None value from all defined
+  issue tracker dicts
+  """
+
+  all_issue_trackers = _get_all_issue_trackers(obj, obj_src)
+
+  keys = _get_all_issue_tracker_keys(all_issue_trackers)
+  ret = dict()
+  for key in keys:
+    # get first non-null value for specified key
+    values = list(dct.get(key) for dct in all_issue_trackers)
+    values = list(val for val in values if val is not None)
+    value = values[0] if values else None
+
+    ret[key] = value
+
+  return ret
+
+
+def update_issue_tracker_for_import(obj):
+  """Update issue_tracker info in DB for obj which is modified in import
+
+  objects not from import will be skipped
+
+  :param obj: IssueTracked object for which issue_tracker have to be updated
+  """
+
+  if not obj.is_import:
+    return
+
+  issue_tracker_info = collect_issue_tracker_info(obj, dict())
+  all_models.IssuetrackerIssue.create_or_update_from_dict(
+      obj,
+      issue_tracker_info
+  )

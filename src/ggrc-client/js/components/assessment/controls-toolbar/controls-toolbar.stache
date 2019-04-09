@@ -4,14 +4,14 @@
 }}
 
 <custom-attributes-actions
-  {disabled}="isInfoPaneSaving"
-  {instance}="instance"
-  {(form-edit-mode)}="editMode">
+  {disabled}="{isInfoPaneSaving}"
+  {instance}="{instance}"
+  {(form-edit-mode)}="{editMode}">
 </custom-attributes-actions>
-<object-state-toolbar {verifiers}="verifiers"
-                      {instance}="instance"
-                      {instance-state}="currentState"
-                      {disabled}="isInfoPaneSaving"
-                      {is-undo-button-visible}="isUndoButtonVisible"
-                      (on-state-change)="onStateChange(%event)">
+<object-state-toolbar {verifiers}="{verifiers}"
+                      {instance}="{instance}"
+                      {instance-state}="{currentState}"
+                      {disabled}="{isInfoPaneSaving}"
+                      {is-undo-button-visible}="{isUndoButtonVisible}"
+                      (on-state-change)="{onStateChange(%event)}">
 </object-state-toolbar>

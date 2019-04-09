@@ -3,39 +3,39 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<object-selection items="items" selected-items="selected" refresh-selection="refreshItems" all-items="allItems"
-                  all-selected="allSelected" {disabled-ids}="disabledIds">
+<object-selection {items}="{items}" 
+                  {selected-items}="{selected}"
+                  {disabled-ids}="{disabledIds}"
+                  {all-items}="{allItems}"
+                  {(refresh-selection)}="{refreshItems}"
+                  {(all-selected)}="{allSelected}">
   {{#if items.length}}
     <div class="list-header">
       {{^disableColumnsConfiguration}}
-        <mapper-results-columns-configuration
-          model-type="getDisplayModel.model_singular"
-          available-columns="columns.available"
-          {(selected-columns)}="columns.selected">
+        <mapper-results-columns-configuration {model-type}="{getDisplayModel.model_singular}"
+                                              {available-columns}="{columns.available}"
+                                              {(selected-columns)}="{columns.selected}">
         </mapper-results-columns-configuration>
       {{/disableColumnsConfiguration}}
-      <mapper-results-items-header
-        class="{{#useSnapshots}}is-snapshot{{/useSnapshots}}
-                {{#searchOnly}}search-only{{/searchOnly}}
-                {{#relatedAssessments.show}}has-related-assessments{{/relatedAssessments.show}}"
-        model-type="type"
-        columns="columns.selected"
-        {(sort-key)}="sort.key"
-        {(sort-direction)}="sort.direction">
+      <mapper-results-items-header class="{{#useSnapshots}}is-snapshot{{/useSnapshots}}
+                                          {{#searchOnly}}search-only{{/searchOnly}}
+                                          {{#relatedAssessments.show}}has-related-assessments{{/relatedAssessments.show}}"
+                                   {model-type}="{type}"
+                                   {columns}="{columns.selected}"
+                                   {(sort-key)}="{sort.key}"
+                                   {(sort-direction)}="{sort.direction}">
       </mapper-results-items-header>
       {{^searchOnly}}
         <div class="list-selection-switcher">
           Select:
-          <button type="button"
-                  can-click="deselectAll"
-                  class="btn btn-link"
+          <button type="button" class="btn btn-link"
+                  ($click)="deselectAll"
                   {{#isLoading}}disabled="disabled"{{/isLoading}}>
             None
           </button>
           |
-          <button type="button"
-                  can-click="selectAll"
-                  class="btn btn-link"
+          <button type="button" class="btn btn-link"
+                  ($click)="selectAll"
                   {{#isLoading}}disabled="disabled"{{/isLoading}}>
             All
           </button>
@@ -43,22 +43,21 @@
       {{/searchOnly}}
     </div>
     <div class="list-body {{#isLoading}}loading{{/isLoading}}">
-      <object-list items="items" is-loading="isLoading" {list-type}="'GRID'">
-        <mapper-results-item
-          class="{{#relatedAssessments.show}}has-related-assessments{{/relatedAssessments.show}}"
-          item-data="data"
-          search-only="searchOnly"
-          selected-columns="columns.selected"
-          draw-related-assessments="relatedAssessments.show"
-          (show-related-assessments)="showRelatedAssessments(%event)">
+      <object-list {items}="{items}" {is-loading}="{isLoading}" {list-type}="'GRID'">
+        <mapper-results-item class="{{#relatedAssessments.show}}has-related-assessments{{/relatedAssessments.show}}"
+                             {item-data}="{data}"
+                             {search-only}="{searchOnly}"
+                             {selected-columns}="{columns.selected}"
+                             {draw-related-assessments}="{relatedAssessments.show}"
+                             (show-related-assessments)="{showRelatedAssessments(%event)}">
         </mapper-results-item>
       </object-list>
     </div>
-    <tree-pagination paging="paging" placement="top"></tree-pagination>
+    <tree-pagination {paging}="{paging}" {placement}="{top}"></tree-pagination>
   {{else}}
     {{#if isLoading}}
       <div class="no-items-spinner-wrapper">
-        <spinner toggle="isLoading" extra-css-class="grid-spinner" class="spinner-wrapper active"></spinner>
+        <spinner {toggle}="{isLoading}" {extra-css-class}="'grid-spinner'" class="spinner-wrapper active"></spinner>
       </div>
     {{else}}
       <div class="well well-small">No {{getDisplayModel.title_plural}} were found</div>
@@ -66,13 +65,13 @@
   {{/if}}
 </object-selection>
 {{#relatedAssessments.show}}
-  <simple-modal instance="relatedAssessments.instance"
-                modal-title="'Related Assessments'"
-                state="relatedAssessments.state"
-                extra-css-class="related-assessments">
+  <simple-modal {instance}="{relatedAssessments.instance}"
+                {modal-title}="'Related Assessments'"
+                {state}="{relatedAssessments.state}"
+                {extra-css-class}="{related-assessments}">
     <div class="simple-modal__body">
       <related-assessments
-        {instance}="instance">
+        {instance}="{instance}">
       </related-assessments>
     </div>
   </simple-modal>

@@ -26,7 +26,7 @@
                 <div class="span2">
                   <div class="item-data">
                     <div class="tree-title-area">
-                      {{#if_equals system_wide_role 'No Access'}}
+                      {{#is(system_wide_role, "No Access")}}
                         <span class="no-role">
                           No Role
                         </span>
@@ -34,7 +34,7 @@
                         <span class="role">
                           {{system_wide_role}}
                         </span>
-                      {{/if_equals}}
+                      {{/is}}
                     </div>
                   </div>
                 </div>
@@ -52,7 +52,7 @@
         </div><!-- item-wrap end -->
       </div><!-- item-main end -->
 
-      <people-list-info {instance}="this"></people-list-info>
+      <people-list-info {instance}="{this}"></people-list-info>
     </li>
 
   {{/each}}

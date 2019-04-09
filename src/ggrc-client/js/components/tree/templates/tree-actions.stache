@@ -11,9 +11,7 @@
     <three-dots-menu>
       {{#if showImport}}
         <li>
-          <a href="/import"
-              target="_blank"
-              class="section-import">
+          <a href="/import" target="_blank" class="section-import">
             <i class="fa fa-fw fa-cloud-upload"></i>
             Import {{model.title_plural}}
           </a>
@@ -28,11 +26,12 @@
         </li>
       {{/if}}
       {{#if showGenerateAssessments}}
-        <assessment-generator-button audit="parent_instance"></assessment-generator-button>
+        <assessment-generator-button {audit}="{parent_instance}">
+        </assessment-generator-button>
       {{/if}}
       {{#if showBulkUpdate}}
         <li>
-          <bulk-update-button {model}="model">
+          <bulk-update-button {model}="{model}">
           </bulk-update-button>
         </li>
       {{/if}}

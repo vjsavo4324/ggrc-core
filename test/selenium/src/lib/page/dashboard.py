@@ -154,8 +154,7 @@ class Dashboard(widget_bar.Dashboard, Header):
 
   def start_task_group(self):
     """Clicks "Create" button."""
-    self._browser.element(
-        class_name="section-create action-button create-button").click()
+    self._browser.div(class_name="tree-action").link(text="Create").click()
 
   def click_create_obj_btn(self):
     """Clicks "Create object" button."""

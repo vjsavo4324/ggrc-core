@@ -14,10 +14,12 @@ from datetime import date
 from logging import getLogger
 from urlparse import urljoin
 
-from sqlalchemy import orm
+import sqlalchemy as sa
 
 from ggrc import db
 from ggrc import utils
+from ggrc import models
+from ggrc.models.relationship import Relationship
 from ggrc.models.revision import Revision
 from ggrc.notifications import data_handlers
 from ggrc.utils import merge_dicts, get_url_root
@@ -39,6 +41,7 @@ exposed functions
 
 
 def get_cycle_created_task_data(notification):
+  """Get data of created cycle task."""
   cycle_task = get_object(CycleTaskGroupObjectTask, notification.object_id)
   if not cycle_task:
     logger.warning(
@@ -243,6 +246,7 @@ def get_cycle_task_overdue_data(
 
 
 def get_all_cycle_tasks_completed_data(notification, cycle):
+  """Get data of completed cycle tasks."""
   workflow_admins = get_workflow_admins_dict(cycle.workflow)
   force = cycle.workflow.notify_on_change
   result = {}
@@ -265,6 +269,7 @@ def get_all_cycle_tasks_completed_data(notification, cycle):
 
 
 def get_cycle_created_data(notification, cycle):
+  """Get data of created cycle."""
   if not cycle.is_current:
     return {}
 
@@ -289,6 +294,7 @@ def get_cycle_created_data(notification, cycle):
 
 
 def get_cycle_data(notification):
+  """Get created and completed cycles data."""
   cycle = get_object(Cycle, notification.object_id)
   if not cycle:
     return {}
@@ -303,6 +309,7 @@ def get_cycle_data(notification):
 
 
 def get_cycle_task_declined_data(notification):
+  """Get data of declined cycle tasks."""
   cycle_task = get_object(CycleTaskGroupObjectTask, notification.object_id)
   if cycle_task:
     assignees = set().union(
@@ -350,14 +357,9 @@ def cycle_tasks_cache(notifications):
   if not task_ids:
     return {}
 
-  results = db.session\
-      .query(CycleTaskGroupObjectTask)\
-      .options(
-          orm.joinedload("related_sources"),
-          orm.joinedload("related_destinations")
-      )\
-      .filter(CycleTaskGroupObjectTask.id.in_(task_ids))
-
+  results = CycleTaskGroupObjectTask.eager_query().filter(
+      CycleTaskGroupObjectTask.id.in_(task_ids)
+  )
   return {task.id: task for task in results}
 
 
@@ -402,6 +404,7 @@ def deleted_task_rels_cache(task_ids):
 
 
 def get_cycle_task_data(notification, tasks_cache=None, del_rels_cache=None):
+  """Get all data of cycle task."""
   if tasks_cache is None:
     tasks_cache = {}
 
@@ -423,7 +426,7 @@ def get_cycle_task_data(notification, tasks_cache=None, del_rels_cache=None):
   elif notification_name.endswith("cycle_task_due_in"):
     return get_cycle_task_due(
         notification, tasks_cache=tasks_cache, del_rels_cache=del_rels_cache)
-  elif "cycle_task_due_today" == notification_name:
+  elif notification_name == "cycle_task_due_today":
     return get_cycle_task_due(
         notification, tasks_cache=tasks_cache, del_rels_cache=del_rels_cache)
   elif notification_name == "cycle_task_overdue":
@@ -434,6 +437,7 @@ def get_cycle_task_data(notification, tasks_cache=None, del_rels_cache=None):
 
 
 def get_workflow_starts_in_data(notification, workflow):
+  """Get workflow data for which cycle has started."""
   if workflow.status != "Active":
     return {}
   if (not workflow.next_cycle_start_date or
@@ -467,6 +471,7 @@ def get_workflow_starts_in_data(notification, workflow):
 
 
 def get_cycle_start_failed_data(notification, workflow):
+  """Get data of cycles that failed to start."""
   if workflow.status != "Active":
     return {}
   if (not workflow.next_cycle_start_date or
@@ -498,6 +503,7 @@ def get_cycle_start_failed_data(notification, workflow):
 
 
 def get_workflow_data(notification):
+  """Get workflow data."""
   workflow = get_object(Workflow, notification.object_id)
   if not workflow:
     return {}
@@ -509,7 +515,7 @@ def get_workflow_data(notification):
 
   if "_workflow_starts_in" in notification.notification_type.name:
     return get_workflow_starts_in_data(notification, workflow)
-  if "cycle_start_failed" == notification.notification_type.name:
+  if notification.notification_type.name == "cycle_start_failed":
     return get_cycle_start_failed_data(notification, workflow)
 
   return {}
@@ -523,6 +529,7 @@ def get_object(obj_class, obj_id):
 
 
 def get_workflow_admins_dict(workflow):
+  """Get dict representation of workflow admins."""
   wfa_people = workflow.get_persons_for_rolename("Admin")
   return {person.id: data_handlers.get_person_dict(person)
           for person in wfa_people}
@@ -541,18 +548,61 @@ def _get_object_info_from_revision(revision, known_type):
   return object_type, object_id
 
 
-def get_cycle_task_dict(cycle_task, del_rels_cache=None):
-
+def get_cycle_task_related_objects(cycle_task):
+  """Fetches names and titles of related objects to cycle task."""
   object_titles = []
-  # every object should have a title or at least a name like person object
-  for related_object in cycle_task.related_objects():
-    if related_object.type in ("CycleTaskGroup", "CycleTaskEntry"):
-      # We can skip cycle task groups in notifications because they are
-      # irrelevant for the completion of a given cycle task.
-      continue
-    object_titles.append(getattr(related_object, "title", "") or
-                         getattr(related_object, "name", "") or
-                         u"Untitled object")
+
+  relationships = db.session.query(
+      Relationship.source_id,
+      Relationship.source_type,
+      Relationship.destination_id,
+      Relationship.destination_type,
+  ).filter(
+      sa.or_(
+          sa.and_(
+              Relationship.source_type == 'CycleTaskGroupObjectTask',
+              Relationship.source_id == cycle_task.id,
+          ),
+          sa.and_(
+              Relationship.destination_id == cycle_task.id,
+              Relationship.destination_type == 'CycleTaskGroupObjectTask',
+          )
+      )
+  ).all()
+  type_relations = defaultdict(list)
+  ignored_mappings = frozenset(['CycleTaskGroupObjectTask', 'CycleTaskGroup',
+                                'CycleTaskEntry', 'CalendarEvent'])
+
+  for rel in relationships:
+    src_id, src_type, dst_id, dst_type = rel
+    if src_type not in ignored_mappings:
+      type_relations[src_type].append(src_id)
+    if dst_type not in ignored_mappings:
+      type_relations[dst_type].append(dst_id)
+
+  for rel_type, rel_ids in type_relations.iteritems():
+    related_model = models.get_model(rel_type)
+    if issubclass(type(related_model), models.mixins.Titled):
+      titles = db.session.query(related_model.title).filter(
+          related_model.id.in_(rel_ids)
+      ).all()
+      object_titles.extend(titles)
+    else:
+      try:
+        names = db.session.query(related_model.name).filter(
+            related_model.id.in_(rel_ids)
+        ).all()
+        object_titles.extend(names)
+      except AttributeError:
+        # we don't have name column
+        object_titles.extend([u"Untitled object"] * len(rel_ids))
+
+  return object_titles
+
+
+def get_cycle_task_dict(cycle_task, del_rels_cache=None):
+  """Get dict representation for cycle task."""
+  object_titles = get_cycle_task_related_objects(cycle_task)
 
   # related objects might have been deleted or unmapped,
   # check the revision history
@@ -602,6 +652,7 @@ def get_cycle_task_dict(cycle_task, del_rels_cache=None):
 
 
 def get_cycle_dict(cycle, manual=False):
+  """Get dict representation of cycles"""
   return {
       "manually": manual,
       "custom_message": cycle.workflow.notify_custom_message,
@@ -613,6 +664,7 @@ def get_cycle_dict(cycle, manual=False):
 
 
 def get_workflow_url(workflow):
+  """Get URL to workflow object."""
   url = "workflows/{}#current".format(workflow.id)
   return urljoin(get_url_root(), url)
 

@@ -389,13 +389,14 @@ describe('related-assessments component', () => {
           fn: jasmine.createSpy(),
           inverse: jasmine.createSpy(),
         };
-        spyOn(Mustache, 'resolve');
       });
 
       it('resolves compute argument', () => {
+        spyOn(viewModel, 'isFunction');
+
         ifAllowedToReuse(evidence, options);
 
-        expect(Mustache.resolve).toHaveBeenCalledWith(evidence);
+        expect(viewModel.isFunction).toHaveBeenCalledWith(evidence);
       });
 
       it('calls fn if able to reuse', () => {

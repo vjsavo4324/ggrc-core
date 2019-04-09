@@ -17,7 +17,7 @@ const viewModel = can.Map.extend({
 
 export default can.Component.extend({
   tag: 'change-request-link',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

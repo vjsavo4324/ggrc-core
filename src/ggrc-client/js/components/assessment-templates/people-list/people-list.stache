@@ -9,26 +9,26 @@
   </label>
   <dropdown
     {class-name}="'input-block-level js-toggle-field'"
-    {options-list}="peopleValues"
-    name="selectedValue"
-    ($change)="dropdownChanged"
-    {no-value}="hasEmptyValue"
+    {options-list}="{peopleValues}"
+    {name}="'selectedValue'"
+    ($change)="{dropdownChanged}"
+    {no-value}="{hasEmptyValue}"
   ></dropdown>
 </div>
 
 <div class="span6 {{#if validationError}}field-failure{{/if}}">
   <label>&nbsp;</label>
-  {{#if_equals selectedValue 'other'}}
+  {{#is(selectedValue, "other")}}
     {{^if_config_exist 'external_services.Person'}}
       <autocomplete {search-items-type}="'Person'"
-                    (item-selected)="personAdded(%event)"
+                    (item-selected)="{personAdded(%event)}"
                     {placeholder}="'Enter text to search for {{listName}}'"
       ></autocomplete>
     {{else}}
       <external-data-autocomplete {type}="'Person'"
                                   {placeholder}="'Enter text to search for {{listName}}'"
                                   {min-length}="2"
-                                  (item-selected)="personAdded(%event)">
+                                  (item-selected)="{personAdded(%event)}">
       </external-data-autocomplete>
     {{/if_config_exist}}
     {{#if validationError}}
@@ -41,5 +41,5 @@
         </a>
       </person-data>
     {{/each}}
-  {{/if_equals}}
+  {{/is}}
 </div>

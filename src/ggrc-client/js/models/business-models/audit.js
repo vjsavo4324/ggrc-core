@@ -12,6 +12,8 @@ import timeboxed from '../mixins/timeboxed';
 import issueTracker from '../mixins/issue-tracker';
 import Stub from '../stub';
 import Program from './program';
+import Search from '../service-models/search';
+import {reify} from '../../plugins/utils/reify-utils';
 
 export default Cacheable.extend({
   root_object: 'audit',
@@ -51,7 +53,7 @@ export default Cacheable.extend({
       'Issues', 'Assessments', 'Evidence'],
   },
   tree_view_options: {
-    add_item_view: GGRC.templates_path + '/audits/tree_add_item.stache',
+    add_item_view: 'audits/tree_add_item',
     attr_list: [{
       attr_title: 'Title',
       attr_name: 'title',
@@ -166,5 +168,19 @@ export default Cacheable.extend({
     return new can.List(this.access_control_list.filter((item) => {
       return item.ac_role_id === auditRole.id;
     }));
+  },
+  initTitle: async function () {
+    if (!this.program) return;
+    const program = reify(this.program);
+
+    const currentYear = (new Date()).getFullYear();
+    let title = `${currentYear}: ${program.title} - Audit`;
+
+    const result = await Search.counts_for_types(title, ['Audit']);
+    // Next audit index should be bigger by one than previous, we have unique name policy
+    const newAuditId = result.getCountFor('Audit') + 1;
+    if (!this.title) {
+      this.attr('title', `${title} ${newAuditId}`);
+    }
   },
 });

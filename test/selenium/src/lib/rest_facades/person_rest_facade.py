@@ -1,10 +1,12 @@
 # Copyright (C) 2019 Google Inc.
 # Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 """REST facade for people."""
+from lib import decorator
 from lib.app_entity_factory import person_entity_factory
 from lib.rest_services import person_rest_service
 
 
+@decorator.check_that_obj_is_created
 def create_person(**attrs):
   """Creates Person via REST."""
   person = person_entity_factory.PersonFactory().create(**attrs)

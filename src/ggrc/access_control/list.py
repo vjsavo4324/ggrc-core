@@ -2,12 +2,14 @@
 # Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 
 """Access Control List model"""
+import sqlalchemy as sa
 
 from ggrc import db
+from ggrc import utils
+from ggrc.access_control import people as acp
 from ggrc.models import mixins
 from ggrc.models import reflection
 from ggrc.models.mixins import base
-from ggrc.access_control import people
 
 
 class AccessControlList(base.ContextRBAC, mixins.Base, db.Model):
@@ -69,6 +71,44 @@ class AccessControlList(base.ContextRBAC, mixins.Base, db.Model):
       cascade='all, delete-orphan',
   )
 
+  def _query_people(self):
+    from ggrc.models import person
+    return db.session.query(
+        person.Person,
+    ).join(
+        acp.AccessControlPerson,
+        acp.AccessControlPerson.person_id == person.Person.id,
+    ).filter(
+        acp.AccessControlPerson.ac_list_id == self.id,
+    ).options(
+        sa.orm.Load(person.Person).undefer_group(
+            "Person_complete",
+        ),
+    )
+
+  @property
+  def people_json(self):
+    """Get json representation of people in ACL."""
+    people_json = []
+    common_json = self.log_json()
+
+    people = [_acp.person for _acp in self.access_control_people]
+    if any(not utils.is_deferred_loaded(person) for person in people):
+      # Since fields needed to create person json representation for ACL are
+      # deferred and to avoid unnecessary DB queries, people reloading is
+      # performed here.
+      people = self._query_people()
+    for person in people:
+      person_entry = dict(
+          person=utils.create_stub(person),
+          person_email=person.email,
+          person_id=person.id,
+          person_name=person.name,
+      )
+      person_entry.update(common_json)
+      people_json.append(person_entry)
+    return people_json
+
   @property
   def object_attr(self):
     return '{0}_object'.format(self.object_type)
@@ -113,7 +153,7 @@ class AccessControlList(base.ContextRBAC, mixins.Base, db.Model):
   def _add_people(self, additional_people):
     """Add people to the current acl."""
     for person in additional_people:
-      people.AccessControlPerson(ac_list=self, person=person)
+      acp.AccessControlPerson(ac_list=self, person=person)
 
   def add_person(self, additional_person):
     """Add a single person to current ACL entry.

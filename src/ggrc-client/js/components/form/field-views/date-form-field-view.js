@@ -7,7 +7,7 @@ import template from './date-form-field-view.stache';
 
 export default can.Component.extend({
   tag: 'date-form-field-view',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     value: null,

@@ -17,13 +17,13 @@ export default can.Control({
   },
 }, {
   init: function () {
-    let frag;
-    let dashboards =
-      getDashboards(this.options.instance);
+    let options = this.options;
+    let dashboards = getDashboards(options.instance);
+    let $element = $(this.element);
 
-    this.options.context = new can.Map({
-      model: this.options.model,
-      instance: this.options.instance,
+    options.context = new can.Map({
+      model: options.model,
+      instance: options.instance,
       dashboards: dashboards,
       activeDashboard: dashboards[0],
       showDashboardList: dashboards.length > 1,
@@ -31,10 +31,13 @@ export default can.Control({
         this.attr('activeDashboard', dashboard);
       },
     });
-
-    frag = can.view(this.options.widget_view,
-      this.options.context);
-    this.element.html(frag);
+    $.ajax({
+      url: options.widget_view,
+      dataType: 'text',
+    }).then((view) => {
+      let frag = can.stache(view)(options.context);
+      $element.html(frag);
+    });
     return 0;
   },
 });

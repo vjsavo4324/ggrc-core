@@ -7,7 +7,7 @@ import template from './templates/export-panel.stache';
 
 export default can.Component.extend({
   tag: 'export-panel',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

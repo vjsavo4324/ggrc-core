@@ -33,9 +33,9 @@
       <div class="rich-text">
           <rich-text
             tabindex="2"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Description'"
-            {(content)}="instance.description">
+            {(content)}="{instance.description}">
           </rich-text>
       </div>
     </div>
@@ -46,8 +46,8 @@
   <div class="row">
     <div class="span12 hide-wrap hidable">
       <access-control-list-roles-helper
-        {instance}="."
-        {is-new-instance}="new_object_form">
+        {instance}="{.}"
+        {is-new-instance}="{new_object_form}">
       </access-control-list-roles-helper>
     </div>
   </div>
@@ -63,9 +63,9 @@
       <div class="rich-text">
           <rich-text
             tabindex="5"
-            {hidden-toolbar}="true"
+            {hidden-toolbar}="{true}"
             {placeholder}="'Enter Notes'"
-            {(content)}="instance.notes">
+            {(content)}="{instance.notes}">
           </rich-text>
       </div>
     </div>
@@ -78,7 +78,7 @@
 
   <div class="row-fluid">
     <div data-id="folder_hidden" class="span6 hidable">
-      <ggrc-gdrive-folder-picker instance="instance" deferred="true" tabindex="6">
+      <ggrc-gdrive-folder-picker {instance}="{instance}" {deferred}="{true}" tabindex="6">
       </ggrc-gdrive-folder-picker>
     </div>
   </div>
@@ -101,12 +101,12 @@
       </label>
       <div data-id="network_zone_dd" tabindex="9">
         <model-loader {path}="'service-models/option'">
-          <dropdown-wrapper {model-constructor}="loadedModel"
-                            {(value)}="instance.network_zone" 
+          <dropdown-wrapper {model-constructor}="{loadedModel}"
+                            {(value)}="{instance.network_zone}" 
                             {role}="'network_zone'">
-            <dropdown {options-list}="options"
-                      ($change)="selectedChanged" name="selected"
-                      {no-value}="true" {no-value-label}="'---'">
+            <dropdown {options-list}="{options}"
+                      ($change)="{selectedChanged}" {name}="'selected'"
+                      {no-value}="{true}" {no-value-label}="'---'">
             </dropdown>
           </dropdown-wrapper>
         </model-loader>
@@ -116,7 +116,7 @@
 
   <div class="row-fluid">
     <div class="span4 hidable">
-      <effective-dates instance="instance"/>
+      <effective-dates {instance}="{instance}"/>
     </div>
     <div data-id="state_hidden" class="span4 hidable">
       <label>
@@ -124,10 +124,10 @@
         <i class="fa fa-question-circle" rel="tooltip" title="Indicates the status of this object."></i>
         <a data-id="hide_state_lk" href="javascript://" class="field-hide" tabindex="-1">hide</a>
       </label>
-        <dropdown options-list="model.statuses"
-                  no-value="true"
-                  no-value-label="---"
-                  name="instance.status"
+        <dropdown {options-list}="{model.statuses}"
+                  {no-value}="{true}"
+                  {no-value-label}="'---'"
+                  {name}="'instance.status'"
                   tabindex="23">
         </dropdown>
     </div>

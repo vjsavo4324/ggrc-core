@@ -52,6 +52,7 @@ import {REFRESH_TAB_CONTENT,
   RELATED_ITEMS_LOADED,
   REFRESH_MAPPING,
   REFRESH_RELATED,
+  REFRESHED,
 } from '../../../events/eventTypes';
 import Permission from '../../../permission';
 import {
@@ -66,14 +67,12 @@ import {notifier, notifierXHR} from '../../../plugins/utils/notifiers-utils';
 import Evidence from '../../../models/business-models/evidence';
 import * as businessModels from '../../../models/business-models';
 
-const editableStatuses = ['Not Started', 'In Progress', 'Rework Needed'];
-
 /**
  * Assessment Specific Info Pane View Component
  */
 export default can.Component.extend({
   tag: 'assessment-info-pane',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {
@@ -178,8 +177,9 @@ export default can.Component.extend({
           if (currentState !== instanceStatus) {
             return false;
           }
-
-          return editableStatuses.includes(instanceStatus);
+          const editModeStatuses = this.attr('instance')
+            .constructor.editModeStatuses;
+          return editModeStatuses.includes(instanceStatus);
         },
         set: function () {
           this.onStateChange({state: 'In Progress', undo: false});
@@ -631,6 +631,10 @@ export default can.Component.extend({
         ...REFRESH_RELATED,
         model: event.destinationType,
       });
+    },
+    [`{viewModel.instance} ${REFRESHED.type}`]() {
+      const status = this.viewModel.attr('instance.status');
+      this.viewModel.setCurrentState(status);
     },
     '{viewModel.instance} updated'(instance) {
       const vm = this.viewModel;

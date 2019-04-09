@@ -5,6 +5,7 @@
 
 import template from './gca-controls.stache';
 import '../custom-attributes/custom-attributes-field';
+import isFunction from 'can-util/js/is-function/is-function';
 import {CUSTOM_ATTRIBUTE_TYPE} from '../../plugins/utils/custom-attribute/custom-attribute-config';
 import {CONTROL_TYPE} from './../../plugins/utils/control-utils';
 
@@ -19,7 +20,7 @@ const errorMessages = {
 
 export default can.Component.extend({
   tag: 'gca-controls',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},
@@ -55,7 +56,7 @@ export default can.Component.extend({
   },
   helpers: {
     errorMessage(type) {
-      type = Mustache.resolve(type);
+      type = isFunction(type) ? type() : type;
       return errorMessages[type] || errorMessages.any;
     },
     isHidable(item, options) {

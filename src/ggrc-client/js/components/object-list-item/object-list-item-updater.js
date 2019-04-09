@@ -7,10 +7,8 @@ import '../object-list-item/business-object-list-item';
 import '../read-more/read-more';
 import RefreshQueue from '../../models/refresh_queue';
 
-const tag = 'object-list-item-updater';
-
 export default can.Component.extend({
-  tag,
+  tag: 'object-list-item-updater',
   leakScope: true,
   viewModel: {
     define: {

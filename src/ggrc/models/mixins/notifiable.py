@@ -22,16 +22,31 @@ class Notifiable(object):
     """Relationship with notifications for cls."""
     from ggrc.models.notification import Notification
 
-    def join_function():
-      """Object and Notification join function."""
-      object_id = sa.orm.foreign(Notification.object_id)
-      object_type = sa.orm.foreign(Notification.object_type)
-      return sa.and_(object_type == cls.__name__,
-                     object_id == cls.id)
+    current_type = cls.__name__
+
+    joinstr = (
+        "and_("
+        "foreign(remote(Notification.object_id)) == {type}.id,"
+        "Notification.object_type == '{type}'"
+        ")"
+        .format(type=current_type)
+    )
+
+    # Since we have some kind of generic relationship here, it is needed
+    # to provide custom joinstr for backref. If default, all models having
+    # this mixin will be queried, which in turn produce large number of
+    # queries returning nothing and one query returning object.
+    backref_joinstr = (
+        "remote({type}.id) == foreign(Notification.object_id)"
+        .format(type=current_type)
+    )
 
     return sa.orm.relationship(
         Notification,
-        primaryjoin=join_function,
-        backref="{}_notifiable".format(cls.__name__),
+        primaryjoin=joinstr,
+        backref=sa.orm.backref(
+            "{}_notifiable".format(current_type),
+            primaryjoin=backref_joinstr,
+        ),
         cascade="all, delete-orphan",
     )

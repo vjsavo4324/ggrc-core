@@ -553,6 +553,32 @@ class TestIssueIntegration(ggrc.TestCase):
     # Check that issue in Issue Tracker hasn't been updated.
     update_issue_mock.assert_not_called()
 
+  @ddt.data("Primary Contacts", "Admin", "Secondary Contacts")
+  @mock.patch('ggrc.settings.INTEGRATION_SERVICE_URL', new='mock')
+  def test_create_missed_issue_acl(self, role):
+    """Test create_missed_issue_acl method"""
+    test_email = "newemail@example.com"
+    issue = factories.IssueFactory()
+    issue_integration.create_missed_issue_acl(test_email, role, issue)
+    db.session.commit()
+    person = all_models.Person.query.filter_by(email=test_email).one()
+    role_emails = [
+        p.email for p in issue.get_persons_for_rolename(role)
+    ]
+    self.assertIn(person.email, role_emails)
+
+  @ddt.data("Primary Contacts", "Admin", "Secondary Contacts")
+  @mock.patch('ggrc.utils.user_generator.find_user', return_value=None)
+  def test_invalid_person_was_skipped(self, role, find_mock):
+    """Invalid users should be skipped"""
+    test_email = "newemail@example.com"
+    issue = factories.IssueFactory()
+    issue_integration.create_missed_issue_acl(test_email, role, issue)
+    db.session.commit()
+    people = all_models.Person.query.filter_by(email=test_email).all()
+    self.assertFalse(people)
+    find_mock.assert_called_once()
+
 
 @ddt.ddt
 class TestDisabledIssueIntegration(ggrc.TestCase):

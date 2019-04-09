@@ -83,11 +83,6 @@ class Workflow(roleable.Roleable,
   is_old_workflow = deferred(
       db.Column(db.Boolean, default=False, nullable=True), 'Workflow')
 
-  # This column needs to be deferred because one of the migrations
-  # uses Workflow as a model and breaks since at that point in time
-  # there is no 'kind' column yet
-  kind = deferred(
-      db.Column(db.String, default=None, nullable=True), 'Workflow')
   IS_VERIFICATION_NEEDED_DEFAULT = True
   is_verification_needed = db.Column(
       db.Boolean,
@@ -336,8 +331,6 @@ class Workflow(roleable.Roleable,
       reflection.Attribute('non_adjusted_next_cycle_start_date',
                            create=False, update=False),
       reflection.Attribute('workflow_state',
-                           create=False, update=False),
-      reflection.Attribute('kind',
                            create=False, update=False),
       reflection.Attribute('repeat',
                            create=False, update=False)

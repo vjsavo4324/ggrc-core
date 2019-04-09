@@ -15,7 +15,7 @@
   <div class="target-state-control__label">
     <h6>State</h6>
   </div>
-  <select id="targetState" {($value)}="targetState" class="target-state-control__selector"
+  <select id="targetState" {($value)}="{targetState}" class="target-state-control__selector"
     {{^enabled}}disabled="disabled"{{/enabled}}>
     {{#targetStates}}
       <option value="{{.}}">{{.}}</option>

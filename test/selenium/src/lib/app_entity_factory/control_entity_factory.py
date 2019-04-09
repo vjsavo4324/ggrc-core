@@ -33,8 +33,3 @@ class ControlFactory(_base.BaseFactory):
         "external_id": self.generate_external_id(),
         "external_slug": self.generate_external_slug()
     }
-
-
-class ControlAssertionFactory(_base.BaseFactory):
-  """Factory for Control Assertions."""
-  _entity_cls = control_entity.ControlAssertion

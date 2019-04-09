@@ -353,6 +353,22 @@ def generate_wf_tasks_notifications(_):
   return app.make_response(("success", 200, [("Content-Type", "text/html")]))
 
 
+def _remove_dead_reindex_objects(indexed_models):
+  """Remove fulltext record entries for deleted objects.
+
+  This function cleans up orphan records for objects that have been deleted
+  but that have not removed their records for some reason.
+  """
+  record = fulltext.mysql.MysqlRecordProperty
+  with benchmark("Removing dead index records"):
+    for model_name, model in sorted(indexed_models.items()):
+      logger.info("Removing dead records for: %s", model_name)
+      record.query.filter(
+          record.type == model_name,
+          ~record.key.in_(db.session.query(model.id))
+      ).delete(synchronize_session='fetch')
+
+
 @helpers.without_sqlalchemy_cache
 def do_reindex(with_reindex_snapshots=False):
   """Update the full text search index."""
@@ -372,6 +388,7 @@ def do_reindex(with_reindex_snapshots=False):
       models.all_models.AccessControlRole.id,
       models.all_models.AccessControlRole.name,
   ))
+  _remove_dead_reindex_objects(indexed_models)
   for model_name in sorted(indexed_models.keys()):
     logger.info("Updating index for: %s", model_name)
     with benchmark("Create records for %s" % model_name):

@@ -29,7 +29,7 @@ export default Cacheable.extend({
   },
 
   tree_view_options: {
-    add_item_view: GGRC.templates_path + '/task_groups/tree_add_item.stache',
+    add_item_view: 'task_groups/tree_add_item',
     mapper_attr_list: [
       {attr_title: 'Summary', attr_name: 'title'},
       {attr_title: 'Assignee', attr_name: 'assignee',

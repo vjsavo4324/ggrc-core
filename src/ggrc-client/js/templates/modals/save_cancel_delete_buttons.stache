@@ -9,7 +9,7 @@
         <div class="deny-buttons">
           {{^new_object_form}}
             {{#is_allowed 'delete' instance context='for'}}
-              {{^if_equals modal_title 'Edit Person'}}
+              {{^is(modal_title, "Edit Person")}}
                 <a
                   tabindex="37"
                   class="btn btn-small btn-red"
@@ -21,14 +21,14 @@
                   data-object-id="{{instance.id}}"
                   href="javascript://"
                   >Delete</a>
-              {{/if_equals}}
+              {{/is}}
             {{/is_allowed}}
           {{/new_object_form}}
         </div>
     </div>
     <div class="span7">
       <div class="confirm-buttons">
-        <spinner toggle="isSaving"></spinner>
+        <spinner {toggle}="{isSaving}"></spinner>
           {{^new_object_form}}
             <a
               tabindex="25"
@@ -38,14 +38,14 @@
               >Save &amp; Close</a>
           {{/new_object_form}}
           {{#new_object_form}}
-            {{^if_equals model.model_singular "AssessmentTemplate"}}
+            {{^is(model.model_singular, "AssessmentTemplate")}}
             <a
               tabindex="24"
               class="btn btn-small btn-lightBlue {{#if instance.computed_unsuppressed_errors}}disabled{{/if instance.computed_unsuppressed_errors}}"
               data-toggle="modal-submit-addmore"
               href="javascript://"
               >Save &amp; Add Another</a>
-            {{/if_equals}}
+            {{/is}}
             <a
               tabindex="25"
               class="btn btn-small btn-green {{#if instance.computed_unsuppressed_errors}}disabled{{/if instance.computed_unsuppressed_errors}}"

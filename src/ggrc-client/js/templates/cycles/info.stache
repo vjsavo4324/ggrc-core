@@ -1,6 +1,6 @@
 {{!
-    Copyright (C) 2019 Google Inc.
-    Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
 <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
@@ -24,68 +24,68 @@
 
           <div class="pane-header__toolbar">
             {{#is_info_pin}}
-              <info-pin-buttons maximized="maximized" on-change-maximized-state="@onChangeMaximizedState" on-close="@onClose"></info-pin-buttons>
+              <info-pin-buttons {maximized}="{maximized}" 
+                                {on-change-maximized-state}="{@onChangeMaximizedState}" 
+                                {on-close}="{@onClose}">
+              </info-pin-buttons>
             {{/is_info_pin}}
 
             <div class="info-pane-utility">
-              {{#using workflow=instance.workflow}}
               <!-- This should have only view link, shouldn't edit cycle instance of workflow while active -->
-                <three-dots-menu>
-                    {{#if workflow.viewLink}}
-                      <li>
-                        <a href="{{workflow.viewLink}}">
-                          <i class="fa fa-long-arrow-right"></i>
-                          Open {{workflow.class.title_singular}}
-                        </a>
-                      </li>
-                    {{/if}}
-                    <li>
-                      <permalink {instance}="instance"/>
-                    </li>
-                </three-dots-menu>
-              {{/using}}
+              <three-dots-menu>
+                <li>
+                  <a href="/workflows/{{instance.workflow.id}}">
+                    <i class="fa fa-long-arrow-right"></i>
+                    Open Workflow
+                  </a>
+                </li>
+                <li>
+                  <permalink {instance}="{instance}"/>
+                </li>
+              </three-dots-menu>
             </div>
           </div>
         </div>
       </div>
     {{/instance}}
+
     <div class="pane-content">
 
-    <div class="row-fluid wrap-row">
-      <div class="span12">
-        <h6>Description</h6>
-        <div class="rtf-block">
-          <read-more
-            {text}="instance.description"
-            {handle-markdown}="instance.class.isChangeableExternally">
-          </read-more>
+      <div class="row-fluid wrap-row">
+        <div class="span12">
+          <h6>Description</h6>
+          <div class="rtf-block">
+            <read-more {text}="{instance.description}"
+                       {handle-markdown}="{instance.class.isChangeableExternally}">
+            </read-more>
+          </div>
         </div>
       </div>
+
+      <object-loader {path}="instance.workflow">
+        {{#if loadedObject}}
+          <custom-roles {instance}="{loadedObject}"
+                        {read-only}="{true}">
+          </custom-roles>
+          <div class="row-fluid wrap-row">
+            <div class="span6">
+              <ggrc-gdrive-folder-picker 
+                {instance}="{loadedObject}"
+                {placeholder}="'If selected, all workflow attachments go here.''"
+                {{^is_allowed 'update' loadedObject}}{readonly}="{true}"{{/is_allowed}}>
+              </ggrc-gdrive-folder-picker>
+            </div>
+            <div class="span6">
+              <h6>Repeat Cycle</h6>
+              <repeat-on-summary {unit}="{loadedObject.unit}" 
+                                 {repeat-every}="{loadedObject.repeat_every}"
+                                 {hide-repeat-off}="{false}">
+              </repeat-on-summary>
+            </div>
+          </div>
+        {{/if}}
+      </object-loader>
     </div>
-
-    {{#using workflow=instance.workflow}}
-      <custom-roles
-        {instance}="workflow"
-        {read-only}="true">
-      </custom-roles>
-
-      <div class="row-fluid wrap-row">
-          <div class="span6">
-            <ggrc-gdrive-folder-picker
-              {{^is_allowed 'update' workflow}}readonly="true"{{/is_allowed}}
-              instance="workflow"
-              placeholder="If selected, all workflow attachments go here." />
-          </div>
-          <div class="span6">
-            <h6>
-                Repeat Cycle
-            </h6>
-            <repeat-on-summary {unit}="workflow.unit" {repeat-every}="workflow.repeat_every"
-                               hide-repeat-off="false">
-            </repeat-on-summary>
-          </div>
-      </div>
-    {{/using}}
-  </div>
+  
   </div>
 </section>

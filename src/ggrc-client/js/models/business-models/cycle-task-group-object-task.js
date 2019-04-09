@@ -90,8 +90,7 @@ export default Cacheable.extend({
     cycle: Stub,
   },
   tree_view_options: {
-    add_item_view: GGRC.templates_path +
-      '/cycle_task_group_object_tasks/tree_add_item.stache',
+    add_item_view: 'cycle_task_group_object_tasks/tree_add_item',
     attr_list: [
       {
         attr_title: 'Task Title',

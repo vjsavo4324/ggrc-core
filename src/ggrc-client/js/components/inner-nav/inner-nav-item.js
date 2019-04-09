@@ -7,7 +7,7 @@ import template from './inner-nav-item.stache';
 export default can.Component.extend({
   tag: 'inner-nav-item',
   leakScope: false,
-  template,
+  template: can.stache(template),
   viewModel: {
     define: {
       displayTab: {

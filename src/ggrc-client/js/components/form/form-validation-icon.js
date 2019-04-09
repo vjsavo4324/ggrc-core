@@ -3,7 +3,6 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
-const tag = 'form-validation-icon';
 /**
  * State object to present possible icons for validation
  */
@@ -18,8 +17,10 @@ const icons = {
  * Form validation icon component
  */
 export default can.Component.extend({
-  tag,
-  template: '<i class="fa form-validation-icon__body {{iconCls}}"></i>',
+  tag: 'form-validation-icon',
+  template: can.stache(
+    '<i class="fa form-validation-icon__body {{iconCls}}"></i>'
+  ),
   leakScope: true,
   viewModel: {
     define: {

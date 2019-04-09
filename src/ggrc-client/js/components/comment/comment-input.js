@@ -7,7 +7,7 @@ import template from './comment-input.stache';
 
 export default can.Component.extend({
   tag: 'comment-input',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

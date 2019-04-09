@@ -150,6 +150,7 @@ mapper-results {
   }
 
   .list-object-item {
+    border-top: 1px solid $itemBorder;
     overflow: hidden;
     cursor: default;
     border-radius: 2px;
@@ -178,6 +179,11 @@ mapper-results {
     .related-assessments-button {
       flex: 0 1 $related-assessment-button-width;
     }
+
+  }
+
+  .object-list__items .object-list__item:last-child .list-object-item {
+    border-bottom: 1px solid $itemBorder;
   }
 
   mapper-results-item-details {

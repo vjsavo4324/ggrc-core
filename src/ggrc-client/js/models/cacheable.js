@@ -758,13 +758,13 @@ export default can.Model.extend({
     return serial;
   },
   display_name: function () {
-    let displayName = this.title || this.name;
-
-    if (_.isUndefined(displayName)) {
-      return '"' + this.type + ' ID: ' + this.id + '" (DELETED)';
+    if (this.is_deleted()) {
+      return `"${this.type} ID: ${this.id}" (DELETED)`;
     }
-
-    return displayName;
+    return this.title || this.name || `"${this.type} ID: ${this.id}"`;
+  },
+  is_deleted: function () {
+    return !(this.created_at);
   },
   display_type: function () {
     return this.type;

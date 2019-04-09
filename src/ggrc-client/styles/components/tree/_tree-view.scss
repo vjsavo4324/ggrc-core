@@ -105,6 +105,12 @@ tree-view {
         margin-bottom: 0;
       }
     }
+
+    tree-people-with-role-list-field {
+      .tree-field__item:nth-child(n+3) {
+        display: none;
+      }
+    }
   }
 }
 

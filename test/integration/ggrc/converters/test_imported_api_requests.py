@@ -56,7 +56,7 @@ class TestComprehensiveSheets(TestCase):
 
   LIMIT_DICT = {
       "LIST": {
-          all_models.Revision: 70,
+          all_models.Revision: 85,
           all_models.Event: 291,
       },
       "SINGLE": {}
@@ -76,7 +76,7 @@ class TestComprehensiveSheets(TestCase):
         self.generator.api.get_query(model, "")
         if counter.get > limit:
           print collections.Counter(counter.queries).most_common(1)
-        self.assertLess(
+        self.assertLessEqual(
             counter.get,
             limit,
             "Query count for object {} exceeded: {}/{}".format(

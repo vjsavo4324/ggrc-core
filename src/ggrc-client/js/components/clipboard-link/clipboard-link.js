@@ -8,14 +8,15 @@ import {notifier} from '../../plugins/utils/notifiers-utils';
 
 export default can.Component.extend({
   tag: 'clipboard-link',
+  template: can.stache(
+    `<a type="button" data-clipboard-text="{{text}}">
+       <content/>
+     </a>`
+  ),
   leakScope: true,
   viewModel: {
     text: '',
   },
-  template:
-    `<a type="button" data-clipboard-text="{{text}}">
-       <content/>
-     </a>`,
   events: {
     inserted(el, evnt) {
       new Clipboard(el.find('a')[0]).on('success', () => {

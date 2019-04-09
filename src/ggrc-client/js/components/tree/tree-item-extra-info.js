@@ -180,7 +180,7 @@ let viewModel = can.Map.extend({
 
 export default can.Component.extend({
   tag: 'tree-item-extra-info',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

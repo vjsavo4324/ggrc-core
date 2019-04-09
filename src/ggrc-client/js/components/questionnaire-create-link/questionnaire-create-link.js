@@ -10,7 +10,7 @@ import {
 
 export default can.Component.extend({
   tag: 'questionnaire-create-link',
-  template,
+  template: can.stache(template),
   viewModel: {
     define: {
       externalUrl: {

@@ -15,6 +15,7 @@ import '../tree_pagination/tree_pagination';
 import Pagination from '../base-objects/pagination';
 import template from './templates/related-assessments.stache';
 import {prepareCustomAttributes} from '../../plugins/utils/ca-utils';
+import isFunction from 'can-util/js/is-function/is-function';
 import {backendGdriveClient} from '../../plugins/ggrc-gapi-client';
 import tracker from '../../tracker';
 import Evidence from '../../models/business-models/evidence';
@@ -28,7 +29,7 @@ const defaultOrderBy = [
 
 export default can.Component.extend({
   tag: 'related-assessments',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {
@@ -159,6 +160,9 @@ export default can.Component.extend({
 
       return isAble;
     },
+    isFunction(evidence) {
+      return isFunction(evidence) ? evidence() : evidence;
+    },
   },
   init() {
     this.viewModel.loadRelatedAssessments();
@@ -176,14 +180,14 @@ export default can.Component.extend({
   },
   helpers: {
     isAllowedToReuse(evidence) {
-      evidence = Mustache.resolve(evidence);
+      evidence = this.isFunction(evidence);
 
       let isAllowed = this.checkReuseAbility(evidence);
 
       return isAllowed;
     },
     ifAllowedToReuse(evidence, options) {
-      evidence = Mustache.resolve(evidence);
+      evidence = this.isFunction(evidence);
 
       let isAllowed = this.checkReuseAbility(evidence);
 

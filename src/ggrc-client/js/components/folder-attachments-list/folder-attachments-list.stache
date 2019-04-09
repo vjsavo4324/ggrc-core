@@ -3,26 +3,26 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 <div class="folder-attachments-list">
-    <related-documents {instance}="instance" kind="FILE" {^is-loading}="isListLoading">
+    <related-documents {instance}="{instance}" {kind}="'FILE'" {^is-loading}="{isListLoading}">
         <div class="folder-attachments-list__heading">
-            <spinner class="folder-attachments-list__spinner" {toggle}="showSpinner"></spinner>
+            <spinner class="folder-attachments-list__spinner" {toggle}="{showSpinner}"></spinner>
             <h6>{{title}}</h6>
         </div>
-            <ggrc-gdrive-folder-picker hide-label="true"
-                                        readonly="readonly"
-                                        instance="instance"
-                                        {^current_folder}="*currentFolder"
-                                        {(folder_error)}="folderError"
+            <ggrc-gdrive-folder-picker {hide-label}="{true}"
+                                       {readonly}="{readonly}"
+                                       {instance}="{instance}"
+                                       {^current_folder}="*currentFolder"
+                                       {(folder_error)}="{folderError}"
             ></ggrc-gdrive-folder-picker>
-        <object-list {items}="documents" {empty-message}="noItemsText" {show-more}="showMore">
+        <object-list {items}="{documents}" {empty-message}="{noItemsText}" {show-more}="{showMore}">
             <editable-document-object-list-item {document}="{.}">
             {{#unless readonly}}
                 <unmap-button
-                    {destination}="instance"
-                    {source}="document"
-                    {^is-unmapping} = "../../../../isUnmapping">
+                    {destination}="{instance}"
+                    {source}="{document}"
+                    {^is-unmapping}="../../../../isUnmapping">
                     <action-toolbar-control>
-                    <i class="fa fa-trash"></i>
+                      <i class="fa fa-trash"></i>
                     </action-toolbar-control>
                 </unmap-button>
             {{/unless}}

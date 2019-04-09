@@ -1,12 +1,12 @@
 {{!
-    Copyright (C) 2019 Google Inc.
-    Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 {{#if isActive}}
-    <div class="object-popover-wrapper active" style="{{openStyle}}">
-        <div class="object-popover-content flex-box flex-col flex-box-single"
-                style="max-height: {{maxInnerHeight}}px;">
-            <content>No Component or Template is provided</content>
-        </div>
+  <div class="object-popover-wrapper active" style="{{openStyle}}">
+    <div class="object-popover-content flex-box flex-col flex-box-single"
+         style="max-height: {{maxInnerHeight}}px;">
+      <content>No Component or Template is provided</content>
     </div>
+  </div>
 {{/if}}

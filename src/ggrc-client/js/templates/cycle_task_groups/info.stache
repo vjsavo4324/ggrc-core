@@ -23,7 +23,10 @@
 
           <div class="pane-header__toolbar">
             {{#is_info_pin}}
-              <info-pin-buttons maximized="maximized" on-change-maximized-state="@onChangeMaximizedState" on-close="@onClose"></info-pin-buttons>
+              <info-pin-buttons {maximized}="{maximized}" 
+                                {on-change-maximized-state}="{@onChangeMaximizedState}" 
+                                {on-close}="{@onClose}">
+              </info-pin-buttons>
             {{/is_info_pin}}
           </div>
         </div>
@@ -34,8 +37,8 @@
             <h6>{{instance.class.title_singular}} description</h6>
             <div class="rtf-block">
               <read-more
-                {text}="instance.description"
-                {handle-markdown}="instance.class.isChangeableExternally">
+                {text}="{instance.description}"
+                {handle-markdown}="{instance.class.isChangeableExternally}">
               </read-more>
             </div>
           </div>

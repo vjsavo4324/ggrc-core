@@ -267,7 +267,8 @@ let handlers = {
 function preloadContent() {
   let template =
     ['<div class="modal-header">',
-      '<a class="pull-right modal-dismiss" href="#" data-dismiss="modal">',
+      '<a class="pull-right modal-dismiss" href="javascript:void(0)" ',
+      'data-dismiss="modal">',
       '<i class="fa fa-times black"></i>',
       '</a>',
       '<h2>Loading...</h2>',

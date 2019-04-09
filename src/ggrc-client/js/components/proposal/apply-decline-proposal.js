@@ -7,11 +7,10 @@ import template from './templates/apply-decline-proposal.stache';
 import {REFRESH_TAB_CONTENT} from '../../events/eventTypes';
 import {formatDate} from '../../plugins/utils/date-utils';
 import Proposal from '../../models/service-models/proposal';
-const tag = 'apply-decline-proposal';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'apply-decline-proposal',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

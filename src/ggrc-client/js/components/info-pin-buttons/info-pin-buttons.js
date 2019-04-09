@@ -4,11 +4,11 @@
 */
 
 import template from './info-pin-buttons.stache';
-
+import isFunction from 'can-util/js/is-function/is-function';
 
 export default can.Component.extend({
   tag: 'info-pin-buttons',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     onChangeMaximizedState: null,
@@ -21,8 +21,8 @@ export default can.Component.extend({
     },
     toggleSize: function (el, ev) {
       let maximized = !this.attr('maximized');
-      let onChangeMaximizedState =
-          Mustache.resolve(this.onChangeMaximizedState);
+      let onChangeMaximizedState = isFunction(this.onChangeMaximizedState) ?
+        this.onChangeMaximizedState() : this.onChangeMaximizedState;
       ev.preventDefault();
 
       onChangeMaximizedState(maximized);
@@ -36,7 +36,7 @@ export default can.Component.extend({
       }.bind(this), 0);
     },
     close: function (el, ev) {
-      let onClose = Mustache.resolve(this.onClose);
+      let onClose = isFunction(this.onClose) ? this.onClose() : this.onClose;
       $(el).find('[rel="tooltip"]').tooltip('hide');
       ev.preventDefault();
       onClose();

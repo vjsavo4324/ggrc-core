@@ -9,7 +9,7 @@
     href="{{url}}"
     target="_blank">
       {{#if showIcon}}
-        <i class="fa fa-external-link questionnaire-link__icon {{#if_equals iconPosition 'right'}}questionnaire-link__icon_position_right{{/if}}"></i>
+        <i class="fa fa-external-link questionnaire-link__icon {{#is(iconPosition, "right")}}questionnaire-link__icon_position_right{{/is}}"></i>
       {{/if}}
       <content></content>
   </a>

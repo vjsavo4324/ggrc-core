@@ -39,7 +39,7 @@ const events = {
 
 export default can.Component({
   tag: 'three-dots-menu',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events,

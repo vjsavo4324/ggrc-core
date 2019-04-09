@@ -12,7 +12,7 @@ import Assessment from '../../models/business-models/assessment';
 
 export default can.Component.extend({
   tag: 'assessment-generator-button',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     audit: null,

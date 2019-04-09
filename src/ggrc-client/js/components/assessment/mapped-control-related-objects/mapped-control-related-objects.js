@@ -6,7 +6,6 @@
 import '../../collapsible-panel/collapsible-panel';
 import template from './mapped-control-related-objects.stache';
 
-const tag = 'assessment-mapped-control-related-objects';
 /**
  * ViewModel for Assessment Mapped Controls Related Objectives and Regulations.
  * @type {can.Map}
@@ -25,8 +24,8 @@ let viewModel = can.Map.extend({
  * Should Load on expand Related Objectives and Regulations
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'assessment-mapped-control-related-objects',
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

@@ -4,11 +4,10 @@
  */
 
 import template from './templates/tree-visible-column-checkbox.stache';
-const tag = 'tree-visible-column-checkbox';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'tree-visible-column-checkbox',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     column: {},

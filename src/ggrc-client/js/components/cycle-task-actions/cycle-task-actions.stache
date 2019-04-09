@@ -10,28 +10,28 @@
 
 {{#if_instance_of instance 'CycleTaskGroupObjectTask'}}
   <div class="flex-box item-actions{{#if disabled}} disabled{{/if}}">
-    <spinner {toggle}="disabled" size="medium"></spinner>
+    <spinner {toggle}="{disabled}" {size}="'medium'"></spinner>
       {{#if isShowActionButtons}}
           <div class="request-control">
-            {{#if_equals instance.status 'Assigned'}}
+            {{#is(instance.status, "Assigned")}}
               <button type="button"
                       class="btn btn-mini btn-lightBlue"
                       ($click)="changeStatus"
                       data-value="In Progress">Start</button>
-            {{/if_equals}}
-            {{#if_equals instance.status 'In Progress'}}
+            {{/is}}
+            {{#is(instance.status, "In Progress")}}
               <button type="button"
                       class="btn btn-mini btn-white"
                       ($click)="changeStatus"
                       data-value="Finished">Finish</button>
-            {{/if_equals}}
-            {{#if_equals instance.status 'Declined'}}
+            {{/is}}
+            {{#is(instance.status, "Declined")}}
               <button type="button"
                       class="btn btn-mini btn-white"
                       ($click)="changeStatus"
                       data-value="Finished">Finish</button>
-            {{/if_equals}}
-            {{#if_equals instance.status 'Finished'}}
+            {{/is}}
+            {{#is(instance.status, "Finished")}}
               {{#if instance.is_verification_needed}}
                 <button type="button"
                         class="btn btn-mini btn-red"
@@ -42,7 +42,7 @@
                         ($click)="changeStatus"
                         data-value="Verified">Verify</button>
               {{/if}}
-            {{/if_equals}}
+            {{/is}}
           </div>
       {{/if}}
       {{#if oldValues.length}}
@@ -57,7 +57,7 @@
 {{#if_instance_of instance 'Cycle'}}
 <div class="flex-box item-actions">
   <div class="request-control">
-     <cycle-end-cycle cycle="instance">
+     <cycle-end-cycle {cycle}="{instance}">
        {{#isAllowedToUpdateWorkflow}}
          {{#if instance.is_current}}
            <button type="button" class="btn btn-white btn-small end-cycle">End Cycle</button>

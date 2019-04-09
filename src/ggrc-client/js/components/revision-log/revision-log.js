@@ -23,7 +23,7 @@ import {notifier} from '../../plugins/utils/notifiers-utils';
 
 export default can.Component.extend({
   tag: 'revision-log',
-  template,
+  template: can.stache(template),
   leakScope: true,
   /**
    * The component's entry point. Invoked when a new component instance has

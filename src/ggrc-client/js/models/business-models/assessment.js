@@ -18,6 +18,7 @@ import refetchHash from '../mixins/refetch-hash';
 import assessmentIssueTracker from '../mixins/assessment-issue-tracker';
 import relatedAssessmentsLoader from '../mixins/related-assessments-loader';
 import {getInstance} from '../../plugins/utils/models-utils';
+import {REFRESH_MAPPING, REFRESHED} from '../../events/eventTypes';
 
 export default Cacheable.extend({
   root_object: 'assessment',
@@ -46,7 +47,7 @@ export default Cacheable.extend({
   statuses: ['Not Started', 'In Progress', 'In Review',
     'Verified', 'Completed', 'Deprecated', 'Rework Needed'],
   tree_view_options: {
-    add_item_view: GGRC.templates_path + '/assessments/tree_add_item.stache',
+    add_item_view: 'assessments/tree_add_item',
     attr_list: [{
       attr_title: 'Title',
       attr_name: 'title',
@@ -145,6 +146,8 @@ export default Cacheable.extend({
   },
   conclusions: ['Effective', 'Ineffective', 'Needs improvement',
     'Not Applicable'],
+  editModeStatuses: ['In Progress', 'Rework Needed', 'Not Started'],
+  readModeStatuses: ['Completed', 'Verified', 'In Review'],
   init: function () {
     if (this._super) {
       this._super(...arguments);
@@ -250,6 +253,11 @@ export default Cacheable.extend({
       this._super(...arguments);
     }
     this.bind('refreshInstance', this.refresh.bind(this));
+    this.bind(REFRESH_MAPPING.type, () => {
+      if (this.constructor.readModeStatuses.includes(this.status)) {
+        this.refresh();
+      }
+    });
   },
   before_create: function () {
     if (!this.audit) {
@@ -338,9 +346,7 @@ export default Cacheable.extend({
     }
   },
   refresh: function () {
-    let dfd;
     let href = this.selfLink || this.href;
-    let that = this;
 
     if (!href) {
       return $.Deferred().reject();
@@ -348,35 +354,36 @@ export default Cacheable.extend({
     if (!this._pending_refresh) {
       this._pending_refresh = {
         dfd: $.Deferred(),
-        fn: _.throttle(function () {
-          let dfd = that._pending_refresh.dfd;
+        fn: _.throttle(() => {
+          let dfd = this._pending_refresh.dfd;
           can.ajax({
             url: href,
             type: 'get',
             dataType: 'json',
           })
-            .then($.proxy(that, 'cleanupAcl'))
-            .then(function (model) {
-              delete that._pending_refresh;
+            .then((model) => this.cleanupAcl(model))
+            .then((model) => {
+              delete this._pending_refresh;
               if (model) {
-                model = that.constructor.model(model, that);
-                that.after_refresh && that.after_refresh();
+                model = this.constructor.model(model, this);
+                this.after_refresh && this.after_refresh();
                 model.backup();
                 return model;
               }
             })
-            .done(function () {
-              dfd.resolve(...arguments);
+            .done((...args) => {
+              dfd.resolve(...args);
+              this.dispatch(REFRESHED);
             })
-            .fail(function () {
-              dfd.reject(...arguments);
+            .fail((...args) => {
+              dfd.reject(...args);
             });
         }, 300, {trailing: false}),
       };
     }
-    dfd = this._pending_refresh.dfd;
+
     this._pending_refresh.fn();
-    return dfd;
+    return this._pending_refresh.dfd;
   },
   getRelatedObjects() {
     const stopFn = tracker.start(

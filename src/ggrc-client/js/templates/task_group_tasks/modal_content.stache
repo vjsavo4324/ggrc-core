@@ -27,9 +27,9 @@
             <a href="javascript://" class="field-hide" tabindex="-1">hide</a>
           </div>
           <select name="task_type" tabindex="2">
-            <option value="text" {{#if_equals instance.task_type 'text'}}selected="selected"{{/if_equals}}>Rich text</option>
-            <option value="menu" {{#if_equals instance.task_type 'menu'}}selected="selected"{{/if_equals}}>Dropdown</option>
-            <option value="checkbox" {{#if_equals instance.task_type 'checkbox'}}selected="selected"{{/if_equals}}>Checkbox</option>
+            <option value="text" {{#is(instance.task_type, "text")}}selected="selected"{{/is}}>Rich text</option>
+            <option value="menu" {{#is(instance.task_type, "menu")}}selected="selected"{{/is}}>Dropdown</option>
+            <option value="checkbox" {{#is(instance.task_type, "checkbox")}}selected="selected"{{/is}}>Checkbox</option>
           </select>
         </div>
       </div>
@@ -46,33 +46,39 @@
             <div class="rich-text">
                 <rich-text
                   tabindex="3"
-                  {hidden-toolbar}="true"
+                  {hidden-toolbar}="{true}"
                   {placeholder}="'Enter Description'"
-                  {(content)}="instance.description">
+                  {(content)}="{instance.description}">
                 </rich-text>
             </div>
           </div>
         {{/if_in}}
-        {{#if_equals instance.task_type 'menu'}}
+        {{#is(instance.task_type, "menu")}}
           <div class="span12">
             <label class="form-label">
               Dropdown Options (Comma Separated)
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array array="instance.response_options" placeholder="Enter Values" class-name="span12 double"></textarea-array>
+            <textarea-array {array}="{instance.response_options}"
+                            {placeholder}="'Enter Values'" 
+                            {class-name}="'span12 double'">
+            </textarea-array>
           </div>
-          {{/if_equals}}
-        {{#if_equals instance.task_type 'checkbox'}}
+        {{/is}}
+        {{#is(instance.task_type, "checkbox")}}
           <div class="span12">
             <label class="form-label">
               Checkbox Options (Comma Separated)
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array array="instance.response_options" placeholder="Enter Values" class-name="span12 double"></textarea-array>
+            <textarea-array {array}="{instance.response_options}"
+                            {placeholder}="'Enter Values'"
+                            {class-name}="'span12 double'">
+            </textarea-array>
           </div>
-        {{/if_equals}}
+        {{/is}}
         <input type="hidden" name="task_group" model="TaskGroup" value="{{firstnonempty object_params.task_group instance.task_group.id}}" />
         <input type="hidden" name="context" model="Context" value="{{firstnonempty object_params.context instance.context.id}}" />
       </div>
@@ -90,44 +96,48 @@
       </div>
     </div>
     <div class="span4">
-        <access-control-list-roles-helper
-                {instance}="instance"
-                {is-new-instance}="new_object_form">
-        </access-control-list-roles-helper>
-        {{#using task_group=instance.task_group}}
-        {{#using workflow=task_group.workflow}}
-            <div class="frequency-wrap">
-                <label class="form-label">
-                    Repeat
-                    <i class="fa fa-question-circle" rel="tooltip" title="Choose start and end dates"></i>
-                </label>
-                <repeat-on-summary {unit}="workflow.unit" {repeat-every}="workflow.repeat_every"
-                {hide-repeat-off}="false">
-                </repeat-on-summary>
-                <label class="smaller">
-                    <label class="form-label">
-                        Start Date
-                        <i class="fa fa-asterisk"></i>
-                    </label>
-                    <datepicker date="instance.start_date"
-                                required="true"
-                                no-weekends="true"
-                                readonly="true"></datepicker>
-                </label>
-                <label class="smaller">
-                    <label class="form-label">
-                        Due Date
-                        <i class="fa fa-asterisk"></i>
-                    </label>
-                    <datepicker set-min-date="instance.start_date"
-                                date="instance.end_date"
-                                required="true"
-                                no-weekends="true"
-                                readonly="true"></datepicker>
-                </label>
-            </div>
-        {{/using}}
-        {{/using}}
+      <access-control-list-roles-helper {instance}="{instance}"
+                                        {is-new-instance}="{new_object_form}">
+      </access-control-list-roles-helper>
+      <object-loader {path}="instance.task_group">
+        <object-loader {path}="loadedObject.workflow">
+          <div class="frequency-wrap">
+            <label class="form-label">
+                Repeat
+                <i class="fa fa-question-circle" rel="tooltip" title="Choose start and end dates"></i>
+            </label>
+            <repeat-on-summary {unit}="{loadedObject.unit}"
+                               {repeat-every}="{loadedObject.repeat_every}"
+                               {hide-repeat-off}="{false}">
+            </repeat-on-summary> 
+            <label class="smaller">
+              <label class="form-label">
+                  Start Date
+                  <i class="fa fa-asterisk"></i>
+              </label>
+              <datepicker id="repeate-start-date"
+                          {(date)}="{instance.start_date}"
+                          {required}="{true}"
+                          {no-weekends}="{true}"
+                          {readonly}="{true}">
+              </datepicker>
+            </label>
+            <label class="smaller">
+              <label class="form-label">
+                  Due Date
+                  <i class="fa fa-asterisk"></i>
+              </label>
+              <datepicker id="repeate-end-date"
+                          {set-min-date}="{instance.start_date}"
+                          {(date)}="{instance.end_date}"
+                          {required}="{true}"
+                          {no-weekends}="{true}"
+                          {readonly}="{true}">
+              </datepicker>
+            </label>
+          </div>
+        </object-loader>
+      </object-loader>
     </div>
   </div>
 </form>

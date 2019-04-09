@@ -4,6 +4,7 @@
 */
 
 import template from './templates/dashboard-workflows.stache';
+import isFunction from 'can-util/js/is-function/is-function';
 import {DATE_FORMAT, getFormattedLocalDate} from '../../plugins/utils/date-utils';
 import {getTruncatedList} from '../../plugins/ggrc_utils';
 
@@ -76,14 +77,15 @@ const viewModel = can.Map.extend({
 export default can.Component.extend({
   tag: 'dashboard-workflows',
   leakScope: true,
-  template,
+  template: can.stache(template),
   viewModel,
   init() {
     this.viewModel.initMyWorkflows();
   },
   helpers: {
     overdueCountMessage(taskStatistic) {
-      const {overdue, total} = Mustache.resolve(taskStatistic);
+      const {overdue, total} = isFunction(taskStatistic) ?
+        taskStatistic() : taskStatistic;
       const formOfTaskWord = total > 1
         ? 'tasks'
         : 'task';
@@ -94,7 +96,7 @@ export default can.Component.extend({
       return `${overdue} of ${total} ${formOfTaskWord} ${formOfVerb} overdue`;
     },
     totalCountMessage(totalCount) {
-      totalCount = Mustache.resolve(totalCount);
+      totalCount = isFunction(totalCount) ? totalCount() : totalCount;
       const taskWord = totalCount > 1
         ? 'tasks'
         : 'task';

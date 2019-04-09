@@ -15,8 +15,8 @@ def init_notification_views(app):
     app: current flask app.
   """
   app.add_url_rule(
-      "/_notifications/send_daily_digest", "send_daily_digest_notifications",
-      view_func=common.send_daily_digest_notifications)
+      "/_notifications/send_daily_digest", "create_daily_digest_bg",
+      view_func=common.create_daily_digest_bg)
 
   app.add_url_rule(
       "/_notifications/show_pending", "show_pending_notifications",

@@ -6,15 +6,12 @@
 import {SWITCH_TO_ERROR_PANEL, SHOW_INVALID_FIELD} from '../../events/eventTypes';
 import template from './object-state-toolbar.stache';
 
-const tag = 'object-state-toolbar';
-const activeStates = ['In Progress', 'Rework Needed', 'Not Started'];
-
 /**
  * Object State Toolbar Component allowing Object state modification
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'object-state-toolbar',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {
@@ -42,6 +39,7 @@ export default can.Component.extend({
     verifiers: [],
     instance: {},
     isActiveState: function () {
+      const activeStates = this.attr('instance').constructor.editModeStatuses;
       return activeStates.includes(this.attr('instanceState'));
     },
     isInProgress: function () {

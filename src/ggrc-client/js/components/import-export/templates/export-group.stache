@@ -8,10 +8,10 @@
   <div class="relevant-filter-group">
     {{#each panels}}
       <div class="new-relevant-block">
-        <export-panel {type}="type"
-                      {item}="."
-                      {panel_index}="@index"
-                      {removable}="isRemovable">
+        <export-panel {type}="{type}"
+                      {item}="{.}"
+                      {panel_index}="{@index}"
+                      {removable}="{isRemovable}">
        </export-panel>
      </div>
     {{/each}}

@@ -6,15 +6,15 @@
 import '../show-more/show-more';
 import template from './object-popover.stache';
 
-const tag = 'object-popover';
 const defaultMaxInnerHeight = 400;
 const defaultRightPosition = 60;
+
 /**
  * Assessment specific mapped objects popover view component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'object-popover',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     expanded: false,

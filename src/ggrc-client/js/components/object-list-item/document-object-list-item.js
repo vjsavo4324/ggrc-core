@@ -6,13 +6,12 @@
 import template from './document-object-list-item.stache';
 import '../spinner/spinner';
 
-const tag = 'document-object-list-item';
 /**
  * Simple component to show Document-like Objects
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'document-object-list-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

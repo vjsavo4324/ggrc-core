@@ -9,63 +9,60 @@
   {{#if editMode}}
     <div class="inline__content-wrapper">
       <div class="inline__content inline--active">
-
         {{#switch type}}
-          {{#case 'dropdown'}}
-            <dropdown-form-field {value}="value"
+          {{#case "dropdown"}}
+            <dropdown-form-field {value}="{value}"
               class="inline__content-input"
-              {options}="dropdownOptions"
-              {no-value}="dropdownNoValue"
-              {dropdown-options-groups}="dropdownOptionsGroups"
-              {is-grouped-dropdown}="isGroupedDropdown"
-              (value-changed)="fieldValueChanged(%event)"
+              {options}="{dropdownOptions}"
+              {no-value}="{dropdownNoValue}"
+              {dropdown-options-groups}="{dropdownOptionsGroups}"
+              {is-grouped-dropdown}="{isGroupedDropdown}"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></dropdown-form-field>
           {{/case}}
-          {{#case 'input'}}
-            <text-form-field
-              {value}="value"
+          {{#case "input"}}
+            <text-form-field {value}="{value}"
               class="inline__content-input inline-input-form-field"
-              {placeholder}="placeholder"
-              (value-changed)="fieldValueChanged(%event)"
+              {placeholder}="{placeholder}"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></text-form-field>
           {{/case}}
-          {{#case 'text'}}
-            <rich-text-form-field {value}="value"
+          {{#case "text"}}
+            <rich-text-form-field {value}="{value}"
               class="inline__content-input"
-              {placeholder}="placeholder"
-              (value-changed)="fieldValueChanged(%event)"
+              {placeholder}="{placeholder}"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></rich-text-form-field>
           {{/case}}
-           {{#case 'checkbox'}}
-            <checkbox-form-field {value}="value"
+           {{#case "checkbox"}}
+            <checkbox-form-field {value}="{value}"
               class="inline__content-input"
-              (value-changed)="fieldValueChanged(%event)"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></checkbox-form-field>
           {{/case}}
-           {{#case 'date'}}
-            <date-form-field {value}="value"
+           {{#case "date"}}
+            <date-form-field {value}="{value}"
               class="inline__content-input"
-              (value-changed)="fieldValueChanged(%event)"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></date-form-field>
           {{/case}}
-          {{#case 'person'}}
-            <person-form-field {value}="value"
+          {{#case "person"}}
+            <person-form-field {value}="{value}"
               class="inline__content-input"
-              (value-changed)="fieldValueChanged(%event)"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></person-form-field>
           {{/case}}
-          {{#case 'number'}}
-            <numberbox-form-field
+          {{#case "number"}}
+            <numberbox-form-field {value}="{value}"
               class="inline__content-input inline-input-form-field"
-              {placeholder}="placeholder"
-              {value}="value"
-              (value-changed)="fieldValueChanged(%event)"
+              {placeholder}="{placeholder}"
+              (value-changed)="{fieldValueChanged(%event)}"
             ></numberbox-form-field>
           {{/case}}
-          {{#case 'multi-select-label'}}
-            <multi-select-label {labels}="value"
-                {edit-mode}="true"
-                (value-changed)="fieldValueChanged(%event)">
+          {{#case "multi-select-label"}}
+            <multi-select-label {labels}="{value}"
+                {edit-mode}="{true}"
+                (value-changed)="{fieldValueChanged(%event)}">
             </multi-select-label>
           {{/case}}
         {{/switch}}
@@ -88,9 +85,9 @@
 
   {{#if isShowContent}}
     <div class="inline__content-wrapper">
-        <readonly-inline-content class="inline__content {{#if editMode}}inline--hidden{{/if}}"
-          {with-read-more}="withReadMore"
-          {value}="value">
+        <readonly-inline-content {value}="{value}"
+          class="inline__content {{#if editMode}}inline--hidden{{/if}}"
+          {with-read-more}="{withReadMore}">
         </readonly-inline-content>
     </div>
   {{/if}}

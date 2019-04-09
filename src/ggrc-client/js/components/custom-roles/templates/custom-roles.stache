@@ -7,55 +7,55 @@
 <div class="flex-box">
   <related-people-access-control
     class="width-100"
-    {deferred-save}="deferredSave"
-    (save-custom-role)="save(%event)"
-    {conflict-roles}="conflictRoles"
-    {order-of-roles}="orderOfRoles"
-    {include-roles}="includeRoles"
-    {exclude-roles}="excludeRoles"
-    {updatable-group-id}="updatableGroupId"
-    {info-pane-mode}="infoPaneMode"
-    {is-new-instance}="isNewInstance"
-    {read-only}="isReadonly"
-    {instance}="instance">
+    {deferred-save}="{deferredSave}"
+    (save-custom-role)="{save(%event)}"
+    {conflict-roles}="{conflictRoles}"
+    {order-of-roles}="{orderOfRoles}"
+    {include-roles}="{includeRoles}"
+    {exclude-roles}="{excludeRoles}"
+    {updatable-group-id}="{updatableGroupId}"
+    {info-pane-mode}="{infoPaneMode}"
+    {is-new-instance}="{isNewInstance}"
+    {read-only}="{isReadonly}"
+    {instance}="{instance}">
       <div class="people-groups">
         {{#groups}}
           <related-people-access-control-group
             class="people-group"
-            (update-roles)="updateRoles(%event)"
-            {required}="required"
-            {group-id}="groupId"
-            {title}="title"
-            {people}="people"
-            {instance}="instance"
-            {read-only}="readOnly"
-            {updatable-group-id}="updatableGroupId"
-            {single-user-role}="singleUserRole">
+            (update-roles)="{updateRoles(%event)}"
+            {required}="{required}"
+            {group-id}="{groupId}"
+            {title}="{title}"
+            {people}="{people}"
+            {instance}="{instance}"
+            {read-only}="{readOnly}"
+            {updatable-group-id}="{updatableGroupId}"
+            {single-user-role}="{singleUserRole}">
               <div>
                   <editable-people-group
-                    {required}="required"
-                    (unmap)="removePerson(%event)"
-                    (change-editable-mode)="changeEditableGroup(%event)"
-                    (save-changes)="saveChanges()"
-                    (person-selected)="personSelected(%event)"
-                    {can-unmap}="canEdit"
-                    {can-edit}="canEdit"
-                    {is-loading}="isLoading"
-                    {group-id}="groupId"
-                    {instance}="instance"
-                    {title}="title"
-                    {people}="people"
-                    {updatable-group-id}="updatableGroupId">
+                    {required}="{required}"
+                    (unmap)="{removePerson(%event)}"
+                    (change-editable-mode)="{changeEditableGroup(%event)}"
+                    (save-changes)="{saveChanges()}"
+                    (person-selected)="{personSelected(%event)}"
+                    {can-unmap}="{canEdit}"
+                    {can-edit}="{canEdit}"
+                    {is-loading}="{isLoading}"
+                    {group-id}="{groupId}"
+                    {instance}="{instance}"
+                    {title}="{title}"
+                    {people}="{people}"
+                    {updatable-group-id}="{updatableGroupId}">
                       <editable-people-group-header
-                        {editable-mode}="editableMode"
-                        {redirection-enabled}="redirectionEnabled"
-                        {is-loading}="isLoading"
-                        {can-edit}="canEdit"
-                        {title}="title"
-                        {required}="required"
-                        {people}="people"
-                        {single-user-role}="singleUserRole"
-                        (edit-people-group)="changeEditableMode(true)">
+                        {editable-mode}="{editableMode}"
+                        {redirection-enabled}="{redirectionEnabled}"
+                        {is-loading}="{isLoading}"
+                        {can-edit}="{canEdit}"
+                        {title}="{title}"
+                        {required}="{required}"
+                        {people}="{people}"
+                        {single-user-role}="{singleUserRole}"
+                        (edit-people-group)="{changeEditableMode(true)}">
                       </editable-people-group-header>
                   </editable-people-group>
               </div>

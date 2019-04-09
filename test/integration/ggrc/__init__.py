@@ -293,14 +293,23 @@ class TestCase(BaseTestCase, object):
     with tempfile.NamedTemporaryFile(dir=cls.CSV_DIR, suffix=".csv") as tmp:
       writer = csv.writer(tmp)
       object_type = None
+      object_len = None
       for data in import_data:
         data = data.copy()
+        data_object_len = len(data)
         data_object_type = data.pop("object_type")
         keys = data.keys()
         if data_object_type != object_type:
           if object_type is not None:
             writer.writerow([])
           object_type = data_object_type
+          object_len = data_object_len
+          writer.writerow(["Object type"])
+          writer.writerow([data_object_type] + keys)
+        elif data_object_len != object_len:
+          if object_len:
+            writer.writerow([])
+          object_len = data_object_len
           writer.writerow(["Object type"])
           writer.writerow([data_object_type] + keys)
         writer.writerow([""] + [data[k] for k in keys])

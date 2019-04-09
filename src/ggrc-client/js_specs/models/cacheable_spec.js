@@ -43,6 +43,43 @@ describe('Cacheable model', () => {
     GGRC.custom_attr_defs = origGcaDefs;
   });
 
+  describe('display_name method', () => {
+    it("shouldn't contain DELETED in display_name if object isn't deleted",
+      () => {
+        const instance = new DummyModel();
+        spyOn(instance, 'is_deleted').and.returnValue(false);
+        expect(instance.display_name()).not.toContain('DELETED');
+      }
+    );
+
+    it('should contain DELETED in display_name if object is deleted', () => {
+      const instance = new DummyModel();
+      spyOn(instance, 'is_deleted').and.returnValue(true);
+      expect(instance.display_name()).toContain('DELETED');
+    });
+  });
+
+  it("shouldn't contain DELETED in display_name in created_at is set", () => {
+    const instance = new DummyModel({
+      created_at: '02/20/2019 03:19:57 PM +03:00',
+    });
+    expect(instance.display_name()).not.toContain('DELETED');
+  });
+
+  describe('is_deleted method', () => {
+    it('should return true if created_at is undefined', () => {
+      const instance = new DummyModel();
+      expect(instance.is_deleted()).toBe(true);
+    });
+
+    it('should return false if created_at is defined', () => {
+      const instance = new DummyModel({
+        created_at: '02/20/2019 03:19:57 PM +03:00',
+      });
+      expect(instance.is_deleted()).toBe(false);
+    });
+  });
+
   describe('::setup', () => {
     it('prefers pre-set static names over root object & collection', () => {
       let Model = Cacheable.extend({

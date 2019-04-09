@@ -12,7 +12,7 @@ import './label-autocomplete-wrapper';
 
 export default can.Component.extend({
   tag: 'multi-select-label',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

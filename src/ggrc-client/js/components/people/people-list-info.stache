@@ -16,8 +16,8 @@
           </li>
           {{#is_allowed 'create' 'delete' 'UserRole' context=parent_instance.context.id}}
             <li class="border">
-              <user-roles-selector-button {person-id}="id">
-                <a href="javascript://" ($click)="openModal(%event)">
+              <user-roles-selector-button {person-id}="{id}">
+                <a href="javascript://" ($click)="{openModal(%event)}">
                   <i class="fa fa-address-card"></i>
                   Edit Authorizations
                 </a>
@@ -50,11 +50,11 @@
           <div class="span12">
             <h6>Email</h6>
             {{#if instance.email}}
-                <p>
-                  <a href='mailto:{{instance.email}}' target="_blank">
-                    {{email}}
-                  </a>
-                </p>
+              <p>
+                <a href='mailto:{{instance.email}}' target="_blank">
+                  {{email}}
+                </a>
+              </p>
             {{else}}
               <span class="empty-message">None</span>
             {{/if}}
@@ -65,7 +65,7 @@
           <div class="span12">
             <h6>Company</h6>
             {{#if instance.company}}
-                {{instance.company}}
+              {{instance.company}}
             {{else}}
               <span class="empty-message">None</span>
             {{/if}}
@@ -105,9 +105,9 @@
           </div>
         </div>
       </div>
-      {{#using instance isAttributesDisabled}}
+      {{^if isAttributesDisabled}}
         {{> /static/templates/custom_attributes/info.stache}}
-      {{/using}}
+      {{/if}}
     </div>
   </div>
 {{/isOpen}}

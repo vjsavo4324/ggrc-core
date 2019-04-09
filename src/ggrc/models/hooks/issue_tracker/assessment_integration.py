@@ -217,6 +217,8 @@ class AssessmentTrackerHandler(object):
   def _get_issuetracker_info(self, assessment, assessment_src):
     """Get default issue information.
 
+    This function MUST NOT be called during import background task.
+
     Args:
         assessment_src: dictionary with issue information
     Returns:
@@ -272,33 +274,46 @@ class AssessmentTrackerHandler(object):
   def handle_assessment_create(self, assessment, assessment_src):
     """Handle assessment issue create.
 
+    Do not perform any actions if one of the following is true:
+    * this is import background task
+    * this is POST request and integration is disabled on audit or app level
+
+    In case of import the work will be done by bulk_sync background task
+    to speed up import
+
     Args:
         assessment: object from Assessment model
         assessment_src: dictionary with issue information
     """
-    if self._is_issue_on_create_enabled(assessment, assessment_src):
-      if assessment_src.get("issue_tracker", {}).get("issue_id"):
-        issue_id = assessment_src["issue_tracker"]["issue_id"]
-        if not self._is_already_linked(assessment, issue_id):
-          issue_info, _ = self._link_ticket(
-              assessment,
-              issue_id,
-              assessment_src
-          )
 
-          all_models.IssuetrackerIssue.create_or_update_from_dict(
-              assessment,
-              issue_info
-          )
-      else:
-        issue_info, _ = self._create_ticket(
+    if assessment.is_import:
+      return
+
+    if not self._is_issue_on_create_enabled(assessment, assessment_src):
+      return
+
+    issue_id = assessment_src.get("issue_tracker", {}).get("issue_id")
+    if issue_id:
+      if not self._is_already_linked(assessment, issue_id):
+        issue_info, _ = self._link_ticket(
             assessment,
+            issue_id,
             assessment_src
         )
+
         all_models.IssuetrackerIssue.create_or_update_from_dict(
             assessment,
             issue_info
         )
+    else:
+      issue_info, _ = self._create_ticket(
+          assessment,
+          assessment_src
+      )
+      all_models.IssuetrackerIssue.create_or_update_from_dict(
+          assessment,
+          issue_info
+      )
 
   def handle_assessment_delete(self, assessment):
     """Handle assessment issue delete.
@@ -416,6 +431,8 @@ class AssessmentTrackerHandler(object):
   def handle_audit_create(self, audit, audit_src):
     """Handle audit create for Issue Tracker.
 
+    This function MUST NOT be called during import background task execution
+
     Args:
         audit: object from Audit model
         audit_src: dictionary with issue information
@@ -432,9 +449,11 @@ class AssessmentTrackerHandler(object):
   def handle_audit_update(self, audit, audit_src):
     """Handle audit update for Issue Tracker.
 
-      Args:
-          audit: object from Audit model
-          audit_src: dictionary with issue information
+    This function MUST NOT be called during import background task execution
+
+    Args:
+        audit: object from Audit model
+        audit_src: dictionary with issue information
     """
     issue_db_info = self._collect_audit_info(
         audit,
@@ -480,6 +499,8 @@ class AssessmentTrackerHandler(object):
   def handle_assmt_template_create(self, assessment_template,
                                    assmt_template_src):
     """Handle assessment template create for Issue Tracker.
+
+    This function MUST NOT be called during import background task execution
 
     Args:
         assessment_template: object from
@@ -2539,8 +2560,10 @@ def _hook_assmt_template_post(sender, objects=None, sources=None):
   tracker_handler = AssessmentTrackerHandler()
   for assessment_template, assmt_template_src in itertools.izip(objects,
                                                                 sources):
+    integration_utils.update_issue_tracker_for_import(assessment_template)
     issue_info = assmt_template_src.get('issue_tracker')
     if issue_info:
+      # this part will be run for API calls only, as src is empty for imports
       tracker_handler.handle_assmt_template_create(
           assessment_template,
           issue_info
@@ -2576,8 +2599,10 @@ def _hook_audit_issue_post(sender, objects=None, sources=None):
 
   tracker_handler = AssessmentTrackerHandler()
   for audit, audit_src in itertools.izip(objects, sources):
+    integration_utils.update_issue_tracker_for_import(audit)
     issue_info = audit_src.get('issue_tracker')
     if issue_info:
+      # this part will be run for API calls only, as src is empty for imports
       tracker_handler.handle_audit_create(audit, issue_info)
 
 

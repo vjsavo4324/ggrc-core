@@ -244,7 +244,7 @@ const events = {
 
 export default can.Component.extend({
   tag: 'sub-tree-wrapper',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events,

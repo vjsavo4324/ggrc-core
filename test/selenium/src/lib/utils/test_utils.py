@@ -30,7 +30,7 @@ class HtmlParser(object):
     return re.sub(r'\s+', " ", text)
 
 
-def wait_for(func, timeout=constants.ux.MAX_USER_WAIT_SECONDS):
+def wait_for(func, timeout=constants.ux.TWO_MIN_USER_WAIT):
   """Waits for function to return truthy value."""
   def is_falsy(value):
     """Return whether value if falsy (None or False)."""

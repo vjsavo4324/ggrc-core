@@ -19,7 +19,7 @@
       <div class="flex-box sub-models_item">
           <input type="checkbox"
                  id="{{inputId}}"
-                 {($checked)}="display"
+                 {($checked)}="{display}"
                  value="{{name}}">
           <label for="{{inputId}}">{{widgetName}}</label>
       </div>

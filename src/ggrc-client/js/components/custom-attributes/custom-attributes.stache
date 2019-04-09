@@ -6,7 +6,7 @@
 <div class="fields-wrapper flex-box flex-row">
   {{#each fields}}
     <div class="field-wrapper flex-size-1 custom-attribute-{{type}} {{#isInvalidField validation.show validation.valid highlightInvalidFields}}invalid-field{{/isInvalidField}}">
-      <form-validation-icon {validation}="validation"></form-validation-icon>
+      <form-validation-icon {validation}="{validation}"></form-validation-icon>
       <div class="field__title form-field__title">
         <label class="field__title-text custom-attribute-{{type}}" for="form-field-{{id}}">
           {{title}}
@@ -17,12 +17,12 @@
       </div>
       {{#if editMode}}
         <custom-attributes-field
-          {type}="type"
-          {(value)}="value"
-          {field-id}="id"
-          {placeholder}="placeholder"
-          {options}="options"
-          (value-changed)="fieldValueChanged(%event, %context)"
+          {type}="{type}"
+          {(value)}="{value}"
+          {field-id}="{id}"
+          {placeholder}="{placeholder}"
+          {options}="{options}"
+          (value-changed)="{fieldValueChanged(%event, %context)}"
           class="form-field__content custom-attribute-{{type}}"
         ></custom-attributes-field>
         {{#if validation.hasMissingInfo}}
@@ -35,15 +35,14 @@
           </div>
         {{/if}}
         {{#isInvalidField validation.show validation.valid highlightInvalidFields}}
-          <form-validation-text
-            {validation}="validation"
-            {type}="type">
+          <form-validation-text {validation}="{validation}"
+                                {type}="{type}">
           </form-validation-text>
         {{/isInvalidField}}
       {{else}}
         <custom-attributes-field-view
-          {type}="type"
-          {value}="value"
+          {type}="{type}"
+          {value}="{value}"
           class="form-field__content custom-attribute-{{type}}"
         ></custom-attributes-field-view>
       {{/if}}

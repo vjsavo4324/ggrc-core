@@ -7,13 +7,13 @@
 
   <span class="create-new-object">
 
-  {{#if_equals destinationType 'Document'}}
+  {{#is(destinationType, "Document")}}
     
       Do you want to search for an existing document or
       <create-document-button
-        {parent-instance}="source"
-        (map-objects)="mapObjects(%event.objects)"
-        (cancel)="cancel()">
+        {parent-instance}="{source}"
+        (map-objects)="{mapObjects(%event.objects)}"
+        (cancel)="{cancel()}">
         Attach new
       </create-document-button>
 
@@ -43,7 +43,7 @@
 
       {{/if}}
 
-  {{/if_equals}}
+  {{/is}}
 
   </span>
 

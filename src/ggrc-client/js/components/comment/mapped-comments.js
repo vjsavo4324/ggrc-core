@@ -12,7 +12,7 @@ import template from './mapped-comments.stache';
  */
 export default can.Component.extend({
   tag: 'mapped-comments',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -33,5 +33,4 @@ import './user';
 
 // Common components
 import '../components/model-loader/model-loader';
-
-
+import '../components/object-loader/object-loader';

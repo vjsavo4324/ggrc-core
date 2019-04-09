@@ -13,9 +13,9 @@
     <div class="rich-text">
       <rich-text
         tabindex="3"
-        {hidden-toolbar}="true"
+        {hidden-toolbar}="{true}"
         {placeholder}="'Enter Assessment Procedure'"
-        {(content)}="instance.test_plan">
+        {(content)}="{instance.test_plan}">
       </rich-text>
     </div>
   </div>

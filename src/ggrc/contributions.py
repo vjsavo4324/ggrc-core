@@ -13,7 +13,7 @@ from ggrc.notifications import import_export as import_export_notifications
 
 NIGHTLY_CRON_JOBS = [
     common.generate_cycle_tasks_notifs,
-    common.send_daily_digest_notifications,
+    common.create_daily_digest_bg,
     common.send_calendar_events,
     import_export.clear_overtimed_tasks,
 ]

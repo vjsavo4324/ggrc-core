@@ -230,15 +230,19 @@ def get_ac_roles_for(object_type):
   Returns:
       Dict like {"Access Control Role Name": ACR Instance, ...}
   """
-  if getattr(flask.g, "global_ac_roles", None) is None:
+  if not hasattr(flask.g, "global_ac_roles"):
     flask.g.global_ac_roles = collections.defaultdict(dict)
+
+  if not flask.g.global_ac_roles[object_type]:
     query = AccessControlRole.query.filter(
+        AccessControlRole.object_type == object_type,
         AccessControlRole.internal == sa.sql.expression.false(),
     ).options(
         load_only("id", "name", "object_type", "mandatory")
     )
     for role in query:
       flask.g.global_ac_roles[role.object_type][role.name] = role
+
   return flask.g.global_ac_roles[object_type]
 
 

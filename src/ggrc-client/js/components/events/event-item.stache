@@ -6,26 +6,25 @@
 {{#event}}
   <ul>
     {{#revisions_stub}}
-      {{^if_equals resource_type 'Context'}}
+      {{^is(resource_type, "Context")}}
         <li>
           <strong>
             {{description}}
           </strong>
         </li>
-      {{/if_equals}}
+      {{/is}}
     {{/revisions_stub}}
     {{#if hasHiddenRevisions}} 
       <li>
         <strong>
-          + {{hiddenRevisionsCount}} more 
-          {{#if_equals hiddenRevisionsCount 1}} revision {{else}} revisions {{/if_equals}}
+          + {{hiddenRevisionsCount}} more {{#is(hiddenRevisionsCount, 1)}}revision{{else}}revisions{{/is}}
         </strong>
       </li>
     {{/if}}
     <li>
       <span class="event-owner">
         by
-        <person-data {person}="modified_by"></person-data>
+        <person-data {person}="{modified_by}"></person-data>
       </span>
     </li>
     <li>

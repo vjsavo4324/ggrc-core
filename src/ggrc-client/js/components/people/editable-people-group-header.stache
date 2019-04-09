@@ -3,11 +3,11 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<label class="action-toolbar editable-people-group__label form-label form-label__extended">
+<div class="action-toolbar editable-people-group__label form-label form-label__extended">
   <div class="people-group__title-content">
     <div class="people-group__title">
       {{#unless editableMode}}
-        <spinner class="people-group__title-spinner" {toggle}="isLoading"></spinner>
+        <spinner class="people-group__title-spinner" {toggle}="{isLoading}"></spinner>
       {{/unless}}
       {{title}}
     </div>
@@ -21,10 +21,10 @@
   {{#if redirectionEnabled}}
     <div class="action-toolbar__controls">
       <div class="action-toolbar__controls-item">
-        <role-attr-names-provider {role-name}="title">
+        <role-attr-names-provider {role-name}="{title}">
           <proposable-control
-            {instance}="instance"
-            {attr-name}="linkAttrName"
+            {instance}="{instance}"
+            {attr-name}="{linkAttrName}"
           ></proposable-control>
         </role-attr-names-provider>
       </div>
@@ -38,7 +38,7 @@
       </div>
     {{/if}}
   {{/if}}
-</label>
+</div>
 {{#if singleUserRole}}
   <div class="people-group__title-tooltip">
     <small><em>You can add only one person for this role</em></small>

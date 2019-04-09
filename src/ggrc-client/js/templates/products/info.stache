@@ -6,10 +6,10 @@
 {{#instance}}
   <section class="info{{#is_info_pin}} sticky-info-panel{{/is_info_pin}}">
     <div class="tier-content">
-      <general-page-header {instance}="instance"></general-page-header>
+      <general-page-header {instance}="{instance}"></general-page-header>
 
       <tab-container>
-        <tab-panel {(panels)}="panels" title-text="Attributes">
+        <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
           <div class="info-pane__body">
             <div class="info-pane__main-content {{^if isSnapshot}}info-pane__main-content-with-sidebar{{/if}}">
               {{> /static/templates/base_objects/description.stache}}
@@ -47,15 +47,13 @@
                     </div>
                     <div class="span3">
                       <h6>Kind/Type</h6>
-                      {{#using kind=kind}}
-                      {{#if kind}}
-                        <p>
-                          {{kind.title}}
-                        </p>
-                      {{else}}
-                        <span class="empty-message">None</span>
-                      {{/if}}
-                      {{/using}}
+                      <object-loader {path}="instance.kind">
+                        {{#if loadedObject}}
+                          <p>{{loadedObject.title}}</p>
+                        {{else}}
+                          <span class="empty-message">None</span>
+                        {{/if}}
+                      </object-loader>
                     </div>
                     <div class="span3">
                       <h6>Effective Date</h6>
@@ -86,15 +84,15 @@
             <div class="info-pane__sidebar">
               <div class="info-pane__section-title">Responses/Comments</div>
               <comments-section class="flex-box flex-col"
-                {instance}="instance">
+                {instance}="{instance}">
               </comments-section>
             </div>
             {{/if}}
           </div>
         </tab-panel>
         {{^if isSnapshot}}
-          <tab-panel {(panels)}="panels" title-text="Change Log">
-              <revision-log {instance}="instance" {options}="tabOptions"></revision-log>
+          <tab-panel {(panels)}="{panels}" {title-text}="'Change Log'">
+            <revision-log {instance}="{instance}" {options}="{tabOptions}"></revision-log>
           </tab-panel>
         {{/if}}
       </tab-container>
@@ -102,6 +100,6 @@
   </section>
 
   {{#if is_info_widget}}
-    <info-pane-footer {created-at}="instance.created_at" {modified-at}="instance.updated_at" {modified-by}="instance.modified_by"></info-pane-footer>
+    <info-pane-footer {created-at}="{instance.created_at}" {modified-at}="{instance.updated_at}" {modified-by}="{instance.modified_by}"></info-pane-footer>
   {{/if}}
 {{/instance}}

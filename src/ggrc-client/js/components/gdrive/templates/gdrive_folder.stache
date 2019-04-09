@@ -16,7 +16,7 @@
 </div>
 <div class="mapped-folder">
   {{#if _folder_change_pending}}
-    <spinner class="mapped-folder__spinner" toggle="_folder_change_pending"></spinner>
+    <spinner class="mapped-folder__spinner" {toggle}="{_folder_change_pending}"></spinner>
   {{/if}}
 
   {{#if current_folder}}

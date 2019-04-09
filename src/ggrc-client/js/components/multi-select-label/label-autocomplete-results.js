@@ -8,7 +8,7 @@ import template from './templates/label-autocomplete-results.stache';
 
 export default can.Component.extend({
   tag: 'label-autocomplete-results',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: baseAutocompleteResults.extend({
     currentValue: '',

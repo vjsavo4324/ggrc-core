@@ -4,34 +4,34 @@
 }}
 
 {{#switch type}}
-  {{#case 'input'}}
+  {{#case "input"}}
     <text-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></text-form-field-view>
   {{/case}}
-  {{#case 'text'}}
+  {{#case "text"}}
     <rich-text-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></rich-text-form-field-view>
   {{/case}}
-  {{#case 'checkbox'}}
+  {{#case "checkbox"}}
     <checkbox-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></checkbox-form-field-view>
   {{/case}}
-  {{#case 'dropdown'}}
+  {{#case "dropdown"}}
     <text-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></text-form-field-view>
   {{/case}}
-  {{#case 'date'}}
+  {{#case "date"}}
     <date-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></date-form-field-view>
   {{/case}}
-  {{#case 'person'}}
+  {{#case "person"}}
     <person-form-field-view
-      {value}="value"
+      {value}="{value}"
     ></person-form-field-view>
   {{/case}}
 {{/switch}}

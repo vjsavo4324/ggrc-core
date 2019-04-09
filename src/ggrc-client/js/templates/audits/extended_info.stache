@@ -71,9 +71,13 @@
     <div class="span6">
       <h6>Audit firm</h6>
       <p>
-        {{#using firm=instance.audit_firm}}
-          {{{firstnonempty firm.title 'None'}}}
-        {{/using}}
+        <object-loader {path}="instance.audit_firm">
+          {{#if loadedObject}}
+            {{loadedObject.title}}
+          {{else}}
+            None
+          {{/if}}
+        </object-loader>
       </p>
     </div>
   </div>

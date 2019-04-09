@@ -5,14 +5,14 @@
 
 {{#if isAuditScope}} 
   <audit-inner-nav
-    {instance}="instance"
-    {widget-descriptors}="innerNavDescriptors"
-    (active-changed)="showWidgetArea(%event)"
+    {instance}="{instance}"
+    {widget-descriptors}="{innerNavDescriptors}"
+    (active-changed)="{showWidgetArea(%event)}"
   ></audit-inner-nav>
 {{else}}
   <inner-nav
-    {instance}="instance"
-    {widget-descriptors}="innerNavDescriptors"
-    (active-changed)="showWidgetArea(%event)"
+    {instance}="{instance}"
+    {widget-descriptors}="{innerNavDescriptors}"
+    (active-changed)="{showWidgetArea(%event)}"
   ></inner-nav>
 {{/if}}

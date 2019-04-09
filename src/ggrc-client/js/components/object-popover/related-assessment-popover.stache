@@ -3,37 +3,35 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<object-popover {item}="selectedAssessment" {popover-title}="selectedAssessmentTitle" {direction}="popoverDirection"
-                {popover-link}="selectedAssessmentLink" {popover-title-info}="popoverTitleInfo">
+<object-popover {item}="{selectedAssessment}" {popover-title}="{selectedAssessmentTitle}" {direction}="{popoverDirection}"
+                {popover-link}="{selectedAssessmentLink}" {popover-title-info}="{popoverTitleInfo}">
     <tab-container class="related-assessments__tab-container">
-        <tab-panel {(panels)}="panels" title-text="Attributes">
+        <tab-panel {(panels)}="{panels}" {title-text}="'Attributes'">
             <div class="fields-wrapper flex-box flex-row">
-                <show-more items="selectedAssessmentFields">
+                <show-more {items}="{selectedAssessmentFields}">
                     <div class="field-wrapper flex-size-1 custom-attribute-{{type}}">
-                        <form-validation-icon {validation}="validation"></form-validation-icon>
+                        <form-validation-icon {validation}="{validation}"></form-validation-icon>
                         <div class="field__title form-field__title">
                             <label class="field__title-text custom-attribute-{{type}}" for="form-field-{{id}}">
                               {{title}}
                               {{#if helptext}}
-                                  <i class="fa fa-question-circle field__title-helper-text" rel="tooltip" title="{{helptext}}"></i>
+                                <i class="fa fa-question-circle field__title-helper-text" rel="tooltip" title="{{helptext}}"></i>
                               {{/if}}
                             </label>
                         </div>
-            <custom-attributes-field-view
-                                {type}="type"
-                                {value}="value"
-                                class="form-field__content custom-attribute-{{type}}"
-            ></custom-attributes-field-view>
+                        <custom-attributes-field-view class="form-field__content custom-attribute-{{type}}"
+                                                      {type}="{type}"
+                                                      {value}="{value}">
+                        </custom-attributes-field-view>
                     </div>
                 </show-more>
             </div>
         </tab-panel>
-        <tab-panel {(panels)}="panels" title-text="Comments">
-            <related-comments {parent-instance}="item.data">
-                <mapped-objects
-                        {parent-instance}="parentInstance"
-                        {related-types}="relatedTypes">
-                    <comment-list-item {instance}="instance"></comment-list-item>
+        <tab-panel {(panels)}="{panels}" {title-text}="'Comments'">
+            <related-comments {parent-instance}="{item.data}">
+                <mapped-objects {parent-instance}="{parentInstance}"
+                                {related-types}="{relatedTypes}">
+                    <comment-list-item {instance}="{instance}"></comment-list-item>
                 </mapped-objects>
             </related-comments>
         </tab-panel>

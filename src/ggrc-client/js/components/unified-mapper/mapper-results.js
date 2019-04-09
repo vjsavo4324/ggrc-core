@@ -32,7 +32,7 @@ const DEFAULT_PAGE_SIZE = 10;
 
 export default can.Component.extend({
   tag: 'mapper-results',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

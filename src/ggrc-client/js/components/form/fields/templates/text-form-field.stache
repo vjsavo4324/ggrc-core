@@ -8,6 +8,6 @@
          id="form-field-{{fieldId}}"
          placeholder="{{placeholder}}"
          class="text-field"
-         {($value)}="inputValue"
+         {($value)}="{inputValue}"
          {{#if disabled}}disabled{{/if}}>
 </div>

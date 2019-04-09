@@ -7,23 +7,23 @@
   <nav class="internav">
     {{#if showTabs}}
       {{#widgetList}}
-        <inner-nav-item {widget}="." 
-          {active-widget}="activeWidget"
-          {show-title}="true" 
-          {show-all-tabs}="showAllTabs"
-          (close)="closeTab(%event)"></inner-nav-item>
+        <inner-nav-item {widget}="{.}" 
+          {active-widget}="{activeWidget}"
+          {show-title}="{true}" 
+          {show-all-tabs}="{showAllTabs}"
+          (close)="{closeTab(%event)}"></inner-nav-item>
       {{/widgetList}}
     {{/if}}
 
     <add-tab-button
-      {instance}="instance"
-      {widget-list}="hiddenWidgets"
+      {instance}="{instance}"
+      {widget-list}="{hiddenWidgets}"
       {add-tab-title}="'Add Tab'">
     </add-tab-button>
 
-    {{#if_equals instance.type 'Workflow'}}
-      {{> '/static/templates/dashboard/object_nav_actions.stache'}}
-    {{/if_equals}}
+    {{#is(instance.type, "Workflow")}}
+      {{> /static/templates/dashboard/object_nav_actions.stache}}
+    {{/is}}
   </nav>
 </div>
 </div>

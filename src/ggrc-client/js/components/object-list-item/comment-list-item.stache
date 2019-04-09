@@ -20,7 +20,7 @@
       {{/if}}
       {{#if commentAuthor}}
         <div class="comment-object-item__header-author">
-          <person-data {person}="commentAuthor"></person-data>
+          <person-data {person}="{commentAuthor}"></person-data>
         </div>
       {{/if}}
       <div class="comment-object-item__header-author-info">
@@ -28,7 +28,7 @@
         {{#if commentCreationDate}}
           {{dateTime commentCreationDate}}
         {{else}}
-          <spinner {toggle}="true"></spinner>
+          <spinner {toggle}="{true}"></spinner>
         {{/if}}
       </div>
     </div>
@@ -37,8 +37,8 @@
     {{/if}}
     <div class="comment-object-item__text">
       <read-more
-        {text}="commentText"
-        {handle-markdown}="instance.class.isChangeableExternally">
+        {text}="{commentText}"
+        {handle-markdown}="{instance.class.isChangeableExternally}">
       </read-more>
     </div>
 </div>

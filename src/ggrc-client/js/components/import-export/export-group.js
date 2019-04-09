@@ -9,7 +9,7 @@ import panelModel from './panel';
 
 export default can.Component.extend('exportGroup', {
   tag: 'export-group',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

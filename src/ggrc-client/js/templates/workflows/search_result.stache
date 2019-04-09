@@ -5,15 +5,15 @@
 
 
   <li class="filters" data-for="{{model.model_singular}}">
-    <a href="javascript://" class="wf-trigger wf-active {{#if_equals filter_params.Workflow.status 'Active'}}active{{/if_equals}}" data-key="status" data-value="Active">
+    <a href="javascript://" class="wf-trigger wf-active {{#is(filter_params.Workflow.status, "Active")}}active{{/is}}" data-key="status" data-value="Active">
       Active
       ({{firstnonempty counts.Workflow_Active 0}})
     </a>
-    <a href="javascript://" class="wf-trigger wf-draft {{#if_equals filter_params.Workflow.status 'Draft'}}active{{/if_equals}}" data-key="status" data-value="Draft">
+    <a href="javascript://" class="wf-trigger wf-draft {{#is(filter_params.Workflow.status, "Draft")}}active{{/is}}" data-key="status" data-value="Draft">
       Draft
       ({{firstnonempty counts.Workflow_Draft 0}})
     </a>
-    <a href="javascript://" class="wf-trigger wf-inactive {{#if_equals filter_params.Workflow.status 'Inactive'}}active{{/if_equals}}" data-key="status" data-value="Inactive">
+    <a href="javascript://" class="wf-trigger wf-inactive {{#is(filter_params.Workflow.status, "Inactive")}}active{{/is}}" data-key="status" data-value="Inactive">
       Inactive
       ({{firstnonempty counts.Workflow_Inactive 0}})
     </a>
@@ -32,5 +32,5 @@
   {{/each}}
 
   <li class="spinny">
-    <spinner {toggle}="list.is_loading"></spinner>
+    <spinner {toggle}="{list.is_loading}"></spinner>
   </li>

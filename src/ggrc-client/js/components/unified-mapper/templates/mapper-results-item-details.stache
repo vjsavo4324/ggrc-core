@@ -7,23 +7,23 @@
   {{#if instance.snapshot}}
     {{> /static/templates/snapshots/dropdown_menu.stache}}
   {{else}}
-    {{#if_equals instance.type "Person"}}
+    {{#is(instance.type, "Person")}}
       {{> /static/templates/people/dropdown_menu.stache}}
     {{else}}
-        {{#if_equals instance.type 'Audit'}}
-            {{> /static/templates/audits/dropdown_menu.stache}}
-        {{else}}
-            {{> /static/templates/base_objects/dropdown_menu.stache}}
-        {{/if_equals}}
-    {{/if_equals}}
+      {{#is(instance.type, "Audit")}}
+        {{> /static/templates/audits/dropdown_menu.stache}}
+      {{else}}
+        {{> /static/templates/base_objects/dropdown_menu.stache}}
+      {{/is}}
+    {{/is}}
   {{/if}}
 </div>
 <div class="flex-box">
-  {{#if_equals instance.type "Person"}}
+  {{#is(instance.type, "Person")}}
     {{> /static/templates/people/mapper-item-description.stache}}
   {{else}}
     {{> /static/templates/base_objects/mapper-item-description.stache}}
-  {{/if_equals}}
+  {{/is}}
 </div>
 <div class="open-link-container">
   <a href="{{firstnonempty instance.originalLink item.viewLink}}" target="_blank">

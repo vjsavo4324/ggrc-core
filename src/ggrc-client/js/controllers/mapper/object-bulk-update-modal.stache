@@ -3,8 +3,7 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<object-bulk-update
-    {type}="type"
-    {object}="object"
-    class="object-bulk-update">
+<object-bulk-update class="object-bulk-update"
+                    {type}="{type}"
+                    {object}="{object}">
 </object-bulk-update>

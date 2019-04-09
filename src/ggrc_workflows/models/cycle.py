@@ -3,7 +3,7 @@
 
 """Module contains a workflow Cycle model
 """
-
+import itertools
 from urlparse import urljoin
 
 from sqlalchemy import orm, inspect
@@ -124,8 +124,55 @@ class Cycle(roleable.Roleable,
   PROPERTY_TEMPLATE = u"cycle {}"
 
   _fulltext_attrs = [
-      ft_attributes.DateFullTextAttr("due date", "next_due_date"),
       "folder",
+      ft_attributes.DateFullTextAttr("due date", "next_due_date"),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "group title",
+          "cycle_task_groups",
+          ["title"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "group assignee",
+          lambda instance: [g.contact for g in instance.cycle_task_groups],
+          ["email", "name"],
+          False),
+      ft_attributes.DateMultipleSubpropertyFullTextAttr(
+          "group due date",
+          'cycle_task_groups',
+          ["next_due_date"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "task title",
+          'cycle_task_group_object_tasks',
+          ["title"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "task state",
+          'cycle_task_group_object_tasks',
+          ["status"],
+          False),
+      ft_attributes.DateMultipleSubpropertyFullTextAttr(
+          "task due date",
+          "cycle_task_group_object_tasks",
+          ["end_date"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "task assignees",
+          "_task_assignees",
+          ["name", "email"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "task secondary assignees",
+          "_task_secondary_assignees",
+          ["name", "email"],
+          False),
+      ft_attributes.MultipleSubpropertyFullTextAttr(
+          "task comment",
+          lambda instance: itertools.chain(*[
+              t.comments for t in instance.cycle_task_group_object_tasks
+          ]),
+          ["description"],
+          False),
   ]
 
   @property
@@ -145,6 +192,9 @@ class Cycle(roleable.Roleable,
     return list(people)
 
   AUTO_REINDEX_RULES = [
+      ft_mixin.ReindexRule("CycleTaskGroup", lambda x: x.cycle),
+      ft_mixin.ReindexRule("CycleTaskGroupObjectTask",
+                           lambda x: x.cycle_task_group.cycle),
       ft_mixin.ReindexRule("Person", _query_filtered_by_contact),
   ]
 
@@ -180,8 +230,39 @@ class Cycle(roleable.Roleable,
   def indexed_query(cls):
     return super(Cycle, cls).indexed_query().options(
         orm.Load(cls).load_only("next_due_date"),
+        orm.Load(cls).subqueryload("cycle_task_group_object_tasks").load_only(
+            "end_date",
+            "id",
+            "status",
+            "title",
+        ),
+        orm.Load(cls).subqueryload("cycle_task_groups").load_only(
+            "id",
+            "title",
+            "next_due_date",
+        ),
+        orm.Load(cls).subqueryload(
+            "cycle_task_group_object_tasks",
+        ).subqueryload("_access_control_list").load_only(
+            "ac_role_id",
+        ).subqueryload("access_control_people").load_only(
+            "person_id",
+        ),
+        orm.Load(cls).subqueryload("cycle_task_group_object_tasks").joinedload(
+            "cycle_task_entries"
+        ).load_only(
+            "description",
+            "id",
+        ),
+        orm.Load(cls).subqueryload("cycle_task_groups").joinedload(
+            "contact"
+        ).load_only(
+            "name",
+            "email",
+            "id",
+        ),
         orm.Load(cls).joinedload("workflow").undefer_group(
-            "Workflow_complete"
+            "Workflow_complete",
         ),
     )
 

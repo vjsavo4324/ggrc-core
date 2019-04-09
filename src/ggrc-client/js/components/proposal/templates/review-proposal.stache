@@ -6,7 +6,7 @@
 {{#if canReview}}
   <div class="object-history__actions">
     <div class="object-history__action">
-      <spinner class="revision-history__spinner" toggle="isLoading"></spinner>
+      <spinner class="revision-history__spinner" {toggle}="{isLoading}"></spinner>
       <button
         type="button"
         ($click)="prepareComparerConfig()"
@@ -17,16 +17,15 @@
     </div>
   </div>
 
-  <revisions-comparer
-    display-descriptions="true"
-    {right-revision-description}="'Proposal:'"
-    {left-revision-description}="'Current version:'"
-    {modal-title}="modalTitle"
-    {modal-confirm}="modalConfirm"
-    {button-view}="buttonView"
-    {instance}="instance"
-    {proposal}="proposal"
-    {right-revision}="rightRevision"
-    {left-revision-id}="leftRevisionId">
+  <revisions-comparer {display-descriptions}="{true}"
+                      {right-revision-description}="'Proposal:'"
+                      {left-revision-description}="'Current version:'"
+                      {modal-title}="{modalTitle}"
+                      {modal-confirm}="{modalConfirm}"
+                      {button-view}="{buttonView}"
+                      {instance}="{instance}"
+                      {proposal}="{proposal}"
+                      {right-revision}="{rightRevision}"
+                      {left-revision-id}="{leftRevisionId}">
   </revisions-comparer>
 {{/if}}

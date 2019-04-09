@@ -742,6 +742,13 @@ def obj(request):
 
 # New fixtures
 
+@pytest.fixture(scope="function")
+def lhn_menu(selenium):
+  """Open LHN menu and return LHN page objects model."""
+  selenium_utils.open_url(url.Urls().dashboard)
+  return dashboard.Dashboard(selenium).open_lhn_menu()
+
+
 @pytest.fixture()
 def app_workflow():
   """Creates a Workflow."""

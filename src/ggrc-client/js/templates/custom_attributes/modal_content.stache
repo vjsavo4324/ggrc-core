@@ -7,9 +7,8 @@
 {{#instance.class.is_custom_attributable}}
   {{^if_instance_of instance 'Assessment'}}
     <div class="ggrc-form">
-      <gca-controls
-        {instance}="instance"
-        allow-hide="true"
+      <gca-controls {instance}="{instance}"
+                    {allow-hide}="{true}"
       ></gca-controls>
     </div>
   {{/if}}

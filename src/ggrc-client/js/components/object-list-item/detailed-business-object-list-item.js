@@ -13,13 +13,12 @@ import '../custom-attributes/custom-attributes-field-view';
 import '../related-objects/related-people-access-control';
 import template from './detailed-business-object-list-item.stache';
 
-const tag = 'detailed-business-object-list-item';
 /**
  * Assessment specific mapped objects popover view component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'detailed-business-object-list-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: {},

@@ -8,15 +8,15 @@
   {{#if issueUnmap}}
 
     <unmap-button
-      {prevent-click}="true"
-      {source}="page_instance"
-      {destination}="instance"
+      {prevent-click}="{true}"
+      {source}="{page_instance}"
+      {destination}="{instance}"
       class="unmap-link">
         <issue-unmap-item
           class="issue-unmap-item"
-          (unmap-issue)="unmapInstance()"
-          {source}="page_instance"
-          {destination}="instance">
+          (unmap-issue)="{unmapInstance()}"
+          {source}="{page_instance}"
+          {destination}="{instance}">
             <i class="fa fa-ban"></i>Unmap
         </issue-unmap-item>
     </unmap-button>
@@ -25,15 +25,15 @@
 
     {{^if isMappableExternally}}
       <unmap-button
-        {source}="page_instance"
-        {destination}="instance"
+        {source}="{page_instance}"
+        {destination}="{instance}"
         class="unmap-link">
           <i class="fa fa-ban"></i>Unmap
       </unmap-button>
     {{else}}
       <questionnaire-mapping-link 
-        {instance}="page_instance" 
-        {destination-model}="instance.constructor" 
+        {instance}="{page_instance}" 
+        {destination-model}="{instance.constructor}" 
         {type}="'unmap'">
           <i class="fa fa-fw fa-external-link"></i>
           Unmap in new frontend

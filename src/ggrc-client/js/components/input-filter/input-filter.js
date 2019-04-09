@@ -5,11 +5,9 @@
 
 import template from './templates/input-filter.stache';
 
-const tag = 'input-filter';
-
 export default can.Component.extend({
-  template,
-  tag,
+  tag: 'input-filter',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     value: '',

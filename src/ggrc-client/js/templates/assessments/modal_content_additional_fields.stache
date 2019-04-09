@@ -3,7 +3,7 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<gca-controls {instance}="instance"></gca-controls>
+<gca-controls {instance}="{instance}"></gca-controls>
 
 <div class="ggrc-form-item">
   <div class="ggrc-form-item__row">
@@ -12,9 +12,9 @@
     </label>
     <rich-text 
         tabindex="10"
-        {hidden-toolbar}="true"
+        {hidden-toolbar}="{true}"
         {placeholder}="'Enter Notes'"
-        {(content)}="notes">
+        {(content)}="{notes}">
     </rich-text>
   </div>
 </div>
@@ -26,9 +26,9 @@
     </label>
     <rich-text 
         tabindex="11"
-        {hidden-toolbar}="true"
+        {hidden-toolbar}="{true}"
         {placeholder}="'Enter Description'"
-        {(content)}="description">
+        {(content)}="{description}">
     </rich-text>
   </div>
 </div>
@@ -44,7 +44,7 @@
       name="slug"
       placeholder="ASSESSMENT-XXX"
       type="text"
-      {$value}="slug">
+      {$value}="{slug}">
   </div>
   <div class="ggrc-form-item__multiple-row">
     <label class="ggrc-form-item__label">
@@ -52,10 +52,9 @@
     </label>
     <datepicker
       tabindex="15"
-      date="start_date"
-      set-max-date="end_date"
-      helptext="Enter the date this object becomes effective."
-      test-id="startTestId"
+      {(date)}="{start_date}"
+      {set-max-date}="{end_date}"
+      {helptext}="'Enter the date this object becomes effective.'"
     />
   </div>
 </div>
@@ -70,11 +69,11 @@
         <em>Is this control design effective?</em>
       </small>
     </div>
-    <dropdown tabindex="17"
-              options-list="model.conclusions"
-              no-value="true"
-              no-value-label="---"
-              name="instance.design">
+    <dropdown {options-list}="{model.conclusions}"
+              {no-value}="{true}"
+              {no-value-label}="'---'"
+              {name}="'instance.design'"
+              tabindex="17">
     </dropdown>
   </div>
   <div class="ggrc-form-item__multiple-row">
@@ -86,11 +85,11 @@
         <em>Is this control design effective?</em>
       </small>
     </div>
-    <dropdown tabindex="18"
-              options-list="model.conclusions"
-              no-value="true"
-              no-value-label="---"
-              name="instance.operationally">
+    <dropdown {options-list}="{model.conclusions}"
+              {no-value}="{true}"
+              {no-value-label}="'---'"
+              {name}="'instance.operationally'"
+              tabindex="18">
     </dropdown>
   </div>
 </div>

@@ -5,11 +5,11 @@
 
 <model-loader {path}="'business-models/task-group-task'">
   <related-objects
-    {paging}="paging"
-    {initial-order-by}="initialOrderBy"
-    {base-instance}="baseInstance"
-    {(related-objects)}="items"
-    {model-constructor}="loadedModel"
+    {paging}="{paging}"
+    {initial-order-by}="{initialOrderBy}"
+    {base-instance}="{baseInstance}"
+    {(related-objects)}="{items}"
+    {model-constructor}="{loadedModel}"
     {related-items-type}="'TaskGroupTask'">
     <div class="task-list">
       <div class="task_group_tasks__header">
@@ -33,8 +33,8 @@
       </div>
       <div class="task_group_tasks__list">
         <object-list
-          {items}="items"
-          {is-loading}="isLoading"
+          {items}="{items}"
+          {is-loading}="{isLoading}"
           {list-type}="'GRID'">
             {{> /static/templates/task_group_tasks/task_group_subtree.stache}}
         </object-list>
@@ -60,7 +60,7 @@
           </div>
         {{/if}}
       </div>
-      <tree-pagination {paging}="paging" class="grid-data__toolbar-item" placement="top"></tree-pagination>
+      <tree-pagination {paging}="{paging}" class="grid-data__toolbar-item" {placement}="'top'"></tree-pagination>
     </div>
   </related-objects>
 </model-loader>

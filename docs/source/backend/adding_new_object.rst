@@ -128,7 +128,7 @@ In :src:`ggrc-client/js/templates/dashboard/lhn.stache` add the line:
 
 ..  code-block:: javascript
 
-    {{{renderLive '/static/templates/dashboard/lhn_search.stache' type="NewObject" li_class="class"}}}
+    {{{renderLive 'dashboard/lhn_search' type="NewObject" li_class="class"}}}
 
 Create template files
 ---------------------

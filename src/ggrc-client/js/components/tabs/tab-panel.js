@@ -11,7 +11,7 @@ const PRE_RENDER_DELAY = 3000;
 
 export default can.Component.extend({
   tag: 'tab-panel',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

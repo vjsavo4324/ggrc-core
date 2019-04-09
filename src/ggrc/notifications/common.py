@@ -15,6 +15,8 @@ from logging import getLogger
 from operator import itemgetter
 from dateutil import relativedelta
 
+import flask
+
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import true
 from sqlalchemy import inspect
@@ -22,6 +24,7 @@ from werkzeug.exceptions import Forbidden
 from google.appengine.api import mail
 
 from ggrc import db, extensions, settings, utils
+from ggrc import models
 from ggrc.app import app
 from ggrc.gcalendar import calendar_event_builder
 from ggrc.gcalendar import calendar_event_sync
@@ -31,6 +34,7 @@ from ggrc.models import background_task
 from ggrc.notifications.unsubscribe import unsubscribe_url
 from ggrc.rbac import permissions
 from ggrc.utils import DATE_FORMAT_US, merge_dict, benchmark
+from ggrc.utils import generate_query_chunks
 from ggrc.notifications.notification_handlers import SEND_TIME
 
 from ggrc_workflows.models import CycleTaskGroupObjectTask
@@ -216,6 +220,26 @@ def get_pending_notifications():
   return notifications, data
 
 
+def generate_daily_notifications():
+  """Generate daily notifications data in chunks."""
+  notifications = db.session.query(Notification).options(
+      joinedload("notification_type")
+  ).filter(
+      (Notification.runner == Notification.RUNNER_DAILY) &
+      (Notification.send_on <= datetime.today()) &
+      ((Notification.sent_at.is_(None)) | (Notification.repeating == true()))
+  ).order_by(Notification.repeating, Notification.id)
+  all_count = notifications.count()
+  handled = 0
+  chunk_size = settings.DAILY_DIGEST_BATCH_SIZE
+  for data_chunk in generate_query_chunks(
+      notifications, chunk_size=chunk_size, needs_ordering=False
+  ):
+    handled += data_chunk.count()
+    logger.info("Processing notifications: %s/%s", handled, all_count)
+    yield data_chunk, get_notification_data(data_chunk)
+
+
 def get_daily_notifications():
   """Get notification data for all future notifications.
 
@@ -223,13 +247,14 @@ def get_daily_notifications():
     list of Notifications, data: a tuple of notifications that were handled
       and corresponding data for those notifications.
   """
-  notifications = db.session.query(Notification).filter(
-      (Notification.runner == Notification.RUNNER_DAILY) &
-      (Notification.send_on <= datetime.today()) &
-      ((Notification.sent_at.is_(None)) | (Notification.repeating == true()))
-  ).all()
 
-  return notifications, get_notification_data(notifications)
+  notifications = []
+  notifications_data = {}
+  for notif_list, notif_data in generate_daily_notifications():
+    notifications.extend(notif_list.all())
+    notifications_data.update(notif_data)
+
+  return notifications, notifications_data
 
 
 def should_receive(notif, user_data, people_cache):
@@ -285,29 +310,51 @@ def should_receive(notif, user_data, people_cache):
   return has_digest
 
 
+def create_daily_digest_bg():
+  """Create daily digest background task."""
+  models.background_task.create_task(
+      name="send_daily_digest_bg",
+      url=flask.url_for("send_daily_digest_bg"),
+      queued_callback=send_daily_digest_bg,
+  )
+  db.session.commit()
+  return utils.make_simple_response()
+
+
+@app.route("/_background_tasks/send_daily_digest_bg",
+           methods=["POST"])
+@background_task.queued_task
+def send_daily_digest_bg(task):  # pylint: disable=unused-argument
+  """Send emails for today's or overdue notifications."""
+  error_msg = None
+  try:
+    send_daily_digest_notifications()
+  except Exception as exp:  # pylint: disable=broad-except
+    error_msg = ("Sending of daily digest has failed "
+                 "with the following error {}".format(exp.message))
+    logger.exception(error_msg)
+  return utils.make_simple_response(error_msg)
+
+
 def send_daily_digest_notifications():
-  """Send emails for today's or overdue notifications.
-
-  Returns:
-    str: String containing a simple list of who received the notification.
-  """
-  # pylint: disable=invalid-name
+  """Send emails for today's or overdue notifications."""
   with benchmark("contributed cron job send_daily_digest_notifications"):
-    notif_list, notif_data = get_daily_notifications()
-    sent_emails = []
-    subject = "GGRC daily digest for {}".format(date.today().strftime("%b %d"))
+    for notif_list, notif_data in generate_daily_notifications():
+      with benchmark("processing notification data chunk"):
+        subject = "GGRC daily digest for {}".format(
+            date.today().strftime("%b %d")
+        )
+        sent_emails = []
+        with benchmark("sending daily emails"):
+          for user_email, data in notif_data.iteritems():
+            data = modify_data(data)
+            email_body = settings.EMAIL_DIGEST.render(digest=data)
+            send_email(user_email, subject, email_body)
+            sent_emails.append(user_email)
 
-    with benchmark("sending daily emails"):
-      for user_email, data in notif_data.iteritems():
-        data = modify_data(data)
-        email_body = settings.EMAIL_DIGEST.render(digest=data)
-        send_email(user_email, subject, email_body)
-        sent_emails.append(user_email)
-
-    with benchmark("processing sent notifications"):
-      process_sent_notifications(notif_list)
-
-    return "emails sent to: <br> {}".format("<br>".join(sent_emails))
+        with benchmark("processing sent notifications"):
+          process_sent_notifications(notif_list)
+        logger.info("emails sent to: %s", ",".join(sent_emails))
 
 
 def generate_cycle_tasks_notifs():
@@ -348,9 +395,10 @@ def process_sent_notifications(notif_list):
       to modify sent_at field.
   """
   from ggrc.models import all_models
+
   for notif in notif_list:
-    if notif.object_type == "CycleTaskGroupObjectTask" and \
-       notif.object.status == all_models.CycleTaskGroupObjectTask.DEPRECATED:
+    if (notif.object and notif.object_type == "CycleTaskGroupObjectTask" and
+       notif.object.status == all_models.CycleTaskGroupObjectTask.DEPRECATED):
       continue
     if notif.repeating:
       notif.sent_at = datetime.utcnow()

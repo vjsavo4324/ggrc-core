@@ -34,7 +34,7 @@ let viewModel = can.Map.extend({
  */
 export default can.Component.extend({
   tag: 'lazy-render',
-  template: '{{#if activatedOrForceRender}}<content/>{{/if}}',
+  template: can.stache('{{#if activatedOrForceRender}}<content/>{{/if}}'),
   leakScope: true,
   viewModel,
 });

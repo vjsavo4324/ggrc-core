@@ -14,7 +14,7 @@ import {getPageInstance} from '../../plugins/utils/current-page-utils';
 
 export default can.Component.extend({
   tag: 'assessment-template-clone',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: function () {
     return ObjectOperationsBaseVM.extend({
@@ -23,7 +23,7 @@ export default can.Component.extend({
       },
       extendInstanceData(instance) {
         instance = instance().serialize();
-        let audit = _.pick(instance, ['id', 'type', 'issue_tracker']);
+        let audit = _.pick(instance, ['id', 'type', 'title', 'issue_tracker']);
         let context = {
           id: instance.context.id,
           type: instance.context.type,

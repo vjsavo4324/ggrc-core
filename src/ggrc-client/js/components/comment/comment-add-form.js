@@ -11,15 +11,13 @@ import tracker from '../../tracker';
 import {getAssigneeType} from '../../plugins/ggrc_utils';
 import {notifier} from '../../plugins/utils/notifiers-utils';
 
-const tag = 'comment-add-form';
-
 /**
  * A component that takes care of adding comments
  *
  */
 export default can.Component.extend({
-  tag: tag,
-  template: template,
+  tag: 'comment-add-form',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

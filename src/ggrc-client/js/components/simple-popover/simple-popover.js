@@ -7,7 +7,7 @@ import template from './simple-popover.stache';
 
 export default can.Component.extend({
   tag: 'simple-popover',
-  template: template,
+  template: can.stache(template),
   init: function (el) {
     this.viewModel.attr('element', el);
   },

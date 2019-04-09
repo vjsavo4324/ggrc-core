@@ -12,8 +12,8 @@
     <div class="action-toolbar__controls">
       <div class="action-toolbar__controls-item">
         <proposable-control
-          {instance}="instance"
-          {attr-name}="attrName"
+          {instance}="{instance}"
+          {attr-name}="{attrName}"
         ></proposable-control>
       </div>
     </div>

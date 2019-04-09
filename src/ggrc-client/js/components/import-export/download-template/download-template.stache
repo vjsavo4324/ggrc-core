@@ -7,10 +7,10 @@
   Download import template
 </button>
 
-<simple-modal modal-title="modalTitle"
-              state="modalState"
-              replace-content="true"
-              extra-css-class="download-template">
+<simple-modal {modal-title}="{modalTitle}"
+              {state}="{modalState}"
+              {replace-content}="{true}"
+              {extra-css-class}="'download-template'">
   <div class="simple-modal__header">
     <div class="simple-modal__header-text">{{modalTitle}}</div>
     <button type="button" class="btn btn-small btn-icon" ($click)="close()">
@@ -31,9 +31,9 @@
     </p>
 
     <h4>Choose Templates</h4>
-    <multiselect-dropdown {options}="importableModels"
+    <multiselect-dropdown {options}="{importableModels}"
                           {placeholder}="'Choose Templates'"
-                          (selected-changed)="selectItems(%event)">
+                          (selected-changed)="{selectItems(%event)}">
     </multiselect-dropdown>
   </div>
 
@@ -52,7 +52,7 @@
               ($click)="downloadSheet">
         Download Sheet
       </button>
-      {{#if isLoading}}<spinner {toggle}="true"></spinner>{{/if}}
+      {{#if isLoading}}<spinner {toggle}="{true}"></spinner>{{/if}}
     </div>
   </div>
 </simple-modal>

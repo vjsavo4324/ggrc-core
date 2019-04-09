@@ -6,10 +6,14 @@ import re
 
 from ggrc.converters import errors
 from ggrc.converters.handlers import handlers
-from ggrc.integrations import constants
 from ggrc.models import all_models
 from ggrc.models.hooks.issue_tracker import \
     issue_tracker_params_container as params_container
+
+
+_ATTR_NAME_TO_ISSUE_TRACKER_KEY = {
+    "issue_title": "title",
+}
 
 
 class IssueTrackerColumnHandler(handlers.ColumnHandler):
@@ -19,41 +23,26 @@ class IssueTrackerColumnHandler(handlers.ColumnHandler):
   default values.
   """
 
+  def _get_issue_tracker_value(self, default=None):
+    """Get value by corresponding key in issue_tracker dict"""
+    key = _ATTR_NAME_TO_ISSUE_TRACKER_KEY.get(self.key, self.key)
+
+    return self.row_converter.issue_tracker.get(key, default)
+
+  def _set_issue_tracker_value(self, value):
+    """Set value by corresponding key in issue_tracker dict"""
+    key = _ATTR_NAME_TO_ISSUE_TRACKER_KEY.get(self.key, self.key)
+
+    self.row_converter.issue_tracker[key] = value
+
   def get_value(self):
-    return self.row_converter.issue_tracker.get(self.key, "")
+    return self._get_issue_tracker_value("")
 
   def set_obj_attr(self):
-    if not self.value:
-      self.value = self._get_default_value()
-    if self.dry_run or not self.value:
+    if self.dry_run or self.value is None:
       return
-    self.row_converter.issue_tracker[self.key] = self.value
 
-  def _get_default_value(self):
-    """Get default value for missed value in Issue Tracker attribute column.
-
-    We have some rules for default values.
-    - Assessment and Assessment Template should take their missing values
-      from audit if there, otherwise from default values.
-    - Issues should have Issue specific hotlist_id and component_id. They are
-      stored separately in default_values dict ('issue_hotlist_id' and
-      'issue_component_id' keys).
-    """
-    value = None
-    default_values = constants.DEFAULT_ISSUETRACKER_VALUES
-    is_assmt = isinstance(self.row_converter.obj,
-                          all_models.Assessment)
-    is_assmt_template = isinstance(self.row_converter.obj,
-                                   all_models.AssessmentTemplate)
-    is_issue = isinstance(self.row_converter.obj, all_models.Issue)
-    if is_assmt or is_assmt_template:
-      value = self.row_converter.obj.audit.issue_tracker.get(self.key)
-
-    if is_issue and (self.key in ["hotlist_id", "component_id"]):
-      value = default_values.get("issue_" + self.key)
-
-    default_value = value or default_values.get(self.key)
-    return default_value
+    self._set_issue_tracker_value(self.value)
 
 
 class IssueTrackerWithValidStates(IssueTrackerColumnHandler):
@@ -99,9 +88,6 @@ class IssueTrackerAddsColumnHandler(IssueTrackerColumnHandler):
 class IssueTrackerTitleColumnHandler(IssueTrackerColumnHandler):
   """Column handler for Issue title for IssueTracked models"""
 
-  def get_value(self):
-    return self.row_converter.issue_tracker.get("title", "")
-
   def parse_item(self):
     """ Remove multiple spaces and new lines from text """
     value = self.raw_value or ""
@@ -115,13 +101,13 @@ class IssueTrackerTitleColumnHandler(IssueTrackerColumnHandler):
 
   @staticmethod
   def clean_whitespaces(value):
-    """Change multiply whitespaces with single one in the value string."""
+    """Change multiple whitespaces with single one in the value string."""
     return re.sub(r"\s+", " ", value)
 
   def set_obj_attr(self):
     if self.dry_run or not self.value:
       return
-    self.row_converter.issue_tracker["title"] = self.value
+    self._set_issue_tracker_value(self.value)
 
 
 class IssueTrackerEnabledHandler(IssueTrackerColumnHandler):
@@ -138,26 +124,8 @@ class IssueTrackerEnabledHandler(IssueTrackerColumnHandler):
 
   NOT_ALLOWED_STATUSES = {"Fixed", "Fixed and Verified", "Deprecated"}
 
-  def _get_populated_enabled(self):
-    """We have some rules for turning integration On for assessments.
-
-    We should turn integration On only if assessment's audit integration
-    enabled. We should turn it Off otherwise.
-    """
-    is_assmt = isinstance(self.row_converter.obj, all_models.Assessment)
-    if is_assmt:
-      audit_enabled = self.row_converter.obj.audit.issue_tracker.get(self.key)
-      return audit_enabled and self.value
-    return self.value
-
-  def set_obj_attr(self):
-    if self.dry_run:
-      return
-    value = self._get_populated_enabled()
-    self.row_converter.issue_tracker[self.key] = value
-
   def get_value(self):
-    if self.row_converter.issue_tracker.get(self.key, ""):
+    if super(IssueTrackerEnabledHandler, self).get_value():
       return self._true
     return self._false
 
@@ -193,7 +161,9 @@ class IssueTrackerEnabledHandler(IssueTrackerColumnHandler):
                            column_name=self.display_name)
           return False
       return True
-    if value not in self.FALSE_VALUES:
-      self.add_warning(errors.WRONG_VALUE_DEFAULT,
-                       column_name=self.display_name)
-    return False
+    if value in self.FALSE_VALUES:
+      return False
+
+    self.add_warning(errors.WRONG_VALUE_DEFAULT,
+                     column_name=self.display_name)
+    return None

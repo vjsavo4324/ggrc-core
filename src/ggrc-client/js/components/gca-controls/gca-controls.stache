@@ -32,12 +32,12 @@
     }}
     <custom-attributes-field
       tabindex="20"
-      {type}="attributeType"
-      {(value)}="value"
-      {field-id}="customAttributeId"
-      {placeholder}="placeholder"
-      {options}="multiChoiceOptions"
-      (value-changed)="updateGlobalAttribute(%event, %context)"
+      {type}="{attributeType}"
+      {(value)}="{value}"
+      {field-id}="{customAttributeId}"
+      {placeholder}="{placeholder}"
+      {options}="{multiChoiceOptions}"
+      (value-changed)="{updateGlobalAttribute(%event, %context)}"
       class="form-field__content custom-attribute-{{attributeType}}"
     ></custom-attributes-field>
     {{#if_helpers '\n #if' validationState.hasGCAErrors '\n and #if' instance.computed_errors._gca_valid}}

@@ -28,27 +28,48 @@ class IssueTracked(object):
 
   def __init__(self, *args, **kwargs):
     super(IssueTracked, self).__init__(*args, **kwargs)
-    self._warnings = []
+    self.init_on_load()
 
   @orm.reconstructor
   def init_on_load(self):
+    """Init object when it is fetched from DB
+
+    SQLAlchemy doesn't call __init__() for objects from DB
+    """
+
     self._warnings = []
+    self.is_import = False
+    self.issue_tracker_to_import = dict()
 
   @declared_attr
   def issuetracker_issue(cls):  # pylint: disable=no-self-argument
     """Relationship with the corresponding issue for cls."""
+    current_type = cls.__name__
 
-    def join_function():
-      """Object and Notification join function."""
-      object_id = sa.orm.foreign(IssuetrackerIssue.object_id)
-      object_type = sa.orm.foreign(IssuetrackerIssue.object_type)
-      return sa.and_(object_type == cls.__name__,
-                     object_id == cls.id)
+    joinstr = (
+        "and_("
+        "foreign(remote(IssuetrackerIssue.object_id)) == {type}.id,"
+        "IssuetrackerIssue.object_type == '{type}'"
+        ")"
+        .format(type=current_type)
+    )
+
+    # Since we have some kind of generic relationship here, it is needed
+    # to provide custom joinstr for backref. If default, all models having
+    # this mixin will be queried, which in turn produce large number of
+    # queries returning nothing and one query returning object.
+    backref_joinstr = (
+        "remote({type}.id) == foreign(IssuetrackerIssue.object_id)"
+        .format(type=current_type)
+    )
 
     return sa.orm.relationship(
         IssuetrackerIssue,
-        primaryjoin=join_function,
-        backref="{}_issue_tracked".format(cls.__name__),
+        primaryjoin=joinstr,
+        backref=sa.orm.backref(
+            "{}_issue_tracked".format(current_type),
+            primaryjoin=backref_joinstr,
+        ),
         cascade="all, delete-orphan",
         uselist=False,
     )

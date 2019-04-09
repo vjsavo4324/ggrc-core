@@ -6,7 +6,7 @@
 <div class="tree-filter__expression-holder width-100">
   <input type="text"
          class="tree-filter__input width-100"
-         {($value)}="filter"
+         {($value)}="{filter}"
          {{#disabled}}disabled{{/disabled}}
          placeholder="Type here to search or click the advanced search icon">
   <span class="tree-filter_is-expression {{#if isExpression}}valid{{/if}}">

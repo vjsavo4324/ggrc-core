@@ -8,7 +8,7 @@ import template from './people-autocomplete-results.stache';
 
 export default can.Component.extend({
   tag: 'people-autocomplete-results',
-  template,
+  template: can.stache(template),
   leakScope: false,
   viewModel: baseAutocompleteResults.extend({
     currentValue: null,

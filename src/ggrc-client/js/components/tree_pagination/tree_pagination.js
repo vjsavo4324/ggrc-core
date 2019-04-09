@@ -7,12 +7,12 @@ import template from './tree_pagination.stache';
 
 /**
  * A component that renders a tree pagination widget
- * Usage: <tree-pagination paging="paging"></tree-pagination>
- * Optional parameter: placement="top" - to display content above the control
+ * Usage: <tree-pagination {paging}="{paging}"></tree-pagination>
+ * Optional parameter: {placement}="'top'" - to display content above the control
  */
 export default can.Component.extend({
   tag: 'tree-pagination',
-  template: template,
+  template: can.stache(template),
   init: function () {
     /**
      * Entrance object validation

@@ -10,7 +10,7 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul>
-      <lazy-render trigger="activated">
+      <lazy-render {trigger}="{activated}">
         <!-- Link for open instance on info panel at bottom -->
         <li>
           <a href="javascript://" ($click)="maximizeObject">
@@ -36,7 +36,7 @@
           {{#if instance.constructor.isChangeableExternally}}
             {{^if isSnapshot}}
               <li>
-                <questionnaire-link {instance}="instance" {show-icon}="true">
+                <questionnaire-link {instance}="{instance}" {show-icon}="{true}">
                   Open {{instance.class.title_singular}} in new frontend
                 </questionnaire-link>
               </li>
@@ -45,7 +45,7 @@
 
           {{#if isAllowedToMap}}
             <li>
-              <tree-item-map {instance}="instance"></tree-item-map>
+              <tree-item-map {instance}="{instance}"></tree-item-map>
             </li>
           {{/if}}
 
@@ -67,11 +67,11 @@
 
           <li>
             <show-related-assessments-button
-              {instance}="instance"
-              {reset-styles}="true"
-              {show-title}="false"
-              {show-icon}="true"
-              text="Show related assessments">
+              {instance}="{instance}"
+              {reset-styles}="{true}"
+              {show-title}="{false}"
+              {show-icon}="{true}"
+              {text}="'Show related assessments'">
             </show-related-assessments-button>
           </li>
 
@@ -81,8 +81,8 @@
             {{#if canExpand}}
               <li>
                 <sub-tree-models
-                  {type}="instance.type"
-                  {title}="instance.title">
+                  {type}="{instance.type}"
+                  {title}="{instance.title}">
                 </sub-tree-models>
               </li>
             <li>

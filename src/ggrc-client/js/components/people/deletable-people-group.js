@@ -9,7 +9,7 @@ import template from './deletable-people-group.stache';
 
 export default can.Component.extend({
   tag: 'deletable-people-group',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

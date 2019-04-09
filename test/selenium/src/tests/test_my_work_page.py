@@ -13,8 +13,9 @@ import pytest  # pylint: disable=import-error
 from lib import base, url
 from lib.constants import objects
 from lib.page import dashboard, lhn
-from lib.page.widget import generic_widget
+from lib.page.widget import generic_widget, object_modal
 from lib.service import webui_facade
+from lib.ui import ui_facade
 from lib.utils import selenium_utils
 
 
@@ -210,3 +211,9 @@ class TestMyWorkPage(base.Test):
                  str(hnb_objects)
       )
     assert hnb_objects.issubset(lhn_objects) is True
+
+  def test_user_cannot_create_control_from_lhn(self, lhn_menu):
+    """Tests that `New Control` modal object cannot be opened from lhn."""
+    lhn_menu.select_controls_or_objectives().select_controls().create_new()
+    ui_facade.verify_modal_obj_not_present_in_all_windows(
+        object_modal.ControlModal())

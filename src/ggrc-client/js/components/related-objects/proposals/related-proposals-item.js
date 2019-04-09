@@ -15,11 +15,9 @@ import {getPersonInfo} from '../../../plugins/utils/user-utils';
 import {getFormattedLocalDate} from '../../../plugins/utils/date-utils';
 import {reify, isReifiable} from '../../../plugins/utils/reify-utils';
 
-const tag = 'related-proposals-item';
-
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'related-proposals-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

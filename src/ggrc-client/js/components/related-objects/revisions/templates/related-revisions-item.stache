@@ -19,19 +19,19 @@
 </div>
 
 <div class="flex-size-3">
-  <instance-fields-diff {current-instance}="instance" {modified-fields}="revision.diff_with_current.fields">
+  <instance-fields-diff {current-instance}="{instance}" {modified-fields}="{revision.diff_with_current.fields}">
   </instance-fields-diff>
 
-  <instance-mapping-fields-diff {current-instance}="instance" {modified-fields}="revision.diff_with_current.mapping_fields">
+  <instance-mapping-fields-diff {current-instance}="{instance}" {modified-fields}="{revision.diff_with_current.mapping_fields}">
   </instance-mapping-fields-diff>
 
-  <instance-list-fields-diff {current-instance}="instance" {modified-fields}="revision.diff_with_current.mapping_list_fields">
+  <instance-list-fields-diff {current-instance}="{instance}" {modified-fields}="{revision.diff_with_current.mapping_list_fields}">
   </instance-list-fields-diff>
 
-  <instance-acl-diff {current-instance}="instance" {modified-acl}="revision.diff_with_current.access_control_list">
+  <instance-acl-diff {current-instance}="{instance}" {modified-acl}="{revision.diff_with_current.access_control_list}">
   </instance-acl-diff>
 
-  <instance-gca-diff {current-instance}="instance" {modified-attributes}="revision.diff_with_current.custom_attribute_values">
+  <instance-gca-diff {current-instance}="{instance}" {modified-attributes}="{revision.diff_with_current.custom_attribute_values}">
   </instance-gca-diff>
 </div>
 
@@ -40,19 +40,19 @@
     <div class="object-history__actions">
         <div class="object-history__action">
           <restored-revision-comparer-config
-            {instance}="instance"
-            {left-revision-id}="lastRevision.id"
-            {right-revision}="revision">
+            {instance}="{instance}"
+            {left-revision-id}="{lastRevision.id}"
+            {right-revision}="{revision}">
               <revisions-comparer
-                display-descriptions="true"
-                {left-revision-description}="leftRevisionDescription"
-                {right-revision-description}="rightRevisionDescription"
-                {modal-title}="modalTitle"
-                {modal-confirm}="modalConfirm"
-                {button-view}="buttonView"
-                {instance}="instance"
-                {left-revision-id}="leftRevisionId"
-                {right-revision}="rightRevision">
+                {display-descriptions}="{true}"
+                {left-revision-description}="{leftRevisionDescription}"
+                {right-revision-description}="{rightRevisionDescription}"
+                {modal-title}="{modalTitle}"
+                {modal-confirm}="{modalConfirm}"
+                {button-view}="{buttonView}"
+                {instance}="{instance}"
+                {left-revision-id}="{leftRevisionId}"
+                {right-revision}="{rightRevision}">
                   <a href="javascript://" class="btn btn-small btn-white" can-click="compareIt">
                     Review &amp; Restore
                   </a>

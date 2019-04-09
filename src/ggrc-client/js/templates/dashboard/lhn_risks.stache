@@ -4,14 +4,14 @@
 }}
 
 <li class="risk accordion-group">
-  <a data-test-id="risk/threats_66116337" class="risk list-toggle top" href="#">
+  <a data-test-id="risk/threats_66116337" class="risk list-toggle top" href="javascript:void(0)">
     <i class="fa fa-caret-right"></i>
     Risks/Threats
   </a>
   <div class="content">
     <ul class="mid-level">
-      {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Risk" title_plural="Risks" li_class="risk"}}}
-      {{{renderLive "/static/templates/dashboard/lhn_search.stache" type="Threat" title_plural="Threats" li_class="risk"}}}
+      {{{renderLive "dashboard/lhn_search" type="Risk" title_plural="Risks" li_class="risk"}}}
+      {{{renderLive "dashboard/lhn_search" type="Threat" title_plural="Threats" li_class="risk"}}}
     </ul>
   </div>
 </li>

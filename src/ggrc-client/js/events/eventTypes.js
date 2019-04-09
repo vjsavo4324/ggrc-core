@@ -4,6 +4,17 @@
 */
 
 /**
+ * Fired after instance refresh.
+ *
+ * @event refreshed
+ * @type {object}
+ * @property {string} type - Event name.
+ */
+const REFRESHED = {
+  type: 'refreshed',
+};
+
+/**
  *
  * @event refreshRelated
  * @type {object}
@@ -212,6 +223,7 @@ const REFRESH_MAPPED_COUNTER = {
 };
 
 export {
+  REFRESHED,
   REFRESH_SUB_TREE,
   REFRESH_RELATED,
   ROLES_CONFLICT,

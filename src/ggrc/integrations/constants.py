@@ -6,6 +6,7 @@
 OBSOLETE_ISSUE_STATUS = "OBSOLETE"
 ISSUE_TRACKED_MODELS = ["Assessment", "Issue"]
 DEFAULT_ISSUETRACKER_VALUES = {
+    'enabled': False,
     'issue_priority': 'P2',
     'issue_severity': 'S2',
     'issue_type': 'PROCESS',

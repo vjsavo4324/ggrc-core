@@ -10,10 +10,10 @@
         {{#case "link"}}
           <li>
             <questionnaire-link
-              {instance}="instance"
-              {show-icon}="true"
+              {instance}="{instance}"
+              {show-icon}="{true}"
               {icon-position}="'right'"
-              {link-type}="linkType"
+              {link-type}="{linkType}"
               {view-type}="'tab'"
             >
               <span>{{titleText}}</span>

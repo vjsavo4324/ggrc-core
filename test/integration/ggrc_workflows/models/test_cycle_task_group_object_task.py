@@ -2,7 +2,6 @@
 # Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 
 """Module for integration tests for CycleTaskGroupObjectTask specifics."""
-import unittest
 
 import ddt
 
@@ -217,7 +216,6 @@ class CycleTaskSecondaryAssigneeQuery(query_helper.WithQueryApi, TestCTGOT):
                                         "total")
     self.assertEqual(result, 1)
 
-  @unittest.skip("Skip cause feature cut.")
   def test_query_by_task_secondary_assignee_on_active_cycles_tab(self):  # noqa pylint: disable=invalid-name
     """Test QueryAPI request for CycleTasks on Active Cycles tab."""
     data = [

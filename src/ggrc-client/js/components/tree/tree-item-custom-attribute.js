@@ -4,6 +4,7 @@
  */
 
 import template from './templates/tree-item-custom-attribute.stache';
+import isFunction from 'can-util/js/is-function/is-function';
 import {CONTROL_TYPE} from '../../plugins/utils/control-utils';
 import {formatDate} from '../../plugins/utils/date-utils';
 import {reify} from '../../plugins/utils/reify-utils';
@@ -34,8 +35,9 @@ const getCustomAttrValue = (instance, customAttributeId, options) => {
   let caObject;
   let hasHandler = false;
   let customAttrValue = null;
-  instance = Mustache.resolve(instance);
-  customAttributeId = Mustache.resolve(customAttributeId);
+  instance = isFunction(instance) ? instance() : instance;
+  customAttributeId = isFunction(customAttributeId) ?
+    customAttributeId() : customAttributeId;
   caObject = instance.customAttr(customAttributeId);
 
   if (caObject) {
@@ -62,7 +64,7 @@ export const helpers = {
 
 export default can.Component.extend({
   tag: 'tree-item-custom-attribute',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   helpers,

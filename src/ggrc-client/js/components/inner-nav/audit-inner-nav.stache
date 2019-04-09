@@ -7,11 +7,11 @@
   <nav class="internav">
     {{#if showTabs}}
       {{#priorityTabs}}
-        <inner-nav-item {widget}="." 
-          {active-widget}="activeWidget"
-          {show-title}="true" 
-          {show-all-tabs}="showAllTabs"
-          (close)="closeTab(%event)"></inner-nav-item>
+        <inner-nav-item {widget}="{.}" 
+          {active-widget}="{activeWidget}"
+          {show-title}="{true}" 
+          {show-all-tabs}="{showAllTabs}"
+          (close)="{closeTab(%event)}"></inner-nav-item>
       {{/priorityTabs}}
     {{/if}}
   </nav>
@@ -22,16 +22,16 @@
     <inner-nav-collapse {title}="'Show Audit Scope'">
       <nav class="internav">
         {{#notPriorityTabs}}
-          <inner-nav-item {widget}="."
-            {active-widget}="activeWidget" 
-            {show-title}="false"
-            {show-all-tabs}="showAllTabs"
-            (close)="closeTab(%event)"></inner-nav-item>
+          <inner-nav-item {widget}="{}.}"
+            {active-widget}="{activeWidget}" 
+            {show-title}="{false}"
+            {show-all-tabs}="{showAllTabs}"
+            (close)="{closeTab(%event)}"></inner-nav-item>
         {{/notPriorityTabs}}
 
         <add-tab-button
-          {instance}="instance"
-          {widget-list}="hiddenWidgets"
+          {instance}="{instance}"
+          {widget-list}="{hiddenWidgets}"
           {add-tab-title}="'Add Scope'">
         </add-tab-button>
       </nav>

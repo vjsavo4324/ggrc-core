@@ -11,7 +11,7 @@
       <span class="name">
         {{ name }}
       </span>
-      <person-data {person}="this"></person-data>
+      <person-data {person}="{this}"></person-data>
     </h3>
   </div>
 

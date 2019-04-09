@@ -234,27 +234,65 @@ class Relatable(object):
 
   @declared_attr
   def related_sources(cls):  # pylint: disable=no-self-argument
-    joinstr = 'and_(remote(Relationship.destination_id) == {type}.id, '\
-        'remote(Relationship.destination_type) == "{type}")'
-    joinstr = joinstr.format(type=cls.__name__)
+    current_type = cls.__name__
+
+    joinstr = (
+        "and_("
+        "foreign(remote(Relationship.destination_id)) == {type}.id,"
+        "Relationship.destination_type == '{type}'"
+        ")"
+        .format(type=current_type)
+    )
+
+    # Since we have some kind of generic relationship here, it is needed
+    # to provide custom joinstr for backref. If default, all models having
+    # this mixin will be queried, which in turn produce large number of
+    # queries returning nothing and one query returning object.
+    backref_joinstr = (
+        "remote({type}.id) == foreign(Relationship.destination_id)"
+        .format(type=current_type)
+    )
+
     return db.relationship(
-        'Relationship',
+        "Relationship",
         primaryjoin=joinstr,
-        foreign_keys='Relationship.destination_id',
-        backref='{0}_destination'.format(cls.__name__),
-        cascade='all, delete-orphan')
+        backref=sa.orm.backref(
+            "{}_destination".format(current_type),
+            primaryjoin=backref_joinstr,
+        ),
+        cascade="all, delete-orphan"
+    )
 
   @declared_attr
   def related_destinations(cls):  # pylint: disable=no-self-argument
-    joinstr = 'and_(remote(Relationship.source_id) == {type}.id, '\
-        'remote(Relationship.source_type) == "{type}")'
-    joinstr = joinstr.format(type=cls.__name__)
+    current_type = cls.__name__
+
+    joinstr = (
+        "and_("
+        "foreign(remote(Relationship.source_id)) == {type}.id,"
+        "Relationship.source_type == '{type}'"
+        ")"
+        .format(type=current_type)
+    )
+
+    # Since we have some kind of generic relationship here, it is needed
+    # to provide custom joinstr for backref. If default, all models having
+    # this mixin will be queried, which in turn produce large number of
+    # queries returning nothing and one query returning object.
+    backref_joinstr = (
+        "remote({type}.id) == foreign(Relationship.source_id)"
+        .format(type=current_type)
+    )
+
     return db.relationship(
-        'Relationship',
+        "Relationship",
         primaryjoin=joinstr,
-        foreign_keys='Relationship.source_id',
-        backref='{0}_source'.format(cls.__name__),
-        cascade='all, delete-orphan')
+        backref=sa.orm.backref(
+            "{}_source".format(current_type),
+            primaryjoin=backref_joinstr,
+        ),
+        cascade="all, delete-orphan"
+    )
 
   def related_objects(self, _types=None):
     """Returns all or a subset of related objects of certain types.

@@ -5,7 +5,7 @@
 
 <div class="hideable-holder">
 {{#instance}}
-<person-modal {instance}="instance" {is-new-instance}="new_object_form">
+<person-modal {instance}="{instance}" {is-new-instance}="{new_object_form}">
   <form action="javascript://">
     {{> /static/templates/base_objects/form_restore.stache}}
 
@@ -52,7 +52,7 @@
               <input
                 class="ggrc-form-item__checkbox-item"
                 type="checkbox"
-                {($checked)}="turnOnCalendarEvents"
+                {($checked)}="{turnOnCalendarEvents}"
               >
               Turn on calendar events
             </label>

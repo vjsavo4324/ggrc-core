@@ -3,8 +3,8 @@
   Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<a href="#" class="dropdown-toggle tview-dropdown-toggle" 
-  data-toggle="dropdown" ($click)="initializeColumns()">
+<a href="javascript:void(0)" class="dropdown-toggle tview-dropdown-toggle" 
+   data-toggle="dropdown" ($click)="initializeColumns()">
   <i class="fa fa-fw fa-bars"></i>
 </a>
 <div class="dropdown-menu dropdown-menu-form" can-click="stopPropagation">
@@ -16,7 +16,7 @@
     <ul class="attr-list">
       {{#columns}}
         <li class="{{#mandatory}}disabled{{/mandatory}}">
-          <tree-visible-column-checkbox {column}=".">
+          <tree-visible-column-checkbox {column}="{.}">
           </tree-visible-column-checkbox>
         </li>
       {{/columns}}

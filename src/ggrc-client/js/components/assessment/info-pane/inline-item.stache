@@ -4,33 +4,33 @@
 }}
 
 <inline-edit-control
-  (inline-save)="saveInlineForm(%event)"
-  {is-grouped-dropdown}="isGroupedDropdown"
-  {dropdown-options-groups}="dropdownOptionsGroups"
-  {is-edit-icon-denied}="isEditIconDenied"
-  {prop-name}="propName"
-  {dropdown-options}="dropdownOptions"
-  {dropdown-class}="dropdownClass"
-  {dropdown-no-value}="dropdownNoValue"
-  {is-loading}="isLoading"
-  {instance}="instance"
-  {value}="value"
-  {type}="type"
-  {mandatory}="mandatory"
-  {with-read-more}="withReadMore">
+  (inline-save)="{saveInlineForm(%event)}"
+  {is-grouped-dropdown}="{isGroupedDropdown}"
+  {dropdown-options-groups}="{dropdownOptionsGroups}"
+  {is-edit-icon-denied}="{isEditIconDenied}"
+  {prop-name}="{propName}"
+  {dropdown-options}="{dropdownOptions}"
+  {dropdown-class}="{dropdownClass}"
+  {dropdown-no-value}="{dropdownNoValue}"
+  {is-loading}="{isLoading}"
+  {instance}="{instance}"
+  {value}="{value}"
+  {type}="{type}"
+  {mandatory}="{mandatory}"
+  {with-read-more}="{withReadMore}">
     <confirm-edit-action
-      (set-edit-mode)="setEditModeInline(%event)"
-      (set-in-progress)="setInProgressState()"
-      {is-edit-icon-denied}="isEditIconDenied"
-      {instance}="instance"
-      {is-confirmation-needed}="isConfirmationNeeded"
-      {on-state-change-dfd}="onStateChangeDfd"
-      {edit-mode}="editMode">
+      (set-edit-mode)="{setEditModeInline(%event)}"
+      (set-in-progress)="{setInProgressState()}"
+      {is-edit-icon-denied}="{isEditIconDenied}"
+      {instance}="{instance}"
+      {is-confirmation-needed}="{isConfirmationNeeded}"
+      {on-state-change-dfd}="{onStateChangeDfd}"
+      {edit-mode}="{editMode}">
         <base-inline-control-title
           class="inline__header"
-          {edit-mode}="editMode"
-          {is-edit-icon-denied}="isEditIconDenied"
-          (set-edit-mode-inline)="confirmEdit()">
+          {edit-mode}="{editMode}"
+          {is-edit-icon-denied}="{isEditIconDenied}"
+          (set-edit-mode-inline)="{confirmEdit()}">
             <content></content>
         </base-inline-control-title>
     </confirm-edit-action>

@@ -21,19 +21,19 @@
 </div>
 <div class="flex-size-3">
 
-  <instance-fields-diff {current-instance}="instance" {modified-fields}="proposal.content.fields">
+  <instance-fields-diff {current-instance}="{instance}" {modified-fields}="{proposal.content.fields}">
   </instance-fields-diff>
 
-  <instance-mapping-fields-diff {current-instance}="instance" {modified-fields}="proposal.content.mapping_fields">
+  <instance-mapping-fields-diff {current-instance}="{instance}" {modified-fields}="{proposal.content.mapping_fields}">
   </instance-mapping-fields-diff>
 
-  <instance-list-fields-diff {current-instance}="instance" {modified-fields}="proposal.content.mapping_list_fields">
+  <instance-list-fields-diff {current-instance}="{instance}" {modified-fields}="{proposal.content.mapping_list_fields}">
   </instance-list-fields-diff>
 
-  <instance-acl-diff {current-instance}="instance" {modified-acl}="proposal.content.access_control_list">
+  <instance-acl-diff {current-instance}="{instance}" {modified-acl}="{proposal.content.access_control_list}">
   </instance-acl-diff>
 
-  <instance-gca-diff {current-instance}="instance" {modified-attributes}="proposal.content.custom_attribute_values">
+  <instance-gca-diff {current-instance}="{instance}" {modified-attributes}="{proposal.content.custom_attribute_values}">
   </instance-gca-diff>
 
 </div>
@@ -42,6 +42,6 @@
 </div>
 <div class="flex-size-1">
   {{#is_allowed 'update' instance}}
-    <review-proposal {instance}="instance" {proposal}="proposal"></review-proposal>
+    <review-proposal {instance}="{instance}" {proposal}="{proposal}"></review-proposal>
   {{/is_allowed}}
 </div>

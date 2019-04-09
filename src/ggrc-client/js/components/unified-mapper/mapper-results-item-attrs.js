@@ -11,7 +11,7 @@ import template from './templates/mapper-results-item-attrs.stache';
 
 export default can.Component.extend({
   tag: 'mapper-results-item-attrs',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     instance: null,

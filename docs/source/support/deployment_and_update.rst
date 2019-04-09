@@ -107,6 +107,8 @@ Settings from ``settings.sh``
 +------------------------------------+---------------------------------------------------------------------------+
 | NOTIFICATION_PREFIX                | Title prefix for events and emails notifications                          |
 +------------------------------------+---------------------------------------------------------------------------+
+| DAILY_DIGEST_BATCH_SIZE            | Batch size for processing notifications in daily digest                   |
++------------------------------------+---------------------------------------------------------------------------+
 | CUSTOM_URL_ROOT                    | Equal to the URL where the app is supposed to be deployed too; used to    |
 |                                    | generate links to internal objects in email notifications                 |
 +------------------------------------+---------------------------------------------------------------------------+

@@ -8,10 +8,10 @@
     data-template="{{template_view}}"
     data-model-name="{{type}}"
     data-actions="{{actions}}"
-    {{#if_equals type 'Workflow'}}
+    {{#is(type, "Workflow")}}
       data-model-extra="Workflow_All,Workflow_Active,Workflow_Draft,Workflow_Inactive"
       data-count="Workflow_All"
-    {{/if_equals}}>
+    {{/is}}>
   <a class="{{li_class}} list-toggle" href="javascript://" 
      data-object-singular="{{type}}" data-parent=".top-level">
     <span class="lhs-item lhs-item-long">
@@ -20,7 +20,7 @@
     </span>
   </a>
   <div class="content">
-    <ul class="sub-level {{#if_equals type 'Workflow'}}with-filters{{/if_equals}}"></ul>
+    <ul class="sub-level {{#is(type, "Workflow")}}with-filters{{/is}}"></ul>
     <ul class="sub-actions"></ul>
   </div>
 </li>

@@ -150,35 +150,6 @@
   &__filter-label-role {
     line-height: 21px;
   }
-
-  &.tree-filter_paging {
-    .tree-filter {
-      &__fluid-wraper {
-        width:100%;
-        margin: 0 auto;
-      }
-      &__input-wrap {
-        float: left;
-        width: 27%;
-      }
-      &__paging-wrap {
-        display: block;
-        position: absolute;
-        width: 395px;
-        right: 0;
-        top: 0;
-      }
-      &__status-wrap {
-        float:left;
-        width:20%;
-        min-width: 160px;
-        max-width: 350px;
-        position: relative;
-        top: -2px;
-        font-size: 12px;
-      }
-    }
-  }
 }
 
 .relevance-filters {

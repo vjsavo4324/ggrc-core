@@ -195,6 +195,7 @@ class IssuetrackerIssue(base.ContextRBAC, Base, db.Model):
   def get_issuetracker_issue_stub():
     """Returns dict with all Issue Tracker fields with empty values."""
     return {
+        '_is_stub': True,
         'enabled': False,
         'component_id': None,
         'hotlist_id': None,
@@ -203,5 +204,5 @@ class IssuetrackerIssue(base.ContextRBAC, Base, db.Model):
         'issue_severity': None,
         'title': None,
         'issue_id': None,
-        'issue_url': None
+        'issue_url': None,
     }

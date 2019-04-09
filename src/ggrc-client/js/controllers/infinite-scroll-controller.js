@@ -143,25 +143,27 @@ const LhnTooltipsControl = can.Control.extend({
     return path;
   },
   on_fade_in_timeout: function (el, instance) {
-    let self = this;
     let tooltipView = this.get_tooltip_view(el);
-
     if (tooltipView) {
       this.fade_in_timeout = null;
-      can.view(tooltipView, {instance: instance}, function (frag) {
-        let tooltipWidth = self.options.$extended.outerWidth();
+      $.ajax({
+        url: tooltipView,
+        dataType: 'text',
+      }).then((view) => {
+        let frag = can.stache(view)({instance: instance});
+        let tooltipWidth = this.options.$extended.outerWidth();
         let offset = el.parent().offset();
         let elLeft = offset ? offset.left : 0;
         let offsetLeft = elLeft - tooltipWidth > 0 ?
           elLeft - tooltipWidth : elLeft + el.parent().width();
 
-        self.options.$extended
+        this.options.$extended
           .html(frag)
           .addClass('in')
           .removeClass('hide')
           .css({top: el.offset().top, left: offsetLeft})
           .data('model', instance);
-        self.ensure_tooltip_visibility();
+        this.ensure_tooltip_visibility();
       });
     }
   },

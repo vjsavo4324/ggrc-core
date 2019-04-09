@@ -6,7 +6,7 @@
 <header class="header tree-header flex-box {{cssClasses}}">
   <tree-header-selector class="tree-header-selector">
     {{^if disableConfiguration}}
-    <a href="#" class="dropdown-toggle tview-dropdown-toggle visible-columns-icon"
+    <a href="javascript:void(0)" class="dropdown-toggle tview-dropdown-toggle visible-columns-icon"
       data-toggle="dropdown" ($click)="initializeColumns()">
       <i class="fa fa-fw fa-bars"></i>
     </a>
@@ -17,7 +17,7 @@
       <ul class="attr-list">
         {{#columns}}
           <li class="{{#if mandatory}}disabled{{/if}}">
-            <tree-visible-column-checkbox {column}=".">
+            <tree-visible-column-checkbox {column}="{.}">
             </tree-visible-column-checkbox>
           </li>
         {{/columns}}
@@ -37,8 +37,8 @@
       {{else}}
         <sortable-column
           class="tree-header-titles__item"
-          {(sort)}="orderBy"
-          sort-field="{{attr_sort_field}}">
+          {(sort)}="{orderBy}"
+          {sort-field}="{attr_sort_field}">
           <span class="tree-header-titles__text">
             {{attr_title}}
           </span>

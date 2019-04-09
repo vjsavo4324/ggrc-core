@@ -24,7 +24,7 @@ import {
 
 export default can.Component.extend({
   tag: 'create-and-map',
-  template,
+  template: can.stache(template),
   leakScope: false,
   viewModel: {
     define: {

@@ -4,7 +4,7 @@
 */
 
 import Component from '../info-pane';
-import {getComponentVM} from '../../../../../js_specs/spec_helpers';
+import {getComponentVM, makeFakeInstance} from '../../../../../js_specs/spec_helpers';
 import tracker from '../../../../tracker';
 import {
   REFRESH_TAB_CONTENT,
@@ -178,7 +178,9 @@ describe('assessment-info-pane component', () => {
 
     describe('get() method', () => {
       beforeEach(function () {
-        vm.attr('instance', {});
+        vm.attr('instance', makeFakeInstance({
+          model: businessModels.Assessment,
+        })());
       });
 
       it('returns false if instance is archived', function () {

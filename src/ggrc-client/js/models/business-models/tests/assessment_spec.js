@@ -10,6 +10,7 @@ import * as aclUtils from '../../../plugins/utils/acl-utils';
 import {makeFakeInstance} from '../../../../js_specs/spec_helpers';
 import Context from '../../service-models/context';
 import * as modelsUtils from '../../../plugins/utils/models-utils';
+import {REFRESH_MAPPING} from '../../../events/eventTypes';
 
 describe('Assessment model', function () {
   'use strict';
@@ -246,6 +247,37 @@ describe('Assessment model', function () {
         expect(model.attr('audit.title')).toBe('FooBar');
         done();
       });
+    });
+  });
+
+  describe('handler for REFRESH_MAPPING event', () => {
+    let instance;
+
+    beforeEach(() => {
+      instance = makeFakeInstance({model: Assessment})();
+    });
+
+    it('calls refresh of instance if it is in read mode status', () => {
+      spyOn(instance, 'refresh');
+      Assessment.readModeStatuses.forEach((status) => {
+        instance.attr('status', status);
+
+        instance.dispatch(REFRESH_MAPPING);
+      });
+
+      expect(instance.refresh)
+        .toHaveBeenCalledTimes(Assessment.readModeStatuses.length);
+    });
+
+    it('does not call refresh of instance if it is in edit mode status', () => {
+      spyOn(instance, 'refresh');
+      Assessment.editModeStatuses.forEach((status) => {
+        instance.attr('status', status);
+
+        instance.dispatch(REFRESH_MAPPING);
+      });
+
+      expect(instance.refresh).not.toHaveBeenCalled();
     });
   });
 });

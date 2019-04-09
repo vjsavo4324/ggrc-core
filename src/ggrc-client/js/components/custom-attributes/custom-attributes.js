@@ -10,7 +10,7 @@ import template from './custom-attributes.stache';
 
 export default can.Component.extend({
   tag: 'custom-attributes',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     fields: [],

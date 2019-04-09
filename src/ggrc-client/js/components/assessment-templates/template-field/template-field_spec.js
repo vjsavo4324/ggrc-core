@@ -105,9 +105,9 @@ describe('template-field component', function () {
 
         htmlSnippet = [
           '<template-field',
-          '  {field}="fieldDefinition"',
-          '  {types}="types"',
-          '  (remove)="fieldRemoved">',
+          '  {field}="{fieldDefinition}"',
+          '  {types}="{types}"',
+          '  (remove)="{fieldRemoved}">',
           '</template-field>',
         ].join('');
 
@@ -125,7 +125,7 @@ describe('template-field component', function () {
           fieldRemoved: onRemoveCallback,
         });
 
-        renderer = can.mustache(htmlSnippet);
+        renderer = can.stache(htmlSnippet);
         docFragment = renderer(templateContext);
         $body.append(docFragment);
 

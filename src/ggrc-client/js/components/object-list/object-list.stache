@@ -5,15 +5,15 @@
 {{#if showSpinner}}
   <div class="spinner-section {{#if isGrid}}spinner-section_grid{{/if}}">
     {{#if isGrid}}
-      <spinner {toggle}="isLoading" {extra-css-class}="'grid-spinner'" class="spinner-wrapper active"></spinner>
+      <spinner {toggle}="{isLoading}" {extra-css-class}="'grid-spinner'" class="spinner-wrapper active"></spinner>
     {{else}}
-      <spinner {toggle}="isLoading" class="spinner-wrapper active"></spinner>
+      <spinner {toggle}="{isLoading}" class="spinner-wrapper active"></spinner>
     {{/if}}
   </div>
 {{else}}
   {{#if items.length}}
       {{#if showMore}}
-        <show-more class="list-more" items="items" limit="3">
+        <show-more class="list-more" {items}="{items}" {limit}="3">
           <div class="object-list__item {{#isSelected}}object-list__item-selected{{/isSelected}}" ($click)="modifySelection">
             <content>No item component or template is provided</content>
           </div>

@@ -352,8 +352,8 @@ const LhnControl = can.Control.extend({}, {
 
 const LhnSearchControl = can.Control.extend({
   defaults: {
-    list_view: GGRC.templates_path + '/base_objects/search_result.stache',
-    actions_view: GGRC.templates_path + '/base_objects/search_actions.stache',
+    list_view: 'base_objects/search_result',
+    actions_view: 'base_objects/search_actions',
     list_selector: 'ul.top-level > li, ul.mid-level > li',
     list_toggle_selector: 'li > a.list-toggle',
     model_attr_selector: null,
@@ -370,18 +370,19 @@ const LhnSearchControl = can.Control.extend({
   },
 }, {
   display: function () {
-    let templatePath = GGRC.templates_path + this.element.data('template');
     let lhnPrefs = getLHNState();
 
     // 2-way binding is set up in the view using can-value, directly connecting the
     //  search box and the display prefs to save the search value between page loads.
     //  We also listen for this value in the controller
     //  to trigger the search.
-    let frag = can.view(templatePath, lhnPrefs);
+    let view = GGRC.Templates[this.element.data('template')];
+    let frag = can.stache(view)(lhnPrefs);
+    this.element.html(frag);
+
     let initialParams = {};
     let savedFilters = lhnPrefs.filter_params || new can.Map();
 
-    this.element.html(frag);
     this.post_init();
 
     let subLevelElements = this.element.find('.sub-level');
@@ -705,25 +706,26 @@ const LhnSearchControl = can.Control.extend({
         }),
       };
 
-      can.view($list.data('template') || self.options.list_view, context,
-        (frag, xhr) => {
-          $list.find(self.options.list_content_selector).html(frag);
+      let listView = GGRC.Templates[
+        $list.data('template') || self.options.list_view];
+      let listItem = can.stache(listView)(context);
+      $list.find(self.options.list_content_selector).html(listItem);
 
-          // If this category we're rendering is the one that is open, wait for the
-          //  list to finish rendering in the content pane, then set the scrolltop
-          //  of the category to the stored value in display prefs.
-          if (modelName === getLHNState().open_category) {
-            $list.one('list_displayed', function () {
-              $(this).find(self.options.list_content_selector).scrollTop(
-                getLHNState().category_scroll || 0
-              );
-            });
-          }
+      // If this category we're rendering is the one that is open, wait for the
+      //  list to finish rendering in the content pane, then set the scrolltop
+      //  of the category to the stored value in display prefs.
+      if (modelName === getLHNState().open_category) {
+        $list.one('list_displayed', function () {
+          $(this).find(self.options.list_content_selector).scrollTop(
+            getLHNState().category_scroll || 0
+          );
         });
-      can.view($list.data('actions') || self.options.actions_view, context,
-        function (frag, xhr) {
-          $list.find(self.options.actions_content_selector).html(frag);
-        });
+      }
+
+      let actionView = GGRC.Templates[
+        $list.data('actions') || self.options.actions_view];
+      let actions = can.stache(actionView)(context);
+      $list.find(self.options.actions_content_selector).html(actions);
     });
   },
   get_list_model: function ($list, count) {

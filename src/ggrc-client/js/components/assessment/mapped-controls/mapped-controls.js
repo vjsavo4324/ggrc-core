@@ -22,8 +22,6 @@ import {
 import template from './mapped-controls.stache';
 import {notifier} from '../../../plugins/utils/notifiers-utils';
 
-const tag = 'assessment-mapped-controls';
-
 /**
  * ViewModel for Assessment Mapped Controls Popover.
  * @type {can.Map}
@@ -125,8 +123,8 @@ const viewModel = {
  * Assessment specific mapped controls view component
  */
 export default can.Component.extend({
-  template,
-  tag,
+  tag: 'assessment-mapped-controls',
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
   events: {

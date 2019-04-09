@@ -7,7 +7,7 @@ import template from './add-template-field.stache';
 
 export default can.Component.extend({
   tag: 'add-template-field',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     selected: [],

@@ -3,12 +3,11 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
-const tag = 'object-selection';
 /**
  * Object Selection component
  */
 export default can.Component.extend({
-  tag,
+  tag: 'object-selection',
   leakScope: true,
   viewModel: {
     selectedItems: [],

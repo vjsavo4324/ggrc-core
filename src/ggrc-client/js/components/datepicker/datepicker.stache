@@ -23,7 +23,7 @@
       placeholder="{{MOMENT_DISPLAY_FMT}}"
       type="text"
       class="datepicker__input date {{#if readonly}}datepicker__input--denied{{/if}}"
-      {(value)}="_date"
+      {(value)}="{_date}"
       can-focus="onFocus"
     >
     {{#if date}}

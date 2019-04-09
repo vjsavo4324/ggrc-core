@@ -8,7 +8,7 @@ import {unitOptions as workflowUnitOptions} from '../../apps/workflow-config';
 
 export default can.Component.extend({
   tag: 'repeat-on-summary',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

@@ -112,6 +112,6 @@
     </ul>
   </div>
   <div class="footer-wrap">
-    <a href="#" class="btn btn-small btn-green">OK, got it!</a>
+    <a href="javascript:void(0)" class="btn btn-small btn-green">OK, got it!</a>
   </div>
 </div>

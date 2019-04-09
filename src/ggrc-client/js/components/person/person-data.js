@@ -8,13 +8,12 @@ import template from './person-data.stache';
 import {notifier} from '../../plugins/utils/notifiers-utils';
 import Person from '../../models/business-models/person';
 
-const tag = 'person-data';
 /**
  * Person List Item Component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'person-data',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

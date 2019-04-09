@@ -20,7 +20,7 @@ import template from './related-assessment-popover.stache';
  */
 export default can.Component.extend({
   tag: 'related-assessment-popover',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     selectedAssessment: {},

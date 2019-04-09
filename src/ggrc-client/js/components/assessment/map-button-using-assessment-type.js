@@ -3,10 +3,8 @@
  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
  */
 
-const tag = 'map-button-using-assessment-type';
-
 export default can.Component.extend({
-  tag,
+  tag: 'map-button-using-assessment-type',
   leakScope: true,
   viewModel: {
     instance: {},

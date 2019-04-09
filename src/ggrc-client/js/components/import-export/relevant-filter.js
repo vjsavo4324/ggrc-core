@@ -9,7 +9,7 @@ import TreeViewConfig from '../../apps/base_widgets';
 
 export default can.Component.extend({
   tag: 'relevant-filter',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     relevant_menu_item: '@',

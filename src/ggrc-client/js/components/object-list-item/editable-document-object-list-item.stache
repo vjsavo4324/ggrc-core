@@ -5,7 +5,7 @@
 
 <div class="action-toolbar">
     <div class="action-toolbar__content-item">
-      <document-object-list-item {instance}="document"></document-object-list-item>
+      <document-object-list-item {instance}="{document}"></document-object-list-item>
     </div>
     <div class="action-toolbar__controls">
         {{#unless instance.archived}}

@@ -17,12 +17,12 @@
            title="Set a name for the {{class.title_singular}}."></i>
       </label>
       <input-filter
-        name="name"
-        {(value)}="name"
-        placeholder="Enter Name"
-        exclude-symbols="*"
+        {name}="'name'"
+        {(value)}="{name}"
+        {placeholder}="'Enter Name'"
+        {exclude-symbols}="'*'"
         {tabindex}="1"
-        {autofocus}="true">
+        {autofocus}="{true}">
       </input-filter>
     </div>
 
@@ -60,18 +60,15 @@
         <i class="fa fa-question-circle" rel="tooltip"
           title="Check if this role allows Delete permission on an object type."></i>
       </label>
-      <input
-        type="checkbox"
-        name="delete"
-        {{^if_equals parent_type 'Evidence'}}
-        {{^if_equals parent_type 'Document'}}
-          {{#if delete}}checked="checked"{{/if}}
-        {{/if}}
-        {{/if}}
-        class="input-block-level"
-        tabindex="4"
-        {{#if_equals parent_type 'Evidence'}}disabled{{/if_equals}}
-        {{#if_equals parent_type 'Document'}}disabled{{/if_equals}}>
+      <input type="checkbox" name="delete" class="input-block-level"
+             {{^is(parent_type, "Evidence")}}
+             {{^is(parent_type, "Document")}}
+               {{#if delete}}checked="checked"{{/if}}
+             {{/is}}
+             {{/is}}
+             {{#is(parent_type, "Evidence")}}disabled{{/is}}
+             {{#is(parent_type, "Document")}}disabled{{/is}}
+             tabindex="4"/>
     </div>
   </div>
 </form>

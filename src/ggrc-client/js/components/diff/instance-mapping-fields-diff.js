@@ -8,7 +8,6 @@ import {REFRESH_PROPOSAL_DIFF} from '../../events/eventTypes';
 import DiffBaseVM from './diff-base-vm';
 import {reify} from '../../plugins/utils/reify-utils';
 import template from './templates/instance-diff-items.stache';
-const tag = 'instance-mapping-fields-diff';
 
 const viewModel = DiffBaseVM.extend({
   modifiedFields: {},
@@ -67,8 +66,8 @@ const viewModel = DiffBaseVM.extend({
 });
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'instance-mapping-fields-diff',
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
   events: {

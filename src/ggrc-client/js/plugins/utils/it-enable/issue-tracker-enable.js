@@ -255,10 +255,8 @@ GGRC.enableIssueTracker = () => {
   } else {
     isButtonActivated = true;
 
-    vm = new IssueTrackerEnabler();
-
-    let renderer = can.view.mustache(template);
-    let fragment = renderer(vm);
+    let renderer = can.stache(template);
+    let fragment = renderer(new IssueTrackerEnabler());
 
     $('section.footer').append(fragment);
   }

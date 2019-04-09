@@ -7,7 +7,7 @@ import template from './text-form-field-view.stache';
 
 export default can.Component.extend({
   tag: 'text-form-field-view',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     value: null,

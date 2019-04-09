@@ -10,8 +10,6 @@ import baseNotifications from '../mixins/base-notifications';
 import Stub from '../stub';
 import Program from './program';
 
-const path = GGRC.templates_path + '/risk_assessments';
-
 export default Cacheable.extend({
   root_object: 'risk_assessment',
   root_collection: 'risk_assessments',
@@ -48,7 +46,7 @@ export default Cacheable.extend({
         attr_sort_field: 'ra_counsel',
       },
     ],
-    add_item_view: path + '/tree_add_item.stache',
+    add_item_view: 'risk_assessments/tree_add_item',
   },
   sub_tree_view_options: {
     default_filter: ['Program'],

@@ -15,7 +15,6 @@ import {
 import Permission from '../../permission';
 import Mapper from '../../models/mappers/mappings';
 
-const tag = 'tree-item-actions';
 const forbiddenEditList = ['Cycle', 'CycleTaskGroup'];
 
 const viewModel = can.Map.extend({
@@ -126,8 +125,8 @@ const viewModel = can.Map.extend({
 });
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'tree-item-actions',
+  template: can.stache(template),
   leakScope: true,
   viewModel,
   events: {

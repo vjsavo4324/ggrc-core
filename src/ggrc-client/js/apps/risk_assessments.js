@@ -41,8 +41,7 @@ RiskAssessmentsExtension.init_widgets = function () {
         widgetType: 'treeview',
         treeViewDepth: 0,
         content_controller_options: {
-          add_item_view: GGRC.templates_path +
-            '/risk_assessments/tree_add_item.stache',
+          add_item_view: 'risk_assessments/tree_add_item',
           parent_instance: pageInstance,
           model: RiskAssessment,
         },

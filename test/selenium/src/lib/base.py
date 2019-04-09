@@ -816,7 +816,7 @@ class CommentsPanel(Element):
   def __init__(self, driver, locator_or_element):
     super(CommentsPanel, self).__init__(driver, locator_or_element)
     self._items = []
-    self._root = self._browser.element(tag_name="comment-data-provider")
+    self._root = self._browser.div(text="Responses/Comments").parent()
 
   @property
   def input_txt(self):
@@ -851,8 +851,7 @@ class CommentsPanel(Element):
   @property
   def is_input_empty(self):
     """Return 'True' if comments input field is empty, else 'False'."""
-    return not self.element.find_element(
-        *self.input_txt.locator_or_element).text
+    return not self.input_txt.text
 
   def add_comment(self, text):
     """Clear text from element and enter new text."""

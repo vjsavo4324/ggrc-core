@@ -7,7 +7,7 @@ import template from './people-list.stache';
 
 export default can.Component.extend({
   tag: 'people-list',
-  template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     peopleList: [],

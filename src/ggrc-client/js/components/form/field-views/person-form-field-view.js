@@ -8,7 +8,7 @@ import template from './person-form-field-view.stache';
 
 export default can.Component.extend({
   tag: 'person-form-field-view',
-  template: template,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     value: null,

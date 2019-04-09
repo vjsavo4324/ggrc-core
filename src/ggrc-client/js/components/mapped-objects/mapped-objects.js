@@ -13,13 +13,12 @@ import template from './mapped-objects.stache';
 import Mappings from '../../models/mappers/mappings';
 import QueryParser from '../../generated/ggrc_filter_query_parser';
 
-const tag = 'mapped-objects';
 /**
  * Mapped objects view component
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'mapped-objects',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

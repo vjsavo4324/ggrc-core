@@ -7,7 +7,6 @@ import './collapsible-panel-header';
 import './collapsible-panel-body';
 import template from './collapsible-panel.stache';
 
-const tag = 'collapsible-panel';
 let viewModel = can.Map.extend({
   titleText: '@',
   titleIcon: '@',
@@ -29,8 +28,8 @@ let viewModel = can.Map.extend({
  * Collapsible Panel component to add expand/collapse behavior
  */
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'collapsible-panel',
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

@@ -3,6 +3,7 @@
 """Locators for all elements."""
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=invalid-name
 
 from selenium.webdriver.common.by import By
 
@@ -128,7 +129,8 @@ class Dashboard(object):
   CREATE_TASK_BTN_CSS = (
       By.CSS_SELECTOR, _GET_LIST +
       ' [data-object-singular="CycleTaskGroupObjectTask"]')
-  CREATE_OBJECT_BTN_CSS = (By.CSS_SELECTOR, _GET_LIST + ' [href="#"]')
+  CREATE_OBJECT_BTN_CSS = (
+      By.CSS_SELECTOR, _GET_LIST + ' [href="javascript:void(0)"]')
   ALL_OBJECTS_BTN_CSS = (
       By.CSS_SELECTOR, _GET_LIST + ' [href="/objectBrowser"]')
 
@@ -144,10 +146,14 @@ class LhnMenu(object):
 
     @staticmethod
     def get_create_new_button(label):
+      # Controls cannot be created from UI.
+      if label == objects.get_singular(objects.CONTROLS, title=True):
+        return(By.CSS_SELECTOR,
+               ('[data-model-name="{}"] '
+                'ul.sub-actions li.add-new a').format(label))
       return (
           By.CSS_SELECTOR,
-          '[data-model-name="{}"] [data-test-id='
-          '"button_lhn_create_new_program_522c563f"]'.format(label))
+          '[data-model-name="{}"] [class="add-new oneline"]'.format(label))
 
     @staticmethod
     def get_accordion_count(label):
@@ -683,9 +689,7 @@ class ModalCloneAudit(ModalCommonConfirmAction):
   """Locators for Clone object modals."""
   MODAL = Common.MODAL_CONFIRM
   CHECKBOX_CLONE_ASMT_TMPLS = (
-      By.CSS_SELECTOR,
-      '{} [can-value="instance.includeObjects.AssessmentTemplate"]'
-        .format(MODAL))
+      By.CSS_SELECTOR, '{} .modal-body input[type="checkbox"]'.format(MODAL))
 
 
 class CommonWidgetInfo(object):

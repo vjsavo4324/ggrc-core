@@ -3,6 +3,7 @@
 
 """Module for cycle task group model.
 """
+import itertools
 
 from sqlalchemy import orm, inspect
 from sqlalchemy.ext import hybrid
@@ -87,13 +88,47 @@ class CycleTaskGroup(roleable.Roleable,
       attributes.DateFullTextAttr("due date", 'next_due_date',),
       attributes.FullTextAttr("assignee", "contact", ['email', 'name']),
       attributes.FullTextAttr("cycle title", 'cycle', ['title'], False),
-      attributes.FullTextAttr("cycle assignee",
-                              lambda x: x.cycle.contact,
-                              ['email', 'name'],
-                              False),
-      attributes.DateFullTextAttr("cycle due date",
-                                  lambda x: x.cycle.next_due_date,
-                                  with_template=False),
+      attributes.FullTextAttr(
+          "cycle assignee",
+          lambda x: x.cycle.contact,
+          ['email', 'name'],
+          False),
+      attributes.DateFullTextAttr(
+          "cycle due date",
+          lambda x: x.cycle.next_due_date,
+          with_template=False),
+      attributes.MultipleSubpropertyFullTextAttr(
+          "task title",
+          "cycle_task_group_tasks",
+          ["title"],
+          False),
+      attributes.MultipleSubpropertyFullTextAttr(
+          "task assignees",
+          "_task_assignees",
+          ["email", "name"],
+          False),
+      attributes.MultipleSubpropertyFullTextAttr(
+          "task state",
+          "cycle_task_group_tasks",
+          ["status"],
+          False),
+      attributes.MultipleSubpropertyFullTextAttr(
+          "task secondary assignees",
+          "_task_secondary_assignees",
+          ["email", "name"],
+          False),
+      attributes.DateMultipleSubpropertyFullTextAttr(
+          "task due date",
+          "cycle_task_group_tasks",
+          ["end_date"],
+          False),
+      attributes.MultipleSubpropertyFullTextAttr(
+          "task comment",
+          lambda instance: itertools.chain(*[
+              t.comments for t in instance.cycle_task_group_tasks
+          ]),
+          ["description"],
+          False),
   ]
 
   # This parameter is overridden by cycle backref, but is here to ensure
@@ -135,6 +170,10 @@ class CycleTaskGroup(roleable.Roleable,
 
   AUTO_REINDEX_RULES = [
       index_mixin.ReindexRule(
+          "CycleTaskGroupObjectTask",
+          lambda x: x.cycle_task_group
+      ),
+      index_mixin.ReindexRule(
           "Person",
           _query_filtered_by_contact
       ),
@@ -167,22 +206,43 @@ class CycleTaskGroup(roleable.Roleable,
         orm.Load(cls).load_only(
             "next_due_date",
         ),
+        orm.Load(cls).subqueryload("cycle_task_group_tasks").load_only(
+            "id",
+            "title",
+            "end_date",
+            "status",
+        ),
+        orm.Load(cls).subqueryload("cycle_task_group_tasks").subqueryload(
+            "_access_control_list",
+        ).load_only(
+            "ac_role_id",
+        ).subqueryload(
+            "access_control_people",
+        ).load_only(
+            "person_id",
+        ),
+        orm.Load(cls).subqueryload("cycle_task_group_tasks").joinedload(
+            "cycle_task_entries",
+        ).load_only(
+            "id",
+            "description",
+        ),
         orm.Load(cls).joinedload("cycle").load_only(
             "id",
             "title",
-            "next_due_date"
+            "next_due_date",
         ),
         orm.Load(cls).joinedload("cycle").joinedload(
             "contact"
         ).load_only(
-            "email",
             "name",
-            "id"
+            "email",
+            "id",
         ),
         orm.Load(cls).joinedload("contact").load_only(
-            "email",
             "name",
-            "id"
+            "email",
+            "id",
         ),
     )
 

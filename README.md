@@ -410,23 +410,14 @@ make appengine_packages
 
 ### Changes JS requirements
 
-Same as with python files we can first try to rebuild the entire container with
+On every change of front-end packages or just to reinstall them,
+you can run *inside* the container:
 
 ```sh
-./bin/containers setup
-./bin/containers run
+refresh
 ```
 
-command *should* update npm packages and install the required node modules.
-
-On every change of front-end packages you can manually update the requirements.
-To do that you can log in to docker container and run
-
-```sh
-rm -rf node_modules/*
-npm i --unsafe-perm
-build_assets
-```
+and then run `build_assets` or `watch_assets` to rebuild files
 
 # Copyright Notice
 

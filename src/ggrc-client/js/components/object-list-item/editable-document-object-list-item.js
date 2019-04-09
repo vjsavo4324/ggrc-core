@@ -6,11 +6,9 @@
 import '../object-list-item/document-object-list-item';
 import template from './editable-document-object-list-item.stache';
 
-const tag = 'editable-document-object-list-item';
-
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'editable-document-object-list-item',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     document: {},

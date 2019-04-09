@@ -8,7 +8,6 @@ import DiffBaseVM from './diff-base-vm';
 import template from './templates/instance-diff-items.stache';
 import {getPersonInfo} from '../../../js/plugins/utils/user-utils';
 import {formatDate} from '../../../js/plugins/utils/date-utils';
-const tag = 'instance-gca-diff';
 
 const viewModel = DiffBaseVM.extend({
   modifiedAttributes: {},
@@ -129,8 +128,8 @@ const viewModel = DiffBaseVM.extend({
 });
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'instance-gca-diff',
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
   events: {

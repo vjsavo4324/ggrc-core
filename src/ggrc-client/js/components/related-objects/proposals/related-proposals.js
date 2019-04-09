@@ -4,11 +4,10 @@
  */
 
 import template from './templates/related-proposals.stache';
-const tag = 'related-proposals';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'related-proposals',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     baseInstance: {},

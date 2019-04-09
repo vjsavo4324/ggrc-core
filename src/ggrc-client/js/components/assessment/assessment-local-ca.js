@@ -12,6 +12,7 @@ import {
 import {VALIDATION_ERROR, RELATED_ITEMS_LOADED} from '../../events/eventTypes';
 import tracker from '../../tracker';
 import Permission from '../../permission';
+import isFunction from 'can-util/js/is-function/is-function';
 import {getPageInstance} from '../../plugins/utils/current-page-utils';
 import {getPlainText} from '../../plugins/ggrc_utils';
 
@@ -250,9 +251,10 @@ export default can.Component.extend({
   },
   helpers: {
     isInvalidField: function (show, valid, highlightInvalidFields, options) {
-      show = Mustache.resolve(show);
-      valid = Mustache.resolve(valid);
-      highlightInvalidFields = Mustache.resolve(highlightInvalidFields);
+      show = isFunction(show) ? show() : show;
+      valid = isFunction(valid) ? valid() : valid;
+      highlightInvalidFields = isFunction(highlightInvalidFields) ?
+        highlightInvalidFields() : highlightInvalidFields;
 
       if (highlightInvalidFields && show && !valid) {
         return options.fn(options.context);

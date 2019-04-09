@@ -1,39 +1,37 @@
 {{!
-    Copyright (C) 2019 Google Inc.
-    Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
+  Copyright (C) 2019 Google Inc.
+  Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-{{#using workflow=instance.workflow}}
-  {{#if_equals workflow.status 'Active'}}
-    <div class="row-fluid wrap-row">
-      <div class="span12">
-          <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>Note:</strong> This workflow is active. Changes you make here will not affect active cycles. They will only affect future recurrences.
-          </div>
+{{#is(workflow.status, "Active")}}
+  <div class="row-fluid wrap-row">
+    <div class="span12">
+      <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Note:</strong> This workflow is active. Changes you make here will not affect active cycles. They will only affect future recurrences.
       </div>
     </div>
-  {{/if_equals}}
-{{/using}}
+  </div>
+{{/is}}
 
 {{#instance.description}}
   <div class="info-pane__section">
       <div class="info-pane__section-title">
-          Description
+        Description
       </div>
       <div class="info-pane__section-content">
-         {{{instance.description}}}
+        {{{instance.description}}}
     </div>
   </div>
 {{/instance.description}}
 
 <div class="info-pane__section">
     <div class="info-pane__section-title">
-        Code
+      Code
     </div>
     <div class="info-pane__section-content">
-        {{{instance.slug}}}
+      {{{instance.slug}}}
     </div>
 </div>

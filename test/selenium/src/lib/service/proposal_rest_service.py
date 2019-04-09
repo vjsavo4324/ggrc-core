@@ -18,7 +18,6 @@ class ProposalsService(rest_service.HelpRestService):
   def get_obj_proposals(self, obj):
     """Get and return object proposals according to obj type and id."""
     # double waiting for this rest method
-    double_timeout = constants.ux.MAX_USER_WAIT_SECONDS * 2
     return rest_service.BaseRestService.get_items_from_resp(
         self.client.create_object(
             type=self.endpoint,
@@ -27,7 +26,7 @@ class ProposalsService(rest_service.HelpRestService):
             order_by=[
                 {"name": "status", "desc": True},
                 {"name": "created_at", "desc": True}]),
-        timeout=double_timeout).get("values")
+        timeout=constants.ux.TWO_MIN_USER_WAIT).get("values")
 
   def get_proposal_creation_date(self, obj, proposal):
     """Get proposal creation date."""

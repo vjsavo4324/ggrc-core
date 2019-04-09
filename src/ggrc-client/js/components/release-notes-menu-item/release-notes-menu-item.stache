@@ -12,10 +12,10 @@
     Version {{version}}
   </div>
 
-  <simple-modal {modal-title}="modalTitle"
-                {replace-content}="true"
-                {state}="state"
-                {extra-css-class}="extraCssClass">
+  <simple-modal {modal-title}="{modalTitle}"
+                {replace-content}="{true}"
+                {state}="{state}"
+                {extra-css-class}="{extraCssClass}">
     <release-notes-modal></release-notes-modal>
   </simple-modal>
 </a>

@@ -7,11 +7,11 @@
 <li {{canData 'ui-autocomplete-item'}} class="ui-menu-item">
   <a href="javascript://">
     {{name}} <span class="small">{{email}}</span>
-  {{#if_equals system_wide_role 'No Access'}}
+  {{#is(system_wide_role, "No Access")}}
     <span class="user-disabled">
       (Inactive user)
     </span>
-  {{/if_equals}}
+  {{/is}}
   </a>
 </li>
 {{/each}}

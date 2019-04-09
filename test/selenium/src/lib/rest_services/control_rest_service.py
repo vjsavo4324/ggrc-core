@@ -26,7 +26,6 @@ class ControlRestService(base_rest_service.ObjectRestService):
 
 class ControlAssertionRestService(base_rest_service.ObjectRestService):
   """REST service for ControlAssertion app entities."""
-  app_entity_cls = control_entity.ControlAssertion
 
   @staticmethod
   def _map_from_rest(rest_dict):

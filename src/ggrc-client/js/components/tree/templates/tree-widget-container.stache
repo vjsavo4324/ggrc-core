@@ -7,66 +7,63 @@
   <div class="flex-box flex-col header tree-header-content">
     <div class="flex-box tree-filter">
       <tree-filter-input class="flex-size-1"
-                         {register-filter}="@registerFilter"
-                         (submit)="onFilter"
-                         (openAdvanced)="openAdvancedFilter"
-                         (removeAdvanced)="removeAdvancedFilters"
-                         {show-advanced}="statusFilterVisible"
-                         {disabled}="advancedSearch.filter"
-                         {depth}="options.depth"
-                         {filter-deep-limit}="options.filterDeepLimit"
+                         {register-filter}="{@registerFilter}"
+                         (submit)="{onFilter}"
+                         (openAdvanced)="{openAdvancedFilter}"
+                         (removeAdvanced)="{removeAdvancedFilters}"
+                         {show-advanced}="{statusFilterVisible}"
+                         {disabled}="{advancedSearch.filter}"
+                         {depth}="{options.depth}"
+                         {filter-deep-limit}="{options.filterDeepLimit}"
       ></tree-filter-input>
       {{#if statusFilterVisible}}
         <tree-status-filter class="flex-size-1"
-                            {widget-id}="options.widgetId"
-                            {model-name}="modelName"
-                            {register-filter}="@registerFilter"
-                            (filter)="onFilter"
-                            {disabled}="advancedSearch.filter"
-        >
-          <multiselect-dropdown
-            {options}="filterStates"
-            {placeholder}="'Filter by State'"
-            {disabled}="advancedSearch.filter"
-            (dropdown-close)="selectItems(%event)">
+                            {widget-id}="{options.widgetId}"
+                            {model-name}="{modelName}"
+                            {register-filter}="{@registerFilter}"
+                            (filter)="{onFilter}"
+                            {disabled}="{advancedSearch.filter}">
+          <multiselect-dropdown {options}="{filterStates}"
+                                {placeholder}="'Filter by State'"
+                                {disabled}="{advancedSearch.filter}"
+                                (dropdown-close)="{selectItems(%event)}">
           </multiselect-dropdown>
           {{#if statusTooltipVisible}}
             <i class="fa fa-question-circle" rel="tooltip"
-              title="The state represents the state of this object information within GGRC. It does not indicate the state of the underlying product or system."></i>
+               title="The state represents the state of this object information within GGRC. It does not indicate the state of the underlying product or system."></i>
           {{/if}}
         </tree-status-filter>
       {{/if}}
       {{^if noResults}}
-      <tree-pagination {paging}="pageInfo"></tree-pagination>
+        <tree-pagination {paging}="{pageInfo}"></tree-pagination>
       {{/if}}
     </div>
 
-    <tree-actions
-      {parent-instance}="parent_instance"
-      {options}="options"
-      {model}="model"
-      {showed-items}="showedItems"
-      (export)="export"
-    ></tree-actions>
+    <tree-actions {parent-instance}="{parent_instance}"
+                  {options}="{options}"
+                  {model}="{model}"
+                  {showed-items}="{showedItems}"
+                  (export)="{export}">
+    </tree-actions>
 
-    <simple-modal {state}="advancedSearch" modal-title="'{{model.title_singular}} Advanced Search'" extra-css-class="advanced-search">
+    <simple-modal {state}="{advancedSearch}"
+                  {modal-title}="'{{model.title_singular}} Advanced Search'"
+                  {extra-css-class}="'advanced-search'">
       <div class="advanced-search__content">
         <div class="simple-modal__body">
-          <advanced-search-filter-container
-            {(items)}="advancedSearch.filterItems"
-            {available-attributes}="columns.available"
-            {model-name}="modelName"
-            ($enter)="applyAdvancedFilters()">
+          <advanced-search-filter-container {(items)}="{advancedSearch.filterItems}"
+                                            {available-attributes}="{columns.available}"
+                                            {model-name}="{modelName}"
+                                            ($enter)="{applyAdvancedFilters()}">
           </advanced-search-filter-container>
         </div>
         <div class="advanced-search__mapping-header">
           <h4>Filter by Mapping</h4>
         </div>
         <div class="simple-modal__body">
-          <advanced-search-mapping-container
-            {(items)}="advancedSearch.mappingItems"
-            {model-name}="modelName"
-            ($enter)="applyAdvancedFilters()">
+          <advanced-search-mapping-container {(items)}="{advancedSearch.mappingItems}"
+                                             {model-name}="{modelName}"
+                                             ($enter)="{applyAdvancedFilters()}">
           </advanced-search-mapping-container>
         </div>
       </div>
@@ -78,31 +75,32 @@
       </div>
     </simple-modal>
 
-    <tree-header {selected-columns}="columns.selected"
-                 {available-columns}="columns.available"
-                 {mandatory}="columns.mandatory"
-                 {disable-configuration}="columns.disableConfiguration"
-                 {sorting-info}="sortingInfo"
-                 {model}="model"
-                 (sort)="onSort(%event)"
-                 (update-columns)="onUpdateColumns(%event)"
-    ></tree-header>
+    <tree-header {selected-columns}="{columns.selected}"
+                 {available-columns}="{columns.available}"
+                 {mandatory}="{columns.mandatory}"
+                 {disable-configuration}="{columns.disableConfiguration}"
+                 {sorting-info}="{sortingInfo}"
+                 {model}="{model}"
+                 (sort)="{onSort(%event)}"
+                 (update-columns)="{onUpdateColumns(%event)}">
+    </tree-header>
+
   </div>
 
-  <tree-view {items}="showedItems"
-             {limit-depth-tree}="limitDepthTree"
-             {selected-columns}="columns.selected"
-             {mandatory}="columns.mandatory"
-             {disable-configuration}="columns.disableConfiguration"
-             {loading}="loading"
-             {parent-instance}="parent_instance"
-             {model}="model"
-             {get-depth-filter}="@getDepthFilter"
-  ></tree-view>
+  <tree-view {items}="{showedItems}"
+             {limit-depth-tree}="{limitDepthTree}"
+             {selected-columns}="{columns.selected}"
+             {mandatory}="{columns.mandatory}"
+             {disable-configuration}="{columns.disableConfiguration}"
+             {loading}="{loading}"
+             {parent-instance}="{parent_instance}"
+             {model}="{model}"
+             {get-depth-filter}="{@getDepthFilter}">
+  </tree-view>
 
   <div class="tree-footer flex-box">
     {{^if noResults}}
-      <tree-pagination {paging}="pageInfo" placement="top"></tree-pagination>
+      <tree-pagination {paging}="{pageInfo}" {placement}="'top'"></tree-pagination>
     {{/if}}
   </div>
 </div>

@@ -11,11 +11,10 @@ import {
   REFRESH_COMMENTS,
 } from '../../events/eventTypes';
 import {getRole} from '../../plugins/utils/acl-utils';
-const tag = 'create-proposal';
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'create-proposal',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

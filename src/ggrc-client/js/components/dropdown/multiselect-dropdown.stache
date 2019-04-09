@@ -35,8 +35,8 @@
         <li class="multiselect-dropdown__element">
           <label class="multiselect-dropdown__label">
             <input type="checkbox"
-              {($checked)}="checked"
-              ($click)="optionChange(.)"
+              {($checked)}="{checked}"
+              ($click)="{optionChange(.)}"
               value="{{value}}"
               id="{{id}}"
               class="multiselect-dropdown__checkbox {{cssClass}}"

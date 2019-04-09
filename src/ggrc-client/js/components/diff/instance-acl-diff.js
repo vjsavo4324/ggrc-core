@@ -8,7 +8,6 @@ import {getRoleById} from '../../plugins/utils/acl-utils';
 import {REFRESH_PROPOSAL_DIFF} from '../../events/eventTypes';
 import DiffBaseVM from './diff-base-vm';
 import template from './templates/instance-diff-items.stache';
-const tag = 'instance-acl-diff';
 
 const viewModel = DiffBaseVM.extend({
   modifiedAcl: {},
@@ -66,8 +65,8 @@ const viewModel = DiffBaseVM.extend({
 });
 
 export default can.Component.extend({
-  tag,
-  template,
+  tag: 'instance-acl-diff',
+  template: can.stache(template),
   leakScope: true,
   viewModel: viewModel,
   events: {

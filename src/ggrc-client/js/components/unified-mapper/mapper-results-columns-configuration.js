@@ -5,13 +5,13 @@
 
 import '../tree/tree-header-selector';
 import '../tree/tree-visible-column-checkbox';
-import tmpl from './templates/mapper-results-columns-configuration.stache';
+import template from './templates/mapper-results-columns-configuration.stache';
 import * as TreeViewUtils from '../../plugins/utils/tree-view-utils';
 import * as businessModels from '../../models/business-models';
 
 export default can.Component.extend({
   tag: 'mapper-results-columns-configuration',
-  template: tmpl,
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

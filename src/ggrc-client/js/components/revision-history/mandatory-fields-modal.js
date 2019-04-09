@@ -8,8 +8,8 @@ import '../gca-controls/gca-controls';
 import template from './templates/mandatory-fields-modal.stache';
 
 export default can.Component.extend({
-  template,
   tag: 'mandatory-fields-modal',
+  template: can.stache(template),
   leakScope: true,
   viewModel: {
     define: {

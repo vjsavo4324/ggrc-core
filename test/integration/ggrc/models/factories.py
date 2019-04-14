@@ -626,7 +626,6 @@ def get_model_factory(model_name):
       "Cycle": wf_factories.CycleFactory,
       "CycleTaskGroup": wf_factories.CycleTaskGroupFactory,
       "CycleTaskGroupObjectTask": wf_factories.CycleTaskGroupObjectTaskFactory,
-      "CycleTaskEntry": wf_factories.CycleTaskEntryFactory,
       "DataAsset": DataAssetFactory,
       "Document": DocumentFactory,
       "Evidence": EvidenceFactory,

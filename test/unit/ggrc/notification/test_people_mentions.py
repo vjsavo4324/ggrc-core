@@ -29,7 +29,7 @@ class TestSendMentions(unittest.TestCase):
     comments_data.add(
         people_mentions.CommentData(
             author="other@example.com",
-            created_at=datetime.datetime(2017, 1, 10, 7, 31, 42),
+            created_at=datetime.datetime(2017, 07, 10, 7, 31, 42),
             comment_text=comment_text,
         )
     )
@@ -42,7 +42,7 @@ class TestSendMentions(unittest.TestCase):
                       u"on a comment within Object1")
     expected_body = (
         u"other@example.com mentioned you on a comment within Object1 "
-        u"at 2017-01-10 07:31:42:\n" + comment_text + "\n"
+        u"at 07/10/2017 00:31:42 PDT:\n" + comment_text + "\n"
     )
     self.assertEquals(title, expected_title)
     self.assertEquals(body, [expected_body])
@@ -171,10 +171,10 @@ class TestSendMentions(unittest.TestCase):
     body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
         "comments": [
             (u"author@example.com mentioned you on a comment within Object "
-             u"at 2018-01-10 07:31:42:\n"
+             u"at 01/09/2018 23:31:42 PST:\n"
              u"One <a href=\"mailto:user@example.com\"></a>\n"),
             (u"author@example.com mentioned you on a comment within Object "
-             u"at 2018-01-10 07:31:50:\n"
+             u"at 01/09/2018 23:31:50 PST:\n"
              u"Two <a href=\"mailto:user@example.com\"></a>\n"),
         ],
         "url": "api/objects/1",

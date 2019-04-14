@@ -416,7 +416,7 @@ class TestGetObjectColumnDefinitions(TestCase):
         "Audit",
         "Object Under Assessment",
         "Use Control Assessment Procedure",
-        "Default Test Plan",
+        "Default Assessment Procedure",
         "Default Assignees",
         "Default Verifiers",
         "Custom Attributes",

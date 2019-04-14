@@ -60,7 +60,7 @@
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array {array}="{instance.response_options}"
+            <textarea-array {(array)}="{instance.response_options}"
                             {placeholder}="'Enter Values'" 
                             {class-name}="'span12 double'">
             </textarea-array>
@@ -73,7 +73,7 @@
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-question-circle" rel="tooltip" title="Choose which response should be applied to this {{model.model_singular}}."></i>
             </label>
-            <textarea-array {array}="{instance.response_options}"
+            <textarea-array {(array)}="{instance.response_options}"
                             {placeholder}="'Enter Values'"
                             {class-name}="'span12 double'">
             </textarea-array>

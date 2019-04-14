@@ -80,7 +80,6 @@ permissions = {
         "Cycle",
         "CycleTaskGroup",
         "CycleTaskGroupObjectTask",
-        "CycleTaskEntry",
         "NotificationConfig",
         "PersonProfile",
     ],
@@ -124,14 +123,6 @@ permissions = {
             "type": "Cycle",
             "condition": "is_workflow_admin",
             "terms": {},
-        },
-        {
-            "type": "CycleTaskEntry",
-            "condition": "is_allowed_based_on",
-            "terms": {
-                "property_name": "cycle_task_group_object_task",
-                "action": "update",
-            }
         },
         {
             "type": "TaskGroupObject",

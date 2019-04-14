@@ -111,8 +111,7 @@ class TestAuditPage(base.Test):
     # 'actual_asmt_tmpls': assignees, verifiers, template_object_type (None)
     self.general_equal_assert(
         [expected_asmt_tmpl], actual_asmt_tmpls,
-        "modified_by", "assignees", "verifiers", "template_object_type",
-        "slug")
+        "modified_by", "assignees", "verifiers", "template_object_type")
 
   @pytest.mark.smoke_tests
   def test_asmt_creation(self, program, audit, selenium):
@@ -213,8 +212,7 @@ class TestAuditPage(base.Test):
     # 'expected_asmt': slug, custom_attributes (None) *factory
     # 'actual_asmt': audit (None)
     self.general_equal_assert(
-        expected_asmts, actual_asmts, "slug", "custom_attributes", "audit",
-        "custom_attributes")
+        expected_asmts, actual_asmts, "slug", "custom_attributes", "audit")
 
   @pytest.mark.smoke_tests
   @pytest.mark.cloning

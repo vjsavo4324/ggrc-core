@@ -671,8 +671,8 @@ class TestExportMultipleObjects(TestCase):
           ("Description", "{} description".format(model)),
           ("Program", program.slug),
           ("Audit", audit.slug),
-          ("Start Date", ""),
-          ("End Date", ""),
+          ("Start Date", "01/02/2019"),
+          ("End Date", "03/03/2019"),
       ]))
       if model == "Risk":
         import_queries[-1]["Risk Type"] = "Risk type"

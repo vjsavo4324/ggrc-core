@@ -48,7 +48,7 @@ import {
 import {getRole} from '../../../plugins/utils/acl-utils';
 import DeferredTransaction from '../../../plugins/utils/deferred-transaction-utils';
 import tracker from '../../../tracker';
-import {REFRESH_TAB_CONTENT,
+import {
   RELATED_ITEMS_LOADED,
   REFRESH_MAPPING,
   REFRESH_RELATED,
@@ -61,7 +61,7 @@ import {
 import {initCounts} from '../../../plugins/utils/widgets-utils';
 import template from './info-pane.stache';
 import {CUSTOM_ATTRIBUTE_TYPE} from '../../../plugins/utils/custom-attribute/custom-attribute-config';
-import pubsub from '../../../pub-sub';
+import pubSub from '../../../pub-sub';
 import {relatedAssessmentsTypes} from '../../../plugins/utils/models-utils';
 import {notifier, notifierXHR} from '../../../plugins/utils/notifiers-utils';
 import Evidence from '../../../models/business-models/evidence';
@@ -219,7 +219,7 @@ export default can.Component.extend({
         open: false,
       },
     },
-    pubsub,
+    pubSub,
     _verifierRoleId: undefined,
     isUpdatingRelatedItems: false,
     isUpdatingState: false,
@@ -545,7 +545,7 @@ export default can.Component.extend({
         }
 
         this.attr('onStateChangeDfd').resolve();
-        pubsub.dispatch({
+        pubSub.dispatch({
           type: 'refetchOnce',
           modelNames: relatedAssessmentsTypes,
         });
@@ -656,8 +656,8 @@ export default can.Component.extend({
     '{viewModel.instance} assessment_type'() {
       const onSave = () => {
         this.viewModel.instance.dispatch({
-          ...REFRESH_TAB_CONTENT,
-          tabId: 'tab-related-assessments',
+          ...REFRESH_RELATED,
+          model: 'Related Assessments',
         });
         this.viewModel.instance.unbind('updated', onSave);
       };
@@ -670,13 +670,19 @@ export default can.Component.extend({
 
       this.viewModel.resetCurrentState();
     },
-    '{pubsub} objectDeleted'(pubsub, event) {
+    '{pubSub} objectDeleted'(pubSub, event) {
       let instance = event.instance;
       // handle removing evidence on Evidence tab
       // evidence on Assessment tab should be updated
       if (instance instanceof Evidence) {
         this.viewModel.updateItems('files', 'urls');
       }
+    },
+    '{pubSub} relatedItemSaved'(pubSub, event) {
+      this.viewModel.addRelatedItem(event, event.itemType);
+    },
+    '{pubSub} relatedItemBeforeSave'(pubSub, event) {
+      this.viewModel.addItems(event, event.itemType);
     },
   },
 });

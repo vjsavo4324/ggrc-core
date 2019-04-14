@@ -171,9 +171,9 @@ new WidgetList('ggrc_admin', {
       },
       content_controller_selector: 'ul',
       widget_initial_content:
-       `<ul class="tree-structure new-tree colored-list tree-view-control"
-            data-no-pin="true">
-        </ul>`,
+        '<ul class="tree-structure new-tree colored-list tree-view-control"' +
+        ' data-no-pin="true">' +
+        '</ul>',
     },
     custom_roles: {
       model: Roleable,
@@ -186,9 +186,9 @@ new WidgetList('ggrc_admin', {
       },
       content_controller_selector: 'ul',
       widget_initial_content:
-        `<ul class="tree-structure new-tree colored-list tree-view-control"
-             data-no-pin="true">
-         </ul>`,
+        '<ul class="tree-structure new-tree colored-list tree-view-control"' +
+        ' data-no-pin="true">' +
+        '</ul>',
     },
   },
 });

@@ -26,7 +26,6 @@ class TestProgramPage(base.Test):
     assert active_tab_name == "Program Info"
 
   @pytest.mark.smoke_tests
-  @pytest.mark.skip(reason="Will be fixed.")
   def test_permalink(self, selenium, program):
     """Verify url is copied to clipboard."""
     info_page = webui_service.ProgramsService(
@@ -47,7 +46,6 @@ class TestProgramPage(base.Test):
     assert modal.title_field.value == program.url
 
   @pytest.mark.smoke_tests
-  @pytest.mark.skip(reason="Will be fixed.")
   def test_create_program(self, selenium):
     """Tests program creation via UI."""
     program = entities_factory.ProgramsFactory().create()
@@ -60,7 +58,7 @@ class TestProgramPage(base.Test):
         modified_by=users.current_user(),
         slug=rest_program.slug,
         url=rest_program.url).repr_ui()
-    self.general_equal_assert(program, actual_program)
+    self.general_equal_assert(program, actual_program, "custom_attributes")
 
   @pytest.mark.smoke_tests
   def test_edit_program(self, program, selenium):

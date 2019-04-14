@@ -8,6 +8,10 @@ import {
 } from '../../plugins/utils/acl-utils';
 import Person from '../../models/business-models/person';
 
+const template = '<tree-field-wrapper {source}="{peopleList}"' +
+' {type}="{type}" {field}="\'email\'">' +
+'<tree-field {source}="{items}"/></tree-field-wrapper>';
+
 const viewModel = can.Map.extend({
   define: {
     peopleList: {
@@ -25,14 +29,7 @@ const viewModel = can.Map.extend({
 
 export default can.Component.extend('treePeopleWithRoleListField', {
   tag: 'tree-people-with-role-list-field',
-  template: can.stache(
-    `<tree-field-wrapper
-      {source}="{peopleList}"
-      {type}="{type}"
-      {field}="'email'">
-      <tree-field {source}="{items}"/>
-    </tree-field-wrapper>`
-  ),
+  template: can.stache(template),
   leakScope: true,
   viewModel,
 });

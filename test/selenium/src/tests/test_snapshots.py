@@ -148,7 +148,7 @@ class TestSnapshots(base.Test):
     assert is_control_openable is is_openable
     # 'actual_control': created_at, updated_at, modified_by (None)
     self.general_equal_assert(
-        expected_control, actual_control, "modified_by", "slug",
+        expected_control, actual_control, "modified_by",
         *Representation.tree_view_attrs_to_exclude)
 
   @pytest.mark.smoke_tests
@@ -207,7 +207,7 @@ class TestSnapshots(base.Test):
     # 'actual_control': created_at, updated_at, modified_by (None)
     self.general_equal_assert(
         expected_control, actual_control,
-        "created_at", "updated_at", "modified_by", "slug",
+        "created_at", "updated_at", "modified_by",
         *Representation.tree_view_attrs_to_exclude)
 
   @pytest.mark.smoke_tests

@@ -571,7 +571,7 @@ def get_cycle_task_related_objects(cycle_task):
   ).all()
   type_relations = defaultdict(list)
   ignored_mappings = frozenset(['CycleTaskGroupObjectTask', 'CycleTaskGroup',
-                                'CycleTaskEntry', 'CalendarEvent'])
+                                'CalendarEvent'])
 
   for rel in relationships:
     src_id, src_type, dst_id, dst_type = rel

@@ -7,7 +7,6 @@ import Component from '../info-pane';
 import {getComponentVM, makeFakeInstance} from '../../../../../js_specs/spec_helpers';
 import tracker from '../../../../tracker';
 import {
-  REFRESH_TAB_CONTENT,
   RELATED_ITEMS_LOADED,
   REFRESH_MAPPING,
   REFRESH_RELATED,
@@ -1732,11 +1731,11 @@ describe('assessment-info-pane component', () => {
           event();
         });
 
-        it('dispatches refresh tab event with appropriate data',
+        it('dispatches refresh related event with appropriate data',
           function (done) {
             const instance = vm.attr('instance');
-            instance.bind(REFRESH_TAB_CONTENT.type, (event) => {
-              expect(event.tabId).toBe('tab-related-assessments');
+            instance.bind(REFRESH_RELATED.type, (event) => {
+              expect(event.model).toBe('Related Assessments');
               done();
             });
             instance.dispatch('updated');

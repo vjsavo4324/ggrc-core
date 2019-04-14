@@ -74,16 +74,6 @@ const DESTINATION_UNMAPPED = {
 };
 
 /**
- * Refreshes cached Related Assessments tab
- * @event refreshRelatedAssessments
- * @type {object}
- * @property {string} type - Event name.
- */
-const REFRESH_TAB_CONTENT = {
-  type: 'refreshTabContent',
-};
-
-/**
  * Refreshes diff of proposals
  * @event refreshProposalDiff
  * @type {object}
@@ -231,7 +221,6 @@ export {
   SHOW_INVALID_FIELD,
   VALIDATION_ERROR,
   DESTINATION_UNMAPPED,
-  REFRESH_TAB_CONTENT,
   NAVIGATE_TO_TAB,
   REFRESH_PROPOSAL_DIFF,
   REFRESH_COMMENTS,

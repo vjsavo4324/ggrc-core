@@ -11,7 +11,7 @@ export default can.Component.extend({
     items: [],
     sort() {
       const items = this.attr('items');
-      const sortedItems = items.sort(items);
+      const sortedItems = items.sort();
       this.attr('sortedItems', sortedItems);
     },
   },

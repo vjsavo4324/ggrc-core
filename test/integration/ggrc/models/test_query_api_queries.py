@@ -34,7 +34,7 @@ class TestAllModels(WithQueryApi, TestCase):
       'Control': 16,
       'Cycle': 9,
       'CycleTaskGroup': 10,
-      'CycleTaskGroupObjectTask': 14,
+      'CycleTaskGroupObjectTask': 13,
       'Document': 9,
       'Issue': 14,
       'KeyReport': 14,

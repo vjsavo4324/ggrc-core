@@ -86,7 +86,6 @@ tables = {
         "risk_assessments",
     ],
     "ggrc_workflows": [
-        "cycle_task_entries",
         "cycle_task_group_object_tasks",
         "cycle_task_group_objects",
         "cycle_task_groups",

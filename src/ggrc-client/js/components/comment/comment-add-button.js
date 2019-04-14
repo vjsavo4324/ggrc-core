@@ -8,10 +8,9 @@ import Comment from '../../models/service-models/comment';
 export default can.Component.extend({
   tag: 'comment-add-button',
   template: can.stache(
-    `<button type="button" class="btn btn-small btn-gray"
-       ($click)="createComment()">
-       <content></content>
-     </button>`
+    '<button type="button" class="btn btn-small btn-gray"' +
+    ' ($click)="createComment()">' +
+    '<content/></button>'
   ),
   leakScope: true,
   viewModel: {

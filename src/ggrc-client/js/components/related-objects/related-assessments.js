@@ -21,6 +21,7 @@ import tracker from '../../tracker';
 import Evidence from '../../models/business-models/evidence';
 import Context from '../../models/service-models/context';
 import * as businessModels from '../../models/business-models';
+import {REFRESH_RELATED} from '../../events/eventTypes';
 
 const defaultOrderBy = [
   {field: 'finished_date', direction: 'desc'},
@@ -176,6 +177,11 @@ export default can.Component.extend({
     },
     '{viewModel.orderBy} changed'() {
       this.viewModel.loadRelatedAssessments();
+    },
+    [`{viewModel.instance} ${REFRESH_RELATED.type}`](scope, event) {
+      if (event.model === 'Related Assessments') {
+        this.viewModel.loadRelatedAssessments();
+      }
     },
   },
   helpers: {

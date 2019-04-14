@@ -62,7 +62,7 @@ class TestCycleTaskImportUpdate(BaseTestCycleTaskImportUpdate):
 
   IMPORTABLE_COLUMN_NAMES = [
       "Summary",
-      "Task Details",
+      "Task Description",
       "Start Date", "Due Date",
       "Actual Finish Date",
       "Actual Verified Date",

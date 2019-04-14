@@ -92,9 +92,6 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
       ft_attributes.DateFullTextAttr("cycle due date",
                                      lambda x: x.cycle.next_due_date,
                                      with_template=False),
-      ft_attributes.MultipleSubpropertyFullTextAttr("comments",
-                                                    "cycle_task_entries",
-                                                    ["description"]),
       ft_attributes.BooleanFullTextAttr("needs verification",
                                         "is_verification_needed",
                                         with_template=False,
@@ -116,11 +113,6 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
           if rel.destination_type not in obj.IGNORED_RELATED_TYPES
       ]
   }
-
-  AUTO_REINDEX_RULES = [
-      ft_mixin.ReindexRule("CycleTaskEntry",
-                           lambda x: x.cycle_task_group_object_task),
-  ]
 
   cycle_id = db.Column(
       db.Integer,
@@ -205,7 +197,6 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
       'cycle',
       'cycle_task_group',
       'task_group_task',
-      'cycle_task_entries',
       'sort_index',
       'task_type',
       'response_options',
@@ -235,7 +226,7 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
 
   _aliases = {
       "title": "Summary",
-      "description": "Task Details",
+      "description": "Task Description",
       "finished_date": {
           "display_name": "Actual Finish Date",
           "description": ("Make sure that 'Actual Finish Date' isn't set, "
@@ -331,18 +322,14 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
 
   @classmethod
   def eager_query(cls):
-    """Add cycle task entries to cycle task eager query
+    """
+    Add related objects to eager query.
 
-    This function adds cycle_task_entries as a join option when fetching cycles
-    tasks, and makes sure that with one query we fetch all cycle task related
-    data needed for generating cycle taks json for a response.
-
-    Returns:
-      a query object with cycle_task_entries added to joined load options.
+    This function makes sure that with one query we fetch all cycle task
+    related data needed for generating cycle task json for a response.
     """
     query = super(CycleTaskGroupObjectTask, cls).eager_query()
     return query.options(
-        orm.subqueryload('cycle_task_entries'),
         orm.joinedload('cycle')
            .undefer_group('Cycle_complete'),
         orm.joinedload('cycle')
@@ -388,10 +375,6 @@ class CycleTaskGroupObjectTask(roleable.Roleable,
         ).load_only(
             "email",
             "name",
-            "id"
-        ),
-        orm.Load(cls).subqueryload("cycle_task_entries").load_only(
-            "description",
             "id"
         ),
         orm.Load(cls).joinedload("cycle").joinedload("workflow").undefer_group(

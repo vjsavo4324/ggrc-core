@@ -73,7 +73,6 @@ class TaskGroup(roleable.Roleable,
   )
 
   _aliases = {
-      "title": "Summary",
       "description": "Details",
       "contact": {
           "display_name": "Assignee",

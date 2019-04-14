@@ -15,26 +15,34 @@ describe('lazy-render component', function () {
     viewModel = getComponentVM(Component);
   });
 
-  it('should render content only once when the trigger is truthy', function () {
+  it('should set "activated" to true if "trigger" is true', () => {
+    viewModel.attr('activated', false);
+
     viewModel.attr('trigger', true);
-    expect(viewModel.attr('activatedOrForceRender')).toBe(true);
-    viewModel.attr('trigger', false);
-    expect(viewModel.attr('activatedOrForceRender')).toBe(true);
+    expect(viewModel.attr('activated')).toBe(true);
   });
 
-  it('should re-render content when the trigger is truthy and '+
-     'forceClearContent is set',
-  function () {
+  it('should NOT change "activated" if "trigger" is true ' +
+  'and panel was activated', () => {
+    viewModel.attr('activated', true);
+
     viewModel.attr('trigger', true);
-    // content is rendered
-    expect(viewModel.attr('activatedOrForceRender')).toBe(true);
+    expect(viewModel.attr('activated')).toBe(true);
+  });
 
-    viewModel.attr('forceClearContent', true);
-    // content cleared
-    expect(viewModel.attr('activatedOrForceRender')).toBe(false);
+  it('should NOT change "activated" if "trigger" is false ' +
+  'and panel was activated', () => {
+    viewModel.attr('activated', true);
 
-    viewModel.attr('forceClearContent', false);
-    // content rendered again
-    expect(viewModel.attr('activatedOrForceRender')).toBe(true);
+    viewModel.attr('trigger', false);
+    expect(viewModel.attr('activated')).toBe(true);
+  });
+
+  it('should NOT change "activated" if "trigger" is false ' +
+  'and panel was NOT activated', () => {
+    viewModel.attr('activated', false);
+
+    viewModel.attr('trigger', false);
+    expect(viewModel.attr('activated')).toBe(false);
   });
 });

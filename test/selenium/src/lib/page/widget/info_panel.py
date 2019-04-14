@@ -17,7 +17,7 @@ class InfoPanel(object):
   def title(self):
     """Return panel title"""
     return self._root.element(
-        class_name='pane-header__title-details').h3().text
+        class_name='general-page-header__title-details').h3().text
 
   @property
   def is_minimized(self):

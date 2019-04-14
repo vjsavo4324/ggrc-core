@@ -221,12 +221,7 @@ class CycleTaskGroup(roleable.Roleable,
         ).load_only(
             "person_id",
         ),
-        orm.Load(cls).subqueryload("cycle_task_group_tasks").joinedload(
-            "cycle_task_entries",
-        ).load_only(
-            "id",
-            "description",
-        ),
+        orm.Load(cls).subqueryload("cycle_task_group_tasks"),
         orm.Load(cls).joinedload("cycle").load_only(
             "id",
             "title",

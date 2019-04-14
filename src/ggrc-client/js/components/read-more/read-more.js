@@ -4,9 +4,8 @@
  */
 
 import template from './read-more.stache';
-import showdown from 'showdown';
+import {convertMarkdownToHtml} from '../../plugins/utils/markdown-utils';
 
-const converter = new showdown.Converter();
 const readMore = 'Read More';
 const readLess = 'Read Less';
 const classPrefix = 'ellipsis-truncation-';
@@ -16,7 +15,7 @@ const viewModel = {
       type: 'string',
       value: '',
       set(val) {
-        return this.attr('handleMarkdown') ? converter.makeHtml(val) : val;
+        return this.attr('handleMarkdown') ? convertMarkdownToHtml(val) : val;
       },
     },
     maxLinesNumber: {

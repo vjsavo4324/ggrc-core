@@ -452,9 +452,10 @@ import {changeUrl} from '../router';
                 $html.append($(textContainer).text(message));
                 if (addLink) {
                   $html.removeClass('alert-autohide');
-                  $link = $(`<a href="javascript://" class="reload-link">
-                                Show results
-                             </a>`);
+                  $link = $(
+                    '<a href="javascript://" class="reload-link">Show results' +
+                    '</a>'
+                  );
                   $link.on('click', function () {
                     if (redirectLink) {
                       $('html').addClass('no-js');

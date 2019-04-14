@@ -32,7 +32,10 @@
         <label class="form-label">
           Selection Response Options (Comma Separated)
         </label>
-          <textarea-array {array}="{instance.response_options}" class-name="span12 double" placeholder="Enter Description" tabindex="2"></textarea-array>
+          <textarea-array {(array)}="{instance.response_options}" 
+                          {class-name}="'span12 double'" 
+                          {placeholder}="'Enter Description'" tabindex="2">
+          </textarea-array>
       {{/is}}
       <br>
       <select name="task_type">

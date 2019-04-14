@@ -43,7 +43,7 @@ class _Assessments(lhn.AccordionGroup):
   """Assessments dropdown in LHN."""
   _locator_spinny = locator.LhnMenu.SPINNY_ASSESSMENTS
   # Assessment doesn't have create button
-  _locator_button_create_new = locator.LhnMenu.BUTTON_CREATE_NEW_NO
+  _locator_button_create_new = locator.LhnMenu.BUTTON_CREATE_NEW_ASSESSMENTS
   _locator_accordion_members = locator.LhnMenu.ACCORDION_MEMBERS_ASSESSMENTS
 
 

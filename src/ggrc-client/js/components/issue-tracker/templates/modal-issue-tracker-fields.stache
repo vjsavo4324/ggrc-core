@@ -94,7 +94,7 @@
         Ticket Priority
       </label>
       <dropdown {options-list}="{instance.class.issue_tracker_priorities}"
-                {name}="'instance.issue_tracker.issue_priority}'">
+                {name}="'instance.issue_tracker.issue_priority'">
       </dropdown>
     </div>
     <div class="ggrc-form-item__multiple-row">

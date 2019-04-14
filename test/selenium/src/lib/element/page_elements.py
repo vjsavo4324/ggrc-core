@@ -67,6 +67,8 @@ class SimpleField(object):
   def __init__(self, container, label):
     self._label_text = label
     self._root = container.h6(text=label).parent()
+    if "action-toolbar" in self._root.classes:
+      self._root = self._root.parent()
 
   @property
   def text(self):
@@ -171,7 +173,8 @@ class CommentArea(object):
 
   def __init__(self, container):
     self._container = container
-    self.add_section = container.element(text="Responses/Comments")
+    self.add_section = container.element(
+        text="Responses/Comments").parent().button(text="Add")
 
   @property
   def exists(self):

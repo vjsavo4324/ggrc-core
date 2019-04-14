@@ -5,7 +5,6 @@
 
 {{#if isLazyRender}}
   <lazy-render
-    {force-clear-content}="{forceClearContent}"
     {trigger}="{lazyTrigger}">
     <div class="tab-content">
       <div class="tab-pane {{cssClasses}}">

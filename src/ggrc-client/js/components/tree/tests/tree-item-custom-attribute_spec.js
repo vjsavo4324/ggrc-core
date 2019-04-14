@@ -7,6 +7,7 @@ import Cacheable from '../../../models/cacheable';
 import {helpers} from './../tree-item-custom-attribute';
 import {makeFakeInstance} from '../../../../js_specs/spec_helpers';
 import * as DateUtils from '../../../plugins/utils/date-utils';
+import * as MarkdownUtils from '../../../plugins/utils/markdown-utils';
 
 describe('helpers.getCustomAttrValue', () => {
   let helper;
@@ -79,6 +80,7 @@ describe('helpers.getCustomAttrValue', () => {
       model: Cacheable,
       staticProps: {
         is_custom_attributable: true,
+        isChangeableExternally: false,
       },
     })({
       custom_attribute_definitions: fakeCustomAttrDefs,
@@ -172,6 +174,23 @@ describe('helpers.getCustomAttrValue', () => {
       fakeInstance.customAttr(caId, value);
       actual = helper(fakeInstance, caId, fakeOptions);
       expect(actual).toBe(value);
+    });
+
+    describe('if isMarkdown is true', () => {
+      it('returns converted value', () => {
+        spyOn(MarkdownUtils, 'convertMarkdownToHtml')
+          .and.returnValue('some markdown');
+        const caId = 7;
+        const value = '<strong>some text</strong>';
+        fakeInstance.constructor.isChangeableExternally = true;
+        fakeInstance.customAttr(caId, value);
+
+        actual = helper(fakeInstance, caId, fakeOptions);
+
+        expect(MarkdownUtils.convertMarkdownToHtml)
+          .toHaveBeenCalledWith(value);
+        expect(actual).toBe('some markdown');
+      });
     });
   });
 });

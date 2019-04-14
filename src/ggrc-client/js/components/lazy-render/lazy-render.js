@@ -13,19 +13,7 @@ let viewModel = can.Map.extend({
         }
       },
     },
-    activatedOrForceRender: {
-      get: function () {
-        return this.attr('forceClearContent') ? false :
-          this.attr('activated');
-      },
-    },
   },
-  /**
-   * This flag shuld be switch on and back off to trigger re-render of content
-   * see tab-panel.js for example.
-   * @type {Boolean}
-   */
-  forceClearContent: false,
   activated: false,
 });
 
@@ -34,7 +22,7 @@ let viewModel = can.Map.extend({
  */
 export default can.Component.extend({
   tag: 'lazy-render',
-  template: can.stache('{{#if activatedOrForceRender}}<content/>{{/if}}'),
+  template: can.stache('{{#if activated}}<content/>{{/if}}'),
   leakScope: true,
   viewModel,
 });

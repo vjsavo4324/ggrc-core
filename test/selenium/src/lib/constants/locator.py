@@ -151,6 +151,10 @@ class LhnMenu(object):
         return(By.CSS_SELECTOR,
                ('[data-model-name="{}"] '
                 'ul.sub-actions li.add-new a').format(label))
+      if label == objects.get_singular(objects.ASSESSMENTS, title=True):
+        return(By.CSS_SELECTOR,
+               ('[data-model-name="{}"] '
+                '[data-object-singular="{}"]').format(label, label))
       return (
           By.CSS_SELECTOR,
           '[data-model-name="{}"] [class="add-new oneline"]'.format(label))

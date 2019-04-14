@@ -14,7 +14,7 @@ Workflow,code*,title*,description ,admin,unit,force real-time email updates,cust
 ,wf-2,wf-2,no manager error,,-,,,True
 ,,,,,,,,
 Object type,,,,,,,,
-Task Group,code*,Summary*,details,assignee,workflow*,Objects,,
+Task Group,code*,Title*,details,assignee,workflow*,Objects,,
 ,tg-1,tg-1,test,user1@ggrc.com,wf-1,"Objective: obj-1
 objective : obj-3",,
 ,,,,,,,,

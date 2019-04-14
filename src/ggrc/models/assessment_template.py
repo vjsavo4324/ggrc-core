@@ -129,7 +129,7 @@ class AssessmentTemplate(assessment.AuditRelationship,
           "filter_by": "_nop_filter",
       },
       "default_test_plan": {
-          "display_name": "Default Test Plan",
+          "display_name": "Default Assessment Procedure",
           "filter_by": "_nop_filter",
       },
       "test_plan_procedure": {

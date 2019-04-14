@@ -636,16 +636,6 @@ def handle_workflow_put(sender, obj=None, src=None, service=None):
 
 
 # noqa pylint: disable=unused-argument
-@signals.Restful.model_posted.connect_via(models.CycleTaskEntry)
-def handle_cycle_task_entry_post(sender, obj=None, src=None, service=None):
-  if src['is_declining_review'] == '1':
-    task = obj.cycle_task_group_object_task
-    task.status = task.DECLINED
-  else:
-    src['is_declining_review'] = 0
-
-
-# noqa pylint: disable=unused-argument
 @Signals.status_change.connect_via(models.Cycle)
 def handle_cycle_status_change(sender, objs=None):
   """

@@ -8,6 +8,7 @@ import isFunction from 'can-util/js/is-function/is-function';
 import {CONTROL_TYPE} from '../../plugins/utils/control-utils';
 import {formatDate} from '../../plugins/utils/date-utils';
 import {reify} from '../../plugins/utils/reify-utils';
+import {convertMarkdownToHtml} from '../../plugins/utils/markdown-utils';
 
 const formatValueMap = {
   [CONTROL_TYPE.CHECKBOX](caObject) {
@@ -25,6 +26,11 @@ const formatValueMap = {
     return options.fn(options.contexts.add({
       object: attr ? reify(attr) : null,
     }));
+  },
+  [CONTROL_TYPE.TEXT](caObject, options, isMarkdown) {
+    let value = caObject.value;
+
+    return isMarkdown ? convertMarkdownToHtml(value) : value;
   },
 };
 
@@ -47,7 +53,9 @@ const getCustomAttrValue = (instance, customAttributeId, options) => {
 
   if (hasHandler) {
     const handler = formatValueMap[caObject.attributeType];
-    customAttrValue = handler(caObject, options);
+    const isMarkdown = instance.constructor.isChangeableExternally;
+
+    customAttrValue = handler(caObject, options, isMarkdown);
   }
 
   return customAttrValue || '';

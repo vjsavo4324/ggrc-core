@@ -70,7 +70,7 @@ class TestWorkflowPeopleImport(TestCase):
         ("code", self.tg_slug),
         ("workflow", self.wf_slug),
         ("assignee", self.user_emails[assignee_id]),
-        ("summary", "TG SomeTitle"),
+        ("title", "TG SomeTitle"),
     ])
     response = self.import_data(tg_data)
     self.assertEqual(response[0][expected_resp_action], 1)

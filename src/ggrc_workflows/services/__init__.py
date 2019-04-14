@@ -15,7 +15,6 @@ def contributed_services():
       service(models.TaskGroupTask.__tablename__, models.TaskGroupTask),
       service(models.TaskGroupObject.__tablename__, models.TaskGroupObject),
       service(models.Cycle.__tablename__, models.Cycle),
-      service(models.CycleTaskEntry.__tablename__, models.CycleTaskEntry),
       service(models.CycleTaskGroup.__tablename__, models.CycleTaskGroup),
       service(models.CycleTaskGroupObjectTask.__tablename__,
               models.CycleTaskGroupObjectTask, resource.CycleTaskResource),

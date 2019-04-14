@@ -88,7 +88,6 @@ def all_cache_entries():
       resource('vulnerabilities', 'Vulnerability'),
 
       # ggrc_workflows models
-      resource('cycle_task_entries', 'CycleTaskEntry'),
       resource('cycle_task_group_object_tasks', 'CycleTaskGroupObjectTask'),
       resource('cycle_task_groups', 'CycleTaskGroup'),
       resource('cycles', 'Cycle'),
@@ -126,12 +125,10 @@ def all_mapping_entries():
       mapping('CycleTaskGroup', 'cycle'),
       mapping('CycleTaskGroup', 'task_group'),
       mapping('CycleTaskGroupObjectTask', 'cycle'),
-      mapping('CycleTaskGroupObjectTask', 'cycle_task_entries'),
       mapping('CycleTaskGroupObjectTask', 'cycle_task_group'),
       mapping('CycleTaskGroupObjectTask', 'task_group_task'),
       mapping('CycleTaskGroupObjectTask', 'cycle_task_objects_for_cache'),
-      mapping('CycleTaskEntry', 'cycle'),
-      mapping('CycleTaskEntry', 'cycle_task_group_object_task'),
+
       # mapping('RiskAssessmentMapping'),
       # mapping('RiskAssessmentControlMapping'),
   ]

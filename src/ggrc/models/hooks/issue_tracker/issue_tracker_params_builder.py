@@ -226,10 +226,17 @@ class IssueParamsBuilder(BaseIssueTrackerParamsBuilder):
       self.params.status = res["issueState"]["status"]
       self._add_link_message(obj)
       self.handle_issue_tracker_info(obj, it_info)
+      self._populate_hotlist(it_info, res)
       self._handle_emails_from_response(res)
       self.params.reporter = obj.modified_by.email
 
     return self.params
+
+  def _populate_hotlist(self, it_info, ticket_info):
+    """Set IssueTracker ticket hotlist if user doesn't specified it."""
+    if not it_info.get("hotlist_id"):
+      ticket_hotlists = ticket_info["issueState"].get("hotlist_ids")
+      self.params.hotlist_id = ticket_hotlists[0] if ticket_hotlists else None
 
   def build_update_issue_tracker_params(self,
                                         obj,

@@ -52,11 +52,11 @@
             </a>
             <div class="content">
               <ul class="mid-level">
-                {{{renderLive "dashboard/lhn_search" type="Regulation" title_plural="Regulations" li_class="governance"}}}
-                {{{renderLive "dashboard/lhn_search" type="Policy" title_plural="Policies" li_class="governance"}}}
-                {{{renderLive "dashboard/lhn_search" type="Standard" title_plural="Standards" li_class="governance"}}}
                 {{{renderLive "dashboard/lhn_search" type="Contract" title_plural="Contracts" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Policy" title_plural="Policies" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Regulation" title_plural="Regulations" li_class="governance"}}}
                 {{{renderLive "dashboard/lhn_search" type="Requirement" title_plural="Requirements" li_class="governance"}}}
+                {{{renderLive "dashboard/lhn_search" type="Standard" title_plural="Standards" li_class="governance"}}}
               </ul>
             </div>
           </li>
@@ -95,17 +95,17 @@
               <ul class="mid-level">
                 {{{renderLive "dashboard/lhn_search" type="AccessGroup" title_plural="Access Groups" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="AccountBalance" title_plural="Account Balances" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="OrgGroup" title_plural="Org Groups" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="System" title_plural="Systems" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="Process" title_plural="Processes" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="DataAsset" title_plural="Data Assets" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="Product" title_plural="Products" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="ProductGroup" title_plural="Product Groups" li_class="business"}}}
-                {{{renderLive "dashboard/lhn_search" type="Project" title_plural="Projects" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="Facility" title_plural="Facilities" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="KeyReport" title_plural="Key Reports" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="Market" title_plural="Markets" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="Metric" title_plural="Metrics" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="OrgGroup" title_plural="Org Groups" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Process" title_plural="Processes" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Product" title_plural="Products" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="ProductGroup" title_plural="Product Groups" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="Project" title_plural="Projects" li_class="business"}}}
+                {{{renderLive "dashboard/lhn_search" type="System" title_plural="Systems" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="TechnologyEnvironment" title_plural="Technology Environments" li_class="business"}}}
                 {{{renderLive "dashboard/lhn_search" type="Vendor" title_plural="Vendors" li_class="business"}}}
               </ul>

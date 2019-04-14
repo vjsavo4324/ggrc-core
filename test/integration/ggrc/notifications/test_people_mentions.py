@@ -42,7 +42,7 @@ class TestPeopleMentions(TestCase):
                       u"on a comment within Product1")
     expected_body = (
         u"author@example.com mentioned you on a comment within Product1 "
-        u"at 2018-01-10 07:31:42:\n"
+        u"at 01/09/2018 23:31:42 PST:\n"
         u"One <a href=\"mailto:user@example.com\"></a>\n"
     )
     body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
@@ -77,7 +77,7 @@ class TestPeopleMentions(TestCase):
           description=u"One <a href=\"mailto:some_user@example.com\"></a>",
       )
       comment_id = comment.id
-      comment.created_at = datetime.datetime(2018, 1, 10, 8, 31, 42)
+      comment.created_at = datetime.datetime(2018, 07, 10, 8, 31, 42)
       comment.modified_by_id = author_person.id
       url = urljoin(get_url_root(), utils.view_url_for(obj))
 
@@ -104,7 +104,7 @@ class TestPeopleMentions(TestCase):
                       u"a comment within Product3")
     expected_body = (
         u"author@example.com mentioned you on a comment within Product3 "
-        u"at 2018-01-10 08:31:42:\n"
+        u"at 07/10/2018 01:31:42 PDT:\n"
         u"One <a href=\"mailto:some_user@example.com\"></a>\n"
     )
     body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
@@ -133,7 +133,7 @@ class TestPeopleMentions(TestCase):
             ("comments", first_comment + u";;" + second_comment)
         ]
     )
-    with freeze_time("2018-01-10 08:31:42"):
+    with freeze_time("2018-01-10 07:31:42"):
       response = self.import_data(import_data)
     self._check_csv_response(response, {})
     expected_title = (u"user@example.com mentioned you on "
@@ -141,9 +141,9 @@ class TestPeopleMentions(TestCase):
     body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
         "comments": [
             (u"user@example.com mentioned you on a comment within Product4 "
-             u"at 2018-01-10 08:31:42:\n" + first_comment + u"\n"),
+             u"at 01/09/2018 23:31:42 PST:\n" + first_comment + u"\n"),
             (u"user@example.com mentioned you on a comment within Product4 "
-             u"at 2018-01-10 08:31:42:\n" + second_comment + u"\n"),
+             u"at 01/09/2018 23:31:42 PST:\n" + second_comment + u"\n"),
         ],
         "url": url,
     })
@@ -171,7 +171,7 @@ class TestPeopleMentions(TestCase):
             ("comments", first_comment + u";;" + second_comment)
         ]
     )
-    with freeze_time("2018-01-10 08:31:42"):
+    with freeze_time("2018-01-10 07:31:42"):
       response = self.import_data(import_data)
     self._check_csv_response(response, {})
 
@@ -184,9 +184,9 @@ class TestPeopleMentions(TestCase):
     first_body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
         "comments": [
             (u"user@example.com mentioned you on a comment within Product5 "
-             u"at 2018-01-10 08:31:42:\n" + first_comment + u"\n"),
+             u"at 01/09/2018 23:31:42 PST:\n" + first_comment + u"\n"),
             (u"user@example.com mentioned you on a comment within Product5 "
-             u"at 2018-01-10 08:31:42:\n" + second_comment + u"\n"),
+             u"at 01/09/2018 23:31:42 PST:\n" + second_comment + u"\n"),
         ],
         "url": url,
     })
@@ -194,7 +194,7 @@ class TestPeopleMentions(TestCase):
     second_body = settings.EMAIL_MENTIONED_PERSON.render(person_mention={
         "comments": [(
             u"user@example.com mentioned you on a comment within Product5 "
-            u"at 2018-01-10 08:31:42:\n" + second_comment + u"\n"
+            u"at 01/09/2018 23:31:42 PST:\n" + second_comment + u"\n"
         )],
         "url": url,
     })

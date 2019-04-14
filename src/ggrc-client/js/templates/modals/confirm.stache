@@ -3,8 +3,8 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<div class="centered">
-<p>
-{{{modal_description}}}
-</p>
+<div>
+  <p>
+    {{{modal_description}}}
+  </p>
 </div>

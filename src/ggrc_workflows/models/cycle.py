@@ -61,8 +61,6 @@ class Cycle(roleable.Roleable,
   cycle_task_group_object_tasks = db.relationship(
       'CycleTaskGroupObjectTask', backref='cycle',
       cascade='all, delete-orphan')
-  cycle_task_entries = db.relationship(
-      'CycleTaskEntry', backref='cycle', cascade='all, delete-orphan')
   is_current = db.Column(db.Boolean,
                          default=True,
                          nullable=False)
@@ -248,12 +246,7 @@ class Cycle(roleable.Roleable,
         ).subqueryload("access_control_people").load_only(
             "person_id",
         ),
-        orm.Load(cls).subqueryload("cycle_task_group_object_tasks").joinedload(
-            "cycle_task_entries"
-        ).load_only(
-            "description",
-            "id",
-        ),
+        orm.Load(cls).subqueryload("cycle_task_group_object_tasks"),
         orm.Load(cls).subqueryload("cycle_task_groups").joinedload(
             "contact"
         ).load_only(

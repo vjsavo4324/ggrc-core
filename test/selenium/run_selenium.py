@@ -19,7 +19,7 @@ import urlparse
 import _pytest
 import requests
 
-from lib import decorator, environment, url as url_module, users
+from lib import decorator, environment, url as url_module, users, constants
 from lib.service.rest_service import client
 from lib.utils import test_utils
 
@@ -59,6 +59,9 @@ def add_user(url_origin):
   environment.app_url = url_origin
   environment.app_url = urlparse.urljoin(environment.app_url, "/")
   session = requests.Session()
+  test_utils.wait_for(
+      lambda: session.get(environment.app_url).status_code == OK_CODE,
+      constants.ux.TWO_MIN_USER_WAIT * 4)
   test_utils.wait_for(
       lambda: session.get(url_module.Urls().gae_login(
           users.FAKE_SUPER_USER)).status_code == OK_CODE)

@@ -15,7 +15,6 @@ class TestRiskThreatPage(base.Test):
   """Tests threat/risk page, part of smoke tests, section 8."""
 
   @pytest.mark.smoke_tests
-  @pytest.mark.skip(reason="Will be fixed.")
   def test_create_risk(self, selenium):
     """Tests risk creation via UI."""
     risk = entities_factory.RisksFactory().create()

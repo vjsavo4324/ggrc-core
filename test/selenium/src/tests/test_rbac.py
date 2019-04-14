@@ -45,7 +45,6 @@ class TestRBAC(base.Test):
         webui_facade.assert_can_delete(selenium, obj, can_delete=True)
 
   @pytest.mark.smoke_tests
-  @pytest.mark.skip(reason="Will be fixed.")
   @pytest.mark.parametrize(
       "login_role, can_view, can_edit",
       [
@@ -150,7 +149,6 @@ class TestAuditorRole(base.Test):
     }
 
   @pytest.mark.smoke_tests
-  @pytest.mark.skip(reason="Will be fixed.")
   def test_auditor_cannot_edit_audit(
       self, selenium, test_data
   ):

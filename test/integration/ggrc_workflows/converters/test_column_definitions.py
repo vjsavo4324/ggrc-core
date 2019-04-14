@@ -77,7 +77,7 @@ class TestWorkflowObjectColumnDefinitions(TestCase):
     definitions = get_object_column_definitions(wf_models.TaskGroup)
     display_names = {val["display_name"] for val in definitions.itervalues()}
     expected_names = {
-        "Summary",
+        "Title",
         "Details",
         "Assignee",
         "Code",
@@ -90,7 +90,7 @@ class TestWorkflowObjectColumnDefinitions(TestCase):
     }
     self.assertEqual(expected_names, display_names)
     vals = {val["display_name"]: val for val in definitions.itervalues()}
-    self.assertTrue(vals["Summary"]["mandatory"])
+    self.assertTrue(vals["Title"]["mandatory"])
     self.assertTrue(vals["Assignee"]["mandatory"])
 
   def test_task_definitions(self):
@@ -133,7 +133,7 @@ class TestWorkflowObjectColumnDefinitions(TestCase):
         "Task Type",
         "Task Assignees",
         "Task Secondary Assignees",
-        "Task Details",
+        "Task Description",
         "Start Date",
         "Due Date",
         "Actual Verified Date",

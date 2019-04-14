@@ -93,7 +93,12 @@ class Commentable(object):
       "send_by_default": "Send by default",
       "comments": {
           "display_name": "Comments",
-          "description": 'DELIMITER=";;" double semi-colon separated values',
+          "description": (
+              u'DELIMITER=";;" double semi-colon separated values. '
+              u'To mention person at the comment use the following format '
+              u'<a href="mailto:some_user@example.com">'
+              u'+some_user@example.com</a>.'
+          ),
       },
   }
   _fulltext_attrs = [

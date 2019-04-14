@@ -141,28 +141,6 @@ class TestCTGOT(BaseTestCase):
     for ctask in all_models.CycleTaskGroupObjectTask.query.all():
       self.assertEqual(ctask.context_id, ctask_context_id)
 
-  def test_comment_cascade_deletion_on_cycle_task_delete(self):  # noqa pylint: disable=invalid-name
-    """Test comment cascade deletion on CycleTask delete."""
-    ctask = all_models.CycleTaskGroupObjectTask.query.first()
-    ctask_id = ctask.id
-    wf_factories.CycleTaskEntryFactory(
-        cycle=ctask.cycle,
-        cycle_task_group_object_task=ctask,
-        description="Cycle task comment",
-    )
-    self.assertEqual(all_models.CycleTaskEntry.query.count(), 1)
-
-    user = all_models.Person.query.filter_by(email=self.WORKFLOW_ADMIN).one()
-    self.api.set_user(user)
-
-    response = self.api.delete(
-        all_models.CycleTaskGroupObjectTask.query.get(ctask_id))
-    self.assert200(response)
-
-    self.assertEqual(all_models.CycleTaskGroupObjectTask.query.filter_by(
-        id=ctask_id).count(), 0)
-    self.assertEqual(all_models.CycleTaskEntry.query.count(), 0)
-
 
 class CycleTaskSecondaryAssigneeQuery(query_helper.WithQueryApi, TestCTGOT):
   """CycleTask's QueryAPI secondary assignee related tests."""

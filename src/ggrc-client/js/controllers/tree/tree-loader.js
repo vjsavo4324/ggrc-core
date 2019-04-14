@@ -23,11 +23,9 @@ export default can.Control.extend({
         $wrapper.css('height', '40px');
       }
 
-      let renderer = can.stache(
-        `<spinner {extra-css-class}="'tree-items'"
-                  {toggle}="{showMe}" {size}="'large'">
-        </spinner>`
-      );
+      let view = '<spinner {extra-css-class}="\'tree-items\'"' +
+      ' {toggle}="{showMe}" {size}="\'large\'"></spinner>';
+      let renderer = can.stache(view);
       let spinner = renderer({showMe: true});
 
       // Admin dashboard

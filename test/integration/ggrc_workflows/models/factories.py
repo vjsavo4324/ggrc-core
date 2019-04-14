@@ -117,12 +117,3 @@ class CycleTaskGroupObjectTaskFactory(TitledFactory):
   start_date = date(2015, 12, 4)
   end_date = date(2015, 12, 27)
   context = factory.LazyAttribute(lambda ct: ct.cycle.context)
-
-
-class CycleTaskEntryFactory(ModelFactory):
-
-  class Meta:
-    model = models.CycleTaskEntry
-
-  cycle = factory.SubFactory(CycleFactory)
-  cycle_task_group_object_task = factory.SubFactory(CycleTaskFactory)

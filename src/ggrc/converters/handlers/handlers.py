@@ -366,8 +366,12 @@ class DateColumnHandler(ColumnHandler):
     # TODO: change all importable date columns' type from 'DateTime'
     # to 'Date' type. Remove if statement after it.
     try:
-      if not value:
-        return
+      value = value or self.get_value()
+      if not value and self.mandatory:
+        self.add_error(errors.MISSING_VALUE_ERROR,
+                       column_name=self.display_name)
+        return None
+
       parsed_value = parse(value)
       if self.key == "last_assessment_date":
         self.check_last_asmnt_date(parsed_value)
@@ -428,7 +432,8 @@ class NullableDateColumnHandler(DateColumnHandler):
 
   def parse_item(self):
     """Datetime column can be nullable."""
-    if not self.value_explicitly_empty(self.raw_value):
+    if not self.value_explicitly_empty(self.raw_value) and \
+            self.raw_value != "":
       return super(NullableDateColumnHandler, self).parse_item()
     if self.mandatory:
       self.add_error(

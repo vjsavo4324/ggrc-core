@@ -9,9 +9,7 @@ import {notifier} from '../../plugins/utils/notifiers-utils';
 export default can.Component.extend({
   tag: 'clipboard-link',
   template: can.stache(
-    `<a type="button" data-clipboard-text="{{text}}">
-       <content/>
-     </a>`
+    '<a type="button" data-clipboard-text="{{text}}"><content/></a>'
   ),
   leakScope: true,
   viewModel: {

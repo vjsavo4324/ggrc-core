@@ -291,3 +291,49 @@ class TestTaskGroupTaskImport(WorkflowTestCase):
     self._check_csv_response(response, expected_messages)
     self.assertEquals(start_date_before, start_date_after)
     self.assertEquals(end_date_before, end_date_after)
+
+  @ddt.data(
+      (
+          "",
+          datetime.date(2018, 7, 21),
+          {u"Line 3: Field 'Start Date' is required. "
+           u"The line will be ignored."},
+      ),
+      (
+          datetime.date(2018, 7, 14),
+          "",
+          {u"Line 3: Field 'End Date' is required. "
+           u"The line will be ignored."},
+      ),
+      (
+          "",
+          "",
+          {u"Line 3: Field 'Start Date' is required. "
+           u"The line will be ignored.",
+           u"Line 3: Field 'End Date' is required. "
+           u"The line will be ignored."},
+      ),
+  )
+  # pylint: disable=invalid-name
+  @ddt.unpack
+  def test_start_end_dates_error(self, start_date, end_date,
+                                 expected_errors):
+    """Tests import error message with empty start/end dates."""
+
+    tgt_import_data = collections.OrderedDict([
+        ("object_type", "Task Group Task"),
+        ("code", "code"),
+        ("task type", "Rich Text"),
+        ("task group", self.task_group.slug),
+        ("summary", "Task group test task 1"),
+        ("start date", start_date),
+        ("end date", end_date),
+        ("task assignees", self.person.email),
+    ])
+    response = self.import_data(tgt_import_data)
+    expected_messages = {
+        "Task Group Task": {
+            "row_errors": expected_errors,
+        }
+    }
+    self._check_csv_response(response, expected_messages)

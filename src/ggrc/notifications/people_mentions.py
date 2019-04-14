@@ -18,6 +18,7 @@ from ggrc import settings
 from ggrc import utils
 from ggrc.app import db
 from ggrc.notifications.common import send_mentions_bg
+from ggrc.notifications import data_handlers
 from ggrc.utils import user_generator, get_url_root
 
 
@@ -185,7 +186,7 @@ def _generate_mention_email(object_name, comments_data):
     body.append(body_template.format(
         author=comment.author,
         object_name=object_name,
-        created_at=comment.created_at,
+        created_at=data_handlers.as_user_time(comment.created_at),
         comment_text=comment.comment_text,
     ))
   return title, body

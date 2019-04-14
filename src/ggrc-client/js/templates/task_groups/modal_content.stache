@@ -9,7 +9,7 @@
   <div class="row-fluid">
     <div class="span8">
       <label class="form-label">
-        Summary
+        Title
         <i class="fa fa-asterisk"></i>
         <i class="fa fa-question-circle" rel="tooltip" title=""></i>
       </label>

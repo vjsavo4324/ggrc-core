@@ -80,7 +80,6 @@ class TestWorkflowsApiPost(TestCase):
     self.api.set_user(admin)
 
     related_models = (
-        (all_models.CycleTaskEntry, 26, False),
         (all_models.TaskGroup, 16, False),
         (all_models.TaskGroupTask, 16, True),
         (all_models.Cycle, 2, False),
@@ -140,12 +139,14 @@ class TestWorkflowsApiPost(TestCase):
       self.generator.activate_workflow(workflow)
 
     cycle_task = all_models.CycleTaskGroupObjectTask.query.one()
-    cycle = all_models.Cycle.query.one()
-    data = self.get_comment_dict(cycle_task, cycle)
-    response = self.api.post(all_models.CycleTaskEntry, data)
-    self.assertEqual(response.status_code, 201)
+    with factories.single_commit():
+      comment = factories.CommentFactory()
+      factories.RelationshipFactory(
+          source=comment,
+          destination=cycle_task
+      )
 
-    self._check_propagated_acl(2)
+    self._check_propagated_acl(2, has_comment=True)
 
   @ddt.data('Admin', 'Workflow Member')
   def test_tg_assignee(self, role_name):
@@ -229,13 +230,6 @@ class TestWorkflowsApiPost(TestCase):
             end_date=datetime.date(2017, 8, 7)
         )
       self.generator.activate_workflow(workflow)
-      cycle = all_models.Cycle.query.one()
-      cycle_task = all_models.CycleTaskGroupObjectTask.query.one()
-      wf_factories.CycleTaskEntryFactory(
-          cycle=cycle,
-          cycle_task_group_object_task=cycle_task,
-          description="Cycle task comment",
-      )
       workflow = all_models.Workflow.query.one()
       acl_map = {
           self.people_ids[0]: WF_ROLES['Admin'],
@@ -246,13 +240,14 @@ class TestWorkflowsApiPost(TestCase):
       response = self.api.put(workflow, put_params)
       self.assert200(response)
 
-  def _check_propagated_acl(self, roles_count):
-    """Check Workflow propagated ACL records.
+  def _check_propagated_acl(self, roles_count, has_comment=False):
+    """ Check Workflow propagated ACL records.
 
     Args:
         roles_count: roles' count created in test
+        has_comment: indicator that related objects contain comments
     """
-    related_objects = (
+    related_objects = [
         (all_models.TaskGroup.query.one().id, all_models.TaskGroup.__name__),
         (all_models.TaskGroupTask.query.one().id,
          all_models.TaskGroupTask.__name__),
@@ -261,15 +256,27 @@ class TestWorkflowsApiPost(TestCase):
          all_models.CycleTaskGroup.__name__),
         (all_models.CycleTaskGroupObjectTask.query.one().id,
          all_models.CycleTaskGroupObjectTask.__name__),
-    )
-    related_count = len(related_objects) * 2  # *2 is for relationships
+    ]
+    if has_comment:
+      related_objects.append(
+          (all_models.Comment.query.one().id,
+           all_models.Comment.__name__),
+      )
+
+    # *2 is for relationships
+    related_count = roles_count * len(related_objects) * 2
+
+    # additional acl count for Relationship and Comment propagation of
+    # Task Assignees/Task Secondary Assignees access control roles
+    if has_comment:
+      related_count += roles_count * 2
 
     all_acls = all_models.AccessControlList.query.filter(
         all_models.AccessControlList.parent_id_nn != 0
     ).count()
     self.assertEqual(
         all_acls,
-        roles_count * related_count
+        related_count
     )
 
   def test_assign_workflow_acl(self):
@@ -490,32 +497,6 @@ class TestWorkflowsApiPost(TestCase):
             "title": "Create_task",
             "task_type": "text",
             "description": ""
-        }
-    }
-
-  @staticmethod
-  def get_comment_dict(cycle_task, cycle):
-    return {
-        "cycle_task_entry": {
-            "custom_attributes": {},
-            "cycle_task_group_object_task": {
-                "id": cycle_task.id,
-                "href": "/api/cycle_task_group_object_tasks/{}".format(
-                    cycle_task.id),
-                "type": "CycleTaskGroupObjectTask"
-            },
-            "cycle": {
-                "id": cycle.id,
-                "href": "/api/cycles/{}".format(cycle.id),
-                "type": "Cycle"
-            },
-            "context": {
-                "id": cycle.context_id,
-                "href": "/api/contexts/{}".format(cycle.context_id),
-                "type": "Context"
-            },
-            "is_declining_review": "",
-            "description": "CT comment"
         }
     }
 

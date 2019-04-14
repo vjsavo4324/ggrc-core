@@ -4,6 +4,7 @@
 */
 import Component from '../tree-item-attr';
 import {getComponentVM} from '../../../../js_specs/spec_helpers';
+import * as MarkdownUtils from '../../../plugins/utils/markdown-utils';
 
 describe('tree-item-attr component', () => {
   let viewModel;
@@ -91,6 +92,27 @@ describe('tree-item-attr component', () => {
       let result = viewModel.getDefaultValue();
       expect(viewModel.attr('instance').attr).toHaveBeenCalledWith('notes');
       expect(result).toEqual('Example \n Notes');
+    });
+
+    describe('if isMarkdown is true', () => {
+      it('returns a correctly formatted value through the .attr() method',
+        () => {
+          spyOn(viewModel, 'isMarkdown').and.returnValue(true);
+          spyOn(MarkdownUtils, 'convertMarkdownToHtml')
+            .and.returnValue('<strong>Example for markdown</strong>');
+          viewModel.attr({
+            name: 'notes',
+            instance: {
+              notes: 'some markdown notes',
+            },
+          });
+
+          const result = viewModel.getDefaultValue();
+
+          expect(MarkdownUtils.convertMarkdownToHtml)
+            .toHaveBeenCalledWith('some markdown notes');
+          expect(result).toEqual('Example for markdown');
+        });
     });
   });
 });

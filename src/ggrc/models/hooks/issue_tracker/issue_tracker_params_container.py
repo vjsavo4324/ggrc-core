@@ -79,6 +79,7 @@ class IssueTrackerParamsContainer(object):
   def hotlist_id(self, value):
     """Validate and set 'hotlist_id'."""
     if not value:
+      self._hotlist_id = None
       return
 
     try:

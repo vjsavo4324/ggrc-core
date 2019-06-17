@@ -11,7 +11,7 @@
       <div class="row-fluid">
         <div class="span12">
           <label class="form-label">
-            Summary
+            Task Title
             <i class="fa fa-asterisk"></i>
             <i class="fa fa-question-circle" rel="tooltip" title="Give new {{model.title_singular}} a summary that is easy to search for and indicates the main goals of this {{model.title_singular}}"></i>
           </label>
@@ -99,7 +99,7 @@
             </repeat-on-summary> 
             <label class="smaller">
               <label class="form-label">
-                  Start Date
+                  Task Start Date
                   <i class="fa fa-asterisk"></i>
               </label>
               <datepicker-component id="repeate-start-date"
@@ -111,7 +111,7 @@
             </label>
             <label class="smaller">
               <label class="form-label">
-                  Due Date
+                  Task Due Date
                   <i class="fa fa-asterisk"></i>
               </label>
               <datepicker-component id="repeate-end-date"

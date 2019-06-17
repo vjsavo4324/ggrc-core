@@ -106,7 +106,7 @@ class TestCycleTaskDeprecated(TestCase):
         "object_name": "CycleTaskGroupObjectTask",
         'filters': {
             'expression': {
-                'left': 'task Last Deprecated Date',
+                'left': 'task task Last Deprecated Date',
                 'op': {'name': '='},
                 'right': "2017-01-25",
             },
@@ -138,7 +138,7 @@ class TestCycleTaskDeprecated(TestCase):
         "object_name": "CycleTaskGroupObjectTask",
         'filters': {
             'expression': {
-                'left': 'task Last Deprecated Date',
+                'left': 'task task Last Deprecated Date',
                 'op': {'name': '='},
                 'right': "2017-01",
             },

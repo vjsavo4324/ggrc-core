@@ -183,7 +183,7 @@ function buildFilterExpression(statuses, modelName) {
 */
 function getStatusFieldName(modelName) {
   let modelToStateFieldMap = {
-    CycleTaskGroupObjectTask: 'Task State',
+    CycleTaskGroupObjectTask: 'Task Task State',
   };
   let fieldName = modelToStateFieldMap[modelName] || 'Status';
 

@@ -69,7 +69,7 @@ class TestExportTasks(TestCase):
       due_date_dict[str(task.end_date)].add(task.slug)
 
     for due_date, slugs in due_date_dict.iteritems():
-      self.assert_slugs("task due date", due_date, list(slugs))
+      self.assert_slugs("task task due date", due_date, list(slugs))
 
   @data(0, 1, 2,)
   def test_filter_by_task_assignee(self, task_count):
@@ -123,11 +123,14 @@ class TestExportTasks(TestCase):
     self.assert_slugs("task comment", comment_text, [task.slug])
 
   @data(
-      ("status", ["Task State", "task state", "task status"]),
-      ("end_date", ["Task Due Date", "task due date", "task end_date"]),
+      ("status", ["Task Task State", "task task state", "task status"]),
+      (
+          "end_date",
+          ["Task Task Due Date", "task task due date", "task end_date"]
+      ),
       (
           "start_date",
-          ["task Start Date", "task start date", "task start_date"],
+          ["task task Start Date", "task task start date", "task start_date"],
       ),
   )
   @unpack
@@ -149,14 +152,18 @@ class TestExportTasks(TestCase):
       (
           "updated_at",
           [
-              "task Last Updated Date",
-              "task last updated date",
+              "task task Last Updated Date",
+              "task task last updated date",
               "task updated_at"
           ],
       ),
       (
           "created_at",
-          ["task Created Date", "task created Date", "task created_at"],
+          [
+              "task task Created Date",
+              "task task created Date",
+              "task created_at"
+          ],
       ),
   )
   @unpack

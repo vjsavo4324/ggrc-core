@@ -55,10 +55,10 @@ class TestCycleTaskImportUpdate(BaseTestCycleTaskImportUpdate):
   CSV_DIR = join(abspath(dirname(__file__)), "test_csvs/")
 
   IMPORTABLE_COLUMN_NAMES = [
-      "Summary",
+      "Task Title",
       "Task Description",
-      "Start Date", "Due Date",
-      "State",
+      "Task Start Date", "Task Due Date",
+      "Task State",
       "Task Assignees",
       "Task Secondary Assignees",
   ]

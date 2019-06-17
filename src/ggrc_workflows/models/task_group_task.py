@@ -128,13 +128,13 @@ class TaskGroupTask(roleable.Roleable,
   )
   _sanitize_html = []
   _aliases = {
-      "title": "Summary",
+      "title": "Task Title",
       "description": {
           "display_name": "Task Description",
           "handler_key": "task_description",
       },
       "start_date": {
-          "display_name": "Start Date",
+          "display_name": "Task Start Date",
           "mandatory": True,
           "description": (
               "Enter the task start date\nin the following format:\n"
@@ -142,7 +142,7 @@ class TaskGroupTask(roleable.Roleable,
           ),
       },
       "end_date": {
-          "display_name": "End Date",
+          "display_name": "Task Due Date",
           "mandatory": True,
           "description": (
               "Enter the task end date\nin the following format:\n"
@@ -150,7 +150,7 @@ class TaskGroupTask(roleable.Roleable,
           ),
       },
       "task_group": {
-          "display_name": "Task Group",
+          "display_name": "Task Group Code",
           "mandatory": True,
           "filter_by": "_filter_by_task_group",
       },
@@ -159,6 +159,18 @@ class TaskGroupTask(roleable.Roleable,
           "mandatory": True,
           "description": ("Accepted values are:"
                           "\n'Rich Text'\n'Checkbox'"),
+      },
+      "updated_at": {
+          "display_name": "Task Last Updated Date",
+          "mandatory": False,
+      },
+      "modified_by": {
+          "display_name": "Task Last Updated By",
+          "mandatory": False,
+      },
+      "created_at": {
+          "display_name": "Task Created Date",
+          "mandatory": False,
       }
   }
 

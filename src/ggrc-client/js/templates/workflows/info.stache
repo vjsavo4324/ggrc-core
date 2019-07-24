@@ -42,7 +42,7 @@
             <div class="info-pane-utility">
               {{#is_allowed 'update' instance context='for'}}
                 <three-dots-menu>
-                    {{^if is_info_pin}}
+                    {{#if is_info_pin}}
                         <li>
                           <a href="javascript://" data-toggle="modal-ajax-form" data-object-plural="{{model.table_plural}}" data-object-singular="{{model.model_singular}}" data-modal-reset="reset" data-modal-class="modal-wide" title="Edit {{model.model_title}}" data-object-id="{{instance.id}}">
                             <i class="fa fa-pencil-square-o"></i>
@@ -84,14 +84,6 @@
                           </workflow-deactivate>
                         </li>
                       {{/if}}
-                      {{#is_allowed 'delete' instance}}
-                          <li>
-                            <a data-toggle="modal-ajax-deleteform" data-object-plural="{{model.table_plural}}" data-object-singular="{{model.model_singular}}" data-modal-reset="reset" data-modal-class="modal" data-object-id="{{instance.id}}" href="javascript://">
-                              <i class="fa fa-trash"></i>
-                              Delete
-                            </a>
-                          </li>
-                        {{/is_allowed}}
                     {{/if}}
 
                     {{#if is_info_pin}}
@@ -103,6 +95,14 @@
                           </a>
                         </li>
                       {{/if}}
+                      {{#is_allowed 'delete' instance}}
+                          <li>
+                            <a data-toggle="modal-ajax-deleteform" data-object-plural="{{model.table_plural}}" data-object-singular="{{model.model_singular}}" data-modal-reset="reset" data-modal-class="modal" data-object-id="{{instance.id}}" href="javascript://">
+                              <i class="fa fa-trash"></i>
+                              Delete
+                            </a>
+                          </li>
+                      {{/is_allowed}}
                     {{/if}}
                 </three-dots-menu>
               {{/is_allowed}}
